@@ -9,13 +9,14 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildEvolutionChamber;
 import com.fray.evo.action.build.EcActionBuildExtractor;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeCarapace1 extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(150, 150, 160, "Carapace +1");
+		init(UpgradeLibrary.Armor1);
 	}
 
 	@Override

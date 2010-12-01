@@ -8,20 +8,21 @@ import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildLair;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeVentralSacs extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(200, 200, 130, "Ventral Sacs");
+		init(UpgradeLibrary.VentralSacs);
 	}
 
 	@Override
 	public void execute(EcBuildOrder s, EcEvolver e)
 	{
 		super.execute(s, e);
-		s.consumeHatch(time);
+		s.consumeHatch(getTime());
 	}
 	
 	@Override

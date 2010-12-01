@@ -9,13 +9,14 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildHive;
 import com.fray.evo.action.build.EcActionBuildSpire;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeFlyerAttacks3 extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(250, 250, 220, "Flyer Attacks +3");
+		init(UpgradeLibrary.FlyerAttacks3);
 	}
 
 	@Override

@@ -9,13 +9,14 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildExtractor;
 import com.fray.evo.action.build.EcActionBuildSpawningPool;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeMetabolicBoost extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(100, 100, 110, "Metabolic Boost");
+		init(UpgradeLibrary.MetabolicBoost);
 	}
 
 	@Override

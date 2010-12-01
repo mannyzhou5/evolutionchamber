@@ -8,13 +8,14 @@ import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildUltraliskCavern;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeChitinousPlating extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(150, 150, 110, "Chitinous Plating");
+		init(UpgradeLibrary.ChitinousPlating);
 	}
 
 	@Override

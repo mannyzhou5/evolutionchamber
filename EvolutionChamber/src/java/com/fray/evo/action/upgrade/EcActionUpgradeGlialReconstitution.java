@@ -9,13 +9,14 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildLair;
 import com.fray.evo.action.build.EcActionBuildRoachWarren;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeGlialReconstitution extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(100, 100, 110, "Glial Reconstitution");
+		init(UpgradeLibrary.GlialReconstitution);
 	}
 
 	@Override

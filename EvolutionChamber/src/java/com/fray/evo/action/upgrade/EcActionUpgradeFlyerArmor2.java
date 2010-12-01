@@ -8,13 +8,14 @@ import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildSpire;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeFlyerArmor2 extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(225, 225, 190, "Flyer Armor +2");
+		init(UpgradeLibrary.FlyerArmor2);
 	}
 
 	@Override

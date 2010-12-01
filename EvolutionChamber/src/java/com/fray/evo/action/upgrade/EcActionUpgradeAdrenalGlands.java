@@ -9,13 +9,14 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildHive;
 import com.fray.evo.action.build.EcActionBuildSpawningPool;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeAdrenalGlands extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(200, 200, 130, "Adrenal Glands");
+		init(UpgradeLibrary.AdrenalGlands);
 	}
 
 	@Override

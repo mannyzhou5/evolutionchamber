@@ -9,13 +9,14 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildBanelingNest;
 import com.fray.evo.action.build.EcActionBuildLair;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeCentrifugalHooks extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(150, 150, 110, "Centrifugal Hooks");
+		init(UpgradeLibrary.CentrifugalHooks);
 	}
 
 	@Override

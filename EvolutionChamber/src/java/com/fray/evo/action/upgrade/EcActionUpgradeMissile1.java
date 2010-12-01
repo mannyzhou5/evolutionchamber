@@ -9,13 +9,14 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildEvolutionChamber;
 import com.fray.evo.action.build.EcActionBuildExtractor;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeMissile1 extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(100, 100, 160, "Missile +1");
+		init(UpgradeLibrary.Missile1);
 	}
 
 	@Override

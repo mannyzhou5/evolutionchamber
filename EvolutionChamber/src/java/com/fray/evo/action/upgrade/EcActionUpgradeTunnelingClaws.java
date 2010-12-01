@@ -9,13 +9,14 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildLair;
 import com.fray.evo.action.build.EcActionBuildRoachWarren;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeTunnelingClaws extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(150, 150, 110, "Tunneling Claws");
+		init(UpgradeLibrary.TunnelingClaws);
 	}
 
 	@Override

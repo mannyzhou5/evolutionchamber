@@ -9,13 +9,14 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildEvolutionChamber;
 import com.fray.evo.action.build.EcActionBuildLair;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcActionUpgradeMelee2 extends EcActionUpgrade
 {
 	@Override
 	public void init()
 	{
-		init(150, 150, 190, "Melee +2");
+		init(UpgradeLibrary.Melee2);
 	}
 
 	@Override

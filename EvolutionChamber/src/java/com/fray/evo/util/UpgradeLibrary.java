@@ -29,9 +29,9 @@ public class UpgradeLibrary {
     public static Upgrade Armor1 = new Upgrade("Armor1",150,150,160);
     public static Upgrade Armor2 = new Upgrade("Armor2", 225, 225, 190);
     public static Upgrade Armor3 = new Upgrade("Armor3", 300, 300, 220);
-    public static Upgrade FlyerAttack1 = new Upgrade("FlyerAttack1", 100, 100, 160);
-    public static Upgrade FlyerAttack2 = new Upgrade("FlyerAttack2", 175, 175, 190);
-    public static Upgrade FlyerAttack3 = new Upgrade("FlyerAttack", 250, 250, 220);
+    public static Upgrade FlyerAttacks1 = new Upgrade("FlyerAttacks1", 100, 100, 160);
+    public static Upgrade FlyerAttacks2 = new Upgrade("FlyerAttacks2", 175, 175, 190);
+    public static Upgrade FlyerAttacks3 = new Upgrade("FlyerAttacks3", 250, 250, 220);
     public static Upgrade FlyerArmor1 = new Upgrade("FlyerArmor1", 150, 150, 160);
     public static Upgrade FlyerArmor2 = new Upgrade("FlyerArmor2", 225, 225, 190);
     public static Upgrade FlyerArmor3 = new Upgrade("FlyerArmor3", 300, 300, 220);
@@ -51,6 +51,24 @@ public class UpgradeLibrary {
             allZergUpgrades.add(Burrow);
             allZergUpgrades.add(PneumatizedCarapace);
             allZergUpgrades.add(VentralSacs);
+            allZergUpgrades.add(CentrifugalHooks);
+            allZergUpgrades.add(Melee1);
+            allZergUpgrades.add(Melee2);
+            allZergUpgrades.add(Melee3);
+            allZergUpgrades.add(Armor1);
+            allZergUpgrades.add(Armor2);
+            allZergUpgrades.add(Armor3);
+            allZergUpgrades.add(FlyerAttacks1);
+            allZergUpgrades.add(FlyerAttacks2);
+            allZergUpgrades.add(FlyerAttacks3);
+            allZergUpgrades.add(FlyerArmor1);
+            allZergUpgrades.add(FlyerArmor2);
+            allZergUpgrades.add(FlyerArmor3);
+            allZergUpgrades.add(GroovedSpines);
+            allZergUpgrades.add(NeuralParasite);
+            allZergUpgrades.add(NeuralParasite);
+            allZergUpgrades.add(PathogenGlands);
+            allZergUpgrades.add(ChitinousPlating);
 
         }
         return allZergUpgrades;
