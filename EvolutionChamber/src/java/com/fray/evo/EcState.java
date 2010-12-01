@@ -1,17 +1,32 @@
 package com.fray.evo;
 import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
+import com.fray.evo.util.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 
 public class EcState implements Serializable
 {
 	public EcSettings	settings	= new EcSettings();
+        private HashSet<Upgrade> upgrades;
+        private HashMap<Building, Integer> buildings;
+        private HashMap<Unit, Integer> units;
 
 	public EcState()
 	{
 		hatcheryTimes.add(new Integer(0));
+                units = new HashMap<Unit, Integer>();
+                for(Unit unit: UnitLibrary.getAllZergUnits()){
+                    units.put(unit, 0);
+                }
+                buildings = new HashMap<Building, Integer>();
+                for(Building building: BuildingLibrary.getAllZergBuildings()){
+                    buildings.put(building, 0);
+                }
+                upgrades = new HashSet<Upgrade>();
 	}
 
 	public double					preTimeScore		= 0.0;
@@ -209,9 +224,53 @@ public class EcState implements Serializable
 		s.actionLength = actionLength;
 	}
 
+    protected void assignClean(EcState s) {
+        for (EcState st : waypoints) {
+            try {
+                s.waypoints.add((EcState) st.clone());
+            } catch (CloneNotSupportedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            if (mergedWaypoints == null) {
+                s.mergedWaypoints = null;
+            } else {
+                s.mergedWaypoints = (EcState) mergedWaypoints.clone();
+            }
+        } catch (CloneNotSupportedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        s.settings = settings;
+        s.minerals = minerals;
+        s.gas = gas;
+        s.supplyUsed = supplyUsed;
+
+        s.requiredBases = requiredBases;
+        s.scoutDrone = scoutDrone;
+
+        s.buildings = (HashMap<Building, Integer>) buildings.clone();
+        s.upgrades = (HashSet<Upgrade>) upgrades.clone();
+        s.units = (HashMap<Unit, Integer>) units.clone();
+
+        s.seconds = seconds;
+        s.targetSeconds = targetSeconds;
+        s.invalidActions = invalidActions;
+        s.actionLength = actionLength;
+    }
+
 	public int supply()
 	{
 		return Math.min((overlords + overseers) * 8 + 2 * bases(), 200);
+	}
+
+        public int supplyClean()
+	{
+		return Math.min((units.get(UnitLibrary.Overlord) + units.get(UnitLibrary.Overlord)) * 8 + 2 * bases(), 200);
 	}
 
 	public static EcState defaultDestination()
@@ -354,6 +413,21 @@ public class EcState implements Serializable
 		flyerArmor3 = s.flyerArmor3 | flyerArmor3;
 		chitinousPlating = s.chitinousPlating | chitinousPlating;
 
+	}
+
+
+	public void unionClean(EcState s)
+	{
+		if (s.requiredBases > requiredBases)
+			requiredBases = s.requiredBases;
+
+		for(Unit unit: units.keySet()){
+                    units.put(unit, Math.max(units.get(unit), s.units.get(unit)));
+                }
+                for(Building building: buildings.keySet()){
+                    buildings.put(building, Math.max(buildings.get(building), s.buildings.get(building)));
+                }
+                upgrades.addAll(s.upgrades);
 	}
 
 	public boolean isSatisfied(EcState candidate)
@@ -503,6 +577,55 @@ public class EcState implements Serializable
 
 		return true;
 	}
+        public boolean isSatisfiedClean(EcState candidate)
+	{
+		if (waypoints.size() > 0)
+		{
+			if( mergedWaypoints == null )
+				mergedWaypoints = getMergedState();
+			return mergedWaypoints.isSatisfied(candidate);
+		}
+
+		for(Unit unit: units.keySet()){
+                    if(candidate.units.get(unit) < units.get(unit)){
+                        return false;
+                    }
+                }
+
+		if (candidate.bases() < requiredBases)
+			return false;
+
+                for(Building building: buildings.keySet()){
+                    if(candidate.buildings.get(building) < buildings.get(building)){
+                        return false;
+                    }
+                }
+
+                if(!candidate.upgrades.containsAll(upgrades)){
+                    return false;
+                }
+
+		if (candidate.settings.overDrone || candidate.settings.workerParity)
+		{
+			int overDrones = getOverDrones(candidate);
+
+			if (candidate.settings.overDrone && candidate.units.get(UnitLibrary.Drone) < overDrones)
+			{
+				return false;
+			}
+			if (candidate.settings.workerParity)
+			{
+				int parityDrones = getParityDrones(candidate);
+
+				if (candidate.units.get(UnitLibrary.Drone) < parityDrones)
+				{
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
 
 	public int getOverDrones(EcState s)
 	{
@@ -521,9 +644,24 @@ public class EcState implements Serializable
 		return parityDrones;
 	}
 
+        public int getParityDronesClean(EcState s)
+	{
+		int optimalDrones = Math.min((Math.min(s.bases(), 3) * 16) +
+                        (s.buildings.get(BuildingLibrary.Extractor) * 3), maxOverDrones);
+		int parityDrones = Math.min(s.getOverDrones(s), optimalDrones);
+
+		return parityDrones;
+	}
+
 	public int bases()
 	{
 		return hatcheries + lairs + evolvingHatcheries + evolvingLairs + hives + evolvingHives;
+	}
+
+        public int basesClean()
+	{
+		return buildings.get(BuildingLibrary.Hatchery) + buildings.get(BuildingLibrary.Lair)
+                        + evolvingHatcheries + evolvingLairs + buildings.get(BuildingLibrary.Hive) + evolvingHives;
 	}
 
 	public int productionTime()
@@ -545,6 +683,17 @@ public class EcState implements Serializable
 		return (evolvingHatcheries + evolvingLairs + evolvingHives + (hatcheries - 1) + lairs + hives + spawningPools
 				+ evolutionChambers + roachWarrens + hydraliskDen + banelingNest + infestationPit + ultraliskCavern
 				+ gasExtractors + spire + spineCrawlers + sporeCrawlers + nydusWorm);
+	}
+
+        public int usedDronesClean()
+	{
+                int total = (evolvingHatcheries + evolvingLairs + evolvingHives + -1 );
+                for(Building building: buildings.keySet()){
+                    if(building.getConsumes() == UnitLibrary.Drone){
+                        total += buildings.get(building);
+                    }
+                }
+		return total;
 	}
 
 	public int getEstimatedActions()
@@ -617,6 +766,30 @@ public class EcState implements Serializable
 			i++;
 		if (chitinousPlating)
 			i++;
+		for (EcState s : waypoints)
+			i += s.getEstimatedActions();
+		return i;
+	}
+
+        public int getEstimatedActionsClean()
+	{
+		if (waypoints.size() > 0)
+		{
+			if( mergedWaypoints == null )
+				mergedWaypoints = getMergedState();
+			return mergedWaypoints.getEstimatedActions();
+		}
+
+		int i = requiredBases;
+                
+                for(Integer count: units.values()){
+                    i+=count;
+                }
+
+                for(Integer count: buildings.values()){
+                    i+= count;
+                }
+		i+= upgrades.size();
 		for (EcState s : waypoints)
 			i += s.getEstimatedActions();
 		return i;
@@ -716,6 +889,22 @@ public class EcState implements Serializable
 		append(sb, "Neural Parasite", neuralParasite);
 		append(sb, "Pathogen Glands", pathogenGlands);
 		append(sb, "Chitinous Plating", chitinousPlating);
+	}
+        private void appendBuildStuffClean(StringBuilder sb)
+	{
+		for(Unit unit:units.keySet()){
+                    append(sb, unit.getName(), units.get(unit));
+                }
+
+		append(sb, "Bases", requiredBases);
+
+                for(Building building: buildings.keySet()){
+                    append(sb, building.getName(), buildings.get(building));
+                }
+                //TODO clean that up
+                for(Upgrade upgrade: upgrades){
+                    append(sb, upgrade.getName(), true);
+                }
 	}
 
 	private void append(StringBuilder sb, String name, boolean doit)

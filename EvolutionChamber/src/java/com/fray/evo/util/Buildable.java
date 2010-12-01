@@ -5,11 +5,13 @@
 
 package com.fray.evo.util;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Cyrik
  */
-public interface Buildable {
+public interface Buildable extends Serializable {
     public int getMinerals();
     public int getGas();
     public double getTime();
