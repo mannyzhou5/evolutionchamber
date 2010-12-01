@@ -15,7 +15,6 @@ public class EcActionBuildLair extends EcActionBuildBuilding implements Serializ
 	public EcActionBuildLair()
 	{
 		super(BuildingLibrary.Lair);
-		takesDrone = false;
 	}
 
 	@Override

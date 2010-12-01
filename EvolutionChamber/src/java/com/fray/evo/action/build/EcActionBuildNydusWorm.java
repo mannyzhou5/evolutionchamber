@@ -15,7 +15,6 @@ public class EcActionBuildNydusWorm extends EcActionBuildBuilding implements Ser
 	public EcActionBuildNydusWorm()
 	{
 		super(BuildingLibrary.NydusWorm);
-		takesDrone = false;
 	}
 
 	@Override

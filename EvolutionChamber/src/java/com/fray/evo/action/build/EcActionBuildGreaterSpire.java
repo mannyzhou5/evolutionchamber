@@ -15,7 +15,6 @@ public class EcActionBuildGreaterSpire extends EcActionBuildBuilding implements 
 	public EcActionBuildGreaterSpire()
 	{
 		super(BuildingLibrary.GreaterSpire);
-		takesDrone = false;
 	}
 
 	@Override

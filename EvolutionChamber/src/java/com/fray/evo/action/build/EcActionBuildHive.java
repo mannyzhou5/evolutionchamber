@@ -15,7 +15,6 @@ public class EcActionBuildHive extends EcActionBuildBuilding implements Serializ
 	public EcActionBuildHive()
 	{
 		super(BuildingLibrary.Hive);
-		takesDrone = false;
 	}
 
 	@Override

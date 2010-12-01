@@ -48,4 +48,7 @@ public abstract class EcActionBuild extends EcAction implements Serializable {
     public String getName() {
         return buildable.getName();
     }
+    public Buildable getConsumes(){
+        return buildable.getConsumes();
+    }
 }

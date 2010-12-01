@@ -5,10 +5,10 @@ import java.io.Serializable;
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.util.Building;
+import com.fray.evo.util.UnitLibrary;
 
 public abstract class EcActionBuildBuilding extends EcActionBuild implements Serializable
 {
-	public boolean	takesDrone	= true;
 
 	public EcActionBuildBuilding(Building building)
 	{
@@ -20,7 +20,7 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 	{
 		s.minerals -= getMinerals();
 		s.gas -= getGas();
-		if (takesDrone)
+		if (getConsumes() == UnitLibrary.Drone)
 		{
 			s.drones -= 1;
 			s.dronesOnMinerals -= 1;
@@ -47,7 +47,7 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (takesDrone)
+		if (getConsumes() == UnitLibrary.Drone)
 			if (s.drones < 1)
 				return false;
 		return isPossibleResources(s);
