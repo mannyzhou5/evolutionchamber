@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildUltralisk extends EcActionBuildUnit implements Serializable
 {
 	public EcActionBuildUltralisk()
 	{
-		super(300, 200, 6, 70, "Ultralisk", true);
+		super(UnitLibrary.Ultralisk);
 	}
 
 	@Override

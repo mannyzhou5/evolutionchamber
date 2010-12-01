@@ -10,12 +10,13 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.EcActionMineGas;
 import com.fray.evo.action.EcActionMineMineral;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildExtractor extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildExtractor()
 	{
-		super(25, 0, 30, "Extractor");
+		super(BuildingLibrary.Extractor);
 	}
 
 	@Override

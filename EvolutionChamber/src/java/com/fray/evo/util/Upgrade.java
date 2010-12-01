@@ -14,6 +14,7 @@ public class Upgrade implements Buildable{
     private int gas;
     private double time;
     private String name;
+
     public Upgrade(String name,int minerals, int gas, double time){
         this.name = name;
         this.minerals = minerals;
@@ -36,8 +37,29 @@ public class Upgrade implements Buildable{
         return time;
     }
 
+    @Override
     public String getName(){
         return name;
+    }
+
+    @Override
+    public int getFullMinerals() {
+        return minerals;
+    }
+
+    @Override
+    public int getFullGas() {
+        return gas;
+    }
+
+    @Override
+    public double getFullTime() {
+        return time;
+    }
+
+    @Override
+    public Buildable getConsumes() {
+        return null;
     }
 
 }

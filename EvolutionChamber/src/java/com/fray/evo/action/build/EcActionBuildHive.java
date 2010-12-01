@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildHive extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildHive()
 	{
-		super(200, 150, 100, "Hive");
+		super(BuildingLibrary.Hive);
 		takesDrone = false;
 	}
 

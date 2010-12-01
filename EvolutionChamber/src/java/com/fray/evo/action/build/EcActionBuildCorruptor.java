@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildCorruptor extends EcActionBuildUnit implements Serializable
 {	
 	public EcActionBuildCorruptor()
 	{
-		super(150, 100, 2, 40, "Corruptor", true);
+		super(UnitLibrary.Corruptor);
 	}
 
 	protected void postExecute(final EcBuildOrder s, final EcEvolver e)

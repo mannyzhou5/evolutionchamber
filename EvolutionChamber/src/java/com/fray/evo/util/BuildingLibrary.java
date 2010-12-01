@@ -12,23 +12,23 @@ import java.util.ArrayList;
  * @author Cyrik
  */
 public class BuildingLibrary {
-    static public Building Hatchery = new Building("Hatchery", 300, 0, 100);
-    static public Building Extractor = new Building("Extractor", 25, 0, 30);
-    static public Building Lair = new Building("Lair",150,100,80);
-    static public Building Hive = new Building("Hive",200,150,100);
-    static public Building SpawningPool = new Building("SpawningPool",200,0,65);
-    static public Building RoachWarren = new Building("RoachWarren", 150,0,55);
-    static public Building HydraliskDen = new Building("HydraliskDen", 100, 100, 40);
-    static public Building BanelingNest = new Building("BanelingNest", 100, 50, 60);
-    static public Building GreaterSpire = new Building("GreaterSpire", 300, 350, 200);
-    static public Building UltraliskCavern = new Building("UltraliskCavern", 150, 200, 65);
-    static public Building Spire = new Building("Spire", 200, 200, 100);
-    static public Building InfestationPit = new Building("InfestationPit", 100, 100, 50);
-    static public Building EvolutionChamber = new Building("EvolutionChamber", 75, 0, 35);
-    static public Building NydusNetwork = new Building("NydusNetwork", 150, 200, 50);
-    static public Building NydusWorm = new Building("NydusWorm", 100, 100, 20);
-    static public Building SpineCrawler = new Building("SpineCrawler", 100, 0, 50);
-    static public Building SporeCrawler = new Building("SporeCrawler", 75, 0, 30);
+    static public Building Hatchery = new Building("Hatchery", 300, 0, 100, UnitLibrary.Drone);
+    static public Building Extractor = new Building("Extractor", 25, 0, 30, UnitLibrary.Drone);
+    static public Building Lair = new Building("Lair",150,100,80, BuildingLibrary.Hatchery);
+    static public Building Hive = new Building("Hive",200,150,100, BuildingLibrary.Lair);
+    static public Building SpawningPool = new Building("SpawningPool",200,0,65, UnitLibrary.Drone);
+    static public Building RoachWarren = new Building("RoachWarren", 150,0,55,UnitLibrary.Drone);
+    static public Building HydraliskDen = new Building("HydraliskDen", 100, 100, 40,UnitLibrary.Drone);
+    static public Building BanelingNest = new Building("BanelingNest", 100, 50, 60,UnitLibrary.Drone);
+    static public Building Spire = new Building("Spire", 200, 200, 100,UnitLibrary.Drone);
+    static public Building GreaterSpire = new Building("GreaterSpire", 100, 150, 100,BuildingLibrary.Spire);
+    static public Building UltraliskCavern = new Building("UltraliskCavern", 150, 200, 65,UnitLibrary.Drone);
+    static public Building InfestationPit = new Building("InfestationPit", 100, 100, 50,UnitLibrary.Drone);
+    static public Building EvolutionChamber = new Building("EvolutionChamber", 75, 0, 35,UnitLibrary.Drone);
+    static public Building NydusNetwork = new Building("NydusNetwork", 150, 200, 50,UnitLibrary.Drone);
+    static public Building NydusWorm = new Building("NydusWorm", 100, 100, 20,null);
+    static public Building SpineCrawler = new Building("SpineCrawler", 100, 0, 50,UnitLibrary.Drone);
+    static public Building SporeCrawler = new Building("SporeCrawler", 75, 0, 30,UnitLibrary.Drone);
 
     static private ArrayList<Building> allZergBuildings;
 

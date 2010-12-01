@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildNydusNetwork extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildNydusNetwork()
 	{
-		super(150, 200, 50, "Nydus Network");
+		super(BuildingLibrary.NydusNetwork);
 	}
 
 @Override

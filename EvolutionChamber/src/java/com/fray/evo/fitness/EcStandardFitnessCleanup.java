@@ -28,6 +28,9 @@ public class EcStandardFitnessCleanup implements EcFitness {
             if (unit == UnitLibrary.Overlord) {
                 continue;
             }
+            if (unit == UnitLibrary.Larva) {
+                continue;
+            }
 
             int currentlyBuiltUnits = getUnitByString(unit.getName(), current);
             int neededUnits = getUnitByString(unit.getName(), destination);
@@ -82,6 +85,15 @@ public class EcStandardFitnessCleanup implements EcFitness {
 
     private boolean getUpgradeByString(String upgradeName, EcState state) {
         String fieldName = upgradeName.substring(0, 1).toLowerCase() + upgradeName.substring(1);
+        if (fieldName.equals("flyerAttacks1")) {
+            fieldName = "flyerAttack1";
+        }
+        if (fieldName.equals("flyerAttacks2")) {
+            fieldName = "flyerAttack2";
+        }
+        if (fieldName.equals("flyerAttacks3")) {
+            fieldName = "flyerAttack3";
+        }
         try {
             return state.getClass().getField(fieldName).getBoolean(state);
         } catch (IllegalArgumentException ex) {

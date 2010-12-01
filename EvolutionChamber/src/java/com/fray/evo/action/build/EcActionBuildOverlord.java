@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildOverlord extends EcActionBuildUnit implements Serializable
 {
 	public EcActionBuildOverlord()
 	{
-		super(100, 0, 0, 25, "Overlord", true);
+		super(UnitLibrary.Overlord);
 	}
 
 	@Override

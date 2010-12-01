@@ -8,13 +8,14 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildSpineCrawler extends EcActionBuildBuilding implements Serializable
 {
 
 	public EcActionBuildSpineCrawler()
 	{
-		super(100,0,50,"Spine Crawler");
+		super(BuildingLibrary.SpineCrawler);
 	}
 
 	@Override

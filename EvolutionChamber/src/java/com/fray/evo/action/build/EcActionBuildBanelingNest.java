@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildBanelingNest extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildBanelingNest()
 	{
-		super(100,50,60,"Baneling Nest");
+		super(BuildingLibrary.BanelingNest);
 	}
 
 	protected void postExecute(final EcBuildOrder s, final EcEvolver e)

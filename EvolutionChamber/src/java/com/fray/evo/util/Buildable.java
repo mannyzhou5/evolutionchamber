@@ -13,5 +13,9 @@ public interface Buildable {
     public int getMinerals();
     public int getGas();
     public double getTime();
-
+    public String getName();
+    public int getFullMinerals();
+    public int getFullGas();
+    public double getFullTime();
+    public Buildable getConsumes();
 }

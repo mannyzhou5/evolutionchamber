@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildGreaterSpire extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildGreaterSpire()
 	{
-		super(100, 150, 100, "Greater Spire");
+		super(BuildingLibrary.GreaterSpire);
 		takesDrone = false;
 	}
 

@@ -10,13 +10,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildQueen extends EcActionBuildUnit implements Serializable
 {
 	public EcActionBuildQueen()
 	{
-		super(150, 0, 2, 50, "Queen", false);
-		// TODO Auto-generated constructor stub
+		super(UnitLibrary.Queen);
 	}
 
 	@Override

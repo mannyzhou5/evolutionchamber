@@ -8,26 +8,27 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildHatchery extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildHatchery()
 	{
-		super(300, 0, 100, "Hatchery");
+		super(BuildingLibrary.Hatchery);
 	}
 
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{
 		s.hatcheriesBuilding += 1;
-		s.addFutureAction(time - 30, new Runnable()
+		s.addFutureAction(getTime() - 30, new Runnable()
 		{
 			@Override
 			public void run()
 			{
 			}
 		});
-		s.addFutureAction(time - 50, new Runnable()
+		s.addFutureAction(getTime() - 50, new Runnable()
 		{
 			@Override
 			public void run()

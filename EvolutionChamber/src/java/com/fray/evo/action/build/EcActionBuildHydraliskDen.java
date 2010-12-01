@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildHydraliskDen extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildHydraliskDen()
 	{
-		super(100, 100, 40, "Hydralisk Den");
+		super(BuildingLibrary.HydraliskDen);
 	}
 
 	@Override

@@ -4,29 +4,31 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.Unit;
+import com.fray.evo.util.UnitLibrary;
 
 public abstract class EcActionBuildUnit extends EcActionBuild implements Serializable
 {
-	public int supply;
+	public double supply;
 	public boolean consumeLarva;
 	
-	public EcActionBuildUnit(int minerals, int gas, int supply, int time, String name, boolean consumeLarva)
+	public EcActionBuildUnit(Unit unit)
 	{
-		super(minerals, gas, time, name);
-		this.supply = supply;
-		this.consumeLarva = consumeLarva;
+		super(unit);
+		this.supply = unit.getSupply();
+		this.consumeLarva = (unit.getConsumes() == UnitLibrary.Larva);
 	}
 
 	@Override
 	public void execute(final EcBuildOrder s, final EcEvolver e)
 	{
-		s.minerals -= minerals;
-		s.gas -= gas;
+		s.minerals -= getMinerals();
+		s.gas -= getGas();
 		s.supplyUsed += supply;
 		if (consumeLarva)
 			s.consumeLarva(e);
 		preExecute(s);
-		s.addFutureAction(time, new Runnable()
+		s.addFutureAction(getTime(), new Runnable()
 		{
 			@Override
 			public void run()

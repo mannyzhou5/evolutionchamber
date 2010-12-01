@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildBroodLord extends EcActionBuildUnit implements Serializable
 {
 	public EcActionBuildBroodLord()
 	{
-		super(150, 150, 2, 34, "Brood Lord", false);
+		super(UnitLibrary.Broodlord);
 	}
 
 	protected void preExecute(final EcBuildOrder s)

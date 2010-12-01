@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildLair extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildLair()
 	{
-		super(150, 100, 80, "Lair");
+		super(BuildingLibrary.Lair);
 		takesDrone = false;
 	}
 

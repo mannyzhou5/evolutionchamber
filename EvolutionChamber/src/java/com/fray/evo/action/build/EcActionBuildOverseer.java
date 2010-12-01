@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildOverseer extends EcActionBuildUnit implements Serializable
 {
 	public EcActionBuildOverseer()
 	{
-		super(50, 100, 0, 17, "Overseer", false);
+		super(UnitLibrary.Overseer);
 	}
 
 	@Override

@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildSpawningPool extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildSpawningPool()
 	{
-		super(200, 0, 65, "Spawning Pool");
+		super(BuildingLibrary.SpawningPool);
 	}
 
 	@Override

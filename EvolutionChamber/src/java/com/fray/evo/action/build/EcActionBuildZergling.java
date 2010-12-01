@@ -9,12 +9,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildZergling extends EcActionBuildUnit implements Serializable
 {
 	public EcActionBuildZergling()
 	{
-		super(50, 0, 1, 24, "Zergling", true);
+		super(UnitLibrary.Zergling);
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class EcActionBuildZergling extends EcActionBuildUnit implements Serializ
 	protected void obtainOne(EcBuildOrder s, EcEvolver e)
 	{
 		if (e.debug)
-			e.obtained(s, " " + messages.getString(name) + "+2");
+			e.obtained(s, " " + messages.getString(getName()) + "+2");
 	}
 
 	@Override

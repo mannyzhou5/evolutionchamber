@@ -4,21 +4,22 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.Building;
 
 public abstract class EcActionBuildBuilding extends EcActionBuild implements Serializable
 {
 	public boolean	takesDrone	= true;
 
-	public EcActionBuildBuilding(int minerals, int gas, int time, String name)
+	public EcActionBuildBuilding(Building building)
 	{
-		super(minerals, gas, time, name);
+		super(building);
 	}
 
 	@Override
 	public void execute(final EcBuildOrder s, final EcEvolver e)
 	{
-		s.minerals -= minerals;
-		s.gas -= gas;
+		s.minerals -= getMinerals();
+		s.gas -= getGas();
 		if (takesDrone)
 		{
 			s.drones -= 1;
@@ -26,7 +27,7 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 			s.supplyUsed -= 1;
 		}
 		preExecute(s);
-		s.addFutureAction(time, new Runnable()
+		s.addFutureAction(getTime(), new Runnable()
 		{
 			@Override
 			public void run()

@@ -8,12 +8,13 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildRoachWarren extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildRoachWarren()
 	{
-		super(150, 0, 55, "Roach Warren");
+		super(BuildingLibrary.RoachWarren);
 	}
 
 	@Override
