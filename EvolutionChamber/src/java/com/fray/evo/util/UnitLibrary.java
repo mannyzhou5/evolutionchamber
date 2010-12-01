@@ -28,7 +28,7 @@ public class UnitLibrary {
     public static Unit Overseer = new Unit("Overseer", 150, 100, 0, 42);
 
     private static ArrayList<Unit> zergUnits;
-    public static ArrayList<Unit> getAllZergUnits(){
+    synchronized public static ArrayList<Unit> getAllZergUnits(){
         if(zergUnits == null){
             zergUnits = new ArrayList<Unit>();
             zergUnits.add(Drone);
