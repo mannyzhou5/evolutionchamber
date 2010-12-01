@@ -4,6 +4,8 @@
  */
 package com.fray.evo.util;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Cyrik
@@ -15,13 +17,15 @@ public class Building implements Buildable {
     private int gas;
     private double time;
     private Buildable consumes;
+    private ArrayList<Buildable> requierments;
 
-    public Building(String name, int minerals, int gas, double time, Buildable consumes) {
+    public Building(String name, int minerals, int gas, double time, Buildable consumes, ArrayList<Buildable> requierments) {
         this.name = name;
         this.minerals = minerals;
         this.gas = gas;
         this.time = time;
         this.consumes = consumes;
+        this.requierments = requierments;
     }
 
     @Override
@@ -76,5 +80,10 @@ public class Building implements Buildable {
     @Override
     public Buildable getConsumes() {
         return consumes;
+    }
+
+    @Override
+    public ArrayList<Buildable> getRequirement() {
+        return requierments;
     }
 }

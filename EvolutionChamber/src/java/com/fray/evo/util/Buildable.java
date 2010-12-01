@@ -6,6 +6,7 @@
 package com.fray.evo.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,4 +21,5 @@ public interface Buildable extends Serializable {
     public int getFullGas();
     public double getFullTime();
     public Buildable getConsumes();
+    public ArrayList<Buildable> getRequirement();
 }
