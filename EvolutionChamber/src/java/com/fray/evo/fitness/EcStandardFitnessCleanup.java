@@ -24,7 +24,7 @@ public class EcStandardFitnessCleanup implements EcFitness {
         } else {
             overlordScore = (int) Math.min(100, (current.getOverlords() * (1 / Math.max(1, current.supply() - current.supplyUsed))) * 10);
         }
-        for (Unit unit : UnitLibrary.getAllZergUnits()) {
+        for (Unit unit : UnitLibrary.zergUnits) {
             if (unit == UnitLibrary.Overlord) {
                 continue;
             }

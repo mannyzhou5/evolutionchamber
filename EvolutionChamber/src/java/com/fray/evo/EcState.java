@@ -19,11 +19,12 @@ public class EcState implements Serializable
 	{
 		hatcheryTimes.add(new Integer(0));
                 units = new HashMap<Unit, Integer>();
-                for(Unit unit: UnitLibrary.getAllZergUnits()){
-                    units.put(unit, 0);
-                }
+//                Building test = ZergLibrary.Lair;
+//                for(Unit unit: UnitLibrary.zergUnits){
+//                    units.put(unit, 0);
+//                }
                 buildings = new HashMap<Building, Integer>();
-                for(Building building: BuildingLibrary.getAllZergBuildings()){
+                for(Building building: BuildingLibrary.allZergBuildings){
                     buildings.put(building, 0);
                 }
                 upgrades = new HashSet<Upgrade>();
@@ -109,14 +110,13 @@ public class EcState implements Serializable
         s.actionLength = actionLength;
     }
 
-	public int supply()
+        public int supply()
 	{
-		return Math.min((getOverlords() + getOverseers()) * 8 + 2 * bases(), 200);
-	}
-
-        public int supplyClean()
-	{
-		return Math.min((units.get(UnitLibrary.Overlord) + units.get(UnitLibrary.Overseer)) * 8 + 2 * bases(), 200);
+                int overSeers =0;
+                if(units.containsKey(UnitLibrary.Overseer)){
+                    overSeers = units.get(UnitLibrary.Overseer);
+                }
+		return Math.min((units.get(UnitLibrary.Overlord) + overSeers) * 8 + 2 * bases(), 200);
 	}
 
 	public static EcState defaultDestination()
@@ -141,14 +141,30 @@ public class EcState implements Serializable
 		if (s.requiredBases > requiredBases)
 			requiredBases = s.requiredBases;
 
-		for(Unit unit: units.keySet()){
-                    units.put(unit, Math.max(units.get(unit), s.units.get(unit)));
-                }
+                units = unionUnits(units,s.units);
                 for(Building building: buildings.keySet()){
                     buildings.put(building, Math.max(buildings.get(building), s.buildings.get(building)));
                 }
                 upgrades.addAll(s.upgrades);
 	}
+        private HashMap<Unit, Integer> unionUnits(HashMap<Unit, Integer> map, HashMap<Unit,Integer> s){
+            HashMap<Unit, Integer> result = new HashMap<Unit, Integer>();
+            	for(Unit unit: map.keySet()){
+                    int other = 0;
+                    if(s.containsKey(unit)){
+                        other = s.get(unit);
+                    }
+                    result.put(unit, Math.max(map.get(unit), other));
+                }
+                for(Unit unit: s.keySet()){
+                    int other = 0;
+                    if(map.containsKey(unit)){
+                        other = map.get(unit);
+                    }
+                    result.put(unit, Math.max(s.get(unit), other));
+                }
+                return result;
+        }
 
         public boolean isSatisfied(EcState candidate)
 	{
@@ -160,6 +176,9 @@ public class EcState implements Serializable
 		}
 
 		for(Unit unit: units.keySet()){
+                    if(!candidate.units.containsKey(unit)){
+                        return false;
+                    }
                     if(candidate.units.get(unit) < units.get(unit)){
                         return false;
                     }
@@ -533,9 +552,14 @@ public class EcState implements Serializable
             upgrades.add(upgrade);
         }
 
-        public void AddUnits(Unit unit, int number){
-            units.put(unit, units.get(unit)+number);
+    public void AddUnits(Unit unit, int number) {
+        if (units.containsKey(unit)) {
+            units.put(unit, units.get(unit) + number);
+        } else {
+            SetUnits(unit, number);
+
         }
+    }
 
         public void RemoveUnits(Unit unit, int number){
             units.put(unit, units.get(unit)-number);
@@ -557,7 +581,7 @@ public class EcState implements Serializable
         }
 
     void RequireUnit(Unit unit) {
-            if(units.get(unit) <1 ){
+            if(!units.containsKey(unit) || units.get(unit) < 1 ){
                 units.put(unit, 1);
             }
     }
@@ -796,76 +820,120 @@ public class EcState implements Serializable
      * @return the overseers
      */
     public int getOverseers() {
-        return units.get(UnitLibrary.Overseer);
+        if (units.containsKey(UnitLibrary.Overseer)) {
+            return units.get(UnitLibrary.Overseer);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the zerglings
      */
     public int getZerglings() {
-        return units.get(UnitLibrary.Zergling);
+        if (units.containsKey(UnitLibrary.Zergling)) {
+            return units.get(UnitLibrary.Zergling);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the banelings
      */
     public int getBanelings() {
-        return units.get(UnitLibrary.Baneling);
+                if (units.containsKey(UnitLibrary.Baneling)) {
+            return units.get(UnitLibrary.Baneling);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the roaches
      */
     public int getRoaches() {
-        return units.get(UnitLibrary.Roach);
+        if (units.containsKey(UnitLibrary.Roach)) {
+            return units.get(UnitLibrary.Roach);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the mutalisks
      */
     public int getMutalisks() {
-        return units.get(UnitLibrary.Mutalisk);
+                if (units.containsKey(UnitLibrary.Mutalisk)) {
+            return units.get(UnitLibrary.Mutalisk);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the infestors
      */
     public int getInfestors() {
-        return units.get(UnitLibrary.Infestor);
+                if (units.containsKey(UnitLibrary.Infestor)) {
+            return units.get(UnitLibrary.Infestor);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the queens
      */
     public int getQueens() {
-        return units.get(UnitLibrary.Queen);
+                if (units.containsKey(UnitLibrary.Queen)) {
+            return units.get(UnitLibrary.Queen);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the hydralisks
      */
     public int getHydralisks() {
-        return units.get(UnitLibrary.Hydralisk);
+                if (units.containsKey(UnitLibrary.Hydralisk)) {
+            return units.get(UnitLibrary.Hydralisk);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the corruptors
      */
     public int getCorruptors() {
-        return units.get(UnitLibrary.Corruptor);
+                if (units.containsKey(UnitLibrary.Corruptor)) {
+            return units.get(UnitLibrary.Corruptor);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the ultralisks
      */
     public int getUltralisks() {
-        return units.get(UnitLibrary.Ultralisk);
+                if (units.containsKey(UnitLibrary.Ultralisk)) {
+            return units.get(UnitLibrary.Ultralisk);
+        } else {
+            return 0;
+        }
     }
     /**
      * @return the broodlords
      */
     public int getBroodlords() {
-        return units.get(UnitLibrary.Broodlord);
+               if (units.containsKey(UnitLibrary.Broodlord)) {
+            return units.get(UnitLibrary.Broodlord);
+        } else {
+            return 0;
+        }
     }
 
     /**
