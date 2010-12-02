@@ -18,15 +18,9 @@ public class EcActionBuildInfestor extends EcActionBuildUnit implements Serializ
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.infestors += 1;
-	}
-
-	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.infestationPit == 0)
+		if (s.getInfestationPit() == 0)
 			return true;
 		return false;
 	}

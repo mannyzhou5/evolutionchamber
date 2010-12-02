@@ -18,15 +18,9 @@ public class EcActionBuildEvolutionChamber extends EcActionBuildBuilding impleme
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.evolutionChambers += 1;
-	}
-
-	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.evolutionChambers == 3)
+		if (s.getEvolutionChambers() == 3)
 			return true;
 		return super.isInvalid(s);
 	}

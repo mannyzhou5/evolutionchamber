@@ -21,9 +21,9 @@ public class EcActionUpgradeFlyerAttacks1 extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spire == 0)
+		if (s.getSpire() == 0)
 			return true;
-		if (s.flyerAttack1 == true)
+		if (s.isFlyerAttack1() == true)
 			return true;
 		return false;
 	}
@@ -38,7 +38,7 @@ public class EcActionUpgradeFlyerAttacks1 extends EcActionUpgrade
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.spiresInUse == s.spire)
+		if (s.spiresInUse == s.getSpire())
 			return false;
 		return super.isPossible(s);
 	}
@@ -46,7 +46,7 @@ public class EcActionUpgradeFlyerAttacks1 extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.flyerAttack1 = true;
+		superAfterTime(s, e);
 		s.spiresInUse--;
 	}
 

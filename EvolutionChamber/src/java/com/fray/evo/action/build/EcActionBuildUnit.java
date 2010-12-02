@@ -44,7 +44,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 		if (!s.hasSupply(supply))
 			return false;
 		if (consumeLarva)
-			if (s.larva < 1)
+			if (s.getLarva() < 1)
 				return false;
 		return super.isPossibleResources(s);
 	}
@@ -55,7 +55,9 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 		return isPossibleResources(s);
 	}
 	
-	protected abstract void postExecute(EcBuildOrder s, EcEvolver e);
+	protected void postExecute(EcBuildOrder s, EcEvolver e){
+            s.AddUnits((Unit) buildable, 1);
+        }
 
 	protected void preExecute(EcBuildOrder s){}
 

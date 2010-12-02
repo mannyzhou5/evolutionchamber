@@ -17,16 +17,11 @@ public class EcActionBuildSpawningPool extends EcActionBuildBuilding implements 
 		super(BuildingLibrary.SpawningPool);
 	}
 
-	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.spawningPools +=1;
-	}
 
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spawningPools >= 1)
+		if (s.getSpawningPools() >= 1)
 			return true;
 		if(s.supplyUsed < s.settings.minimumPoolSupply)
 			return true;

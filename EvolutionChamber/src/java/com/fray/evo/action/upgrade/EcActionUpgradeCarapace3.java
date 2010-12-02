@@ -22,13 +22,13 @@ public class EcActionUpgradeCarapace3 extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.evolutionChambers == 0)
+		if (s.getEvolutionChambers() == 0)
 			return true;
-		if (s.hives == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
-		if (s.armor2 == false)
+		if (s.isArmor2() == false)
 			return true;
-		if (s.armor3 == true)
+		if (s.isArmor3() == true)
 			return true;
 		return false;
 	}
@@ -43,7 +43,7 @@ public class EcActionUpgradeCarapace3 extends EcActionUpgrade
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.evolutionChambersInUse == s.evolutionChambers)
+		if (s.evolutionChambersInUse == s.getEvolutionChambers())
 			return false;
 		return super.isPossible(s);
 	}
@@ -51,7 +51,7 @@ public class EcActionUpgradeCarapace3 extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.armor3 = true;
+		superAfterTime(s, e);
 		s.evolutionChambersInUse--;
 	}
 
@@ -59,11 +59,6 @@ public class EcActionUpgradeCarapace3 extends EcActionUpgrade
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildEvolutionChamber());
-		l.add(new EcActionBuildHive());
-		l.add(new EcActionUpgradeCarapace2());
-		destination.armor1 = true;
-		destination.armor2 = true;
 		return l;
 	}
 }

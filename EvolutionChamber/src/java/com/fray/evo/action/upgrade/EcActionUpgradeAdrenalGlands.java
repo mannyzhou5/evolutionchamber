@@ -29,9 +29,9 @@ public class EcActionUpgradeAdrenalGlands extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spawningPools - s.spawningPoolsInUse == 0)
+		if (s.getSpawningPools() - s.spawningPoolsInUse == 0)
 			return true;
-		if (s.hives == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
 		return false;
 	}
@@ -39,7 +39,7 @@ public class EcActionUpgradeAdrenalGlands extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.adrenalGlands = true;
+		superAfterTime(s, e);
 		s.spawningPoolsInUse--;
 	}
 

@@ -7,6 +7,7 @@ import java.util.List;
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
+import com.fray.evo.util.UnitLibrary;
 
 public class EcActionExtractorTrick extends EcAction implements Serializable
 {
@@ -14,7 +15,7 @@ public class EcActionExtractorTrick extends EcAction implements Serializable
 	public void execute(final EcBuildOrder s, final EcEvolver e)
 	{
 		s.minerals -= 25;
-		s.drones -= 1;
+		s.RemoveUnits(UnitLibrary.Drone, 1);
 		s.dronesOnMinerals -= 1;
 		s.supplyUsed -= 1;
 		s.extractorsBuilding++;
@@ -26,7 +27,7 @@ public class EcActionExtractorTrick extends EcAction implements Serializable
 				if (e.debug)
 					e.obtained(s," "+messages.getString("finished.extractortrick"));
 				s.minerals += 19;
-				s.drones += 1;
+				s.AddUnits(UnitLibrary.Drone, 1);
 				s.dronesOnMinerals += 1;
 				s.supplyUsed += 1;
 				s.extractorsBuilding--;
@@ -39,7 +40,7 @@ public class EcActionExtractorTrick extends EcAction implements Serializable
 	{
 		if (s.supplyUsed > s.settings.maximumExtractorTrickSupply)
 			return true;
-		if (s.gasExtractors + s.extractorsBuilding >= s.extractors())
+		if (s.getGasExtractors() + s.extractorsBuilding >= s.extractors())
 			return true;
 		if (s.supplyUsed < s.supply() - 1)
 			return true;
@@ -51,7 +52,7 @@ public class EcActionExtractorTrick extends EcAction implements Serializable
 	{
 		if (s.minerals < 75)
 			return false;
-		if (s.drones < 1)
+		if (s.getDrones() < 1)
 			return false;
 		return true;
 	}

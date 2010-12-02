@@ -22,13 +22,13 @@ public class EcActionUpgradeMissile3 extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.evolutionChambers == 0)
+		if (s.getEvolutionChambers() == 0)
 			return true;
-		if (s.hives == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
-		if (s.missile2 == false)
+		if (s.isMissile2() == false)
 			return true;
-		if (s.missile3 == true)
+		if (s.isMissile3() == true)
 			return true;
 		return false;
 	}
@@ -43,7 +43,7 @@ public class EcActionUpgradeMissile3 extends EcActionUpgrade
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.evolutionChambersInUse == s.evolutionChambers)
+		if (s.evolutionChambersInUse == s.getEvolutionChambers())
 			return false;
 		return super.isPossible(s);
 	}
@@ -51,7 +51,7 @@ public class EcActionUpgradeMissile3 extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.missile3 = true;
+		superAfterTime(s, e);
 		s.evolutionChambersInUse--;
 	}
 
@@ -59,11 +59,6 @@ public class EcActionUpgradeMissile3 extends EcActionUpgrade
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildEvolutionChamber());
-		l.add(new EcActionBuildHive());
-		l.add(new EcActionUpgradeMissile2());
-		destination.missile2 = true;
-		destination.missile1 = true;
 		return l;
 	}
 }

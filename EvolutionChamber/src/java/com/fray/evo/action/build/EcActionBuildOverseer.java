@@ -17,17 +17,17 @@ public class EcActionBuildOverseer extends EcActionBuildUnit implements Serializ
 		super(UnitLibrary.Overseer);
 	}
 
-	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
+
+    @Override
+	protected void preExecute(EcBuildOrder s)
 	{
-		s.overlords -= 1;
-		s.overseers += 1;
+		s.RemoveUnits(UnitLibrary.Overlord, 1);
 	}
 
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.lairs == 0 && s.evolvingLairs == 0 && s.hives == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0 && s.evolvingLairs == 0 && s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
 		return false;
 	}
@@ -35,7 +35,7 @@ public class EcActionBuildOverseer extends EcActionBuildUnit implements Serializ
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.overlords < 1)
+		if (s.getOverlords() < 1)
 			return false;
 		return super.isPossible(s);
 	}

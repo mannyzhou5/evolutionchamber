@@ -22,7 +22,7 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 		s.gas -= getGas();
 		if (getConsumes() == UnitLibrary.Drone)
 		{
-			s.drones -= 1;
+			s.RemoveUnits(UnitLibrary.Drone, 1);
 			s.dronesOnMinerals -= 1;
 			s.supplyUsed -= 1;
 		}
@@ -48,11 +48,13 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 	public boolean isPossible(EcBuildOrder s)
 	{
 		if (getConsumes() == UnitLibrary.Drone)
-			if (s.drones < 1)
+			if (s.getDrones() < 1)
 				return false;
 		return isPossibleResources(s);
 	}
 
-	protected abstract void postExecute(EcBuildOrder s, EcEvolver e);
+	protected void postExecute(EcBuildOrder s, EcEvolver e){
+            s.AddBuilding((Building) buildable);
+        };
 
 }

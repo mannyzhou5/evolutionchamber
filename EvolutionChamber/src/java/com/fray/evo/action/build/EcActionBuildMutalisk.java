@@ -18,15 +18,9 @@ public class EcActionBuildMutalisk extends EcActionBuildUnit implements Serializ
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.mutalisks += 1;
-	}
-
-	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spire == 0 && s.evolvingSpires == 0 && s.greaterSpire == 0)
+		if (s.getSpire() == 0 && s.evolvingSpires == 0 && s.getGreaterSpire() == 0)
 			return true;
 		return false;
 	}

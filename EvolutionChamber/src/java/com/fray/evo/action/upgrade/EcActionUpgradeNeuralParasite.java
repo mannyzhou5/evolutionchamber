@@ -29,7 +29,7 @@ public class EcActionUpgradeNeuralParasite extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.infestationPit-s.infestationPitInUse == 0)
+		if (s.getInfestationPit()-s.infestationPitInUse == 0)
 			return true;
 		return false;
 	}
@@ -37,7 +37,7 @@ public class EcActionUpgradeNeuralParasite extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.neuralParasite = true;
+		superAfterTime(s, e);
 		s.infestationPitInUse--;
 	}
 

@@ -8,6 +8,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildHive extends EcActionBuildBuilding implements Serializable
@@ -20,21 +21,21 @@ public class EcActionBuildHive extends EcActionBuildBuilding implements Serializ
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{
-		s.lairs -= 1;
+		s.RemoveBuilding(BuildingLibrary.Lair);
 		s.evolvingLairs += 1;
 	}
 
 	@Override
 	protected void postExecute(EcBuildOrder s, EcEvolver e)
 	{
-		s.hives += 1;
+		s.AddBuilding((Building) buildable);
 		s.evolvingLairs -= 1;
 	}
 
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.lairs < 1)
+		if (s.getLairs() < 1)
 			return false;
 		return super.isPossible(s);
 	}
@@ -42,9 +43,9 @@ public class EcActionBuildHive extends EcActionBuildBuilding implements Serializ
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.lairs == 0)
+		if (s.getLairs() == 0)
 			return true;
-		if (s.infestationPit == 0)
+		if (s.getInfestationPit() == 0)
 			return true;
 		return super.isInvalid(s);
 	}
@@ -53,8 +54,6 @@ public class EcActionBuildHive extends EcActionBuildBuilding implements Serializ
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildInfestationPit());
-		destination.infestationPit = Math.min(1,destination.infestationPit);
 		return l;
 	}
 }

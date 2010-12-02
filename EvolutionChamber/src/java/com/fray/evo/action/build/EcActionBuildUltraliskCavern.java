@@ -16,19 +16,12 @@ public class EcActionBuildUltraliskCavern extends EcActionBuildBuilding implemen
 	{
 		super(BuildingLibrary.UltraliskCavern);
 	}
-
-	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.ultraliskCavern += 1;
-	}
-
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.hives == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
-		if (s.ultraliskCavern == 1)
+		if (s.getUltraliskCavern() == 1)
 			return true;
 		return super.isInvalid(s);
 	}
@@ -37,8 +30,6 @@ public class EcActionBuildUltraliskCavern extends EcActionBuildBuilding implemen
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildHive());
-		destination.hives = Math.max(destination.hives, 1);
 		return l;
 	}
 }

@@ -19,15 +19,9 @@ public class EcActionBuildSporeCrawler extends EcActionBuildBuilding implements 
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.sporeCrawlers += 1;
-	}
-
-	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.evolutionChambers == 0)
+		if (s.getEvolutionChambers() == 0)
 			return true;
 		return false;
 	}

@@ -59,6 +59,9 @@ import com.fray.evo.EcReportable;
 import com.fray.evo.EcState;
 import com.fray.evo.EvolutionChamber;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.UpgradeLibrary;
 
 //TODO: Refactor this monster. - Lomilar
 public class EcSwingX extends JXPanel implements EcReportable
@@ -640,14 +643,14 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.drones = getDigit(e);
+				dest.SetUnits( UnitLibrary.Drone, getDigit(e));
 			}
 
 			@Override
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.drones));
+				c.setText(Integer.toString(dest.getDrones()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.deadline"), new CustomActionListener()
@@ -672,24 +675,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.overlords = getDigit(e);
+				dest.SetUnits( UnitLibrary.Overlord, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.overlords));
+				c.setText(Integer.toString(dest.getOverlords()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.overseers"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.overseers = getDigit(e);
+				dest.SetUnits( UnitLibrary.Overseer, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.overseers));
+				c.setText(Integer.toString(dest.getOverseers()));
 			}
 		});
 		gridy++;
@@ -712,12 +715,12 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.burrow = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Burrow);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.burrow);
+				c.setSelected(dest.isBurrow());
 			}
 		});
 		gridy++;
@@ -725,24 +728,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.queens = getDigit(e);
+				dest.SetUnits( UnitLibrary.Queen, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.queens));
+				c.setText(Integer.toString(dest.getQueens()));
 			}
 		});
 		addCheck(components, messages.getString("waypoint.pneumatizedCarapace"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.pneumatizedCarapace = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.PneumatizedCarapace);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.pneumatizedCarapace);
+				c.setSelected(dest.isPneumatizedCarapace());
 			}
 		});
 		gridy++;
@@ -750,24 +753,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.zerglings = getDigit(e);
+				dest.SetUnits( UnitLibrary.Zergling, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.zerglings));
+				c.setText(Integer.toString(dest.getZerglings()));
 			}
 		});
 		addCheck(components, messages.getString("waypoint.ventralSacs"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.ventralSacs = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.VentralSacs);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.ventralSacs);
+				c.setSelected(dest.isVentralSacs());
 			}
 		});
 		gridy++;
@@ -775,24 +778,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.metabolicBoost = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.MetabolicBoost);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.metabolicBoost);
+				c.setSelected(dest.isMetabolicBoost());
 			}
 		});
 		addCheck(components, messages.getString("waypoint.adrenalGlands"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.adrenalGlands = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.AdrenalGlands);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.adrenalGlands);
+				c.setSelected(dest.isAdrenalGlands());
 			}
 		});
 		gridy++;
@@ -800,24 +803,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.banelings = getDigit(e);
+				dest.SetUnits( UnitLibrary.Baneling, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.banelings));
+				c.setText(Integer.toString(dest.getBanelings()));
 			}
 		});
 		addCheck(components, messages.getString("waypoint.centrifugalHooks"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.centrifugalHooks = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.CentrifugalHooks);;
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.centrifugalHooks);
+				c.setSelected(dest.isCentrifugalHooks());
 			}
 		});
 		gridy++;
@@ -825,13 +828,13 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.roaches = getDigit(e);
+				dest.SetUnits( UnitLibrary.Roach, getDigit(e));
 
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.roaches));
+				c.setText(Integer.toString(dest.getRoaches()));
 			}
 		});
 		gridy++;
@@ -839,24 +842,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.glialReconstitution = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.GlialReconstitution);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.glialReconstitution);
+				c.setSelected(dest.isGlialReconstitution());
 			}
 		});
 		addCheck(components, messages.getString("waypoint.tunnelingClaws"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.tunnelingClaws = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.TunnelingClaws);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.tunnelingClaws);
+				c.setSelected(dest.isTunnelingClaws());
 			}
 		});
 		gridy++;
@@ -864,24 +867,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.hydralisks = getDigit(e);
+				dest.SetUnits( UnitLibrary.Hydralisk, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.hydralisks));
+				c.setText(Integer.toString(dest.getHydralisks()));
 			}
 		});
 		addCheck(components, messages.getString("waypoint.groovedSpines"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.groovedSpines = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.GroovedSpines);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.groovedSpines);
+				c.setSelected(dest.isGroovedSpines());
 			}
 		});
 		gridy++;
@@ -889,12 +892,12 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.infestors = getDigit(e);
+				dest.SetUnits( UnitLibrary.Infestor, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.infestors));
+				c.setText(Integer.toString(dest.getInfestors()));
 			}
 		});
 		gridy++;
@@ -902,24 +905,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.neuralParasite = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.NeuralParasite);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.neuralParasite);
+				c.setSelected(dest.isNeuralParasite());
 			}
 		});
 		addCheck(components, messages.getString("waypoint.pathogenGlands"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.pathogenGlands = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.PathogenGlands);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.pathogenGlands);
+				c.setSelected(dest.isPathogenGlands());
 			}
 		});
 		gridy++;
@@ -927,12 +930,12 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.mutalisks = getDigit(e);
+				dest.SetUnits( UnitLibrary.Mutalisk, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.mutalisks));
+				c.setText(Integer.toString(dest.getMutalisks()));
 			}
 		});
 		gridy++;
@@ -940,24 +943,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.ultralisks = getDigit(e);
+				dest.SetUnits( UnitLibrary.Ultralisk, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.ultralisks));
+				c.setText(Integer.toString(dest.getUltralisks()));
 			}
 		});
 		addCheck(components, messages.getString("waypoint.chitinousPlating"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.chitinousPlating = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.ChitinousPlating);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.chitinousPlating);
+				c.setSelected(dest.isChitinousPlating());
 			}
 		});
 		gridy++;
@@ -965,24 +968,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.corruptors = getDigit(e);
+				dest.SetUnits( UnitLibrary.Corruptor, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.corruptors));
+				c.setText(Integer.toString(dest.getCorruptors()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.broodlords"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.broodlords = getDigit(e);
+				dest.SetUnits( UnitLibrary.Broodlord, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.broodlords));
+				c.setText(Integer.toString(dest.getBroodlords()));
 			}
 		});
 		gridy++;
@@ -990,36 +993,36 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.melee1 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Melee1);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.melee1);
+				c.setSelected(dest.isMelee1());
 			}
 		});
 		addCheck(components, "+2", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.melee2 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Melee2);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.melee2);
+				c.setSelected(dest.isMelee2());
 			}
 		});
 		addCheck(components, "+3", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.melee3 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Melee3);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.melee3);
+				c.setSelected(dest.isMelee3());
 			}
 		});
 		gridy++;
@@ -1027,36 +1030,36 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.missile1 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Missile1);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.missile1);
+				c.setSelected(dest.isMissile1());
 			}
 		});
 		addCheck(components, "+2", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.missile2 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Missile2);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.missile2);
+				c.setSelected(dest.isMissile2());
 			}
 		});
 		addCheck(components, "+3", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.missile3 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Missile3);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.missile3);
+				c.setSelected(dest.isMissile3());
 			}
 		});
 		gridy++;
@@ -1064,36 +1067,36 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.armor1 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Armor1);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.armor1);
+				c.setSelected(dest.isArmor1());
 			}
 		});
 		addCheck(components, "+2", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.armor2 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Armor2);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.armor2);
+				c.setSelected(dest.isArmor2());
 			}
 		});
 		addCheck(components, "+3", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.armor3 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Armor3);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.armor3);
+				c.setSelected(dest.isArmor3());
 			}
 		});
 		gridy++;
@@ -1101,36 +1104,36 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.flyerAttack1 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerAttacks1);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.flyerAttack1);
+				c.setSelected(dest.isFlyerAttack1());
 			}
 		});
 		addCheck(components, "+2", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.flyerAttack2 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerAttacks2);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.flyerAttack2);
+				c.setSelected(dest.isFlyerAttack2());
 			}
 		});
 		addCheck(components, "+3", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.flyerAttack3 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerAttacks3);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.flyerAttack3);
+				c.setSelected(dest.isFlyerAttack3());
 			}
 		});
 		gridy++;
@@ -1138,36 +1141,36 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.flyerArmor1 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerArmor1);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.flyerArmor1);
+				c.setSelected(dest.isFlyerArmor1());
 			}
 		});
 		addCheck(components, "+2", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.flyerArmor2 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerArmor2);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.flyerArmor2);
+				c.setSelected(dest.isFlyerArmor2());
 			}
 		});
 		addCheck(components, "+3", new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.flyerArmor3 = getTrue(e);
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerArmor3);
 			}
 			void reverse(Object o)
 			{
 				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.flyerArmor3);
+				c.setSelected(dest.isFlyerArmor3());
 			}
 		});
 		gridy++;
@@ -1187,12 +1190,12 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.lairs = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.Lair, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.lairs));
+				c.setText(Integer.toString(dest.getLairs()));
 			}
 		});
 		gridy++;
@@ -1200,24 +1203,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.hives = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.Hive, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.hives));
+				c.setText(Integer.toString(dest.getHives()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.gasExtractors"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.gasExtractors = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.Extractor, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.gasExtractors));
+				c.setText(Integer.toString(dest.getGasExtractors()));
 			}
 		});
 		gridy++;
@@ -1225,12 +1228,12 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.evolutionChambers = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.EvolutionChamber, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.evolutionChambers));
+				c.setText(Integer.toString(dest.getEvolutionChambers()));
 			}
 		});
 		gridy++;
@@ -1238,24 +1241,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.spineCrawlers = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.SpineCrawler, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.spineCrawlers));
+				c.setText(Integer.toString(dest.getSpineCrawlers()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.sporeCrawlers"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.sporeCrawlers = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.SporeCrawler, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.sporeCrawlers));
+				c.setText(Integer.toString(dest.getSporeCrawlers()));
 			}
 		});
 		gridy++;
@@ -1263,24 +1266,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.spawningPools = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.SpawningPool, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.spawningPools));
+				c.setText(Integer.toString(dest.getSpawningPools()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.banelingNests"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.banelingNest = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.BanelingNest, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.banelingNest));
+				c.setText(Integer.toString(dest.getBanelingNest()));
 			}
 		});
 		gridy++;
@@ -1288,24 +1291,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.roachWarrens = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.RoachWarren, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.roachWarrens));
+				c.setText(Integer.toString(dest.getRoachWarrens()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.hydraliskDens"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.hydraliskDen = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.HydraliskDen, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.hydraliskDen));
+				c.setText(Integer.toString(dest.getHydraliskDen()));
 			}
 		});
 		gridy++;
@@ -1313,24 +1316,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.infestationPit = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.InfestationPit, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.infestationPit));
+				c.setText(Integer.toString(dest.getInfestationPit()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.spires"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.spire = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.Spire, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.spire));
+				c.setText(Integer.toString(dest.getSpire()));
 			}
 		});
 		gridy++;
@@ -1338,24 +1341,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.nydusNetwork = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.NydusNetwork, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.nydusNetwork));
+				c.setText(Integer.toString(dest.getNydusNetwork()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.nydusWorms"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.nydusWorm = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.NydusWorm, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.nydusWorm));
+				c.setText(Integer.toString(dest.getNydusWorm()));
 			}
 		});
 		gridy++;
@@ -1363,24 +1366,24 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.ultraliskCavern = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.UltraliskCavern, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.ultraliskCavern));
+				c.setText(Integer.toString(dest.getUltraliskCavern()));
 			}
 		});
 		addInput(components, messages.getString("waypoint.greaterSpires"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.greaterSpire = getDigit(e);
+				dest.SetBuilding(BuildingLibrary.GreaterSpire, getDigit(e));
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.greaterSpire));
+				c.setText(Integer.toString(dest.getGreaterSpire()));
 			}
 		});
 		gridy++;

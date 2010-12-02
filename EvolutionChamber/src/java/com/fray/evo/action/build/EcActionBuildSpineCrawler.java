@@ -18,16 +18,11 @@ public class EcActionBuildSpineCrawler extends EcActionBuildBuilding implements 
 		super(BuildingLibrary.SpineCrawler);
 	}
 
-	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.spineCrawlers += 1;
-	}
 	
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spawningPools == 0)
+		if (s.getSpawningPools() == 0)
 			return true;
 		return false;
 	}

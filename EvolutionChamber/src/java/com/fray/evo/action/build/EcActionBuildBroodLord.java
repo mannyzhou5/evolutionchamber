@@ -8,6 +8,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildBroodLord extends EcActionBuildUnit implements Serializable
@@ -17,19 +18,15 @@ public class EcActionBuildBroodLord extends EcActionBuildUnit implements Seriali
 		super(UnitLibrary.Broodlord);
 	}
 
+    @Override
 	protected void preExecute(final EcBuildOrder s)
 	{
-		s.corruptors -= 1;
-	}
-
-	protected void postExecute(final EcBuildOrder s, final EcEvolver e)
-	{
-		s.broodlords += 1;
+		s.RemoveUnits((Unit)buildable, 1);
 	}
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.corruptors < 1)
+		if (s.getCorruptors() < 1)
 			return false;
 		return isPossibleResources(s);
 	}
@@ -37,9 +34,9 @@ public class EcActionBuildBroodLord extends EcActionBuildUnit implements Seriali
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.hives == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
-		if (s.greaterSpire == 0)
+		if (s.getGreaterSpire() == 0)
 			return true;
 		if (!s.hasSupply(2))
 			return true;
@@ -50,10 +47,6 @@ public class EcActionBuildBroodLord extends EcActionBuildUnit implements Seriali
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildGreaterSpire());
-		l.add(new EcActionBuildCorruptor());
-		destination.hives = Math.max(destination.hives,1);
-		destination.greaterSpire = Math.max(destination.greaterSpire,1);
 		return l;
 	}
 }

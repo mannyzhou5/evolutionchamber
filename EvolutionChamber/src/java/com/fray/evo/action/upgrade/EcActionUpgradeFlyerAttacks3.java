@@ -22,13 +22,13 @@ public class EcActionUpgradeFlyerAttacks3 extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spire == 0)
+		if (s.getSpire() == 0)
 			return true;
-		if (s.hives == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
-		if (s.flyerAttack2 == false)
+		if (s.isFlyerAttack2() == false)
 			return true;
-		if (s.flyerAttack3 == true)
+		if (s.isFlyerAttack3() == true)
 			return true;
 		return false;
 	}
@@ -43,7 +43,7 @@ public class EcActionUpgradeFlyerAttacks3 extends EcActionUpgrade
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.spiresInUse == s.spire)
+		if (s.spiresInUse == s.getSpire())
 			return false;
 		return super.isPossible(s);
 	}
@@ -51,7 +51,7 @@ public class EcActionUpgradeFlyerAttacks3 extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.flyerAttack3 = true;
+		superAfterTime(s, e);
 		s.spiresInUse--;
 	}
 
@@ -59,11 +59,6 @@ public class EcActionUpgradeFlyerAttacks3 extends EcActionUpgrade
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildSpire());
-		l.add(new EcActionBuildHive());
-		l.add(new EcActionUpgradeFlyerAttacks2());
-		destination.flyerAttack1 = true;
-		destination.flyerAttack2 = true;
 		return l;
 	}
 }

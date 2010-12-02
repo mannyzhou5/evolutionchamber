@@ -28,7 +28,7 @@ public class EcActionUpgradePneumatizedCarapace extends EcActionUpgrade
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.hatcheries == 0 && s.lairs == 0 && s.hives == 0)
+		if (s.getHatcheries() == 0 && s.getLairs() == 0 && s.getHives() == 0)
 			return false;
 		return super.isPossible(s);
 	};
@@ -36,7 +36,7 @@ public class EcActionUpgradePneumatizedCarapace extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.lairs == 0 && s.evolvingLairs == 0 && s.hives == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0 && s.evolvingLairs == 0 && s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
 		return false;
 	}
@@ -44,7 +44,7 @@ public class EcActionUpgradePneumatizedCarapace extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.pneumatizedCarapace = true;
+		superAfterTime(s, e);
 	}
 
 	@Override

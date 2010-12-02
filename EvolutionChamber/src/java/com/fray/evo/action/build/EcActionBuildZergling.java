@@ -9,6 +9,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildZergling extends EcActionBuildUnit implements Serializable
@@ -21,7 +22,7 @@ public class EcActionBuildZergling extends EcActionBuildUnit implements Serializ
 	@Override
 	protected void postExecute(EcBuildOrder s, EcEvolver e)
 	{
-		s.zerglings += 2;
+		s.AddUnits((Unit) buildable, 2);
 
 	}
 
@@ -35,7 +36,7 @@ public class EcActionBuildZergling extends EcActionBuildUnit implements Serializ
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spawningPools == 0)
+		if (s.getSpawningPools() == 0)
 			return true;
 		if (s.minerals >= 50 && !s.hasSupply(1))
 			return true;

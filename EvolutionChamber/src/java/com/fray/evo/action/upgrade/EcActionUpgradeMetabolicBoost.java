@@ -30,7 +30,7 @@ public class EcActionUpgradeMetabolicBoost extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spawningPools-s.spawningPoolsInUse == 0)
+		if (s.getSpawningPools()-s.spawningPoolsInUse == 0)
 			return true;
 		return false;
 	}
@@ -38,7 +38,7 @@ public class EcActionUpgradeMetabolicBoost extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.metabolicBoost = true;
+		superAfterTime(s, e);
 		s.spawningPoolsInUse--;
 	}
 

@@ -17,15 +17,10 @@ public class EcActionBuildCorruptor extends EcActionBuildUnit implements Seriali
 		super(UnitLibrary.Corruptor);
 	}
 
-	protected void postExecute(final EcBuildOrder s, final EcEvolver e)
-	{
-		s.corruptors += 1;
-	}
-	
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spire == 0 && s.greaterSpire == 0 && s.evolvingSpires == 0)
+		if (s.getSpire() == 0 && s.getGreaterSpire() == 0 && s.evolvingSpires == 0)
 			return true;
 		return false;
 	}

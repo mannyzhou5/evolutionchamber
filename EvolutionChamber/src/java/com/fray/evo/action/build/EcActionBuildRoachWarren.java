@@ -18,17 +18,11 @@ public class EcActionBuildRoachWarren extends EcActionBuildBuilding implements S
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.roachWarrens += 1;
-	}
-
-	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spawningPools == 0)
+		if (s.getSpawningPools() == 0)
 			return true;
-		if (s.roachWarrens >= 1)
+		if (s.getRoachWarrens() >= 1)
 			return true;
 		return false;
 	}
@@ -37,8 +31,6 @@ public class EcActionBuildRoachWarren extends EcActionBuildBuilding implements S
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildSpawningPool());
-		destination.spawningPools = Math.min(destination.spawningPools, 1);
 		return l;
 	}
 

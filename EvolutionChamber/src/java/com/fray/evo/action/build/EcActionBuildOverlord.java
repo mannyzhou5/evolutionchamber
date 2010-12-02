@@ -17,11 +17,6 @@ public class EcActionBuildOverlord extends EcActionBuildUnit implements Serializ
 		super(UnitLibrary.Overlord);
 	}
 
-	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.overlords += 1;
-	}
 
 	@Override
 	public List<EcAction> requirements(EcState destination)

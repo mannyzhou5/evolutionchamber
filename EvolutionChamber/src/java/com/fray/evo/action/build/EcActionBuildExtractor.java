@@ -10,6 +10,7 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.EcActionMineGas;
 import com.fray.evo.action.EcActionMineMineral;
+import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildExtractor extends EcActionBuildBuilding implements Serializable
@@ -30,7 +31,7 @@ public class EcActionBuildExtractor extends EcActionBuildBuilding implements Ser
 	{
 		if (s.extractorsBuilding == 0)
 			throw new RuntimeException("wtf?");
-		s.gasExtractors += 1;
+		s.AddBuilding((Building) buildable);
 		if (s.settings.pullWorkersFromGas == false)
 		{
 			s.dronesOnMinerals -= 3;
@@ -42,7 +43,7 @@ public class EcActionBuildExtractor extends EcActionBuildBuilding implements Ser
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.gasExtractors + s.extractorsBuilding >= s.extractors())
+		if (s.getGasExtractors() + s.extractorsBuilding >= s.extractors())
 			return true;
 		if (s.supplyUsed < s.settings.minimumExtractorSupply)
 			return true;

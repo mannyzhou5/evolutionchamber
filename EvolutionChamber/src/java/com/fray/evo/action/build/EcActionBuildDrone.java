@@ -8,6 +8,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildDrone extends EcActionBuildUnit implements Serializable
@@ -20,14 +21,14 @@ public class EcActionBuildDrone extends EcActionBuildUnit implements Serializabl
 	@Override
 	protected void postExecute(final EcBuildOrder s, final EcEvolver e)
 	{
-		s.drones += 1;
+		s.AddUnits((Unit) buildable, 1);
 		s.dronesGoingOnMinerals += 1;
 		s.addFutureAction(2, new Runnable()
 		{
 			@Override
 			public void run()
 			{
-				if (s.droneIsScouting == false && s.drones >= e.getDestination().scoutDrone
+				if (s.droneIsScouting == false && s.getDrones() >= e.getDestination().scoutDrone
 						&& e.getDestination().scoutDrone != 0)
 				{
 					s.droneIsScouting = true;

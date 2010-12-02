@@ -21,7 +21,7 @@ public class EcActionUpgradeChitinousPlating extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.ultraliskCavern == 0)
+		if (s.getUltraliskCavern() == 0)
 			return true;
 		return false;
 	}
@@ -29,7 +29,7 @@ public class EcActionUpgradeChitinousPlating extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.chitinousPlating = true;
+		superAfterTime(s, e);
 	}
 
 	@Override

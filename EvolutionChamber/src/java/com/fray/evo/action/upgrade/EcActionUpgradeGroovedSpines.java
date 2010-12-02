@@ -21,7 +21,7 @@ public class EcActionUpgradeGroovedSpines extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.hydraliskDen == 0)
+		if (s.getHydraliskDen() == 0)
 			return true;
 		return false;
 	}
@@ -29,7 +29,7 @@ public class EcActionUpgradeGroovedSpines extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.groovedSpines = true;
+		superAfterTime(s, e);
 	}
 
 	@Override

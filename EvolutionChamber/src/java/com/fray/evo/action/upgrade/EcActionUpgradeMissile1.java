@@ -22,9 +22,9 @@ public class EcActionUpgradeMissile1 extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.evolutionChambers == 0)
+		if (s.getEvolutionChambers() == 0)
 			return true;
-		if (s.missile1 == true)
+		if (s.isMissile1() == true)
 			return true;
 		return false;
 	}
@@ -39,7 +39,7 @@ public class EcActionUpgradeMissile1 extends EcActionUpgrade
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.evolutionChambersInUse == s.evolutionChambers)
+		if (s.evolutionChambersInUse == s.getEvolutionChambers())
 			return false;
 		return super.isPossible(s);
 	}
@@ -47,7 +47,7 @@ public class EcActionUpgradeMissile1 extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.missile1 = true;
+		superAfterTime(s, e);
 		s.evolutionChambersInUse--;
 	}
 

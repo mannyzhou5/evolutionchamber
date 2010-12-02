@@ -22,13 +22,13 @@ public class EcActionUpgradeFlyerArmor3 extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spire == 0)
+		if (s.getSpire() == 0)
 			return true;
-		if (s.hives == 0)
+		if (s.getHives() == 0)
 			return true;
-		if (s.flyerArmor2 == false)
+		if (s.isFlyerArmor2() == false)
 			return true;
-		if (s.flyerArmor3 == true)
+		if (s.isFlyerArmor3() == true)
 			return true;
 		return false;
 	}
@@ -43,7 +43,7 @@ public class EcActionUpgradeFlyerArmor3 extends EcActionUpgrade
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.spiresInUse == s.spire)
+		if (s.spiresInUse == s.getSpire())
 			return false;
 		return super.isPossible(s);
 	}
@@ -51,7 +51,7 @@ public class EcActionUpgradeFlyerArmor3 extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.flyerArmor3 = true;
+		superAfterTime(s, e);
 		s.spiresInUse--;
 	}
 
@@ -59,11 +59,6 @@ public class EcActionUpgradeFlyerArmor3 extends EcActionUpgrade
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildSpire());
-		l.add(new EcActionBuildHive());
-		l.add(new EcActionUpgradeFlyerArmor2());
-		destination.flyerArmor1 = true;
-		destination.flyerArmor2 = true;
 		return l;
 	}
 }

@@ -9,7 +9,7 @@ import com.fray.evo.util.*;
 
 public abstract class EcActionUpgrade extends EcAction implements Serializable {
 
-    private Upgrade upgrade;
+    protected  Upgrade upgrade;
 
     public EcActionUpgrade() {
         init();
@@ -49,6 +49,9 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
     }
 
     public abstract void afterTime(EcBuildOrder s, EcEvolver e);
+    protected void superAfterTime(EcBuildOrder s, EcEvolver e){
+        s.AddUpgrade(upgrade);
+    };
 
     public int getMinerals() {
         return upgrade.getMinerals();

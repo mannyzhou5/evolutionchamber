@@ -30,9 +30,9 @@ public class EcActionUpgradeTunnelingClaws extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.roachWarrens-s.roachWarrensInUse == 0)
+		if (s.getRoachWarrens()-s.roachWarrensInUse == 0)
 			return true;
-		if (s.lairs == 0 && s.evolvingLairs == 0 && s.hives == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0 && s.evolvingLairs == 0 && s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
 		return false;
 	}
@@ -40,7 +40,7 @@ public class EcActionUpgradeTunnelingClaws extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.tunnelingClaws = true;
+		superAfterTime(s, e);
 		s.roachWarrensInUse--;
 	}
 

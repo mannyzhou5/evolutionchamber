@@ -8,6 +8,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildGreaterSpire extends EcActionBuildBuilding implements Serializable
@@ -21,20 +22,20 @@ public class EcActionBuildGreaterSpire extends EcActionBuildBuilding implements 
 	protected void preExecute(EcBuildOrder s)
 	{
 		s.evolvingSpires += 1;
-		s.spire -= 1;
+		s.RemoveBuilding((Building) buildable);
 	}
 	
 	@Override
 	protected void postExecute(EcBuildOrder s, EcEvolver e)
 	{
-		s.greaterSpire += 1;
+		s.AddBuilding((Building) buildable);
 		s.evolvingSpires -= 1;
 	}
 	
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.spire < 1)
+		if (s.getSpire() < 1)
 			return false;
 		return super.isPossible(s);
 	}
@@ -42,11 +43,11 @@ public class EcActionBuildGreaterSpire extends EcActionBuildBuilding implements 
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.hives == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
-		if (s.spire == 0)
+		if (s.getSpire() == 0)
 			return true;
-		if (s.greaterSpire == 1)
+		if (s.getGreaterSpire() == 1)
 			return true;
 		return super.isInvalid(s);
 	}

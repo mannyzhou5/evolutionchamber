@@ -9,71 +9,71 @@ public class EcStandardFitness implements EcFitness {
 		EcState c = current;
 		int overlordScore;
 		
-		if (c.overlords > destination.overlords)
-			overlordScore = (int)Math.min(100, (destination.overlords * (1 / Math.max(1, destination.supply() - destination.supplyUsed))) * 10);
+		if (c.getOverlords() > destination.getOverlords())
+			overlordScore = (int)Math.min(100, (destination.getOverlords() * (1 / Math.max(1, destination.supply() - destination.supplyUsed))) * 10);
 		else
-			overlordScore = (int)Math.min(100, (c.overlords * (1 / Math.max(1, c.supply() - c.supplyUsed))) * 10);
+			overlordScore = (int)Math.min(100, (c.getOverlords() * (1 / Math.max(1, c.supply() - c.supplyUsed))) * 10);
 		
-		score = augmentScore(score, c.zerglings, destination.zerglings, 25, .25, waypoint);
-		score = augmentScore(score, c.banelings, destination.banelings, 75, .75, waypoint);
-		score = augmentScore(score, c.roaches, destination.roaches, 100, 1.0, waypoint);
-		score = augmentScore(score, c.mutalisks, destination.mutalisks, 200, 2.0, waypoint);
-		score = augmentScore(score, c.queens, destination.queens, 150, 1.5, waypoint);
-		score = augmentScore(score, c.hydralisks, destination.hydralisks, 150, 1.5, waypoint);
-		score = augmentScore(score, c.infestors, destination.infestors, 250, 2.5, waypoint);
-		score = augmentScore(score, c.corruptors, destination.corruptors, 250, 2.5, waypoint);
-		score = augmentScore(score, c.ultralisks, destination.ultralisks, 500, 5.0, waypoint);
-		score = augmentScore(score, c.broodlords, destination.broodlords, 400, 4.0, waypoint);
+		score = augmentScore(score, c.getZerglings(), destination.getZerglings(), 25, .25, waypoint);
+		score = augmentScore(score, c.getBanelings(), destination.getBanelings(), 75, .75, waypoint);
+		score = augmentScore(score, c.getRoaches(), destination.getRoaches(), 100, 1.0, waypoint);
+		score = augmentScore(score, c.getMutalisks(), destination.getMutalisks(), 200, 2.0, waypoint);
+		score = augmentScore(score, c.getQueens(), destination.getQueens(), 150, 1.5, waypoint);
+		score = augmentScore(score, c.getHydralisks(), destination.getHydralisks(), 150, 1.5, waypoint);
+		score = augmentScore(score, c.getInfestors(), destination.getInfestors(), 250, 2.5, waypoint);
+		score = augmentScore(score, c.getCorruptors(), destination.getCorruptors(), 250, 2.5, waypoint);
+		score = augmentScore(score, c.getUltralisks(), destination.getUltralisks(), 500, 5.0, waypoint);
+		score = augmentScore(score, c.getBroodlords(), destination.getBroodlords(), 400, 4.0, waypoint);
 		
-		score = augmentScore(score, c.overlords, destination.overlords, overlordScore, overlordScore / 100.0, waypoint);
+		score = augmentScore(score, c.getOverlords(), destination.getOverlords(), overlordScore, overlordScore / 100.0, waypoint);
 		
-		score = augmentScore(score, c.overseers, destination.overseers, 250, 2.5, waypoint);
-		score = augmentScore(score, c.gasExtractors, destination.gasExtractors, 25, .25, waypoint);
+		score = augmentScore(score, c.getOverseers(), destination.getOverseers(), 250, 2.5, waypoint);
+		score = augmentScore(score, c.getGasExtractors(), destination.getGasExtractors(), 25, .25, waypoint);
 
-		score = augmentScore(score, c.hatcheries, destination.hatcheries, 300, 3, waypoint);
-		score = augmentDropoffScore(score, c.lairs, destination.lairs, 550, 5.5, waypoint);
-		score = augmentDropoffScore(score, c.hives, destination.hives, 900, 9, waypoint);
-		score = augmentDropoffScore(score, c.spawningPools, destination.spawningPools, 200, 2, waypoint);
-		score = augmentDropoffScore(score, c.roachWarrens, destination.roachWarrens, 150, 1.5, waypoint);
-		score = augmentDropoffScore(score, c.hydraliskDen, destination.hydraliskDen, 200, 2, waypoint);
-		score = augmentDropoffScore(score, c.banelingNest, destination.banelingNest, 150, 1.5, waypoint);
-		score = augmentDropoffScore(score, c.greaterSpire, destination.greaterSpire, 650, 6.5, waypoint);
-		score = augmentDropoffScore(score, c.ultraliskCavern, destination.ultraliskCavern, 350, 3.5, waypoint);
-		score = augmentDropoffScore(score, c.spire, destination.spire, 400, 4, waypoint);
-		score = augmentDropoffScore(score, c.infestationPit, destination.infestationPit, 200, 2.0, waypoint);
-		score = augmentDropoffScore(score, c.evolutionChambers, destination.evolutionChambers, 75, 0.75, waypoint);
-		score = augmentScore(score, c.spineCrawlers, destination.spineCrawlers, 100, 1.00, waypoint);
-		score = augmentScore(score, c.sporeCrawlers, destination.sporeCrawlers, 75, .75, waypoint);
-		score = augmentDropoffScore(score, c.nydusNetwork, destination.nydusNetwork, 350, 3.00, waypoint);
-		score = augmentScore(score, c.nydusWorm, destination.nydusWorm, 200, 2.00, waypoint);
+		score = augmentScore(score, c.getHatcheries(), destination.getHatcheries(), 300, 3, waypoint);
+		score = augmentDropoffScore(score, c.getLairs(), destination.getLairs(), 550, 5.5, waypoint);
+		score = augmentDropoffScore(score, c.getHives(), destination.getHives(), 900, 9, waypoint);
+		score = augmentDropoffScore(score, c.getSpawningPools(), destination.getSpawningPools(), 200, 2, waypoint);
+		score = augmentDropoffScore(score, c.getRoachWarrens(), destination.getRoachWarrens(), 150, 1.5, waypoint);
+		score = augmentDropoffScore(score, c.getHydraliskDen(), destination.getHydraliskDen(), 200, 2, waypoint);
+		score = augmentDropoffScore(score, c.getBanelingNest(), destination.getBanelingNest(), 150, 1.5, waypoint);
+		score = augmentDropoffScore(score, c.getGreaterSpire(), destination.getGreaterSpire(), 650, 6.5, waypoint);
+		score = augmentDropoffScore(score, c.getUltraliskCavern(), destination.getUltraliskCavern(), 350, 3.5, waypoint);
+		score = augmentDropoffScore(score, c.getSpire(), destination.getSpire(), 400, 4, waypoint);
+		score = augmentDropoffScore(score, c.getInfestationPit(), destination.getInfestationPit(), 200, 2.0, waypoint);
+		score = augmentDropoffScore(score, c.getEvolutionChambers(), destination.getEvolutionChambers(), 75, 0.75, waypoint);
+		score = augmentScore(score, c.getSpineCrawlers(), destination.getSpineCrawlers(), 100, 1.00, waypoint);
+		score = augmentScore(score, c.getSporeCrawlers(), destination.getSporeCrawlers(), 75, .75, waypoint);
+		score = augmentDropoffScore(score, c.getNydusNetwork(), destination.getNydusNetwork(), 350, 3.00, waypoint);
+		score = augmentScore(score, c.getNydusWorm(), destination.getNydusWorm(), 200, 2.00, waypoint);
 
-		score = augmentScore(score, c.metabolicBoost, destination.metabolicBoost, 200, 2.0, waypoint);
-		score = augmentScore(score, c.adrenalGlands, destination.adrenalGlands, 400, 4.0, waypoint);
-		score = augmentScore(score, c.glialReconstitution, destination.glialReconstitution, 200, 2.0, waypoint);
-		score = augmentScore(score, c.tunnelingClaws, destination.tunnelingClaws, 300, 3.0, waypoint);
-		score = augmentScore(score, c.burrow, destination.burrow, 200, 2.0, waypoint);
-		score = augmentScore(score, c.pneumatizedCarapace, destination.pneumatizedCarapace, 200, 2.0, waypoint);
-		score = augmentScore(score, c.ventralSacs, destination.ventralSacs, 400, 4.0, waypoint);
-		score = augmentScore(score, c.centrifugalHooks, destination.centrifugalHooks, 300, 3.0, waypoint);
-		score = augmentScore(score, c.melee1, destination.melee1, 200, 2.0, waypoint);
-		score = augmentScore(score, c.melee2, destination.melee2, 300, 3.0, waypoint);
-		score = augmentScore(score, c.melee3, destination.melee3, 400, 4.0, waypoint);
-		score = augmentScore(score, c.missile1, destination.missile1, 200, 2.0, waypoint);
-		score = augmentScore(score, c.missile2, destination.missile2, 300, 3.0, waypoint);
-		score = augmentScore(score, c.missile3, destination.missile3, 400, 4.0, waypoint);
-		score = augmentScore(score, c.armor1, destination.armor1, 200, 3.0, waypoint);
-		score = augmentScore(score, c.armor2, destination.armor2, 300, 3.0, waypoint);
-		score = augmentScore(score, c.armor3, destination.armor3, 400, 3.0, waypoint);
-		score = augmentScore(score, c.groovedSpines, destination.groovedSpines, 300, 3.0, waypoint);
-		score = augmentScore(score, c.neuralParasite, destination.neuralParasite, 300, 3.0, waypoint);
-		score = augmentScore(score, c.pathogenGlands, destination.pathogenGlands, 300, 3.0, waypoint);
-		score = augmentScore(score, c.flyerAttack1, destination.flyerAttack1, 200, 2.0, waypoint);
-		score = augmentScore(score, c.flyerAttack2, destination.flyerAttack2, 350, 3.5, waypoint);
-		score = augmentScore(score, c.flyerAttack3, destination.flyerAttack3, 500, 5.0, waypoint);
-		score = augmentScore(score, c.flyerArmor1, destination.flyerArmor1, 300, 3.0, waypoint);
-		score = augmentScore(score, c.flyerArmor2, destination.flyerArmor2, 450, 4.5, waypoint);
-		score = augmentScore(score, c.flyerArmor3, destination.flyerArmor3, 600, 6.0, waypoint);
-		score = augmentScore(score, c.chitinousPlating, destination.chitinousPlating, 300, 3.0, waypoint);
+		score = augmentScore(score, c.isMetabolicBoost(), destination.isMetabolicBoost(), 200, 2.0, waypoint);
+		score = augmentScore(score, c.isAdrenalGlands(), destination.isAdrenalGlands(), 400, 4.0, waypoint);
+		score = augmentScore(score, c.isGlialReconstitution(), destination.isGlialReconstitution(), 200, 2.0, waypoint);
+		score = augmentScore(score, c.isTunnelingClaws(), destination.isTunnelingClaws(), 300, 3.0, waypoint);
+		score = augmentScore(score, c.isBurrow(), destination.isBurrow(), 200, 2.0, waypoint);
+		score = augmentScore(score, c.isPneumatizedCarapace(), destination.isPneumatizedCarapace(), 200, 2.0, waypoint);
+		score = augmentScore(score, c.isVentralSacs(), destination.isVentralSacs(), 400, 4.0, waypoint);
+		score = augmentScore(score, c.isCentrifugalHooks(), destination.isCentrifugalHooks(), 300, 3.0, waypoint);
+		score = augmentScore(score, c.isMelee1(), destination.isMelee1(), 200, 2.0, waypoint);
+		score = augmentScore(score, c.isMelee2(), destination.isMelee2(), 300, 3.0, waypoint);
+		score = augmentScore(score, c.isMelee3(), destination.isMelee3(), 400, 4.0, waypoint);
+		score = augmentScore(score, c.isMissile1(), destination.isMissile1(), 200, 2.0, waypoint);
+		score = augmentScore(score, c.isMissile2(), destination.isMissile2(), 300, 3.0, waypoint);
+		score = augmentScore(score, c.isMissile3(), destination.isMissile3(), 400, 4.0, waypoint);
+		score = augmentScore(score, c.isArmor1(), destination.isArmor1(), 200, 3.0, waypoint);
+		score = augmentScore(score, c.isArmor2(), destination.isArmor2(), 300, 3.0, waypoint);
+		score = augmentScore(score, c.isArmor3(), destination.isArmor3(), 400, 3.0, waypoint);
+		score = augmentScore(score, c.isGroovedSpines(), destination.isGroovedSpines(), 300, 3.0, waypoint);
+		score = augmentScore(score, c.isNeuralParasite(), destination.isNeuralParasite(), 300, 3.0, waypoint);
+		score = augmentScore(score, c.isPathogenGlands(), destination.isPathogenGlands(), 300, 3.0, waypoint);
+		score = augmentScore(score, c.isFlyerAttack1(), destination.isFlyerAttack1(), 200, 2.0, waypoint);
+		score = augmentScore(score, c.isFlyerAttack2(), destination.isFlyerAttack2(), 350, 3.5, waypoint);
+		score = augmentScore(score, c.isFlyerAttack3(), destination.isFlyerAttack3(), 500, 5.0, waypoint);
+		score = augmentScore(score, c.isFlyerArmor1(), destination.isFlyerArmor1(), 300, 3.0, waypoint);
+		score = augmentScore(score, c.isFlyerArmor2(), destination.isFlyerArmor2(), 450, 4.5, waypoint);
+		score = augmentScore(score, c.isFlyerArmor3(), destination.isFlyerArmor3(), 600, 6.0, waypoint);
+		score = augmentScore(score, c.isChitinousPlating(), destination.isChitinousPlating(), 300, 3.0, waypoint);
 		return score;
 	}
 
@@ -139,7 +139,7 @@ public class EcStandardFitness implements EcFitness {
 
 		if (state.isSatisfied(c))
 		{
-			score = augmentScore(score, c.drones, state.drones, 50, .58, false);
+			score = augmentScore(score, c.getDrones(), state.getDrones(), 50, .58, false);
 			score = augmentScore(score, (int) c.minerals, (int) state.minerals, .011, .011, false);
 			score = augmentScore(score, (int) c.gas, (int) state.gas, .015, .015, false);
 			score = Math.max(score, 0);
@@ -157,7 +157,7 @@ public class EcStandardFitness implements EcFitness {
 			double xtraDroneScore = .6;
 			if (metric.settings.overDrone || metric.settings.workerParity)
 				xtraDroneScore = 2;
-			score = augmentScore(score, c.drones, state.drones, 50, xtraDroneScore, false);
+			score = augmentScore(score, c.getDrones(), state.getDrones(), 50, xtraDroneScore, false);
 			score = augmentScore(score, (int) c.minerals, (int) state.minerals, .001, .001, false);
 			score = augmentScore(score, (int) c.gas, (int) state.gas, .0012, .0012, false);
 			score = Math.max(score- candidate.invalidActions, 0);

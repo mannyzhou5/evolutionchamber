@@ -22,9 +22,9 @@ public class EcActionUpgradeCentrifugalHooks extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.banelingNest == 0)
+		if (s.getBanelingNest() == 0)
 			return true;
-		if (s.lairs == 0 && s.evolvingLairs == 0 && s.hives == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0 && s.evolvingLairs == 0 && s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
 		return false;
 	}
@@ -32,7 +32,7 @@ public class EcActionUpgradeCentrifugalHooks extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.centrifugalHooks = true;
+		superAfterTime(s, e);
 	}
 
 	@Override

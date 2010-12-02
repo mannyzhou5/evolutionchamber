@@ -393,7 +393,7 @@ public class EcEvolver extends FitnessFunction
 			{
 				if (s.seconds >= s.targetSeconds || destination.waypointMissed(s))
 				{
-					if (s.settings.overDrone && s.drones < s.getOverDrones(s))
+					if (s.settings.overDrone && s.getDrones() < s.getOverDrones(s))
 					{
 						if (debug)
 						{

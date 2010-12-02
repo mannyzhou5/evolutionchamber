@@ -18,15 +18,9 @@ public class EcActionBuildHydralisk extends EcActionBuildUnit implements Seriali
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.hydralisks += 1;
-	}
-
-	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.hydraliskDen == 0)
+		if (s.getHydraliskDen() == 0)
 			return true;
 		return false;
 	}
@@ -35,8 +29,6 @@ public class EcActionBuildHydralisk extends EcActionBuildUnit implements Seriali
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildHydraliskDen());
-		destination.hydraliskDen = Math.max(destination.hydraliskDen, 1);
 		return l;
 	}
 }

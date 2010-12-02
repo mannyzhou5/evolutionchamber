@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.fray.evo.util.ActionList;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.BuildingLibrary;
 
 public class EcBuildOrder extends EcState implements Serializable
 {
@@ -54,7 +55,7 @@ public class EcBuildOrder extends EcState implements Serializable
 
 	private void assign(final EcBuildOrder s)
 	{
-		s.larva = larva;
+		s.setLarva(getLarva());
 		s.dronesGoingOnMinerals = dronesGoingOnMinerals;
 		s.dronesGoingOnGas = dronesGoingOnGas;
 		s.dronesOnMinerals = dronesOnMinerals;
@@ -65,6 +66,7 @@ public class EcBuildOrder extends EcState implements Serializable
 		super.assign(s);
 	}
 
+    @Override
 	public String toString()
 	{
 		return toUnitsOnlyString().replaceAll("\n"," ");
@@ -72,7 +74,7 @@ public class EcBuildOrder extends EcState implements Serializable
 	
 	public String toShortString()
 	{
-		return (messages.getString("short.time") + timestamp() + "\t"+messages.getString("short.minerals")+":" + (int) minerals + "\t"+messages.getString("short.gas")+":" + (int) gas + "\t"+messages.getString("short.larva")+":" + larva + "\t"+messages.getString("short.supply")+":"
+		return (messages.getString("short.time") + timestamp() + "\t"+messages.getString("short.minerals")+":" + (int) minerals + "\t"+messages.getString("short.gas")+":" + (int) gas + "\t"+messages.getString("short.larva")+":" + getLarva() + "\t"+messages.getString("short.supply")+":"
 				+ ((int) supplyUsed) + "/" + supply());
 	}
 
@@ -109,7 +111,7 @@ public class EcBuildOrder extends EcState implements Serializable
 	public void consumeLarva(final EcEvolver e)
 	{
 		final EcBuildOrder t = this;
-		larva -= 1;
+		setLarva(getLarva() - 1);
 		if (!buildingLarva)
 		{
 			buildingLarva = true;
@@ -120,8 +122,8 @@ public class EcBuildOrder extends EcState implements Serializable
 				{
 					if (e.debug)
 						e.obtained(t, " "+messages.getString("Larva")+"+1");
-					larva = Math.max(Math.min(larva + bases(), bases() * 3), larva);
-					if (larva < 3 * bases())
+					setLarva(Math.max(Math.min(getLarva() + bases(), bases() * 3), getLarva()));
+					if (getLarva() < 3 * bases())
 						addFutureAction(15, this);
 					else
 						buildingLarva = false;
@@ -229,23 +231,23 @@ public class EcBuildOrder extends EcState implements Serializable
 
     public double mineGas()
     {
-        if (gasExtractors == 0 || dronesOnGas == 0)
+        if (getGasExtractors() == 0 || dronesOnGas == 0)
 			return 0;
 
-        if(gasExtractors >= 200 || dronesOnGas >= 200) 
+        if(getGasExtractors() >= 200 || dronesOnGas >= 200)
             return mineGasImpl();
 
-        if(cachedGasMined[gasExtractors][dronesOnGas] == 0)
-            cachedGasMined[gasExtractors][dronesOnGas] = mineGasImpl();
+        if(cachedGasMined[getGasExtractors()][dronesOnGas] == 0)
+            cachedGasMined[getGasExtractors()][dronesOnGas] = mineGasImpl();
 
-        return cachedGasMined[gasExtractors][dronesOnGas];
+        return cachedGasMined[getGasExtractors()][dronesOnGas];
     }
 
 	// Mines gas on all bases perfectly per one second.
 	public double mineGasImpl()
 	{
 		int drones = dronesOnGas;
-		int[] extractors = new int[Math.min(gasExtractors,bases()*2)]; // Assign drones/patch
+		int[] extractors = new int[Math.min(getGasExtractors(),bases()*2)]; // Assign drones/patch
 		for (int i = 0; i < extractors.length; i++)
 			extractors[i] = 0;
 		for (int i = 0; i < extractors.length; i++)
@@ -304,21 +306,21 @@ public class EcBuildOrder extends EcState implements Serializable
 	{
 		boolean usehatch = false;
 		boolean uselair = false;
-		if (hatcheries > 0)
+		if (getHatcheries() > 0)
 		{
-			hatcheries--;
+			RemoveBuilding(BuildingLibrary.Hatchery);
 			evolvingHatcheries++;
 			usehatch = true;
 		}
-		else if (lairs > 0)
+		else if (getLairs() > 0)
 		{
-			lairs--;
+			RemoveBuilding(BuildingLibrary.Lair);
 			evolvingLairs++;
 			uselair = true;
 		}
 		else
 		{
-			hives--;
+			RemoveBuilding(BuildingLibrary.Hive);
 			evolvingHives++;
 		}
 		final boolean useHatch = usehatch;
@@ -331,17 +333,17 @@ public class EcBuildOrder extends EcState implements Serializable
 				if (useHatch)
 				{
 					evolvingHatcheries--;
-					hatcheries++;
+					AddBuilding(BuildingLibrary.Hatchery);
 				}
 				else if (useLair)
 				{
 					evolvingLairs--;
-					lairs++;
+					AddBuilding(BuildingLibrary.Lair);
 				}
 				else
 				{
 					evolvingHives--;
-					hives++;
+					AddBuilding(BuildingLibrary.Hive);
 				}
 			}
 		});

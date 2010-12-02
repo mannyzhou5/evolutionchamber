@@ -11,7 +11,7 @@ import com.fray.evo.util.EcMessages;
 
 public abstract class EcActionBuild extends EcAction implements Serializable {
 
-    private Buildable buildable;
+    protected Buildable buildable;
 
     public EcActionBuild(Buildable buildable) {
         this.buildable = buildable;

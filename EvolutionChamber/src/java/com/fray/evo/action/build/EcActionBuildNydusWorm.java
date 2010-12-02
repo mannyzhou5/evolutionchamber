@@ -8,6 +8,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
 
 public class EcActionBuildNydusWorm extends EcActionBuildBuilding implements Serializable
@@ -26,14 +27,14 @@ public class EcActionBuildNydusWorm extends EcActionBuildBuilding implements Ser
 	@Override
 	protected void postExecute(EcBuildOrder s, EcEvolver e)
 	{
-		s.nydusWorm += 1;
+		s.AddBuilding((Building)buildable);
 		s.nydusNetworkInUse -= 1;
 	}
 
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.nydusNetworkInUse == s.nydusNetwork)
+		if (s.nydusNetworkInUse == s.getNydusNetwork())
 			return false;
 		return super.isPossible(s);
 	}
@@ -41,9 +42,9 @@ public class EcActionBuildNydusWorm extends EcActionBuildBuilding implements Ser
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.lairs == 0 && s.evolvingLairs == 0 && s.hives == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0 && s.evolvingLairs == 0 && s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
-		if (s.nydusNetwork == 0)
+		if (s.getNydusNetwork() == 0)
 			return true;
 		return super.isInvalid(s);
 	}

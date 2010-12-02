@@ -17,18 +17,13 @@ public class EcActionBuildNydusNetwork extends EcActionBuildBuilding implements 
 		super(BuildingLibrary.NydusNetwork);
 	}
 
-@Override
-protected void postExecute(EcBuildOrder s, EcEvolver e)
-{
-	s.nydusNetwork += 1;
-}
 
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.lairs == 0 && s.evolvingLairs == 0 && s.hives == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0 && s.evolvingLairs == 0 && s.getHives() == 0 && s.evolvingHives == 0)
 			return true;
-		if (s.nydusNetwork == 2)
+		if (s.getNydusNetwork() == 2)
 			return true;
 		return super.isInvalid(s);
 	}

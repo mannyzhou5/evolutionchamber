@@ -17,18 +17,13 @@ public class EcActionBuildBaneling extends EcActionBuildUnit implements Serializ
     }
 
     @Override
-    public void postExecute(final EcBuildOrder s, EcEvolver e) {
-        s.banelings += 1;
-    }
-
-    @Override
     public void preExecute(final EcBuildOrder s) {
-        s.zerglings -= 1;
+        s.RemoveUnits(UnitLibrary.Zergling, 1);
     }
 
     @Override
     public boolean isInvalid(EcBuildOrder s) {
-        if (s.banelingNest == 0) {
+        if (s.getBanelingNest() == 0) {
             return true;
         }
         return false;
@@ -36,7 +31,7 @@ public class EcActionBuildBaneling extends EcActionBuildUnit implements Serializ
 
     @Override
     public boolean isPossible(EcBuildOrder s) {
-        if (s.zerglings < 1) {
+        if (s.getZerglings() < 1) {
             return false;
         }
         return isPossibleResources(s);

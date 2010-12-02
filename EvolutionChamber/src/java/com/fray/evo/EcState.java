@@ -27,6 +27,10 @@ public class EcState implements Serializable
                     buildings.put(building, 0);
                 }
                 upgrades = new HashSet<Upgrade>();
+
+                units.put(UnitLibrary.Drone, 6);
+                units.put(UnitLibrary.Overlord, 1);
+                buildings.put(BuildingLibrary.Hatchery, 1);
 	}
 
 	public double					preTimeScore		= 0.0;
@@ -39,68 +43,10 @@ public class EcState implements Serializable
 	public int						evolvingLairs		= 0;
 	public int						evolvingHives		= 0;
 	public int						requiredBases		= 1;
-	public int						hatcheries			= 1;
-	public int						lairs				= 0;
-	public int						hives				= 0;
-	public int						spawningPools		= 0;
-	public int						evolutionChambers	= 0;
-	public int						roachWarrens		= 0;
-	public int						hydraliskDen		= 0;
-	public int						banelingNest		= 0;
-	public int						infestationPit		= 0;
-	public int						greaterSpire		= 0;
-	public int						ultraliskCavern		= 0;
-	public int						gasExtractors		= 0;
-	public int						spire				= 0;
-	public int						spineCrawlers		= 0;
-	public int						sporeCrawlers		= 0;
-	public int						nydusNetwork		= 0;
-	public int						nydusWorm			= 0;
 
-	public int						larva				= 3;
+	private int						larva			= 3;
 
-	public int						drones				= 6;
-	public int						overlords			= 1;
-	public int						overseers			= 0;
-	public int						zerglings			= 0;
-	public int						banelings			= 0;
-	public int						roaches				= 0;
-	public int						mutalisks			= 0;
-	public int						infestors			= 0;
-	public int						queens				= 0;
-	public int						hydralisks			= 0;
-	public int						corruptors			= 0;
-	public int						ultralisks			= 0;
-	public int						broodlords			= 0;
 	public int						scoutDrone			= 0;
-
-	public boolean					metabolicBoost		= false;
-	public boolean					adrenalGlands		= false;
-	public boolean					glialReconstitution	= false;
-	public boolean					tunnelingClaws		= false;
-	public boolean					burrow				= false;
-	public boolean					pneumatizedCarapace	= false;
-	public boolean					ventralSacs			= false;
-	public boolean					centrifugalHooks	= false;
-	public boolean					melee1				= false;
-	public boolean					melee2				= false;
-	public boolean					melee3				= false;
-	public boolean					missile1			= false;
-	public boolean					missile2			= false;
-	public boolean					missile3			= false;
-	public boolean					armor1				= false;
-	public boolean					armor2				= false;
-	public boolean					armor3				= false;
-	public boolean					groovedSpines		= false;
-	public boolean					neuralParasite		= false;
-	public boolean					pathogenGlands		= false;
-	public boolean					flyerAttack1		= false;
-	public boolean					flyerAttack2		= false;
-	public boolean					flyerAttack3		= false;
-	public boolean					flyerArmor1			= false;
-	public boolean					flyerArmor2			= false;
-	public boolean					flyerArmor3			= false;
-	public boolean					chitinousPlating	= false;
 
 	public int						seconds				= 0;
 	public int						targetSeconds		= 0;
@@ -124,107 +70,7 @@ public class EcState implements Serializable
 		return s;
 	}
 
-	protected void assign(EcState s)
-	{
-		for (EcState st : waypoints)
-			try
-			{
-				s.waypoints.add((EcState) st.clone());
-			}
-			catch (CloneNotSupportedException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		try
-		{
-			if( mergedWaypoints == null )
-				s.mergedWaypoints = null;
-			else
-				s.mergedWaypoints = (EcState)mergedWaypoints.clone();
-		}
-		catch (CloneNotSupportedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		s.settings = settings;
-		s.minerals = minerals;
-		s.gas = gas;
-		s.supplyUsed = supplyUsed;
-
-		s.requiredBases = requiredBases;
-		s.hatcheries = hatcheries;
-		s.lairs = lairs;
-		s.hives = hives;
-		s.spawningPools = spawningPools;
-		s.banelingNest = banelingNest;
-		s.evolutionChambers = evolutionChambers;
-		s.roachWarrens = roachWarrens;
-		s.hydraliskDen = hydraliskDen;
-		s.infestationPit = infestationPit;
-		s.greaterSpire = greaterSpire;
-		s.ultraliskCavern = ultraliskCavern;
-		s.gasExtractors = gasExtractors;
-		s.spire = spire;
-		s.greaterSpire = greaterSpire;
-		s.spineCrawlers = spineCrawlers;
-		s.sporeCrawlers = sporeCrawlers;
-		s.nydusNetwork = nydusNetwork;
-		s.nydusWorm = nydusWorm;
-		s.scoutDrone = scoutDrone;
-
-		s.zerglings = zerglings;
-		s.banelings = banelings;
-		s.roaches = roaches;
-		s.mutalisks = mutalisks;
-		s.drones = drones;
-		s.queens = queens;
-		s.hydralisks = hydralisks;
-		s.infestors = infestors;
-		s.corruptors = corruptors;
-		s.ultralisks = ultralisks;
-		s.broodlords = broodlords;
-		s.overlords = overlords;
-		s.overseers = overseers;
-
-		s.metabolicBoost = metabolicBoost;
-		s.adrenalGlands = adrenalGlands;
-		s.glialReconstitution = glialReconstitution;
-		s.tunnelingClaws = tunnelingClaws;
-		s.burrow = burrow;
-		s.pneumatizedCarapace = pneumatizedCarapace;
-		s.ventralSacs = ventralSacs;
-		s.centrifugalHooks = centrifugalHooks;
-		s.melee1 = melee1;
-		s.melee2 = melee2;
-		s.melee3 = melee3;
-		s.missile1 = missile1;
-		s.missile2 = missile2;
-		s.missile3 = missile3;
-		s.armor1 = armor1;
-		s.armor2 = armor2;
-		s.armor3 = armor3;
-		s.groovedSpines = groovedSpines;
-		s.neuralParasite = neuralParasite;
-		s.pathogenGlands = pathogenGlands;
-		s.flyerAttack1 = flyerAttack1;
-		s.flyerAttack2 = flyerAttack2;
-		s.flyerAttack3 = flyerAttack3;
-		s.flyerArmor1 = flyerArmor1;
-		s.flyerArmor2 = flyerArmor2;
-		s.flyerArmor3 = flyerArmor3;
-		s.chitinousPlating = chitinousPlating;
-
-		s.seconds = seconds;
-		s.targetSeconds = targetSeconds;
-		s.invalidActions = invalidActions;
-		s.actionLength = actionLength;
-	}
-
-    protected void assignClean(EcState s) {
+    protected void assign(EcState s) {
         for (EcState st : waypoints) {
             try {
                 s.waypoints.add((EcState) st.clone());
@@ -265,21 +111,21 @@ public class EcState implements Serializable
 
 	public int supply()
 	{
-		return Math.min((overlords + overseers) * 8 + 2 * bases(), 200);
+		return Math.min((getOverlords() + getOverseers()) * 8 + 2 * bases(), 200);
 	}
 
         public int supplyClean()
 	{
-		return Math.min((units.get(UnitLibrary.Overlord) + units.get(UnitLibrary.Overlord)) * 8 + 2 * bases(), 200);
+		return Math.min((units.get(UnitLibrary.Overlord) + units.get(UnitLibrary.Overseer)) * 8 + 2 * bases(), 200);
 	}
 
 	public static EcState defaultDestination()
 	{
 		EcState d = new EcState();
 
-		d.drones = 0;
-		d.overlords = 0;
-		d.hatcheries = 0;
+		d.SetUnits(UnitLibrary.Drone,0);
+		d.SetUnits(UnitLibrary.Overlord, 0);
+		d.SetBuilding(BuildingLibrary.Hatchery, 0);
 		d.targetSeconds = 60 * 120;
 
 		return d;
@@ -295,132 +141,6 @@ public class EcState implements Serializable
 		if (s.requiredBases > requiredBases)
 			requiredBases = s.requiredBases;
 
-		if (s.lairs > lairs)
-			lairs = s.lairs;
-
-		if (s.hives > hives)
-			hives = s.hives;
-
-		if (s.spawningPools > spawningPools)
-			spawningPools = s.spawningPools;
-
-		if (s.banelingNest > banelingNest)
-			banelingNest = s.banelingNest;
-
-		if (s.evolutionChambers > evolutionChambers)
-			evolutionChambers = s.evolutionChambers;
-
-		if (s.roachWarrens > roachWarrens)
-			roachWarrens = s.roachWarrens;
-
-		if (s.hydraliskDen > hydraliskDen)
-			hydraliskDen = s.hydraliskDen;
-
-		if (s.infestationPit > infestationPit)
-			infestationPit = s.infestationPit;
-
-		if (s.greaterSpire > greaterSpire)
-			greaterSpire = s.greaterSpire;
-
-		if (s.ultraliskCavern > ultraliskCavern)
-			ultraliskCavern = s.ultraliskCavern;
-
-		if (s.gasExtractors > gasExtractors)
-			gasExtractors = s.gasExtractors;
-
-		if (s.spire > spire)
-			spire = s.spire;
-
-		if (s.spineCrawlers > spineCrawlers)
-			spineCrawlers = s.spineCrawlers;
-
-		if (s.sporeCrawlers > sporeCrawlers)
-			sporeCrawlers = s.sporeCrawlers;
-
-		if (s.nydusNetwork > nydusNetwork)
-			nydusNetwork = s.nydusNetwork;
-
-		if (s.nydusWorm > nydusWorm)
-			nydusWorm = s.nydusWorm;
-
-		if (s.zerglings > zerglings)
-			zerglings = s.zerglings;
-
-		if (s.banelings > banelings)
-			banelings = s.banelings;
-
-		if (s.roaches > roaches)
-			roaches = s.roaches;
-
-		if (s.mutalisks > mutalisks)
-			mutalisks = s.mutalisks;
-
-		if (s.drones > drones)
-			drones = s.drones;
-
-		if (s.nydusNetwork > nydusNetwork)
-			nydusNetwork = s.nydusNetwork;
-
-		if (s.queens > queens)
-			queens = s.queens;
-
-		if (s.hydralisks > hydralisks)
-			hydralisks = s.hydralisks;
-
-		if (s.infestors > infestors)
-			infestors = s.infestors;
-
-		if (s.corruptors > corruptors)
-			corruptors = s.corruptors;
-
-		if (s.ultralisks > ultralisks)
-			ultralisks = s.ultralisks;
-
-		if (s.broodlords > broodlords)
-			broodlords = s.broodlords;
-
-		if (s.overlords > overlords)
-			overlords = s.overlords;
-
-		if (s.overseers > overseers)
-			overseers = s.overseers;
-
-		metabolicBoost = s.metabolicBoost | metabolicBoost;
-		adrenalGlands = s.adrenalGlands | adrenalGlands;
-		glialReconstitution = s.glialReconstitution | glialReconstitution;
-		tunnelingClaws = s.tunnelingClaws | tunnelingClaws;
-		burrow = s.burrow | burrow;
-		pneumatizedCarapace = s.pneumatizedCarapace | pneumatizedCarapace;
-		ventralSacs = s.ventralSacs | ventralSacs;
-		centrifugalHooks = s.centrifugalHooks | centrifugalHooks;
-		melee1 = s.melee1 | melee1;
-		melee2 = s.melee2 | melee2;
-		melee3 = s.melee3 | melee3;
-		missile1 = s.missile1 | missile1;
-		missile2 = s.missile2 | missile2;
-		missile3 = s.missile3 | missile3;
-		armor1 = s.armor1 | armor1;
-		armor2 = s.armor2 | armor2;
-		armor3 = s.armor3 | armor3;
-		groovedSpines = s.groovedSpines | groovedSpines;
-		neuralParasite = s.neuralParasite | neuralParasite;
-		pathogenGlands = s.pathogenGlands | pathogenGlands;
-		flyerAttack1 = s.flyerAttack1 | flyerAttack1;
-		flyerAttack2 = s.flyerAttack2 | flyerAttack2;
-		flyerAttack3 = s.flyerAttack3 | flyerAttack3;
-		flyerArmor1 = s.flyerArmor1 | flyerArmor1;
-		flyerArmor2 = s.flyerArmor2 | flyerArmor2;
-		flyerArmor3 = s.flyerArmor3 | flyerArmor3;
-		chitinousPlating = s.chitinousPlating | chitinousPlating;
-
-	}
-
-
-	public void unionClean(EcState s)
-	{
-		if (s.requiredBases > requiredBases)
-			requiredBases = s.requiredBases;
-
 		for(Unit unit: units.keySet()){
                     units.put(unit, Math.max(units.get(unit), s.units.get(unit)));
                 }
@@ -430,154 +150,7 @@ public class EcState implements Serializable
                 upgrades.addAll(s.upgrades);
 	}
 
-	public boolean isSatisfied(EcState candidate)
-	{
-		if (waypoints.size() > 0)
-		{
-			if( mergedWaypoints == null )
-				mergedWaypoints = getMergedState();
-			return mergedWaypoints.isSatisfied(candidate);
-		}
-
-		if (candidate.drones < drones)
-			return false;
-		if (candidate.zerglings < zerglings)
-			return false;
-		if (candidate.banelings < banelings)
-			return false;
-		if (candidate.roaches < roaches)
-			return false;
-		if (candidate.mutalisks < mutalisks)
-			return false;
-		if (candidate.queens < queens)
-			return false;
-		if (candidate.hydralisks < hydralisks)
-			return false;
-		if (candidate.infestors < infestors)
-			return false;
-		if (candidate.corruptors < corruptors)
-			return false;
-		if (candidate.ultralisks < ultralisks)
-			return false;
-		if (candidate.broodlords < broodlords)
-			return false;
-		if (candidate.overlords < overlords)
-			return false;
-		if (candidate.overseers < overseers)
-			return false;
-
-		if (candidate.bases() < requiredBases)
-			return false;
-		if (candidate.lairs < lairs)
-			return false;
-		if (candidate.hives < hives)
-			return false;
-		if (candidate.gasExtractors < gasExtractors)
-			return false;
-		if (candidate.spawningPools < spawningPools)
-			return false;
-		if (candidate.banelingNest < banelingNest)
-			return false;
-		if (candidate.roachWarrens < roachWarrens)
-			return false;
-		if (candidate.hydraliskDen < hydraliskDen)
-			return false;
-		if (candidate.infestationPit < infestationPit)
-			return false;
-		if (candidate.spire < spire)
-			return false;
-		if (candidate.greaterSpire < greaterSpire)
-			return false;
-		if (candidate.ultraliskCavern < ultraliskCavern)
-			return false;
-		if (candidate.evolutionChambers < evolutionChambers)
-			return false;
-		if (candidate.spineCrawlers < spineCrawlers)
-			return false;
-		if (candidate.sporeCrawlers < sporeCrawlers)
-			return false;
-		if (candidate.nydusNetwork < nydusNetwork)
-			return false;
-		if (candidate.nydusWorm < nydusWorm)
-			return false;
-
-		if ((!candidate.metabolicBoost) & metabolicBoost)
-			return false;
-		if ((!candidate.adrenalGlands) & adrenalGlands)
-			return false;
-		if ((!candidate.glialReconstitution) & glialReconstitution)
-			return false;
-		if ((!candidate.tunnelingClaws) & tunnelingClaws)
-			return false;
-		if ((!candidate.burrow) & burrow)
-			return false;
-		if ((!candidate.pneumatizedCarapace) & pneumatizedCarapace)
-			return false;
-		if ((!candidate.ventralSacs) & ventralSacs)
-			return false;
-		if ((!candidate.centrifugalHooks) & centrifugalHooks)
-			return false;
-		if ((!candidate.melee1) & melee1)
-			return false;
-		if ((!candidate.melee2) & melee2)
-			return false;
-		if ((!candidate.melee3) & melee3)
-			return false;
-		if ((!candidate.missile1) & missile1)
-			return false;
-		if ((!candidate.missile2) & missile2)
-			return false;
-		if ((!candidate.missile3) & missile3)
-			return false;
-		if ((!candidate.armor1) & armor1)
-			return false;
-		if ((!candidate.armor2) & armor2)
-			return false;
-		if ((!candidate.armor3) & armor3)
-			return false;
-		if ((!candidate.groovedSpines) & groovedSpines)
-			return false;
-		if ((!candidate.neuralParasite) & neuralParasite)
-			return false;
-		if ((!candidate.pathogenGlands) & pathogenGlands)
-			return false;
-		if ((!candidate.flyerAttack1) & flyerAttack1)
-			return false;
-		if ((!candidate.flyerAttack2) & flyerAttack2)
-			return false;
-		if ((!candidate.flyerAttack3) & flyerAttack3)
-			return false;
-		if ((!candidate.flyerArmor1) & flyerArmor1)
-			return false;
-		if ((!candidate.flyerArmor2) & flyerArmor2)
-			return false;
-		if ((!candidate.flyerArmor3) & flyerArmor3)
-			return false;
-		if ((!candidate.chitinousPlating) & chitinousPlating)
-			return false;
-
-		if (candidate.settings.overDrone || candidate.settings.workerParity)
-		{
-			int overDrones = getOverDrones(candidate);
-
-			if (candidate.settings.overDrone && candidate.drones < overDrones)
-			{
-				return false;
-			}
-			if (candidate.settings.workerParity)
-			{
-				int parityDrones = getParityDrones(candidate);
-
-				if (candidate.drones < parityDrones)
-				{
-					return false;
-				}
-			}
-		}
-
-		return true;
-	}
-        public boolean isSatisfiedClean(EcState candidate)
+        public boolean isSatisfied(EcState candidate)
 	{
 		if (waypoints.size() > 0)
 		{
@@ -638,7 +211,7 @@ public class EcState implements Serializable
 
 	public int getParityDrones(EcState s)
 	{
-		int optimalDrones = Math.min((Math.min(s.bases(), 3) * 16) + (s.gasExtractors * 3), maxOverDrones);
+		int optimalDrones = Math.min((Math.min(s.bases(), 3) * 16) + (s.getGasExtractors() * 3), maxOverDrones);
 		int parityDrones = Math.min(s.getOverDrones(s), optimalDrones);
 
 		return parityDrones;
@@ -655,7 +228,7 @@ public class EcState implements Serializable
 
 	public int bases()
 	{
-		return hatcheries + lairs + evolvingHatcheries + evolvingLairs + hives + evolvingHives;
+		return getHatcheries() + getLairs() + evolvingHatcheries + evolvingLairs + getHives() + evolvingHives;
 	}
 
         public int basesClean()
@@ -680,9 +253,9 @@ public class EcState implements Serializable
 
 	public int usedDrones()
 	{
-		return (evolvingHatcheries + evolvingLairs + evolvingHives + (hatcheries - 1) + lairs + hives + spawningPools
-				+ evolutionChambers + roachWarrens + hydraliskDen + banelingNest + infestationPit + ultraliskCavern
-				+ gasExtractors + spire + spineCrawlers + sporeCrawlers + nydusWorm);
+		return (evolvingHatcheries + evolvingLairs + evolvingHives + (getHatcheries() - 1) + getLairs() + getHives() + getSpawningPools()
+				+ getEvolutionChambers() + getRoachWarrens() + getHydraliskDen() + getBanelingNest() + getInfestationPit() + getUltraliskCavern()
+				+ getGasExtractors() + getSpire() + getSpineCrawlers() + getSporeCrawlers() + getNydusWorm());
 	}
 
         public int usedDronesClean()
@@ -705,72 +278,72 @@ public class EcState implements Serializable
 			return mergedWaypoints.getEstimatedActions();
 		}
 
-		int i = requiredBases + lairs + hives + spawningPools + evolutionChambers + roachWarrens + hydraliskDen
-				+ banelingNest + infestationPit + greaterSpire + ultraliskCavern + gasExtractors + spire
-				+ spineCrawlers + sporeCrawlers + nydusNetwork + nydusWorm
+		int i = requiredBases + getLairs() + getHives() + getSpawningPools() + getEvolutionChambers() + getRoachWarrens() + getHydraliskDen()
+				+ getBanelingNest() + getInfestationPit() + getGreaterSpire() + getUltraliskCavern() + getGasExtractors() + getSpire()
+				+ getSpineCrawlers() + getSporeCrawlers() + getNydusNetwork() + getNydusWorm()
 
-				+ drones + overlords + overseers + zerglings + banelings * 2 + roaches + mutalisks*2 + infestors*2 + queens
-				+ hydralisks*2 + corruptors*2 + ultralisks*2 + broodlords * 4;
+				+ getDrones() + getOverlords() + getOverseers() + getZerglings() + getBanelings() * 2 + getRoaches() + getMutalisks()*2 + getInfestors()*2 + getQueens()
+				+ getHydralisks()*2 + getCorruptors()*2 + getUltralisks()*2 + getBroodlords() * 4;
 
-		if (metabolicBoost)
+		if (isMetabolicBoost())
 			i++;
-		if (adrenalGlands)
+		if (isAdrenalGlands())
 			i++;
-		if (glialReconstitution)
+		if (isGlialReconstitution())
 			i++;
-		if (tunnelingClaws)
+		if (isTunnelingClaws())
 			i++;
-		if (burrow)
+		if (isBurrow())
 			i++;
-		if (pneumatizedCarapace)
+		if (isPneumatizedCarapace())
 			i++;
-		if (ventralSacs)
+		if (isVentralSacs())
 			i++;
-		if (centrifugalHooks)
+		if (isCentrifugalHooks())
 			i++;
-		if (melee1)
+		if (isMelee1())
 			i++;
-		if (melee2)
+		if (isMelee2())
 			i++;
-		if (melee3)
+		if (isMelee3())
 			i++;
-		if (missile1)
+		if (isMissile1())
 			i++;
-		if (missile2)
+		if (isMissile2())
 			i++;
-		if (missile3)
+		if (isMissile3())
 			i++;
-		if (armor1)
+		if (isArmor1())
 			i++;
-		if (armor2)
+		if (isArmor2())
 			i++;
-		if (armor3)
+		if (isArmor3())
 			i++;
-		if (groovedSpines)
+		if (isGroovedSpines())
 			i++;
-		if (neuralParasite)
+		if (isNeuralParasite())
 			i++;
-		if (pathogenGlands)
+		if (isPathogenGlands())
 			i++;
-		if (flyerAttack1)
+		if (isFlyerAttack1())
 			i++;
-		if (flyerAttack2)
+		if (isFlyerAttack2())
 			i++;
-		if (flyerAttack3)
+		if (isFlyerAttack3())
 			i++;
-		if (flyerArmor1)
+		if (isFlyerArmor1())
 			i++;
-		if (flyerArmor2)
+		if (isFlyerArmor2())
 			i++;
-		if (flyerArmor3)
+		if (isFlyerArmor3())
 			i++;
-		if (chitinousPlating)
+		if (isChitinousPlating())
 			i++;
 		for (EcState s : waypoints)
 			i += s.getEstimatedActions();
 		return i;
 	}
-
+        //TODO do we need to change tier 2 and 3 units
         public int getEstimatedActionsClean()
 	{
 		if (waypoints.size() > 0)
@@ -816,7 +389,7 @@ public class EcState implements Serializable
 		StringBuilder sb = new StringBuilder();
 		sb.append(messages.getString("AtTime")+": " + timestamp());
 		sb.append("\n"+messages.getString("Minerals")+": " + (int) minerals + "\t"+messages.getString("Gas")+":      " + (int) gas + "\t"+messages.getString("Supply")+":   " + ((int) supplyUsed)
-				+ "/" + supply() + "\t"+messages.getString("Larva")+": " + larva);
+				+ "/" + supply() + "\t"+messages.getString("Larva")+": " + getLarva());
 		appendBuildStuff(sb);
 		return sb.toString();
 	}
@@ -830,65 +403,65 @@ public class EcState implements Serializable
 
 	private void appendBuildStuff(StringBuilder sb)
 	{
-		append(sb, "Drone", drones);
-		append(sb, "Overlord", overlords);
-		append(sb, "Overseer", overseers);
-		append(sb, "Queen", queens);
-		append(sb, "Zergling", zerglings);
-		append(sb, "Baneling", banelings);
-		append(sb, "Roach", roaches);
-		append(sb, "Hydralisk", hydralisks);
-		append(sb, "Infestor", infestors);
-		append(sb, "Mutalisk", mutalisks);
-		append(sb, "Corruptor", corruptors);
-		append(sb, "Ultralisk", ultralisks);
-		append(sb, "Brood Lord", broodlords);
+		append(sb, "Drone", getDrones());
+		append(sb, "Overlord", getOverlords());
+		append(sb, "Overseer", getOverseers());
+		append(sb, "Queen", getQueens());
+		append(sb, "Zergling", getZerglings());
+		append(sb, "Baneling", getBanelings());
+		append(sb, "Roach", getRoaches());
+		append(sb, "Hydralisk", getHydralisks());
+		append(sb, "Infestor", getInfestors());
+		append(sb, "Mutalisk", getMutalisks());
+		append(sb, "Corruptor", getCorruptors());
+		append(sb, "Ultralisk", getUltralisks());
+		append(sb, "Brood Lord", getBroodlords());
 
 		append(sb, "Bases", requiredBases);
-		append(sb, "Lair", lairs);
-		append(sb, "Hive", hives);
-		append(sb, "Gas Extractor", gasExtractors);
-		append(sb, "Spawning Pool", spawningPools);
-		append(sb, "Baneling Nest", banelingNest);
-		append(sb, "Roach Warren", roachWarrens);
-		append(sb, "Hydralisk Den", hydraliskDen);
-		append(sb, "Infestation Pit", infestationPit);
-		append(sb, "Spire", spire);
-		append(sb, "Ultralisk Cavern", ultraliskCavern);
-		append(sb, "Greater Spire", greaterSpire);
-		append(sb, "Evolution Chamber", evolutionChambers);
-		append(sb, "Spine Crawler", spineCrawlers);
-		append(sb, "Spore Crawler", sporeCrawlers);
-		append(sb, "Nydus Network", nydusNetwork);
-		append(sb, "Nydus Worm", nydusWorm);
+		append(sb, "Lair", getLairs());
+		append(sb, "Hive", getHives());
+		append(sb, "Gas Extractor", getGasExtractors());
+		append(sb, "Spawning Pool", getSpawningPools());
+		append(sb, "Baneling Nest", getBanelingNest());
+		append(sb, "Roach Warren", getRoachWarrens());
+		append(sb, "Hydralisk Den", getHydraliskDen());
+		append(sb, "Infestation Pit", getInfestationPit());
+		append(sb, "Spire", getSpire());
+		append(sb, "Ultralisk Cavern", getUltraliskCavern());
+		append(sb, "Greater Spire", getGreaterSpire());
+		append(sb, "Evolution Chamber", getEvolutionChambers());
+		append(sb, "Spine Crawler", getSpineCrawlers());
+		append(sb, "Spore Crawler", getSporeCrawlers());
+		append(sb, "Nydus Network", getNydusNetwork());
+		append(sb, "Nydus Worm", getNydusWorm());
 
-		append(sb, "Melee +1", melee1);
-		append(sb, "Melee +2", melee2);
-		append(sb, "Melee +3", melee3);
-		append(sb, "Missile +1", missile1);
-		append(sb, "Missile +2", missile2);
-		append(sb, "Missile +3", missile3);
-		append(sb, "Carapace +1", armor1);
-		append(sb, "Carapace +2", armor2);
-		append(sb, "Carapace +3", armor3);
-		append(sb, "Flyer Attacks +1", flyerAttack1);
-		append(sb, "Flyer Attacks +2", flyerAttack2);
-		append(sb, "Flyer Attacks +3", flyerAttack3);
-		append(sb, "Flyer Armor +1", flyerArmor1);
-		append(sb, "Flyer Armor +2", flyerArmor2);
-		append(sb, "Flyer Armor +3", flyerArmor3);
-		append(sb, "Metabolic Boost", metabolicBoost);
-		append(sb, "Adrenal Glands", adrenalGlands);
-		append(sb, "Glial Reconstitution", glialReconstitution);
-		append(sb, "Tunneling Claws", tunnelingClaws);
-		append(sb, "Burrow", burrow);
-		append(sb, "Pneumatized Carapace", pneumatizedCarapace);
-		append(sb, "Ventral Sacs", ventralSacs);
-		append(sb, "Centrifugal Hooks", centrifugalHooks);
-		append(sb, "Grooved Spines", groovedSpines);
-		append(sb, "Neural Parasite", neuralParasite);
-		append(sb, "Pathogen Glands", pathogenGlands);
-		append(sb, "Chitinous Plating", chitinousPlating);
+		append(sb, "Melee +1", isMelee1());
+		append(sb, "Melee +2", isMelee2());
+		append(sb, "Melee +3", isMelee3());
+		append(sb, "Missile +1", isMissile1());
+		append(sb, "Missile +2", isMissile2());
+		append(sb, "Missile +3", isMissile3());
+		append(sb, "Carapace +1", isArmor1());
+		append(sb, "Carapace +2", isArmor2());
+		append(sb, "Carapace +3", isArmor3());
+		append(sb, "Flyer Attacks +1", isFlyerAttack1());
+		append(sb, "Flyer Attacks +2", isFlyerAttack2());
+		append(sb, "Flyer Attacks +3", isFlyerAttack3());
+		append(sb, "Flyer Armor +1", isFlyerArmor1());
+		append(sb, "Flyer Armor +2", isFlyerArmor2());
+		append(sb, "Flyer Armor +3", isFlyerArmor3());
+		append(sb, "Metabolic Boost", isMetabolicBoost());
+		append(sb, "Adrenal Glands", isAdrenalGlands());
+		append(sb, "Glial Reconstitution", isGlialReconstitution());
+		append(sb, "Tunneling Claws", isTunnelingClaws());
+		append(sb, "Burrow", isBurrow());
+		append(sb, "Pneumatized Carapace", isPneumatizedCarapace());
+		append(sb, "Ventral Sacs", isVentralSacs());
+		append(sb, "Centrifugal Hooks", isCentrifugalHooks());
+		append(sb, "Grooved Spines", isGroovedSpines());
+		append(sb, "Neural Parasite", isNeuralParasite());
+		append(sb, "Pathogen Glands", isPathogenGlands());
+		append(sb, "Chitinous Plating", isChitinousPlating());
 	}
         private void appendBuildStuffClean(StringBuilder sb)
 	{
@@ -950,4 +523,467 @@ public class EcState implements Serializable
 	public int getWaypointActions(int index) {
 		return waypoints.get(index).getEstimatedActions();
 	}
+
+
+        public HashSet<Upgrade> getUpgrades(){
+            return upgrades;
+        }
+
+        public void AddUpgrade(Upgrade upgrade){
+            upgrades.add(upgrade);
+        }
+
+        public void AddUnits(Unit unit, int number){
+            units.put(unit, units.get(unit)+number);
+        }
+
+        public void RemoveUnits(Unit unit, int number){
+            units.put(unit, units.get(unit)-number);
+        }
+        public void SetUnits(Unit unit, int number){
+            units.put(unit, number);
+        }
+
+        public void AddBuilding(Building building){
+            buildings.put(building, buildings.get(building)+1);
+        }
+        public void RemoveBuilding(Building building){
+            buildings.put(building, buildings.get(building)-1);
+        }
+        public void RequireBuilding(Building building){
+            if(buildings.get(building) <1 ){
+                buildings.put(building, 1);
+            }
+        }
+
+    void RequireUnit(Unit unit) {
+            if(units.get(unit) <1 ){
+                units.put(unit, 1);
+            }
+    }
+
+        public HashMap<Building,Integer> getBuildings(){
+            return buildings;
+        }
+        public HashMap<Unit,Integer> getUnits(){
+            return units;
+        }
+        public void SetBuilding(Building building, int number){
+            buildings.put(building, number);
+        }
+    /**
+     * @return the metabolicBoost
+     */
+    public boolean isMetabolicBoost() {
+        return upgrades.contains(UpgradeLibrary.MetabolicBoost);
+    }
+
+    /**
+     * @return the adrenalGlands
+     */
+    public boolean isAdrenalGlands() {
+        return upgrades.contains(UpgradeLibrary.AdrenalGlands);
+    }
+
+    /**
+     * @return the glialReconstitution
+     */
+    public boolean isGlialReconstitution() {
+        return upgrades.contains(UpgradeLibrary.GlialReconstitution);
+    }
+
+    /**
+     * @return the tunnelingClaws
+     */
+    public boolean isTunnelingClaws() {
+        return upgrades.contains(UpgradeLibrary.TunnelingClaws);
+    }
+
+    /**
+     * @return the burrow
+     */
+    public boolean isBurrow() {
+        return upgrades.contains(UpgradeLibrary.Burrow);
+    }
+
+    /**
+     * @return the pneumatizedCarapace
+     */
+    public boolean isPneumatizedCarapace() {
+        return upgrades.contains(UpgradeLibrary.PneumatizedCarapace);
+    }
+
+    /**
+     * @return the ventralSacs
+     */
+    public boolean isVentralSacs() {
+        return upgrades.contains(UpgradeLibrary.VentralSacs);
+    }
+
+
+    /**
+     * @return the centrifugalHooks
+     */
+    public boolean isCentrifugalHooks() {
+        return upgrades.contains(UpgradeLibrary.CentrifugalHooks);
+    }
+
+
+    /**
+     * @return the melee1
+     */
+    public boolean isMelee1() {
+        return upgrades.contains(UpgradeLibrary.Melee1);
+    }
+
+    /**
+     * @return the melee2
+     */
+    public boolean isMelee2() {
+        return upgrades.contains(UpgradeLibrary.Melee2);
+    }
+
+    /**
+     * @return the melee3
+     */
+    public boolean isMelee3() {
+        return upgrades.contains(UpgradeLibrary.Melee3);
+    }
+
+    /**
+     * @return the missile1
+     */
+    public boolean isMissile1() {
+        return upgrades.contains(UpgradeLibrary.Missile1);
+    }
+
+    /**
+     * @return the missile2
+     */
+    public boolean isMissile2() {
+        return upgrades.contains(UpgradeLibrary.Melee2);
+    }
+
+    /**
+     * @return the missile3
+     */
+    public boolean isMissile3() {
+        return upgrades.contains(UpgradeLibrary.Missile3);
+    }
+
+
+    /**
+     * @return the armor1
+     */
+    public boolean isArmor1() {
+        return upgrades.contains(UpgradeLibrary.Armor1);
+    }
+
+    /**
+     * @return the armor2
+     */
+    public boolean isArmor2() {
+        return upgrades.contains(UpgradeLibrary.Armor2);
+    }
+
+    /**
+     * @return the armor3
+     */
+    public boolean isArmor3() {
+        return upgrades.contains(UpgradeLibrary.Armor3);
+    }
+
+    /**
+     * @return the groovedSpines
+     */
+    public boolean isGroovedSpines() {
+        return upgrades.contains(UpgradeLibrary.GroovedSpines);
+    }
+
+    /**
+     * @return the neuralParasite
+     */
+    public boolean isNeuralParasite() {
+        return upgrades.contains(UpgradeLibrary.NeuralParasite);
+    }
+
+    /**
+     * @return the pathogenGlands
+     */
+    public boolean isPathogenGlands() {
+        return upgrades.contains(UpgradeLibrary.PathogenGlands);
+    }
+    /**
+     * @return the flyerAttack1
+     */
+    public boolean isFlyerAttack1() {
+        return upgrades.contains(UpgradeLibrary.FlyerAttacks1);
+    }
+
+    /**
+     * @return the flyerAttack2
+     */
+    public boolean isFlyerAttack2() {
+        return upgrades.contains(UpgradeLibrary.FlyerAttacks2);
+    }
+
+    /**
+     * @return the flyerAttack3
+     */
+    public boolean isFlyerAttack3() {
+        return upgrades.contains(UpgradeLibrary.FlyerAttacks3);
+    }
+
+    /**
+     * @return the flyerArmor1
+     */
+    public boolean isFlyerArmor1() {
+        return upgrades.contains(UpgradeLibrary.FlyerArmor1);
+    }
+
+
+    /**
+     * @return the flyerArmor2
+     */
+    public boolean isFlyerArmor2() {
+        return upgrades.contains(UpgradeLibrary.FlyerArmor2);
+    }
+
+    /**
+     * @return the flyerArmor3
+     */
+    public boolean isFlyerArmor3() {
+        return upgrades.contains(UpgradeLibrary.FlyerArmor3);
+    }
+
+
+    /**
+     * @return the chitinousPlating
+     */
+    public boolean isChitinousPlating() {
+        return upgrades.contains(UpgradeLibrary.ChitinousPlating);
+    }
+
+    /**
+     * @return the larva
+     */
+    public int getLarva() {
+        return larva;
+    }
+
+    /**
+     * @param larva the larva to set
+     */
+    public void setLarva(int larva) {
+        this.larva = larva;
+    }
+
+    /**
+     * @return the drones
+     */
+    public int getDrones() {
+        return units.get(UnitLibrary.Drone);
+    }
+
+    /**
+     * @return the overlords
+     */
+    public int getOverlords() {
+        return units.get(UnitLibrary.Overlord);
+    }
+
+    /**
+     * @return the overseers
+     */
+    public int getOverseers() {
+        return units.get(UnitLibrary.Overseer);
+    }
+
+    /**
+     * @return the zerglings
+     */
+    public int getZerglings() {
+        return units.get(UnitLibrary.Zergling);
+    }
+
+    /**
+     * @return the banelings
+     */
+    public int getBanelings() {
+        return units.get(UnitLibrary.Baneling);
+    }
+
+    /**
+     * @return the roaches
+     */
+    public int getRoaches() {
+        return units.get(UnitLibrary.Roach);
+    }
+
+    /**
+     * @return the mutalisks
+     */
+    public int getMutalisks() {
+        return units.get(UnitLibrary.Mutalisk);
+    }
+
+    /**
+     * @return the infestors
+     */
+    public int getInfestors() {
+        return units.get(UnitLibrary.Infestor);
+    }
+
+    /**
+     * @return the queens
+     */
+    public int getQueens() {
+        return units.get(UnitLibrary.Queen);
+    }
+
+    /**
+     * @return the hydralisks
+     */
+    public int getHydralisks() {
+        return units.get(UnitLibrary.Hydralisk);
+    }
+
+    /**
+     * @return the corruptors
+     */
+    public int getCorruptors() {
+        return units.get(UnitLibrary.Corruptor);
+    }
+
+    /**
+     * @return the ultralisks
+     */
+    public int getUltralisks() {
+        return units.get(UnitLibrary.Ultralisk);
+    }
+    /**
+     * @return the broodlords
+     */
+    public int getBroodlords() {
+        return units.get(UnitLibrary.Broodlord);
+    }
+
+    /**
+     * @return the hatcheries
+     */
+    public int getHatcheries() {
+        return buildings.get(BuildingLibrary.Hatchery);
+    }
+
+    /**
+     * @return the lairs
+     */
+    public int getLairs() {
+        return buildings.get(BuildingLibrary.Lair);
+    }
+
+    /**
+     * @return the hives
+     */
+    public int getHives() {
+        return buildings.get(BuildingLibrary.Hive);
+    }
+
+    /**
+     * @return the spawningPools
+     */
+    public int getSpawningPools() {
+        return buildings.get(BuildingLibrary.SpawningPool);
+    }
+
+    /**
+     * @return the evolutionChambers
+     */
+    public int getEvolutionChambers() {
+        return buildings.get(BuildingLibrary.EvolutionChamber);
+    }
+
+    /**
+     * @return the roachWarrens
+     */
+    public int getRoachWarrens() {
+        return buildings.get(BuildingLibrary.RoachWarren);
+    }
+
+    /**
+     * @return the hydraliskDen
+     */
+    public int getHydraliskDen() {
+        return buildings.get(BuildingLibrary.HydraliskDen);
+    }
+
+    /**
+     * @return the banelingNest
+     */
+    public int getBanelingNest() {
+        return buildings.get(BuildingLibrary.BanelingNest);
+    }
+
+    /**
+     * @return the infestationPit
+     */
+    public int getInfestationPit() {
+        return buildings.get(BuildingLibrary.InfestationPit);
+    }
+
+    /**
+     * @return the greaterSpire
+     */
+    public int getGreaterSpire() {
+        return buildings.get(BuildingLibrary.GreaterSpire);
+    }
+
+    /**
+     * @return the ultraliskCavern
+     */
+    public int getUltraliskCavern() {
+        return buildings.get(BuildingLibrary.UltraliskCavern);
+    }
+
+    /**
+     * @return the gasExtractors
+     */
+    public int getGasExtractors() {
+        return buildings.get(BuildingLibrary.Extractor);
+    }
+
+    /**
+     * @return the spire
+     */
+    public int getSpire() {
+        return buildings.get(BuildingLibrary.Spire);
+    }
+
+    /**
+     * @return the spineCrawlers
+     */
+    public int getSpineCrawlers() {
+        return buildings.get(BuildingLibrary.SpineCrawler);
+    }
+
+    /**
+     * @return the sporeCrawlers
+     */
+    public int getSporeCrawlers() {
+        return buildings.get(BuildingLibrary.SporeCrawler);
+    }
+    /**
+     * @return the nydusNetwork
+     */
+    public int getNydusNetwork() {
+        return buildings.get(BuildingLibrary.NydusNetwork);
+    }
+
+    /**
+     * @return the nydusWorm
+     */
+    public int getNydusWorm() {
+        return buildings.get(BuildingLibrary.NydusWorm);
+    }
+
 }

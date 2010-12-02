@@ -40,7 +40,7 @@ public class EcActionBuildHatchery extends EcActionBuildBuilding implements Seri
 	@Override
 	protected void postExecute(EcBuildOrder s, EcEvolver e)
 	{
-		s.hatcheries += 1;
+		s.AddBuilding(BuildingLibrary.Hatchery);
 		s.hatcheriesBuilding -= 1;
 		s.hatcheryTimes.add(new Integer(s.seconds));
 	}

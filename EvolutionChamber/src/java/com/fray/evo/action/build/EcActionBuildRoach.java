@@ -18,15 +18,9 @@ public class EcActionBuildRoach extends EcActionBuildUnit implements Serializabl
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.roaches += 1;
-	}
-
-	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.roachWarrens == 0)
+		if (s.getRoachWarrens() == 0)
 			return true;
 		return false;
 	}
@@ -35,9 +29,6 @@ public class EcActionBuildRoach extends EcActionBuildUnit implements Serializabl
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildRoachWarren());
-		l.add(new EcActionBuildExtractor());
-		destination.roachWarrens = Math.max(destination.roachWarrens, 1);
 		return l;
 	}
 }

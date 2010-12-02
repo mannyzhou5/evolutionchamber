@@ -22,13 +22,13 @@ public class EcActionUpgradeMelee2 extends EcActionUpgrade
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.evolutionChambers == 0)
+		if (s.getEvolutionChambers() == 0)
 			return true;
-		if (s.lairs == 0 && s.hives == 0 && s.evolvingLairs == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0 && s.getHives() == 0 && s.evolvingLairs == 0 && s.evolvingHives == 0)
 			return true;
-		if (s.melee1 == false)
+		if (s.isMelee1() == false)
 			return true;
-		if (s.melee2 == true)
+		if (s.isMelee2() == true)
 			return true;
 		return false;
 	}
@@ -43,7 +43,7 @@ public class EcActionUpgradeMelee2 extends EcActionUpgrade
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.evolutionChambersInUse == s.evolutionChambers)
+		if (s.evolutionChambersInUse == s.getEvolutionChambers())
 			return false;
 		return super.isPossible(s);
 	}
@@ -51,7 +51,7 @@ public class EcActionUpgradeMelee2 extends EcActionUpgrade
 	@Override
 	public void afterTime(EcBuildOrder s, EcEvolver e)
 	{
-		s.melee2 = true;
+		superAfterTime(s, e);
 		s.evolutionChambersInUse--;
 	}
 

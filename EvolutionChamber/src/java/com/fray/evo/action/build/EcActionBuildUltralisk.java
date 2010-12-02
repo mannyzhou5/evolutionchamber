@@ -18,15 +18,9 @@ public class EcActionBuildUltralisk extends EcActionBuildUnit implements Seriali
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
-	{
-		s.ultralisks += 1;
-	}
-
-	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.ultraliskCavern == 0)
+		if (s.getUltraliskCavern() == 0)
 			return true;
 		return false;
 	}
@@ -35,8 +29,6 @@ public class EcActionBuildUltralisk extends EcActionBuildUnit implements Seriali
 	public List<EcAction> requirements(EcState destination)
 	{
 		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildUltraliskCavern());
-		destination.ultraliskCavern = Math.max(destination.ultraliskCavern, 1);
 		return l;
 	}
 }

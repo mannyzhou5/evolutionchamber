@@ -10,6 +10,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildQueen extends EcActionBuildUnit implements Serializable
@@ -28,7 +29,7 @@ public class EcActionBuildQueen extends EcActionBuildUnit implements Serializabl
 	@Override
 	protected void postExecute(final EcBuildOrder s, final EcEvolver e)
 	{
-		s.queens += 1;
+		s.AddUnits((Unit) buildable, 1);
 		if (s.hatcheriesSpawningLarva < s.bases())
 		{
 			s.hatcheriesSpawningLarva++;
@@ -37,9 +38,9 @@ public class EcActionBuildQueen extends EcActionBuildUnit implements Serializabl
 				@Override
 				public void run()
 				{
-					if (e.debug && s.larva < s.bases() * 19)
-						e.obtained(s, " "+messages.getString("Larva") + (Math.min(s.bases()*19,s.larva+4) - s.larva));
-					s.larva = Math.min(s.bases()*19,s.larva+4);
+					if (e.debug && s.getLarva() < s.bases() * 19)
+						e.obtained(s, " "+messages.getString("Larva") + (Math.min(s.bases()*19,s.getLarva()+4) - s.getLarva()));
+					s.setLarva(Math.min(s.bases() * 19, s.getLarva() + 4));
 					s.addFutureAction(45, this);
 				}
 			});
@@ -58,9 +59,9 @@ public class EcActionBuildQueen extends EcActionBuildUnit implements Serializabl
 							@Override
 							public void run()
 							{
-								if (e.debug && s.larva < s.bases() * 19)
-									e.obtained(s, " Larva+" + (Math.min(s.bases()*19,s.larva+4) - s.larva));
-								s.larva = Math.min(s.bases()*19,s.larva+4);
+								if (e.debug && s.getLarva() < s.bases() * 19)
+									e.obtained(s, " Larva+" + (Math.min(s.bases()*19,s.getLarva()+4) - s.getLarva()));
+								s.setLarva(Math.min(s.bases() * 19, s.getLarva() + 4));
 								s.addFutureAction(45, this);
 							}
 						});
@@ -74,9 +75,9 @@ public class EcActionBuildQueen extends EcActionBuildUnit implements Serializabl
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.spawningPools == 0)
+		if (s.getSpawningPools() == 0)
 			return true;
-		if (s.hatcheries + s.lairs + s.hives == 0)
+		if (s.getHatcheries() + s.getLairs() + s.getHives() == 0)
 			return true;
 		return false;
 	}
