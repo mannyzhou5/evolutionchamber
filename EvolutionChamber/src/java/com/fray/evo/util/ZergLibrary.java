@@ -16,8 +16,9 @@ public class ZergLibrary {
     static private ArrayList<Buildable> createList(Buildable... buildables) {
         return new ArrayList<Buildable>(Arrays.asList(buildables));
     }
-    public static Unit Larva = new Unit("Larva", 0, 0, 0, 0, null, createList());
-    public static Unit Drone = new Unit("Drone", 50, 0, 1, 17, Larva, createList());
+    private static int unitCount =0;
+    public static Unit Larva = new Unit(unitCount++,"Larva", 0, 0, 0, 0, null, createList());
+    public static Unit Drone = new Unit(unitCount++,"Drone", 50, 0, 1, 17, Larva, createList());
 
     static public Building Hatchery = new Building("Hatchery", 300, 0, 100,
             Drone, createList());
@@ -53,17 +54,17 @@ public class ZergLibrary {
             Drone, createList(SpawningPool));
     static public Building SporeCrawler = new Building("SporeCrawler", 75, 0, 30,
             Drone, createList(EvolutionChamber));
-        public static Unit Zergling = new Unit("Zergling", 50, 0, 1, 24.0, Larva, createList(SpawningPool));
+        public static Unit Zergling = new Unit(unitCount++,"Zergling", 50, 0, 1, 24.0, Larva, createList(SpawningPool));
 
-    public static Unit Roach = new Unit("Roach", 75, 25, 2, 27, Larva, createList(RoachWarren));
-    public static Unit Queen = new Unit("Queen", 150, 0, 2, 50, Larva, createList(SpawningPool));
-    public static Unit Baneling = new Unit("Baneling", 25, 25, 0.5, 20, Zergling, createList(BanelingNest));
-    public static Unit Mutalisk = new Unit("Mutalisk", 100, 100, 2, 33, Larva, createList(Spire));
-    public static Unit Hydralisk = new Unit("Hydralisk", 100, 50, 2, 33, Larva, createList(HydraliskDen));
-    public static Unit Infestor = new Unit("Infestor", 100, 150, 2, 50, Larva, createList(InfestationPit));
-    public static Unit Corruptor = new Unit("Corruptor", 150, 100, 2, 40, Larva, createList(Spire));
-    public static Unit Ultralisk = new Unit("Ultralisk", 300, 200, 6, 70, Larva, createList(UltraliskCavern));
-    public static Unit Broodlord = new Unit("Broodlord", 150, 150, 4, 34, Corruptor, createList(GreaterSpire));
-    public static Unit Overlord = new Unit("Overlord", 100, 0, 0, 25, Larva, createList());
-    public static Unit Overseer = new Unit("Overseer", 50, 100, 0, 17, Overlord, createList(Lair));
+    public static Unit Roach = new Unit(unitCount++,"Roach", 75, 25, 2, 27, Larva, createList(RoachWarren));
+    public static Unit Queen = new Unit(unitCount++,"Queen", 150, 0, 2, 50, Larva, createList(SpawningPool));
+    public static Unit Baneling = new Unit(unitCount++,"Baneling", 25, 25, 0.5, 20, Zergling, createList(BanelingNest));
+    public static Unit Mutalisk = new Unit(unitCount++,"Mutalisk", 100, 100, 2, 33, Larva, createList(Spire));
+    public static Unit Hydralisk = new Unit(unitCount++,"Hydralisk", 100, 50, 2, 33, Larva, createList(HydraliskDen));
+    public static Unit Infestor = new Unit(unitCount++,"Infestor", 100, 150, 2, 50, Larva, createList(InfestationPit));
+    public static Unit Corruptor = new Unit(unitCount++,"Corruptor", 150, 100, 2, 40, Larva, createList(Spire));
+    public static Unit Ultralisk = new Unit(unitCount++,"Ultralisk", 300, 200, 6, 70, Larva, createList(UltraliskCavern));
+    public static Unit Broodlord = new Unit(unitCount++,"Broodlord", 150, 150, 4, 34, Corruptor, createList(GreaterSpire));
+    public static Unit Overlord = new Unit(unitCount++,"Overlord", 100, 0, 0, 25, Larva, createList());
+    public static Unit Overseer = new Unit(unitCount++,"Overseer", 50, 100, 0, 17, Overlord, createList(Lair));
 }

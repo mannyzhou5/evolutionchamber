@@ -13,12 +13,12 @@ public class EcState implements Serializable
 	public EcSettings	settings	= new EcSettings();
         private HashSet<Upgrade> upgrades;
         private HashMap<Building, Integer> buildings;
-        private HashMap<Unit, Integer> units;
+        private UnitCollection units;
 
 	public EcState()
 	{
 		hatcheryTimes.add(new Integer(0));
-                units = new HashMap<Unit, Integer>();
+                units = new UnitCollection(UnitLibrary.zergUnits);
 //                Building test = ZergLibrary.Lair;
 //                for(Unit unit: UnitLibrary.zergUnits){
 //                    units.put(unit, 0);
@@ -102,7 +102,7 @@ public class EcState implements Serializable
 
         s.buildings = (HashMap<Building, Integer>) buildings.clone();
         s.upgrades = (HashSet<Upgrade>) upgrades.clone();
-        s.units = (HashMap<Unit, Integer>) units.clone();
+        s.units = units.clone();
 
         s.seconds = seconds;
         s.targetSeconds = targetSeconds;
@@ -147,22 +147,12 @@ public class EcState implements Serializable
                 }
                 upgrades.addAll(s.upgrades);
 	}
-        private HashMap<Unit, Integer> unionUnits(HashMap<Unit, Integer> map, HashMap<Unit,Integer> s){
-            HashMap<Unit, Integer> result = new HashMap<Unit, Integer>();
-            	for(Unit unit: map.keySet()){
-                    int other = 0;
-                    if(s.containsKey(unit)){
-                        other = s.get(unit);
-                    }
-                    result.put(unit, Math.max(map.get(unit), other));
+        private UnitCollection unionUnits(UnitCollection map, UnitCollection s){
+            UnitCollection result = new UnitCollection(units.getSize());
+                for(int i=0;i<map.getSize();i++){
+                    result.putById(i, Math.max(map.getById(i), s.getById(i)));
                 }
-                for(Unit unit: s.keySet()){
-                    int other = 0;
-                    if(map.containsKey(unit)){
-                        other = map.get(unit);
-                    }
-                    result.put(unit, Math.max(s.get(unit), other));
-                }
+
                 return result;
         }
 
@@ -175,11 +165,8 @@ public class EcState implements Serializable
 			return mergedWaypoints.isSatisfied(candidate);
 		}
 
-		for(Unit unit: units.keySet()){
-                    if(!candidate.units.containsKey(unit)){
-                        return false;
-                    }
-                    if(candidate.units.get(unit) < units.get(unit)){
+		for(int i = 0; i < units.getSize(); i++){
+                    if(candidate.units.getById(i) < units.getById(i)){
                         return false;
                     }
                 }
@@ -374,9 +361,7 @@ public class EcState implements Serializable
 
 		int i = requiredBases;
                 
-                for(Integer count: units.values()){
-                    i+=count;
-                }
+                i+= units.getCount();
 
                 for(Integer count: buildings.values()){
                     i+= count;
@@ -484,9 +469,9 @@ public class EcState implements Serializable
 	}
         private void appendBuildStuffClean(StringBuilder sb)
 	{
-		for(Unit unit:units.keySet()){
-                    append(sb, unit.getName(), units.get(unit));
-                }
+//		for(Unit unit:units.keySet()){
+//                    append(sb, unit.getName(), units.get(unit));
+//                }
 
 		append(sb, "Bases", requiredBases);
 
@@ -590,7 +575,7 @@ public class EcState implements Serializable
             return buildings;
         }
         public HashMap<Unit,Integer> getUnits(){
-            return units;
+            return units.toHashMap();
         }
         public void SetBuilding(Building building, int number){
             buildings.put(building, number);
@@ -806,14 +791,22 @@ public class EcState implements Serializable
      * @return the drones
      */
     public int getDrones() {
-        return units.get(UnitLibrary.Drone);
+        if (units.containsKey(UnitLibrary.Drone)) {
+            return units.get(UnitLibrary.Drone);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * @return the overlords
      */
     public int getOverlords() {
-        return units.get(UnitLibrary.Overlord);
+        if (units.containsKey(UnitLibrary.Overlord)) {
+            return units.get(UnitLibrary.Overlord);
+        } else {
+            return 0;
+        }
     }
 
     /**

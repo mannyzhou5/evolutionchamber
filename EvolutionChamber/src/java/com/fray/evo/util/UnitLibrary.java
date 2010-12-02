@@ -7,6 +7,8 @@ package com.fray.evo.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import javax.print.attribute.HashAttributeSet;
 
 /**
  *
@@ -32,7 +34,7 @@ public class UnitLibrary {
     public static Unit Overlord = ZergLibrary.Overlord;
     public static Unit Overseer = ZergLibrary.Overseer;
 
-
+    public static HashMap<Integer, Unit> idToZergUnit;
     public static ArrayList<Unit> zergUnits;
     static {
         if(zergUnits == null){
@@ -52,7 +54,12 @@ public class UnitLibrary {
             zergUnits.add(Overseer);
             zergUnits.add(Larva);
         }
+        idToZergUnit = new HashMap<Integer, Unit>();
+        for(Unit unit: zergUnits){
+            idToZergUnit.put(unit.getId(), unit);
+        }
     };
+
 
 
 }

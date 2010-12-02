@@ -19,8 +19,9 @@ public class Unit implements Buildable {
     private double time;
     private Buildable consumes;
     private ArrayList<Buildable> requierments;
+    private int id;
 
-    public Unit(String name, int minerals, int gas, double supply, double time, Buildable consumes, ArrayList<Buildable> requierments) {
+    public Unit(int id, String name, int minerals, int gas, double supply, double time, Buildable consumes, ArrayList<Buildable> requierments) {
         this.name = name;
         this.minerals = minerals;
         this.gas = gas;
@@ -28,6 +29,7 @@ public class Unit implements Buildable {
         this.time = time;
         this.requierments = requierments;
         this.consumes = consumes;
+        this.id = id;
     }
 
     public double getSupply() {
@@ -109,5 +111,8 @@ public class Unit implements Buildable {
             return false;
         }
         return true;
+    }
+    public int getId(){
+        return id;
     }
 }
