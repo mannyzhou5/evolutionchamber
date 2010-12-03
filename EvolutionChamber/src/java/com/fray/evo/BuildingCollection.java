@@ -7,6 +7,7 @@ package com.fray.evo;
 
 import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -14,7 +15,7 @@ import java.util.HashMap;
  *
  * @author Cyrik
  */
-public class BuildingCollection {
+public class BuildingCollection implements Serializable{
     private int[] arr;
 
     public BuildingCollection(Collection<Building> buildings){
