@@ -18,14 +18,16 @@ public class Building implements Buildable {
     private double time;
     private Buildable consumes;
     private ArrayList<Buildable> requierments;
+    private int id;
 
-    public Building(String name, int minerals, int gas, double time, Buildable consumes, ArrayList<Buildable> requierments) {
+    public Building(String name, int minerals, int gas, double time, Buildable consumes, ArrayList<Buildable> requierments, int id) {
         this.name = name;
         this.minerals = minerals;
         this.gas = gas;
         this.time = time;
         this.consumes = consumes;
         this.requierments = requierments;
+        this.id = id;
     }
 
     @Override
@@ -105,5 +107,9 @@ public class Building implements Buildable {
             return false;
         }
         return true;
+    }
+
+    public int getId(){
+        return id;
     }
 }

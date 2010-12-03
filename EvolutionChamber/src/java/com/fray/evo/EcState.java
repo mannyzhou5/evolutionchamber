@@ -12,7 +12,7 @@ public class EcState implements Serializable
 {
 	public EcSettings	settings	= new EcSettings();
         private HashSet<Upgrade> upgrades;
-        private HashMap<Building, Integer> buildings;
+        private BuildingCollection buildings;
         private UnitCollection units;
 
 	public EcState()
@@ -23,7 +23,7 @@ public class EcState implements Serializable
 //                for(Unit unit: UnitLibrary.zergUnits){
 //                    units.put(unit, 0);
 //                }
-                buildings = new HashMap<Building, Integer>();
+                buildings = new BuildingCollection(BuildingLibrary.allZergBuildings);
                 for(Building building: BuildingLibrary.allZergBuildings){
                     buildings.put(building, 0);
                 }
@@ -100,7 +100,7 @@ public class EcState implements Serializable
         s.requiredBases = requiredBases;
         s.scoutDrone = scoutDrone;
 
-        s.buildings = (HashMap<Building, Integer>) buildings.clone();
+        s.buildings = buildings.clone();
         s.upgrades = (HashSet<Upgrade>) upgrades.clone();
         s.units = units.clone();
 
@@ -142,9 +142,11 @@ public class EcState implements Serializable
 			requiredBases = s.requiredBases;
 
                 units = unionUnits(units,s.units);
-                for(Building building: buildings.keySet()){
-                    buildings.put(building, Math.max(buildings.get(building), s.buildings.get(building)));
+                BuildingCollection temp = new BuildingCollection(buildings.getSize());
+                for(int i = 0; i< buildings.getSize(); i++){
+                    temp.putById(i, Math.max(buildings.getById(i), s.buildings.getById(i)));
                 }
+                buildings = temp;
                 upgrades.addAll(s.upgrades);
 	}
         private UnitCollection unionUnits(UnitCollection map, UnitCollection s){
@@ -174,8 +176,8 @@ public class EcState implements Serializable
 		if (candidate.bases() < requiredBases)
 			return false;
 
-                for(Building building: buildings.keySet()){
-                    if(candidate.buildings.get(building) < buildings.get(building)){
+                for(int i = 0; i< buildings.getSize(); i++){
+                    if(candidate.buildings.getById(i) < buildings.getById(i)){
                         return false;
                     }
                 }
@@ -267,7 +269,7 @@ public class EcState implements Serializable
         public int usedDronesClean()
 	{
                 int total = (evolvingHatcheries + evolvingLairs + evolvingHives + -1 );
-                for(Building building: buildings.keySet()){
+                for(Building building: BuildingLibrary.allZergBuildings){
                     if(building.getConsumes() == UnitLibrary.Drone){
                         total += buildings.get(building);
                     }
@@ -363,9 +365,7 @@ public class EcState implements Serializable
                 
                 i+= units.getCount();
 
-                for(Integer count: buildings.values()){
-                    i+= count;
-                }
+                i+= buildings.getCount();
 		i+= upgrades.size();
 		for (EcState s : waypoints)
 			i += s.getEstimatedActions();
@@ -475,9 +475,9 @@ public class EcState implements Serializable
 
 		append(sb, "Bases", requiredBases);
 
-                for(Building building: buildings.keySet()){
-                    append(sb, building.getName(), buildings.get(building));
-                }
+//                for(Building building: buildings.keySet()){
+//                    append(sb, building.getName(), buildings.get(building));
+//                }
                 //TODO clean that up
                 for(Upgrade upgrade: upgrades){
                     append(sb, upgrade.getName(), true);
@@ -572,7 +572,7 @@ public class EcState implements Serializable
     }
 
         public HashMap<Building,Integer> getBuildings(){
-            return buildings;
+            return buildings.toHashMap();
         }
         public HashMap<Unit,Integer> getUnits(){
             return units.toHashMap();

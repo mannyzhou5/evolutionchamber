@@ -6,12 +6,14 @@ package com.fray.evo.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  *
  * @author Cyrik
  */
 public class BuildingLibrary {
+    public static HashMap<Integer, Building> idToZergBuilding;
 
     static private ArrayList<Buildable> createList(Buildable... buildables) {
         return new ArrayList<Buildable>(Arrays.asList(buildables));
@@ -54,5 +56,9 @@ public class BuildingLibrary {
             allZergBuildings.add(NydusWorm);
             allZergBuildings.add(SpineCrawler);
             allZergBuildings.add(SporeCrawler);
+        idToZergBuilding = new HashMap<Integer, Building>();
+        for (Building building : allZergBuildings) {
+            idToZergBuilding.put(building.getId(), building);
+        }
     }
 }
