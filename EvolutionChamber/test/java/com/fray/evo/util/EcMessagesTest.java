@@ -32,10 +32,6 @@ public class EcMessagesTest {
 		EcMessages messages = new EcMessages("com/fray/evo/util/test-messages");
 		Assert.assertEquals("My life for Aiur!", messages.getString("no.args"));
 		Assert.assertEquals("The Zergling killed the SCV.", messages.getString("two.args", "Zergling", "SCV"));
-		Assert.assertEquals("The Zealot exclaimed, \"My life for Aiur!\".", messages.getString("ref.prop"));
-		Assert.assertEquals("The Zealot exclaimed, \"My life for Aiur!\".", messages.getString("ref.prop.with.spaces"));
-		Assert.assertEquals("The enemy drew closer. The Zealot exclaimed, \"My life for Aiur!\". But then a Baneling killed him.", messages.getString("double.ref.prop"));
-		Assert.assertEquals("The enemy drew closer. The Zealot exclaimed, \"My life for Aiur!\". But then a Siege Tank killed him.", messages.getString("double.ref.prop.with.arg", "Siege Tank"));
 	}
 
 	/**
@@ -44,7 +40,7 @@ public class EcMessagesTest {
 	 */
 	@Test
 	public void testAllPropertiesInCode() {
-		File dir = new File("src/java/com/fray/evo/ui/swingx");
+		File dir = new File("src/java");
 		EcMessages messages = new EcMessages("com/fray/evo/ui/swingx/messages");
 		List<File> exclude = new ArrayList<File>();
 		go(dir, messages, new JavaAndDirsFilter(exclude));
@@ -80,7 +76,6 @@ public class EcMessagesTest {
 					String code = new String(bytes);
 
 					//check each property in the code to see if it exists in the properties file
-					System.out.print("Checking " + f.getAbsolutePath() + "...");
 					Matcher m = pattern.matcher(code);
 					int found = 0;
 					while (m.find()) {
@@ -92,7 +87,9 @@ public class EcMessagesTest {
 							Assert.fail("Could not find property \"" + key + "\" in " + f.getAbsolutePath());
 						}
 					}
-					System.out.println(found + " found.");
+					if (found > 0){
+						System.out.println(f.getAbsolutePath() + ": " + found + " messages.");
+					}
 				} catch (IOException e) {
 				}
 			}
