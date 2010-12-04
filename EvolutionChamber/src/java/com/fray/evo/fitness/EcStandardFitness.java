@@ -13,7 +13,8 @@ public class EcStandardFitness implements EcFitness {
 			overlordScore = (int)Math.min(100, (destination.getOverlords() * (1 / Math.max(1, destination.supply() - destination.supplyUsed))) * 10);
 		else
 			overlordScore = (int)Math.min(100, (c.getOverlords() * (1 / Math.max(1, c.supply() - c.supplyUsed))) * 10);
-		
+
+//		score = augmentScore(score, (int)c.totalMineralsMined, (int)destination.totalMineralsMined, 1,1, waypoint);
 		score = augmentScore(score, c.getZerglings(), destination.getZerglings(), 25, .25, waypoint);
 		score = augmentScore(score, c.getBanelings(), destination.getBanelings(), 75, .75, waypoint);
 		score = augmentScore(score, c.getRoaches(), destination.getRoaches(), 100, 1.0, waypoint);

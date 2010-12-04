@@ -287,7 +287,9 @@ public class EcBuildOrder extends EcState implements Serializable
 
 	public void accumulateMaterials()
 	{
-		minerals += mineMinerals();
+		double mins = mineMinerals();
+		minerals += mins;
+		totalMineralsMined += mins;
 		gas += mineGas();
 	}
 
