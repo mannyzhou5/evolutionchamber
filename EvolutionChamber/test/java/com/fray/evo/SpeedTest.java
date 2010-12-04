@@ -45,7 +45,7 @@ public class SpeedTest {
 	 * @throws Exception
 	 */
 	private static double finalWaypoint() throws Exception {
-		final int seconds = 5;
+		final int seconds = 20;
 		final int processors = 1;
 
 		EcState destination = new EcState();
@@ -88,7 +88,7 @@ public class SpeedTest {
 	 * @throws Exception
 	 */
 	private static double multipleWaypoints() throws Exception {
-		final int seconds = 5;
+		final int seconds = 20;
 		final int processors = 1;
 
 		ArrayList<EcState> waypoints = new ArrayList<EcState>();
