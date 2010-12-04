@@ -79,7 +79,7 @@ public class EcAutoUpdateTest {
 	@Test
 	public void testBrokenDownload() throws Exception {
 		//create an implementation of the auto-update class which gets the download data from a byte array instead of from the Internet.
-		EcAutoUpdate auto = new EcAutoUpdate("0021", new CallbackImpl()) {
+		EcAutoUpdate auto = new EcAutoUpdate("0013", new CallbackImpl()) {
 			@Override
 			protected FileInfo getFileInputStreamAndLength(String version) throws IOException {
 				String data = "Some data";

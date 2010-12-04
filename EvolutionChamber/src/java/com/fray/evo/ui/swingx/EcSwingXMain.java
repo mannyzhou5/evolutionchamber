@@ -14,7 +14,6 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
 import com.fray.evo.util.EcAutoUpdate;
-import com.fray.evo.util.EcAutoUpdateSS;
 import com.fray.evo.util.EcMessages;
 
 /**
@@ -107,7 +106,7 @@ public class EcSwingXMain
 
 	private static EcAutoUpdate checkForUpdates()
 	{
-		EcAutoUpdate ecUpdater = new EcAutoUpdateSS(EC_VERSION, new EcAutoUpdate.Callback(){
+		EcAutoUpdate ecUpdater = new EcAutoUpdate(EC_VERSION, new EcAutoUpdate.Callback(){
 			@Override
 			public void checksumFailed()
 			{
