@@ -1,10 +1,14 @@
 package com.fray.evo;
 import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
+
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.jgap.FitnessFunction;
 import org.jgap.Gene;
@@ -76,6 +80,7 @@ import com.fray.evo.util.EcYabotEncoder;
 
 public class EcEvolver extends FitnessFunction
 {
+	private static final Logger logger = Logger.getLogger(EcEvolver.class.getName());
 	EcState								source;
 	private EcState						destination;
 	private EcState						mergedDestination;
@@ -182,7 +187,9 @@ public class EcEvolver extends FitnessFunction
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 		return Double.NEGATIVE_INFINITY;
 	}
@@ -198,7 +205,9 @@ public class EcEvolver extends FitnessFunction
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 		return null;
 	}
@@ -214,7 +223,9 @@ public class EcEvolver extends FitnessFunction
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 			return "";
 		}
 	}
@@ -267,7 +278,9 @@ public class EcEvolver extends FitnessFunction
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 			return "";
 		}
 	}
@@ -366,11 +379,15 @@ public class EcEvolver extends FitnessFunction
 			}
 			catch (InstantiationException e)
 			{
-				e.printStackTrace();
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				logger.severe(sw.toString());
 			}
 			catch (IllegalAccessException e)
 			{
-				e.printStackTrace();
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				logger.severe(sw.toString());
 			}
 		}
 		return s;

@@ -8,9 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class EcCacheMap<E, T> implements Map<E, T>
 {
+	private static final Logger logger = Logger.getLogger(EcCacheMap.class.getName());
 	private static final long		serialVersionUID	= 1L;
 
 	HashMap<E, SoftReference<T>>	map					= new HashMap<E, SoftReference<T>>();
@@ -29,11 +31,12 @@ public class EcCacheMap<E, T> implements Map<E, T>
 			return;
 		if (current < lastCleaned + 1000 * 60)
 			return;
-		System.out.println("Cleaning... Before: " + map.size());
+		
+		logger.fine("Cleaning... Before: " + map.size());
 		for (E e : new ArrayList<E>(keySet()))
 			if (getInner(e) == null)
 				remove(e);
-		System.out.println("Cleaning... After: " + map.size());
+		logger.fine("Cleaning... After: " + map.size());
 		lastCleaned = current;
 	}
 

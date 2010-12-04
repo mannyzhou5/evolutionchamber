@@ -1,6 +1,9 @@
 package com.fray.evo;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.jgap.Gene;
 import org.jgap.GeneticOperator;
@@ -14,7 +17,7 @@ import org.jgap.util.ICloneable;
 
 public class EcGeneticUtil
 {
-
+	private static final Logger logger = Logger.getLogger(EcGeneticUtil.class.getName());
 	static GeneticOperator getDeletionOperator(final EvolutionChamber c)
 	{
 		return new GeneticOperator()
@@ -36,7 +39,9 @@ public class EcGeneticUtil
 					}
 					catch (InvalidConfigurationException e)
 					{
-						e.printStackTrace();
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						logger.severe(sw.toString());
 					}
 					arg1.add(chromosome);
 				}
@@ -66,7 +71,9 @@ public class EcGeneticUtil
 					}
 					catch (InvalidConfigurationException e)
 					{
-						e.printStackTrace();
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						logger.severe(sw.toString());
 					}
 					arg1.add(chromosome);
 				}
@@ -99,7 +106,9 @@ public class EcGeneticUtil
 					}
 					catch (InvalidConfigurationException e)
 					{
-						e.printStackTrace();
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						logger.severe(sw.toString());
 					}
 //					EvolutionChamber.displayChromosome(chromosome);
 //					System.out.println();
@@ -132,7 +141,9 @@ public class EcGeneticUtil
 					}
 					catch (InvalidConfigurationException e)
 					{
-						e.printStackTrace();
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						logger.severe(sw.toString());
 					}
 					arg1.add(chromosome);
 				}
@@ -163,8 +174,9 @@ public class EcGeneticUtil
 					}
 					catch (InvalidConfigurationException e)
 					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						logger.severe(sw.toString());
 					}
 				}
 				IChromosome chromosome = arg0.getConfiguration().getSampleChromosome();
@@ -179,8 +191,9 @@ public class EcGeneticUtil
 				}
 				catch (InvalidConfigurationException e)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					logger.severe(sw.toString());
 				}
 			}
 		};
@@ -208,8 +221,9 @@ public class EcGeneticUtil
 					}
 					catch (InvalidConfigurationException e)
 					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						logger.severe(sw.toString());
 					}
 				}
 				IChromosome chromosome = arg0.getConfiguration().getSampleChromosome();
@@ -223,8 +237,9 @@ public class EcGeneticUtil
 				}
 				catch (InvalidConfigurationException e)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					logger.severe(sw.toString());
 				}
 			}
 		};
@@ -254,8 +269,9 @@ public class EcGeneticUtil
 					}
 					catch (InvalidConfigurationException e)
 					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						logger.severe(sw.toString());
 					}
 					arg1.add(chromosome);
 				}
@@ -289,8 +305,9 @@ public class EcGeneticUtil
 					}
 					catch (InvalidConfigurationException e)
 					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						logger.severe(sw.toString());
 					}
 					arg1.add(chromosome);
 				}

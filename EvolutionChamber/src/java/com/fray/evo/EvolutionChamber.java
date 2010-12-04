@@ -10,11 +10,15 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jgap.Chromosome;
 import org.jgap.Configuration;
@@ -32,6 +36,7 @@ import com.fray.evo.util.EcFileSystem;
 
 public class EvolutionChamber
 {
+	private static final Logger logger = Logger.getLogger(EvolutionChamber.class.getName());
 	// The seeds files. (one and a backup, in case execution stops while the
 	// file is half written)
 	private static File			SEEDS_EVO				= null;
@@ -74,7 +79,9 @@ public class EvolutionChamber
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 	}
 
@@ -107,7 +114,9 @@ public class EvolutionChamber
 				}
 				catch (InterruptedException e)
 				{
-					e.printStackTrace();
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					logger.severe(sw.toString());
 				}
 	}
 
@@ -131,7 +140,9 @@ public class EvolutionChamber
 			}
 			catch (InterruptedException e)
 			{
-				e.printStackTrace();
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				logger.severe(sw.toString());
 			}
 		threads.clear();
 	}
@@ -291,14 +302,16 @@ public class EvolutionChamber
 			final Thread thread)
 	{
 		// Stagnation. Suicide village and try again.
-		System.out.println("Restarting thread " + threadIndex);
+		logger.fine("Restarting thread " + threadIndex);
 		try
 		{
 			spawnEvolutionaryChamber(source, destination, threadIndex);
 		}
 		catch (InvalidConfigurationException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 		threads.remove(thread);
 		thread.interrupt();
@@ -360,17 +373,20 @@ public class EvolutionChamber
 
 	public static void displayChromosome(IChromosome fittestChromosome)
 	{
-		int i = 0;
-		for (Gene g : fittestChromosome.getGenes())
-		{
-			if (i++ == 100)
-				break;
-			if (((Integer) g.getAllele()).intValue() >= 10)
-				System.out.print(((char) ((int) 'a' + (Integer) g.getAllele() - 10)));
-			else
-				System.out.print(g.getAllele().toString());
+		if (logger.isLoggable(Level.FINE)){
+			int i = 0;
+			StringBuilder sb = new StringBuilder();
+			for (Gene g : fittestChromosome.getGenes())
+			{
+				if (i++ == 100)
+					break;
+				if (((Integer) g.getAllele()).intValue() >= 10)
+					sb.append(((char) ((int) 'a' + (Integer) g.getAllele() - 10)));
+				else
+					sb.append(g.getAllele().toString());
+			}
+			logger.fine(sb.toString());
 		}
-		System.out.println();
 	}
 
 	private static void displayBuildOrder(final EcEvolver myFunc, IChromosome fittestChromosome)
@@ -400,7 +416,9 @@ public class EvolutionChamber
 				}
 				catch (InvalidConfigurationException e)
 				{
-					e.printStackTrace();
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					logger.severe(sw.toString());
 				}
 				return (int) score;
 			}
@@ -410,12 +428,14 @@ public class EvolutionChamber
 			try
 			{
 				Chromosome c = buildChromosome(conf, bo);
-				System.out.println(myFunc.getFitnessValue(c));
+				logger.fine(myFunc.getFitnessValue(c) + "");
 				population.getPopulation().setChromosome(cindex++, c);
 			}
 			catch (InvalidConfigurationException e)
 			{
-				e.printStackTrace();
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				logger.severe(sw.toString());
 			}
 		}
 	}
@@ -430,11 +450,11 @@ public class EvolutionChamber
 		}
 		catch (FileNotFoundException e)
 		{
-			System.out.println("Seeds file not found.");
+			logger.fine("Seeds file not found.");
 		}
 		catch (InvalidClassException ex)
 		{
-			System.out.println("Seeds file is in old format. Starting over. :-(");
+			logger.fine("Seeds file is in old format. Starting over. :-(");
 		}
 		catch (IOException e)
 		{
@@ -447,25 +467,27 @@ public class EvolutionChamber
 			}
 			catch (FileNotFoundException e1)
 			{
-				System.out.println("Seeds file not found.");
+				logger.fine("Seeds file not found.");
 			}
-			catch (InvalidClassException ex)
+			catch (InvalidClassException e1)
 			{
-				System.out.println("Seeds 2 file is in old format. Starting over. :-(");
+				logger.fine("Seeds 2 file is in old format. Starting over. :-(");
 			}
 			catch (IOException e1)
 			{
-				e1.printStackTrace();
+				StringWriter sw = new StringWriter();
+				e1.printStackTrace(new PrintWriter(sw));
+				logger.severe(sw.toString());
 			}
-			catch (ClassNotFoundException ex)
+			catch (ClassNotFoundException e1)
 			{
-				System.out.println("Seeds 2 file is in old format. Starting over. :-(");
+				logger.fine("Seeds 2 file is in old format. Starting over. :-(");
 			}
 
 		}
 		catch (ClassNotFoundException e)
 		{
-			System.out.println("Seeds file is in old format. Starting over. :-(");
+			logger.fine("Seeds file is in old format. Starting over. :-(");
 		}
 
 	}
@@ -485,7 +507,9 @@ public class EvolutionChamber
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 
 		saveSeeds();
@@ -505,11 +529,15 @@ public class EvolutionChamber
 		}
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 	}
 
@@ -525,7 +553,9 @@ public class EvolutionChamber
 			}
 			catch (InvalidConfigurationException e)
 			{
-				e.printStackTrace();
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				logger.severe(sw.toString());
 			}
 		return genes.toArray(new Gene[genes.size()]);
 	}
@@ -546,8 +576,9 @@ public class EvolutionChamber
 		}
 		catch (CloneNotSupportedException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 		return null;
 	}

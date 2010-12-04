@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.logging.LogManager;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -30,6 +31,16 @@ public class EcSwingXMain
 
 	public static void main(String args[])
 	{
+		//setup the logger
+		try
+		{
+			LogManager.getLogManager().readConfiguration(EcSwingXMain.class.getResourceAsStream("logging.properties"));
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		// run Mac OS X customizations if user is on a Mac
 		// this code must *literally* run before *anything* else
 		// graphics-related...putting this code at the beginning of
@@ -59,14 +70,14 @@ public class EcSwingXMain
 			@Override
 			public void run()
 			{
-				try
-				{
-				//	javax.swing.UIManager.setLookAndFeel("com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
+//				try
+//				{
+//					javax.swing.UIManager.setLookAndFeel("com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace();
+//				}
 
 				final JFrame frame = new JFrame();
 				frame.setTitle(messages.getString("title", EC_VERSION));

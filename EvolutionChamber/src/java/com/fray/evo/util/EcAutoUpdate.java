@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,6 +16,7 @@ import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +26,7 @@ import javax.swing.SwingWorker;
  * Automatically downloads the newest version of the application and runs it.
  */
 public class EcAutoUpdate extends SwingWorker<Void, Void> {
-	
+	private static final Logger logger = Logger.getLogger(EcAutoUpdate.class.getName());
 	/**
 	 * The format of the URL that points to the JAR file.
 	 */
@@ -171,13 +174,17 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 				}
 			}
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		} catch (UnknownHostException e) {
 			// If this happens then our network connection is probably down.
 			// We return the current version as there is no way to download any updates.
 			callback.updateCheckFailed();
 		} catch (IOException e) {
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 		return latestVersion;
 	}
@@ -269,12 +276,18 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 
 			this.jarFile = file.getName();
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		} catch (NoSuchAlgorithmException e) {
 			//thrown if the JVM doesn't recognize the "SHA-1" hash algorithm, which should never happen
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
         return null;
     }
@@ -326,7 +339,9 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 	        try {
 				Runtime.getRuntime().exec( restartCmd );
 			} catch (IOException e) {
-				e.printStackTrace();
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				logger.severe(sw.toString());
 			}
     	} else {
     		callback.checksumFailed();

@@ -22,10 +22,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -66,6 +69,7 @@ import com.fray.evo.util.UpgradeLibrary;
 //TODO: Refactor this monster. - Lomilar
 public class EcSwingX extends JXPanel implements EcReportable
 {
+	private static final Logger logger = Logger.getLogger(EcSwingX.class.getName());
 	private JTextArea			outputText;
 	private JLabel				status1;
 	private JLabel				status2;
@@ -331,15 +335,21 @@ public class EcSwingX extends JXPanel implements EcReportable
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 		catch (InstantiationException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 		catch (IllegalAccessException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 	}
 
@@ -528,7 +538,9 @@ public class EcSwingX extends JXPanel implements EcReportable
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 	}
 
@@ -1706,13 +1718,17 @@ public class EcSwingX extends JXPanel implements EcReportable
 			ec.setDestination(finalDestination);
 			ec.go();
 		}
-		catch (InvalidConfigurationException e1)
+		catch (InvalidConfigurationException e)
 		{
-			e1.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 	}
 
@@ -1765,7 +1781,9 @@ public class EcSwingX extends JXPanel implements EcReportable
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 	}
 

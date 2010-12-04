@@ -2,11 +2,14 @@ package com.fray.evo;
 
 import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
@@ -18,6 +21,7 @@ import com.fray.evo.util.UpgradeLibrary;
 
 public class EcState implements Serializable
 {
+	private static final Logger logger = Logger.getLogger(EcState.class.getName());
 	public EcSettings	settings	= new EcSettings();
         protected HashSet<Upgrade> upgrades;
         protected BuildingCollection buildings;
@@ -95,8 +99,9 @@ public class EcState implements Serializable
 			}
 			catch (CloneNotSupportedException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				logger.severe(sw.toString());
 			}
 		}
 
@@ -113,8 +118,9 @@ public class EcState implements Serializable
 		}
 		catch (CloneNotSupportedException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.severe(sw.toString());
 		}
 
 		s.settings = settings;

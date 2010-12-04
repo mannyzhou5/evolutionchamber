@@ -4,8 +4,10 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public abstract class Utf8ResourceBundle {
+	private static final Logger logger = Logger.getLogger(Utf8ResourceBundle.class.getName());
 
 public static final ResourceBundle getBundle(String baseName) {
   ResourceBundle bundle = ResourceBundle.getBundle(baseName);
@@ -53,7 +55,7 @@ private static class Utf8PropertyResourceBundle extends ResourceBundle {
     } 
     catch (NullPointerException n)
     {
-    	System.out.println("Externalize " + key);
+    	logger.severe("Externalize " + key);
 //    	throw n;
     	return key;
     }
