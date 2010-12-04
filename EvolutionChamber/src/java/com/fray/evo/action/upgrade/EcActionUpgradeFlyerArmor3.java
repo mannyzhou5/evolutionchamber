@@ -55,10 +55,4 @@ public class EcActionUpgradeFlyerArmor3 extends EcActionUpgrade
 		s.spiresInUse--;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
 }

@@ -37,11 +37,4 @@ public class EcActionBuildBaneling extends EcActionBuildUnit implements Serializ
         return isPossibleResources(s);
     }
 
-    @Override
-    public List<EcAction> requirements(EcState destination) {
-        ArrayList<EcAction> l = new ArrayList<EcAction>();
-        l.add(new EcActionBuildBanelingNest());
-        l.add(new EcActionBuildZergling());
-        return l;
-    }
 }

@@ -42,11 +42,4 @@ public class EcActionBuildBroodLord extends EcActionBuildUnit implements Seriali
 			return true;
 		return super.isInvalid(s);
 	}
-
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
 }

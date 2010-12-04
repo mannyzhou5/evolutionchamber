@@ -49,11 +49,4 @@ public class EcActionBuildNydusWorm extends EcActionBuildBuilding implements Ser
 		return super.isInvalid(s);
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildNydusNetwork());
-		return l;
-	}
 }

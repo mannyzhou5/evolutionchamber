@@ -40,12 +40,5 @@ public class EcActionBuildOverseer extends EcActionBuildUnit implements Serializ
 		return super.isPossible(s);
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildLair());
-		return l;
-	}
 
 }

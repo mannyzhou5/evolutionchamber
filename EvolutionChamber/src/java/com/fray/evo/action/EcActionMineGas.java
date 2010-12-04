@@ -64,11 +64,4 @@ public class EcActionMineGas extends EcAction implements Serializable
 		return true;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
-
 }

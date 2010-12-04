@@ -52,10 +52,5 @@ public class EcActionBuildDrone extends EcActionBuildUnit implements Serializabl
 		return super.isInvalid(s);
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		return new ArrayList<EcAction>();
-	}
 
 }

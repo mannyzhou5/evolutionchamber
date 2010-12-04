@@ -50,10 +50,4 @@ public class EcActionBuildHive extends EcActionBuildBuilding implements Serializ
 		return super.isInvalid(s);
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
 }

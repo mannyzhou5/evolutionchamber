@@ -43,12 +43,4 @@ public class EcActionUpgradeGlialReconstitution extends EcActionUpgrade
 		s.roachWarrensInUse--;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildRoachWarren());
-		l.add(new EcActionBuildLair());
-		return l;
-	}
 }

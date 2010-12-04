@@ -51,12 +51,4 @@ public class EcActionUpgradeMelee1 extends EcActionUpgrade
 		s.evolutionChambersInUse--;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildEvolutionChamber());
-		l.add(new EcActionBuildExtractor());
-		return l;
-	}
 }

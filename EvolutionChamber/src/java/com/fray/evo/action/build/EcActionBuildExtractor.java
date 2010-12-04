@@ -50,16 +50,4 @@ public class EcActionBuildExtractor extends EcActionBuildBuilding implements Ser
 		return false;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		if (destination.settings.pullWorkersFromGas)
-		{
-			l.add(new EcActionMineGas());
-			l.add(new EcActionMineMineral());
-		}
-		return l;
-	}
-
 }

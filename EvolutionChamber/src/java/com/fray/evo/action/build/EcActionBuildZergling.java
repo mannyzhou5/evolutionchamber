@@ -43,11 +43,4 @@ public class EcActionBuildZergling extends EcActionBuildUnit implements Serializ
 		return false;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildSpawningPool());
-		return l;
-	}
 }

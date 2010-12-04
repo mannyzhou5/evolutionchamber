@@ -27,10 +27,4 @@ public class EcActionBuildBanelingNest extends EcActionBuildBuilding implements 
 		return false;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
 }

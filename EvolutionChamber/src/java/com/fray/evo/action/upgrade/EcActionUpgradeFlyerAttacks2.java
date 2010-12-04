@@ -54,12 +54,4 @@ public class EcActionUpgradeFlyerAttacks2 extends EcActionUpgrade
 		s.spiresInUse--;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildSpire());
-		l.add(new EcActionUpgradeFlyerAttacks1());
-		return l;
-	}
 }

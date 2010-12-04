@@ -49,12 +49,4 @@ public class EcActionUpgradeFlyerArmor1 extends EcActionUpgrade
 		superAfterTime(s, e);
 		s.spiresInUse--;
 	}
-
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildSpire());
-		return l;
-	}
 }

@@ -27,11 +27,4 @@ public class EcActionBuildSpire extends EcActionBuildBuilding implements Seriali
 		return super.isInvalid(s);
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildLair());
-		return l;
-	}
 }

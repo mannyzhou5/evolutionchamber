@@ -55,13 +55,4 @@ public class EcActionUpgradeMissile2 extends EcActionUpgrade
 		s.evolutionChambersInUse--;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildEvolutionChamber());
-		l.add(new EcActionBuildLair());
-		l.add(new EcActionUpgradeMissile1());
-		return l;
-	}
 }

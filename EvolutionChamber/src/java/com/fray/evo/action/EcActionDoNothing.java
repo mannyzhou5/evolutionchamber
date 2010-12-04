@@ -22,10 +22,4 @@ public class EcActionDoNothing extends EcAction
 		return true;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		return new ArrayList<EcAction>();
-	}
-
 }

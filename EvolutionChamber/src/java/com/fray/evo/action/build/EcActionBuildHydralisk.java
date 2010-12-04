@@ -25,10 +25,4 @@ public class EcActionBuildHydralisk extends EcActionBuildUnit implements Seriali
 		return false;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
 }

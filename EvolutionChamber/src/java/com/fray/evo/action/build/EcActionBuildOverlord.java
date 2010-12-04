@@ -17,11 +17,4 @@ public class EcActionBuildOverlord extends EcActionBuildUnit implements Serializ
 		super(UnitLibrary.Overlord);
 	}
 
-
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
 }

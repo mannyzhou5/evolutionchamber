@@ -54,11 +54,4 @@ public class EcActionUpgradeMissile3 extends EcActionUpgrade
 		superAfterTime(s, e);
 		s.evolutionChambersInUse--;
 	}
-
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
 }

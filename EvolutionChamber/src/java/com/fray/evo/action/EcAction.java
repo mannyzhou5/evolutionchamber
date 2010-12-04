@@ -64,8 +64,6 @@ public abstract class EcAction implements Serializable
 
 	public abstract boolean isPossible(EcBuildOrder s);
 
-	public abstract List<EcAction> requirements(EcState destination);
-
 	public static Integer findAllele(EcAction a)
 	{
 		Integer allele = null;

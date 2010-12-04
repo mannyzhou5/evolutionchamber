@@ -41,13 +41,4 @@ public class EcActionUpgradeMetabolicBoost extends EcActionUpgrade
 		superAfterTime(s, e);
 		s.spawningPoolsInUse--;
 	}
-
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildSpawningPool());
-		l.add(new EcActionBuildExtractor());
-		return l;
-	}
 }

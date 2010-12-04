@@ -47,11 +47,4 @@ public class EcActionWait extends EcAction implements Serializable
 		return go;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
-
 }

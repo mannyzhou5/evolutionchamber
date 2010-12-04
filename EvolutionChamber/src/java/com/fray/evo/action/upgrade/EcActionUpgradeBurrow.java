@@ -45,12 +45,4 @@ public class EcActionUpgradeBurrow extends EcActionUpgrade
 	{
 		superAfterTime(s, e);
 	}
-
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildLair());
-		return l;
-	}
 }

@@ -52,13 +52,4 @@ public class EcActionBuildGreaterSpire extends EcActionBuildBuilding implements 
 		return super.isInvalid(s);
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildSpire());
-		l.add(new EcActionBuildHive());
-		return l;
-	}
-
 }

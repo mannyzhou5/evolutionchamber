@@ -64,11 +64,4 @@ public class EcActionMineMineral extends EcAction implements Serializable
 		return false;
 	}
 
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		return l;
-	}
-
 }

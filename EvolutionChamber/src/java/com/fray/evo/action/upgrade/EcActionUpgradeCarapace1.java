@@ -50,13 +50,4 @@ public class EcActionUpgradeCarapace1 extends EcActionUpgrade
 		superAfterTime(s, e);
 		s.evolutionChambersInUse--;
 	}
-
-	@Override
-	public List<EcAction> requirements(EcState destination)
-	{
-		ArrayList<EcAction> l = new ArrayList<EcAction>();
-		l.add(new EcActionBuildEvolutionChamber());
-		l.add(new EcActionBuildExtractor());
-		return l;
-	}
 }
