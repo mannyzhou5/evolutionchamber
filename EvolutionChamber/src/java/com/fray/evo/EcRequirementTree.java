@@ -19,6 +19,7 @@ import com.fray.evo.action.build.EcActionBuildZergling;
 import com.fray.evo.util.Buildable;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.Unit;
+import com.fray.evo.util.UnitLibrary;
 import com.fray.evo.util.Upgrade;
 import java.util.Map.Entry;
 
@@ -77,17 +78,27 @@ public class EcRequirementTree {
         }
     }
 
-    private static void require(Buildable requirement, EcState destination,Map<Integer, Class> map) {
+    private static void require(Buildable requirement, EcState destination, Map<Integer, Class> map) {
+        if(requirement == UnitLibrary.Larva){
+            return;
+        }
         if (requirement.getClass() == Upgrade.class) {
             destination.AddUpgrade((Upgrade) requirement);
+
         } else if (requirement.getClass() == Building.class) {
             destination.RequireBuilding((Building) requirement);
         } else if (requirement.getClass() == Unit.class) {
             destination.RequireUnit((Unit) requirement);
         }
-        add(map,ActionManager.getActionFor(requirement));
+        for (int i = 0; i < requirement.getRequirement().size(); i++) {
+            require(requirement.getRequirement().get(i), destination, map);
+        }
+        if(requirement.getConsumes()!=null){
+            require(requirement.getConsumes(), destination, map);
+        }
+        add(map, ActionManager.getActionFor(requirement));
         for (Buildable buildable : requirement.getRequirement()) {
-            require(buildable, destination,map);
+            require(buildable, destination, map);
         }
 
     }
