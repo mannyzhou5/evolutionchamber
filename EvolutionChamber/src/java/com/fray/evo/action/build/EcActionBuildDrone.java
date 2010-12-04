@@ -44,13 +44,4 @@ public class EcActionBuildDrone extends EcActionBuildUnit implements Serializabl
 		});
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.minerals >= 50 && !s.hasSupply(1))
-			return true;
-		return super.isInvalid(s);
-	}
-
-
 }

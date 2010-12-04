@@ -22,14 +22,6 @@ public class EcActionBuildBaneling extends EcActionBuildUnit implements Serializ
     }
 
     @Override
-    public boolean isInvalid(EcBuildOrder s) {
-        if (s.getBanelingNest() == 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public boolean isPossible(EcBuildOrder s) {
         if (s.getZerglings() < 1) {
             return false;

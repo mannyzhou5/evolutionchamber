@@ -24,7 +24,7 @@ public class EcActionUpgradeFlyerAttacks3 extends EcActionUpgrade
 	{
 		if (s.getSpire() == 0)
 			return true;
-		if (s.getHives() == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 )
 			return true;
 		if (s.isFlyerAttack2() == false)
 			return true;

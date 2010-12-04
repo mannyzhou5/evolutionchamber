@@ -24,7 +24,7 @@ public class EcActionUpgradeCarapace3 extends EcActionUpgrade
 	{
 		if (s.getEvolutionChambers() == 0)
 			return true;
-		if (s.getHives() == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 )
 			return true;
 		if (s.isArmor2() == false)
 			return true;

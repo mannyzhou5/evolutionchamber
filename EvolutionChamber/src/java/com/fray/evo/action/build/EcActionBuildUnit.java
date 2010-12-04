@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.Buildable;
+import com.fray.evo.util.Building;
 import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.Upgrade;
 
 public abstract class EcActionBuildUnit extends EcActionBuild implements Serializable
 {
@@ -60,5 +63,31 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
         }
 
 	protected void preExecute(EcBuildOrder s){}
+
+	@Override
+	public boolean isInvalid(EcBuildOrder s)
+	{
+            for(Buildable req:((Unit)buildable).getRequirement()){
+                if(req.getClass() == Building.class){
+                    if(s.getBuildingCount((Building)req) < 1){
+                        return true;
+                    }
+                }
+                if(req.getClass() == Unit.class){
+                    if(s.getUnitCount((Unit)req) < 1){
+                        return true;
+                    }
+                }
+                if(req.getClass() == Upgrade.class){
+                    if(!s.isUpgrade((Upgrade)req)){
+                        return true;
+                    }
+                }
+            }
+            if(!s.hasSupply(((Unit)buildable).getSupply())){
+                return true;
+            }
+            return false;
+	}
 
 }

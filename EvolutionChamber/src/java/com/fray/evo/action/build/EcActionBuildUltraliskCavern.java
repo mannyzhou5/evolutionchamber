@@ -19,7 +19,7 @@ public class EcActionBuildUltraliskCavern extends EcActionBuildBuilding implemen
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.getHives() == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 )
 			return true;
 		if (s.getUltraliskCavern() == 1)
 			return true;

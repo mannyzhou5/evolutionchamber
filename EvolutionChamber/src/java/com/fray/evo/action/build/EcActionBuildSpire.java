@@ -20,7 +20,7 @@ public class EcActionBuildSpire extends EcActionBuildBuilding implements Seriali
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.getLairs() == 0 && s.evolvingLairs == 0 && s.getHives() == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0  && s.getHives() == 0 )
 			return true;
 		if (s.getSpire() == 2)
 			return true;

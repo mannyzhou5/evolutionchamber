@@ -17,12 +17,4 @@ public class EcActionBuildInfestor extends EcActionBuildUnit implements Serializ
 		super(UnitLibrary.Infestor);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getInfestationPit() == 0)
-			return true;
-		return false;
-	}
-
 }

@@ -17,12 +17,4 @@ public class EcActionBuildRoach extends EcActionBuildUnit implements Serializabl
 		super(UnitLibrary.Roach);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getRoachWarrens() == 0)
-			return true;
-		return false;
-	}
-
 }

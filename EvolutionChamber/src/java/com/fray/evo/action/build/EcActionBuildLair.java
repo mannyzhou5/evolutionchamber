@@ -21,15 +21,15 @@ public class EcActionBuildLair extends EcActionBuildBuilding implements Serializ
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{
-		s.RemoveBuilding(BuildingLibrary.Hatchery);
-		s.evolvingHatcheries += 1;
+		s.busyMainBuildings++;
 	}
 
 	@Override
 	protected void postExecute(EcBuildOrder s, EcEvolver e)
 	{
+            s.RemoveBuilding(BuildingLibrary.Hatchery);
 		s.AddBuilding((Building) buildable);
-		s.evolvingHatcheries -= 1;
+		s.busyMainBuildings--;
 	}
 
 	@Override

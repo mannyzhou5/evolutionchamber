@@ -10,6 +10,7 @@ import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
+import org.jdesktop.swingx.plaf.BusyLabelUI;
 
 public class EcActionBuildHive extends EcActionBuildBuilding implements Serializable
 {
@@ -20,22 +21,21 @@ public class EcActionBuildHive extends EcActionBuildBuilding implements Serializ
 
 	@Override
 	protected void preExecute(EcBuildOrder s)
-	{
-		s.RemoveBuilding(BuildingLibrary.Lair);
-		s.evolvingLairs += 1;
+	{		
+		s.busyMainBuildings++;
 	}
 
 	@Override
 	protected void postExecute(EcBuildOrder s, EcEvolver e)
 	{
+            s.RemoveBuilding(BuildingLibrary.Lair);
 		s.AddBuilding((Building) buildable);
-		s.evolvingLairs -= 1;
 	}
 
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.getLairs() < 1)
+		if (s.getLairs() < 1 || s.getLairs() <= s.busyLairs.size())
 			return false;
 		return super.isPossible(s);
 	}

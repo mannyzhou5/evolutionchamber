@@ -21,6 +21,8 @@ public class EcBuildOrder extends EcState implements Serializable
 	public int				queensBuilding		= 0;
 	public int				spiresInUse			= 0;
 	public int				evolutionChambersInUse;
+        public int                              busyMainBuildings        = 0;
+        public ArrayList<EcAction>              busyLairs                = new ArrayList<EcAction>();
 	public boolean 			droneIsScouting		= false;
 
 	transient ActionList	futureAction		= new ActionList();
@@ -304,52 +306,21 @@ public class EcBuildOrder extends EcState implements Serializable
 		return (bases() + hatcheriesBuilding) * 2;
 	}
 
-	public void consumeHatch(int seconds)
+        public void consumeHatch(EcAction action)
 	{
-		boolean usehatch = false;
-		boolean uselair = false;
-		if (getHatcheries() > 0)
-		{
-			RemoveBuilding(BuildingLibrary.Hatchery);
-			evolvingHatcheries++;
-			usehatch = true;
-		}
-		else if (getLairs() > 0)
-		{
-			RemoveBuilding(BuildingLibrary.Lair);
-			evolvingLairs++;
-			uselair = true;
-		}
-		else
-		{
-			RemoveBuilding(BuildingLibrary.Hive);
-			evolvingHives++;
-		}
-		final boolean useHatch = usehatch;
-		final boolean useLair = uselair;
-		addFutureAction(seconds, new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				if (useHatch)
-				{
-					evolvingHatcheries--;
-					AddBuilding(BuildingLibrary.Hatchery);
-				}
-				else if (useLair)
-				{
-					evolvingLairs--;
-					AddBuilding(BuildingLibrary.Lair);
-				}
-				else
-				{
-					evolvingHives--;
-					AddBuilding(BuildingLibrary.Hive);
-				}
-			}
-		});
+		busyMainBuildings++;
+                if(getHatcheries() - busyMainBuildings < 0){
+                    busyLairs.add(action);
+                }
 	}
+
+    public void unconsumeHatch(EcAction action) {
+        busyMainBuildings--;
+        if(busyLairs.contains(action)){
+            busyLairs.remove(action);
+        }
+    }
+
 
 
 }

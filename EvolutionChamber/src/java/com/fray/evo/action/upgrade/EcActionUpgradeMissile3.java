@@ -24,7 +24,7 @@ public class EcActionUpgradeMissile3 extends EcActionUpgrade
 	{
 		if (s.getEvolutionChambers() == 0)
 			return true;
-		if (s.getHives() == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 )
 			return true;
 		if (s.isMissile2() == false)
 			return true;

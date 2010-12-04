@@ -17,12 +17,4 @@ public class EcActionBuildUltralisk extends EcActionBuildUnit implements Seriali
 		super(UnitLibrary.Ultralisk);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getUltraliskCavern() == 0)
-			return true;
-		return false;
-	}
-
 }

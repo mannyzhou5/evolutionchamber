@@ -43,7 +43,7 @@ public class EcActionBuildGreaterSpire extends EcActionBuildBuilding implements 
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.getHives() == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 )
 			return true;
 		if (s.getSpire() == 0)
 			return true;

@@ -34,7 +34,7 @@ public class EcActionBuildBroodLord extends EcActionBuildUnit implements Seriali
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.getHives() == 0 && s.evolvingHives == 0)
+		if (s.getHives() == 0 )
 			return true;
 		if (s.getGreaterSpire() == 0)
 			return true;

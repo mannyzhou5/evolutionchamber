@@ -10,10 +10,11 @@ import java.util.List;
 
 public class EcState implements Serializable
 {
-	public EcSettings			settings	= new EcSettings();
-	private HashSet<Upgrade>	upgrades;
-	private BuildingCollection	buildings;
-	private UnitCollection		units;
+	public EcSettings	settings	= new EcSettings();
+        protected HashSet<Upgrade> upgrades;
+        protected BuildingCollection buildings;
+        protected UnitCollection units;
+
 
 	public EcState()
 	{
@@ -38,13 +39,12 @@ public class EcState implements Serializable
 	public double				preTimeScore		= 0.0;
 	public double				timeBonus			= 0.0;
 
-	public double				minerals			= 50;
-	public double				gas					= 0;
-	public double				supplyUsed			= 6;
-	public int					evolvingHatcheries	= 0;
-	public int					evolvingLairs		= 0;
-	public int					evolvingHives		= 0;
-	public int					requiredBases		= 1;
+
+	public double					minerals			= 50;
+	public double					gas					= 0;
+	public double					supplyUsed			= 6;
+	public int						requiredBases		= 1;
+
 
 	private int					larva				= 3;
 
@@ -260,8 +260,9 @@ public class EcState implements Serializable
 
 	public int bases()
 	{
-		return buildings.get(BuildingLibrary.Hatchery) + buildings.get(BuildingLibrary.Lair) + evolvingHatcheries
-				+ evolvingLairs + buildings.get(BuildingLibrary.Hive) + evolvingHives;
+		return buildings.get(BuildingLibrary.Hatchery) + buildings.get(BuildingLibrary.Lair) +
+                        buildings.get(BuildingLibrary.Hive) ;
+
 	}
 
 	public int productionTime()
@@ -280,22 +281,21 @@ public class EcState implements Serializable
 
 	public int usedDrones()
 	{
-		return (evolvingHatcheries + evolvingLairs + evolvingHives + (getHatcheries() - 1) + getLairs() + getHives()
-				+ getSpawningPools() + getEvolutionChambers() + getRoachWarrens() + getHydraliskDen()
-				+ getBanelingNest() + getInfestationPit() + getUltraliskCavern() + getGasExtractors() + getSpire()
-				+ getSpineCrawlers() + getSporeCrawlers() + getNydusWorm());
+		return ((getHatcheries() - 1) + getLairs() + getHives() + getSpawningPools()
+				+ getEvolutionChambers() + getRoachWarrens() + getHydraliskDen() + getBanelingNest() + getInfestationPit() + getUltraliskCavern()
+				+ getGasExtractors() + getSpire() + getSpineCrawlers() + getSporeCrawlers() + getNydusWorm());
+
 	}
 
 	public int usedDronesClean()
 	{
-		int total = (evolvingHatcheries + evolvingLairs + evolvingHives + -1);
-		for (Building building : BuildingLibrary.allZergBuildings)
-		{
-			if (building.getConsumes() == UnitLibrary.Drone)
-			{
-				total += buildings.get(building);
-			}
-		}
+                int total =  -1 ;
+                for(Building building: BuildingLibrary.allZergBuildings){
+                    if(building.getConsumes() == UnitLibrary.Drone){
+                        total += buildings.get(building);
+                    }
+                }
+
 		return total;
 	}
 
@@ -599,6 +599,22 @@ public class EcState implements Serializable
 		buildings.put(building, buildings.get(building) + 1);
 	}
 
+        public int getBuildingCount(Building building){
+            return buildings.getById(building.getId());
+        }
+
+        public int getUnitCount(Unit unit){
+            return units.getById(unit.getId());
+        }
+
+        public boolean isUpgrade(Upgrade upgrade){
+            return upgrades.contains(upgrade);
+        }
+    void RequireUnit(Unit unit) {
+            if(!units.containsKey(unit) || units.get(unit) < 1 ){
+                units.put(unit, 1);
+            }
+    }
 	public void RemoveBuilding(Building building)
 	{
 		buildings.put(building, buildings.get(building) - 1);
@@ -612,13 +628,6 @@ public class EcState implements Serializable
 		}
 	}
 
-	void RequireUnit(Unit unit)
-	{
-		if (!units.containsKey(unit) || units.get(unit) < 1)
-		{
-			units.put(unit, 1);
-		}
-	}
 
 	public HashMap<Building, Integer> getBuildings()
 	{

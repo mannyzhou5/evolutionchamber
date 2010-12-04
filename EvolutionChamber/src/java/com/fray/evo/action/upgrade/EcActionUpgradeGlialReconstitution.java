@@ -31,7 +31,7 @@ public class EcActionUpgradeGlialReconstitution extends EcActionUpgrade
 	{
 		if (s.getRoachWarrens()-s.roachWarrensInUse == 0)
 			return true;
-		if (s.getLairs() == 0 && s.evolvingLairs == 0 && s.getHives() == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0 && s.getHives() == 0)
 			return true;
 		return false;
 	}

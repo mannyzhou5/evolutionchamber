@@ -23,12 +23,13 @@ public class EcActionBuildQueen extends EcActionBuildUnit implements Serializabl
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{
-		s.consumeHatch(50);
+		s.consumeHatch(this);
 	}
 	
 	@Override
 	protected void postExecute(final EcBuildOrder s, final EcEvolver e)
 	{
+            s.unconsumeHatch(this);
 		s.AddUnits((Unit) buildable, 1);
 		if (s.hatcheriesSpawningLarva < s.bases())
 		{
@@ -77,7 +78,7 @@ public class EcActionBuildQueen extends EcActionBuildUnit implements Serializabl
 	{
 		if (s.getSpawningPools() == 0)
 			return true;
-		if (s.getHatcheries() + s.getLairs() + s.getHives() == 0)
+		if (s.getHatcheries() + s.getLairs() + s.getHives() == s.busyMainBuildings)
 			return true;
 		return false;
 	}

@@ -58,7 +58,7 @@ public class ZergLibrary {
         final public static Unit Zergling = new Unit(unitCount++,"Zergling", 50, 0, 1, 24.0, Larva, createList(SpawningPool));
 
     final public static Unit Roach = new Unit(unitCount++,"Roach", 75, 25, 2, 27, Larva, createList(RoachWarren));
-    final public static Unit Queen = new Unit(unitCount++,"Queen", 150, 0, 2, 50, Larva, createList(SpawningPool));
+    final public static Unit Queen = new Unit(unitCount++,"Queen", 150, 0, 2, 50, null, createList(SpawningPool));
     final public static Unit Baneling = new Unit(unitCount++,"Baneling", 25, 25, 0.5, 20, Zergling, createList(BanelingNest));
     final public static Unit Mutalisk = new Unit(unitCount++,"Mutalisk", 100, 100, 2, 33, Larva, createList(Spire));
     final public static Unit Hydralisk = new Unit(unitCount++,"Hydralisk", 100, 50, 2, 33, Larva, createList(HydraliskDen));

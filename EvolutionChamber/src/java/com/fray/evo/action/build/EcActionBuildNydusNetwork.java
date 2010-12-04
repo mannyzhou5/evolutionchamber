@@ -21,7 +21,7 @@ public class EcActionBuildNydusNetwork extends EcActionBuildBuilding implements 
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-		if (s.getLairs() == 0 && s.evolvingLairs == 0 && s.getHives() == 0 && s.evolvingHives == 0)
+		if (s.getLairs() == 0  && s.getHives() == 0)
 			return true;
 		if (s.getNydusNetwork() == 2)
 			return true;
