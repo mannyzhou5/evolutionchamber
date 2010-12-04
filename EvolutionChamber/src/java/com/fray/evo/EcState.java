@@ -83,7 +83,7 @@ public class EcState implements Serializable
 		assign(s);
 		return s;
 	}
-
+	
 	protected void assign(EcState s)
 	{
 		for (EcState st : waypoints)
@@ -573,12 +573,20 @@ public class EcState implements Serializable
 			return currWaypoint - 1;
 		return -1;
 	}
-
-	public int getWaypointActions(int index)
-	{
+	
+	public void waypointReset() {
+		currWaypoint = 0;
+	}
+	
+	public int getWaypointActions(int index) {
 		return waypoints.get(index).getEstimatedActions();
 	}
 
+	public EcState getMergedWaypoints() {
+		if( mergedWaypoints == null )
+			mergedWaypoints = getMergedState();
+		return mergedWaypoints;
+	}
 	public HashSet<Upgrade> getUpgrades()
 	{
 		return upgrades;

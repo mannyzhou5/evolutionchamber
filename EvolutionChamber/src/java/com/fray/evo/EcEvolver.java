@@ -224,6 +224,7 @@ public class EcEvolver extends FitnessFunction
 		StringBuilder sb = new StringBuilder();
 		
 		int i = 0;
+		destination.waypointReset();
 		for (EcAction a : s.getActions())
 		{
 			i++;
@@ -238,7 +239,7 @@ public class EcEvolver extends FitnessFunction
 					return messages.getString("NoFinishedBuildYet");
 				}
 				
-				if (destination.isSatisfied(s))
+				if (destination.getMergedWaypoints().isSatisfied(s))
 				{
 					return sb.toString();
 				}
@@ -279,6 +280,7 @@ public class EcEvolver extends FitnessFunction
 		ArrayList<String> warnings = new ArrayList<String>();
 		
 		int i = 0;
+		destination.waypointReset();
 		for (EcAction a : s.getActions())
 		{
 			i++;
@@ -293,7 +295,7 @@ public class EcEvolver extends FitnessFunction
 					return messages.getString("NoFinishedBuildYet")+"\n"+EcUtil.toString(warnings);
 				}
 				
-				if (destination.isSatisfied(s))
+				if (destination.getMergedWaypoints().isSatisfied(s))
 				{
 					String yabot = encoder.done();
 					final int max = 770;
@@ -381,6 +383,7 @@ public class EcEvolver extends FitnessFunction
 	public EcBuildOrder doEvaluate(EcBuildOrder s)
 	{
 		int i = 0;
+		destination.waypointReset();
 		for (EcAction a : s.getActions())
 		{
 			i++;
@@ -425,7 +428,7 @@ public class EcEvolver extends FitnessFunction
 							log.println("----------------");
 						}
 				}
-				if (destination.isSatisfied(s))
+				if (destination.getMergedWaypoints().isSatisfied(s))
 				{ 
 					if (debug)
 					{
