@@ -21,7 +21,7 @@ public class EcActionBuildBroodLord extends EcActionBuildUnit implements Seriali
     @Override
 	protected void preExecute(final EcBuildOrder s)
 	{
-		s.RemoveUnits((Unit)buildable, 1);
+		s.RemoveUnits((Unit)getConsumes(), 1);
 	}
 	@Override
 	public boolean isPossible(EcBuildOrder s)

@@ -22,7 +22,7 @@ public class EcActionBuildGreaterSpire extends EcActionBuildBuilding implements 
 	protected void preExecute(EcBuildOrder s)
 	{
 		s.evolvingSpires += 1;
-		s.RemoveBuilding((Building) buildable);
+		s.RemoveBuilding((Building) getConsumes());
 	}
 	
 	@Override

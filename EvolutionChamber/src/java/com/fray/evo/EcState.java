@@ -627,12 +627,21 @@ public class EcState implements Serializable
 
         public boolean isUpgrade(Upgrade upgrade){
             return upgrades.contains(upgrade);
-        }
-    void RequireUnit(Unit unit) {
-            if(!units.containsKey(unit) || units.get(unit) < 1 ){
-                units.put(unit, 1);
-            }
-    }
+	}
+
+	void RequireUnit(Unit unit)
+	{
+		if (unit == UnitLibrary.Zergling)
+			return; //Extra zerglings should not be required for banelings.
+		if (unit == UnitLibrary.Corruptor)
+			return; //Extra corruptors should not be required for brood lords.
+		if (unit == UnitLibrary.Overlord)
+			return; //Extra overlords should not be required for overseers.
+		if (!units.containsKey(unit) || units.get(unit) < 1)
+		{
+			units.put(unit, 1);
+		}
+	}
 	public void RemoveBuilding(Building building)
 	{
 		buildings.put(building, buildings.get(building) - 1);
@@ -640,6 +649,12 @@ public class EcState implements Serializable
 
 	public void RequireBuilding(Building building)
 	{
+		if (building == BuildingLibrary.Spire)
+			return; //Exemption due to greater spire satisfying spire.
+		if (building == BuildingLibrary.Lair)
+			return; //Exemption due to hive satisfying lair.
+		if (building == BuildingLibrary.Hatchery)
+			return; //Exemption due to lair satisfying hatchery.
 		if (buildings.get(building) < 1)
 		{
 			buildings.put(building, 1);

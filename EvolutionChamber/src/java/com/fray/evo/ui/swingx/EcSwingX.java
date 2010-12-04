@@ -219,11 +219,11 @@ public class EcSwingX extends JXPanel implements EcReportable
 			JPanel right = new JPanel(new GridBagLayout());
 			addOutputContainer(right);
 			addOutputButtons(right);
-			outside.setRightComponent(right);
+			outside.setRightComponent(new JScrollPane(right));
 		}
 
 		add(outside);
-		outside.setDividerLocation(395);
+		outside.setDividerLocation(430);
 	}
 	
 	private void refreshTabs(){

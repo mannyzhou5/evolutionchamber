@@ -41,8 +41,8 @@ public class BuildingLibrary {
             allZergBuildings = new ArrayList<Building>();
             allZergBuildings.add(Hatchery);
             allZergBuildings.add(Extractor);
-            allZergBuildings.add(ZergLibrary.Lair);
             allZergBuildings.add(Hive);
+            allZergBuildings.add(ZergLibrary.Lair);
             allZergBuildings.add(SpawningPool);
             allZergBuildings.add(RoachWarren);
             allZergBuildings.add(HydraliskDen);
