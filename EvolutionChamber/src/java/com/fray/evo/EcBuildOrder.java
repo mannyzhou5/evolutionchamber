@@ -3,11 +3,10 @@ package com.fray.evo;
 import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
 
-import com.fray.evo.util.ActionList;
 import com.fray.evo.action.EcAction;
-import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.ActionList;
 
 public final class EcBuildOrder extends EcState implements Serializable
 {

@@ -2,7 +2,11 @@ package com.fray.evo;
 
 import java.io.Serializable;
 
-import com.fray.evo.fitness.*;
+import com.fray.evo.fitness.EcEconFitness;
+import com.fray.evo.fitness.EcFitness;
+import com.fray.evo.fitness.EcFitnessType;
+import com.fray.evo.fitness.EcStandardFitness;
+import com.fray.evo.util.Race;
 
 public class EcSettings implements Serializable
 {
@@ -16,6 +20,7 @@ public class EcSettings implements Serializable
 	public int minimumPoolSupply = 2;
 	public int minimumExtractorSupply = 2;
 	public int minimumHatcherySupply = 2;
+	public Race race = Race.Zerg;
 
 
 	

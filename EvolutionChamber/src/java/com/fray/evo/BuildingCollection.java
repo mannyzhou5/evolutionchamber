@@ -5,11 +5,13 @@
 
 package com.fray.evo;
 
-import com.fray.evo.util.Building;
-import com.fray.evo.util.BuildingLibrary;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
+
+import com.fray.evo.util.Building;
+import com.fray.evo.util.Race;
+import com.fray.evo.util.RaceLibraries;
 
 /**
  *
@@ -17,12 +19,15 @@ import java.util.HashMap;
  */
 public final class BuildingCollection implements Serializable{
     private final int[] arr;
+    private final Race race;
 
-    public BuildingCollection(Collection<Building> buildings){
-        arr = new int[buildings.size()];
+    public BuildingCollection(Collection<Building> buildings, Race race){
+       this(buildings.size(),race);
     }
-    public BuildingCollection(int size){
+    
+    public BuildingCollection(int size, Race race){
         arr = new int[size];
+        this.race = race;
     }
 
     public void put(Building building, int num){
@@ -51,7 +56,7 @@ public final class BuildingCollection implements Serializable{
     public HashMap<Building,Integer> toHashMap(){
         HashMap<Building, Integer> result = new HashMap<Building, Integer>();
         for(int i=0;i < arr.length;i++){
-            result.put(BuildingLibrary.idToZergBuilding.get(i), arr[i]);
+            result.put(RaceLibraries.getBuildingLibrary(race).getIdToItemMap().get(i), arr[i]);
         }
         return result;
     }
@@ -60,7 +65,7 @@ public final class BuildingCollection implements Serializable{
     }
     @Override
     public BuildingCollection clone(){
-        BuildingCollection result = new BuildingCollection(arr.length);
+        BuildingCollection result = new BuildingCollection(arr.length, race);
         for(int i = 0; i < arr.length;i++){
             result.putById(i, arr[i]);
         }

@@ -8,10 +8,15 @@ package com.fray.evo.fitness;
  *
  * @author Cyrik
  */
-import com.fray.evo.EcState;
-import com.fray.evo.util.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.fray.evo.EcState;
+import com.fray.evo.util.RaceLibraries;
+import com.fray.evo.util.Unit;
+import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.Upgrade;
 
 public class EcStandardFitnessCleanup implements EcFitness {
 
@@ -24,7 +29,9 @@ public class EcStandardFitnessCleanup implements EcFitness {
         } else {
             overlordScore = (int) Math.min(100, (current.getOverlords() * (1 / Math.max(1, current.supply() - current.supplyUsed))) * 10);
         }
-        for (Unit unit : UnitLibrary.zergUnits) {
+        
+        List<Unit> allUnitsList = RaceLibraries.getUnitLibrary(current.settings.race).getList();
+        for (Unit unit : allUnitsList) {
             if (unit == UnitLibrary.Overlord) {
                 continue;
             }
@@ -58,7 +65,8 @@ public class EcStandardFitnessCleanup implements EcFitness {
         score = augmentDropoffScore(score, current.getNydusNetwork(), destination.getNydusNetwork(), 350, 3.00, waypoint);
         score = augmentScore(score, current.getNydusWorm(), destination.getNydusWorm(), 200);
 
-        for (Upgrade upgrade : UpgradeLibrary.getAllZergUpgrades()) {
+        List<Upgrade> allUpgradesList = RaceLibraries.getUpgradeLibrary(current.settings.race).getList();
+        for (Upgrade upgrade : allUpgradesList) {
 
             boolean currentlyBuiltUnits = getUpgradeByString(upgrade.getName(), current);
             boolean neededUnits = getUpgradeByString(upgrade.getName(), destination);

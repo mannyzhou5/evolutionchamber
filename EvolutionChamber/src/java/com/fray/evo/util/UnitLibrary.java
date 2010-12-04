@@ -5,20 +5,15 @@
 
 package com.fray.evo.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import javax.print.attribute.HashAttributeSet;
 
 /**
- *
+ * The singleton instance contains all Zerg Units
  * @author Cyrik
+ * 
+ * TODO rename this class to ZerUnitLibrary
  */
-//TODO: should the units cost the "full" cost or the upgrade cost?
-public class UnitLibrary {
-    static private ArrayList<Buildable> createList(Buildable ...buildables){
-        return new ArrayList<Buildable>(Arrays.asList(buildables));
-    }
+public class UnitLibrary extends Library<Unit> {
+
     final public static Unit Larva = ZergLibrary.Larva;
     final public static Unit Zergling = ZergLibrary.Zergling;
     final public static Unit Drone = ZergLibrary.Drone;
@@ -34,32 +29,37 @@ public class UnitLibrary {
     final public static Unit Overlord = ZergLibrary.Overlord;
     final public static Unit Overseer = ZergLibrary.Overseer;
 
-    final public static HashMap<Integer, Unit> idToZergUnit;
-    public static ArrayList<Unit> zergUnits;
-    static {
-        if(zergUnits == null){
-            zergUnits = new ArrayList<Unit>();
-            zergUnits.add(Drone);
-            zergUnits.add(Zergling);
-            zergUnits.add(Roach);
-            zergUnits.add(Queen);
-            zergUnits.add(Baneling);
-            zergUnits.add(Mutalisk);
-            zergUnits.add(Hydralisk);
-            zergUnits.add(Infestor);
-            zergUnits.add(Corruptor);
-            zergUnits.add(Broodlord);
-            zergUnits.add(Ultralisk);
-            zergUnits.add(Overlord);
-            zergUnits.add(Overseer);
-            zergUnits.add(Larva);
+    
+    /**
+     * initializes the lists
+     */
+    private UnitLibrary() {
+        // execute parent constructor to init the lists first
+        super();
+        libaryList.add(Drone);
+        libaryList.add(Zergling);
+        libaryList.add(Roach);
+        libaryList.add(Queen);
+        libaryList.add(Baneling);
+        libaryList.add(Mutalisk);
+        libaryList.add(Hydralisk);
+        libaryList.add(Infestor);
+        libaryList.add(Corruptor);
+        libaryList.add(Broodlord);
+        libaryList.add(Ultralisk);
+        libaryList.add(Overlord);
+        libaryList.add(Overseer);
+        libaryList.add(Larva);
+
+        for (Unit unit : libaryList) {
+            idToItemMap.put(unit.getId(), unit);
         }
-        idToZergUnit = new HashMap<Integer, Unit>();
-        for(Unit unit: zergUnits){
-            idToZergUnit.put(unit.getId(), unit);
-        }
-    };
+    }
 
-
-
+    
+    // has to be at the end of the class to keep the class initialization in order
+    final private static UnitLibrary instance = new UnitLibrary();
+    final public static UnitLibrary getInstance() {
+        return instance;
+    }
 }

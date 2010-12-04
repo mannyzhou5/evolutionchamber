@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.RaceLibraries;
 import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 import com.fray.evo.util.Upgrade;
@@ -28,13 +29,13 @@ public class EcState implements Serializable
 		hatcheryTimes.add(Optimization.inte(0));
 		larva.add(Optimization.inte(3));
 		larvaProduction.add(Optimization.inte(1));
-		units = new UnitCollection(UnitLibrary.zergUnits);
+		units = new UnitCollection(RaceLibraries.getUnitLibrary(settings.race).getList(), settings.race);
 		// Building test = ZergLibrary.Lair;
-		// for(Unit unit: UnitLibrary.zergUnits){
+		// for(Unit unit: RaceLibraries.getUnitLibrary(settings.race).getList()){
 		// units.put(unit, 0);
 		// }
-		buildings = new BuildingCollection(BuildingLibrary.allZergBuildings);
-		for (Building building : BuildingLibrary.allZergBuildings)
+		buildings = new BuildingCollection(RaceLibraries.getBuildingLibrary(settings.race).getList(), settings.race);
+		for (Building building : RaceLibraries.getBuildingLibrary(settings.race).getList())
 		{
 			buildings.put(building, 0);
 		}
@@ -172,7 +173,7 @@ public class EcState implements Serializable
 			requiredBases = s.requiredBases;
 
 		units = unionUnits(units, s.units);
-		BuildingCollection temp = new BuildingCollection(buildings.getSize());
+		BuildingCollection temp = new BuildingCollection(buildings.getSize(), settings.race);
 		for (int i = 0; i < buildings.getSize(); i++)
 		{
 			temp.putById(i, Math.max(buildings.getById(i), s.buildings.getById(i)));
@@ -183,7 +184,7 @@ public class EcState implements Serializable
 
 	private UnitCollection unionUnits(UnitCollection map, UnitCollection s)
 	{
-		UnitCollection result = new UnitCollection(units.getSize());
+		UnitCollection result = new UnitCollection(units.getSize(), settings.race);
 		for (int i = 0; i < map.getSize(); i++)
 		{
 			result.putById(i, Math.max(map.getById(i), s.getById(i)));
@@ -305,7 +306,7 @@ public class EcState implements Serializable
 	public int usedDronesClean()
 	{
                 int total =  -1 ;
-                for(Building building: BuildingLibrary.allZergBuildings){
+                for(Building building: RaceLibraries.getBuildingLibrary(settings.race).getList()){
                     if(building.getConsumes() == UnitLibrary.Drone){
                         total += buildings.get(building);
                     }

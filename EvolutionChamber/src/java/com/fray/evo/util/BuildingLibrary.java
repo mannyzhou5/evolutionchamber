@@ -4,20 +4,16 @@
  */
 package com.fray.evo.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 /**
- *
+ * The singleton instance contains all Zerg Buildings
  * @author Cyrik
+ * 
+ * TODO rename this class to ZergBuildingLibrary
  */
-public class BuildingLibrary {
-    final public static HashMap<Integer, Building> idToZergBuilding;
+public class BuildingLibrary extends Library<Building> {
 
-    static private ArrayList<Buildable> createList(Buildable... buildables) {
-        return new ArrayList<Buildable>(Arrays.asList(buildables));
-    }
+
     static final public Building Hatchery = ZergLibrary.Hatchery;
     static final public Building Extractor = ZergLibrary.Extractor;
     static final public Building SpawningPool = ZergLibrary.SpawningPool;
@@ -35,30 +31,35 @@ public class BuildingLibrary {
     static final public Building NydusWorm = ZergLibrary.NydusWorm;
     static final public Building SpineCrawler = ZergLibrary.SpineCrawler;
     static final public Building SporeCrawler = ZergLibrary.SporeCrawler;
-    static final public ArrayList<Building> allZergBuildings;
 
-    static {
-            allZergBuildings = new ArrayList<Building>();
-            allZergBuildings.add(Hatchery);
-            allZergBuildings.add(Extractor);
-            allZergBuildings.add(Hive);
-            allZergBuildings.add(ZergLibrary.Lair);
-            allZergBuildings.add(SpawningPool);
-            allZergBuildings.add(RoachWarren);
-            allZergBuildings.add(HydraliskDen);
-            allZergBuildings.add(BanelingNest);
-            allZergBuildings.add(GreaterSpire);
-            allZergBuildings.add(UltraliskCavern);
-            allZergBuildings.add(Spire);
-            allZergBuildings.add(InfestationPit);
-            allZergBuildings.add(EvolutionChamber);
-            allZergBuildings.add(NydusNetwork);
-            allZergBuildings.add(NydusWorm);
-            allZergBuildings.add(SpineCrawler);
-            allZergBuildings.add(SporeCrawler);
-        idToZergBuilding = new HashMap<Integer, Building>();
-        for (Building building : allZergBuildings) {
-            idToZergBuilding.put(building.getId(), building);
+    
+    private BuildingLibrary() {
+        libaryList.add(Hatchery);
+        libaryList.add(Extractor);
+        libaryList.add(Hive);
+        libaryList.add(ZergLibrary.Lair);
+        libaryList.add(SpawningPool);
+        libaryList.add(RoachWarren);
+        libaryList.add(HydraliskDen);
+        libaryList.add(BanelingNest);
+        libaryList.add(GreaterSpire);
+        libaryList.add(UltraliskCavern);
+        libaryList.add(Spire);
+        libaryList.add(InfestationPit);
+        libaryList.add(EvolutionChamber);
+        libaryList.add(NydusNetwork);
+        libaryList.add(NydusWorm);
+        libaryList.add(SpineCrawler);
+        libaryList.add(SporeCrawler);
+        
+        for (Building building : libaryList) {
+            idToItemMap.put(building.getId(), building);
         }
+    }
+    
+ // has to be at the end of the class to keep the class initialization in order
+    final private static BuildingLibrary instance = new BuildingLibrary();
+    final public static BuildingLibrary getInstance() {
+        return instance;
     }
 }
