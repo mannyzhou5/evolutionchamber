@@ -224,7 +224,6 @@ public class EcEvolver extends FitnessFunction
 		StringBuilder sb = new StringBuilder();
 		
 		int i = 0;
-		destination.waypointReset();
 		for (EcAction a : s.getActions())
 		{
 			i++;
@@ -280,7 +279,6 @@ public class EcEvolver extends FitnessFunction
 		ArrayList<String> warnings = new ArrayList<String>();
 		
 		int i = 0;
-		destination.waypointReset();
 		for (EcAction a : s.getActions())
 		{
 			i++;
@@ -383,7 +381,6 @@ public class EcEvolver extends FitnessFunction
 	public EcBuildOrder doEvaluate(EcBuildOrder s)
 	{
 		int i = 0;
-		destination.waypointReset();
 		for (EcAction a : s.getActions())
 		{
 			i++;

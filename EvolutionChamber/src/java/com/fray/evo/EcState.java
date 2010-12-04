@@ -543,39 +543,26 @@ public class EcState implements Serializable
 			sb.append("\n" + messages.getString(name.replace(' ', '.')) + ": " + count);
 	}
 
-	private int	currWaypoint	= 0;
-
 	public boolean waypointMissed(EcBuildOrder candidate)
 	{
-		if (waypoints == null || currWaypoint >= waypoints.size())
+		if (waypoints == null)
 			return false;
 
-		EcState s = waypoints.get(currWaypoint);
-		if (candidate.seconds != s.targetSeconds)
-			return false;
-
-		if (s.isSatisfied(candidate))
-		{
-			currWaypoint++;
-			return false;
+		for (int i = 0; i < waypoints.size(); ++i) {
+			EcState s = waypoints.get(i);
+			if (candidate.seconds >= s.targetSeconds)
+				if (!s.isSatisfied(candidate))
+					return true;
 		}
-
-		return true;
+		return false;
 	}
 
 	public int getCurrWaypointIndex(EcBuildOrder candidate)
 	{
-		if (currWaypoint == 0)
-			return -1;
-
-		EcState r = waypoints.get(currWaypoint - 1);
-		if (r.targetSeconds == candidate.seconds)
-			return currWaypoint - 1;
+		for( int i = 0; i < waypoints.size(); ++i )
+			if (waypoints.get(i).targetSeconds == candidate.seconds)
+				return i;
 		return -1;
-	}
-	
-	public void waypointReset() {
-		currWaypoint = 0;
 	}
 	
 	public int getWaypointActions(int index) {
