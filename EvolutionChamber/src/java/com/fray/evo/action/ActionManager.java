@@ -39,7 +39,6 @@ import com.fray.evo.action.upgrade.*;
 import com.fray.evo.util.Buildable;
 import com.fray.evo.util.BuildingLibrary;
 import com.fray.evo.util.UnitLibrary;
-import com.fray.evo.util.Upgrade;
 import com.fray.evo.util.UpgradeLibrary;
 import java.util.HashMap;
 
@@ -47,7 +46,7 @@ import java.util.HashMap;
  *
  * @author Cyrik
  */
-public class ActionManager {
+public final class ActionManager {
     private static HashMap<Buildable,EcAction> buildableToActionMap;
 
     synchronized static public EcAction getActionFor(Buildable buildable){

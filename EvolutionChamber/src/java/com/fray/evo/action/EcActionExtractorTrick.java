@@ -1,15 +1,12 @@
 package com.fray.evo.action;
 import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
-import com.fray.evo.EcState;
 import com.fray.evo.util.UnitLibrary;
 
-public class EcActionExtractorTrick extends EcAction implements Serializable
+public final class EcActionExtractorTrick extends EcAction implements Serializable
 {
 	@Override
 	public void execute(final EcBuildOrder s, final EcEvolver e)

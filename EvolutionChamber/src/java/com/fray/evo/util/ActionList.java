@@ -3,7 +3,7 @@ package com.fray.evo.util;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class ActionList {
+public final class ActionList {
 	private int numLeft;
 	private PriorityQueue<TWrapper> pq = null;
 	

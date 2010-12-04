@@ -1,17 +1,14 @@
 package com.fray.evo.action.build;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
-import com.fray.evo.EcState;
-import com.fray.evo.action.EcAction;
+import com.fray.evo.Optimization;
 import com.fray.evo.util.BuildingLibrary;
 import com.fray.evo.util.UnitLibrary;
 
-public class EcActionBuildHatchery extends EcActionBuildBuilding implements Serializable
+public final class EcActionBuildHatchery extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildHatchery()
 	{
@@ -47,7 +44,7 @@ public class EcActionBuildHatchery extends EcActionBuildBuilding implements Seri
 	{
 		s.AddBuilding(BuildingLibrary.Hatchery);
 		s.hatcheriesBuilding -= 1;
-		s.hatcheryTimes.add(new Integer(s.seconds));
+		s.hatcheryTimes.add(Optimization.inte(s.seconds));
 		s.larva.add(1);
 		s.larvaProduction.add(1);
 	}

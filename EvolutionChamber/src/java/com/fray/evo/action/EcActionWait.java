@@ -1,14 +1,11 @@
 package com.fray.evo.action;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
-import com.fray.evo.EcState;
 
-public class EcActionWait extends EcAction implements Serializable
+public final class EcActionWait extends EcAction implements Serializable
 {
 	boolean	go	= false;
 

@@ -1,16 +1,10 @@
 package com.fray.evo.action.upgrade;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
-import com.fray.evo.EcState;
-import com.fray.evo.action.EcAction;
-import com.fray.evo.action.build.EcActionBuildInfestationPit;
 import com.fray.evo.util.UpgradeLibrary;
 
-public class EcActionUpgradeNeuralParasite extends EcActionUpgrade
+public final class EcActionUpgradeNeuralParasite extends EcActionUpgrade
 {
 	@Override
 	public void init()

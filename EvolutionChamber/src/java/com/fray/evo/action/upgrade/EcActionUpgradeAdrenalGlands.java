@@ -1,17 +1,10 @@
 package com.fray.evo.action.upgrade;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
-import com.fray.evo.EcState;
-import com.fray.evo.action.EcAction;
-import com.fray.evo.action.build.EcActionBuildHive;
-import com.fray.evo.action.build.EcActionBuildSpawningPool;
 import com.fray.evo.util.UpgradeLibrary;
 
-public class EcActionUpgradeAdrenalGlands extends EcActionUpgrade
+public final class EcActionUpgradeAdrenalGlands extends EcActionUpgrade
 {
 	@Override
 	public void init()

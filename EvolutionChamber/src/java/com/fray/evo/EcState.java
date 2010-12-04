@@ -25,9 +25,9 @@ public class EcState implements Serializable
 
 	public EcState()
 	{
-		hatcheryTimes.add(new Integer(0));
-		larva.add(3);
-		larvaProduction.add(1);
+		hatcheryTimes.add(Optimization.inte(0));
+		larva.add(Optimization.inte(3));
+		larvaProduction.add(Optimization.inte(1));
 		units = new UnitCollection(UnitLibrary.zergUnits);
 		// Building test = ZergLibrary.Lair;
 		// for(Unit unit: UnitLibrary.zergUnits){
@@ -899,8 +899,8 @@ public class EcState implements Serializable
 	public int getLarva()
 	{
 		int sum = 0;
-		for (Integer i : larva)
-			sum += i;
+		for(int i = 0; i < larva.size(); ++i)
+			sum += larva.get(i);
 		return sum;
 	}
 	public int getLarva(int base)
@@ -915,8 +915,8 @@ public class EcState implements Serializable
 	public void setLarva(int base, int larva)
 	{
 		while (this.larva.size() <= base)
-			this.larva.add(new Integer(0));
-		this.larva.set(base, larva);
+			this.larva.add(Optimization.inte(0));
+		this.larva.set(base, Optimization.inte(larva));
 	}
 
 	/**

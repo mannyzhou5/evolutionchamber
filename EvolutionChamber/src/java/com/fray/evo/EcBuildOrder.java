@@ -9,7 +9,7 @@ import com.fray.evo.util.ActionList;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.util.BuildingLibrary;
 
-public class EcBuildOrder extends EcState implements Serializable
+public final class EcBuildOrder extends EcState implements Serializable
 {
 	static final long		serialVersionUID	= 1L;
 	public int				dronesGoingOnMinerals	= 6;	
@@ -83,7 +83,7 @@ public class EcBuildOrder extends EcState implements Serializable
 				+ ((int) supplyUsed) + "/" + supply());
 	}
 
-	public List<EcAction> getActions()
+	public ArrayList<EcAction> getActions()
 	{
 		return actions;
 	}
@@ -131,7 +131,7 @@ public class EcBuildOrder extends EcState implements Serializable
 		setLarva(finalHighestLarvaHatch,getLarva(finalHighestLarvaHatch) - 1);
 	}
 
-	public void executeLarvaProduction(final EcEvolver e)
+	private void executeLarvaProduction(final EcEvolver e)
 	{
 		for (int hatchIndex = 0;hatchIndex < larva.size();hatchIndex++)
 			executeLarvaProduction(e,hatchIndex);
@@ -148,7 +148,7 @@ public class EcBuildOrder extends EcState implements Serializable
 				setLarva(hatchIndex,getLarva(hatchIndex)+1);
 				larvaProduction.set(hatchIndex,0);
 			}
-			larvaProduction.set(hatchIndex,larvaProduction.get(hatchIndex)+1);
+			larvaProduction.set(hatchIndex,Optimization.inte(larvaProduction.get(hatchIndex)+1));
 		}
 	}
 	
@@ -250,20 +250,21 @@ public class EcBuildOrder extends EcState implements Serializable
 
     public double mineGas()
     {
-        if (getGasExtractors() == 0 || dronesOnGas == 0)
+    	int gasExtra = getGasExtractors();
+        if (gasExtra == 0 || dronesOnGas == 0)
 			return 0;
 
-        if(getGasExtractors() >= 200 || dronesOnGas >= 200)
+        if(gasExtra >= 200 || dronesOnGas >= 200)
             return mineGasImpl();
 
-        if(cachedGasMined[getGasExtractors()][dronesOnGas] == 0)
-            cachedGasMined[getGasExtractors()][dronesOnGas] = mineGasImpl();
+        if(cachedGasMined[gasExtra][dronesOnGas] == 0)
+            cachedGasMined[gasExtra][dronesOnGas] = mineGasImpl();
 
-        return cachedGasMined[getGasExtractors()][dronesOnGas];
+        return cachedGasMined[gasExtra][dronesOnGas];
     }
 
 	// Mines gas on all bases perfectly per one second.
-	public double mineGasImpl()
+	private double mineGasImpl()
 	{
 		int drones = dronesOnGas;
 		int[] extractors = new int[Math.min(getGasExtractors(),bases()*2)]; // Assign drones/patch
@@ -304,7 +305,7 @@ public class EcBuildOrder extends EcState implements Serializable
 		return gasMined;
 	}
 
-	protected void accumulateMaterials()
+	private void accumulateMaterials()
 	{
 		double mins = mineMinerals();
 		minerals += mins;
@@ -337,7 +338,4 @@ public class EcBuildOrder extends EcState implements Serializable
             busyLairs.remove(action);
         }
     }
-
-
-
 }

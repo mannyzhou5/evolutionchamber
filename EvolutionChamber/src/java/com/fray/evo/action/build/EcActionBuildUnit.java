@@ -1,6 +1,7 @@
 package com.fray.evo.action.build;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
@@ -47,14 +48,22 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 		return (getConsumes() != null ? ((Unit)getConsumes()).getSupply() : 0);
 	}
 	@Override
-	protected boolean isPossibleResources(EcBuildOrder s)
+	protected final boolean isPossibleResources(EcBuildOrder s)
 	{
 		if (!s.hasSupply(supply-consumesUnitSupply()))
 			return false;
 		if (consumeLarva)
 			if (s.getLarva() < 1)
 				return false;
-		return super.isPossibleResources(s);
+
+		//inlined super.isPossibleResources(s);
+        if (s.minerals < getMinerals()) {
+            return false;
+        }
+        if (s.gas < getGas()) {
+            return false;
+        }
+        return true;
 	}
 
 	@Override
@@ -72,27 +81,29 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
-            for(Buildable req:((Unit)buildable).getRequirement()){
-                if(req.getClass() == Building.class){
-                    if(s.getBuildingCount((Building)req) < 1){
-                        return true;
-                    }
-                }
-                if(req.getClass() == Unit.class){
-                    if(s.getUnitCount((Unit)req) < 1){
-                        return true;
-                    }
-                }
-                if(req.getClass() == Upgrade.class){
-                    if(!s.isUpgrade((Upgrade)req)){
-                        return true;
-                    }
-                }
-            }
-            if(!s.hasSupply(((Unit)buildable).getSupply())){
-                return true;
-            }
-            return false;
-	}
+        if(!s.hasSupply(((Unit)buildable).getSupply())){
+            return true;
+        }
 
+        ArrayList<Buildable> reqs = ((Unit)buildable).getRequirement();
+        for(int i = 0; i < reqs.size(); ++i) {
+        	Buildable req = reqs.get(i);
+            if(req.getClass() == Building.class){
+                if(s.getBuildingCount((Building)req) < 1){
+                    return true;
+                }
+            }
+            if(req.getClass() == Unit.class){
+                if(s.getUnitCount((Unit)req) < 1){
+                    return true;
+                }
+            }
+            if(req.getClass() == Upgrade.class){
+                if(!s.isUpgrade((Upgrade)req)){
+                    return true;
+                }
+            }
+        }
+        return false;
+	}
 }

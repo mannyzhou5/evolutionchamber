@@ -381,8 +381,10 @@ public class EcEvolver extends FitnessFunction
 	public EcBuildOrder doEvaluate(EcBuildOrder s)
 	{
 		int i = 0;
-		for (EcAction a : s.getActions())
+		ArrayList<EcAction> actions = s.getActions();
+		for (int c = 0; c < actions.size(); ++c)
 		{
+			EcAction a = actions.get(c);
 			i++;
 			if (a.isInvalid(s))
 			{
