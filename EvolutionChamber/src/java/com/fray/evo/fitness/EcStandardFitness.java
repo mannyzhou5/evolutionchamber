@@ -14,7 +14,6 @@ public class EcStandardFitness implements EcFitness {
 		else
 			overlordScore = (int)Math.min(100, (c.getOverlords() * (1 / Math.max(1, c.supply() - c.supplyUsed))) * 10);
 
-//		score = augmentScore(score, (int)c.totalMineralsMined, (int)destination.totalMineralsMined, 1,1, waypoint);
 		score = augmentScore(score, c.getZerglings(), destination.getZerglings(), 25, .25, waypoint);
 		score = augmentScore(score, c.getBanelings(), destination.getBanelings(), 75, .75, waypoint);
 		score = augmentScore(score, c.getRoaches(), destination.getRoaches(), 100, 1.0, waypoint);
@@ -144,11 +143,10 @@ public class EcStandardFitness implements EcFitness {
 			score = augmentScore(score, (int) c.minerals, (int) state.minerals, .011, .011, false);
 			score = augmentScore(score, (int) c.gas, (int) state.gas, .015, .015, false);
 			score = Math.max(score, 0);
-			
 			c.preTimeScore = score;
 			score *= ((double) c.targetSeconds / (double) c.seconds) * ((double) c.targetSeconds / (double) c.seconds);
 			c.timeBonus = score - c.preTimeScore;
-			
+
 			//System.out.println(String.format("PreTimeScore: %.2f",c.preTimeScore));
 			//System.out.println(String.format("Time Bonus: %.2f",c.timeBonus));
 			

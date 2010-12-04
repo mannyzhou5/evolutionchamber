@@ -19,7 +19,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 	{
 		super(unit);
 		this.supply = unit.getSupply();
-		this.consumeLarva = (unit.getConsumes() == UnitLibrary.Larva);
+		this.consumeLarva = (UnitLibrary.Larva == unit.getConsumes());
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 	{
 		s.minerals -= getMinerals();
 		s.gas -= getGas();
-		s.supplyUsed += supply;
+		s.supplyUsed += supply-consumesUnitSupply();
 		if (consumeLarva)
 			s.consumeLarva(e);
 		preExecute(s);
@@ -41,10 +41,15 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 			}
 		});
 	}
+
+	private double consumesUnitSupply()
+	{
+		return (getConsumes() != null ? ((Unit)getConsumes()).getSupply() : 0);
+	}
 	@Override
 	protected boolean isPossibleResources(EcBuildOrder s)
 	{
-		if (!s.hasSupply(supply))
+		if (!s.hasSupply(supply-consumesUnitSupply()))
 			return false;
 		if (consumeLarva)
 			if (s.getLarva() < 1)

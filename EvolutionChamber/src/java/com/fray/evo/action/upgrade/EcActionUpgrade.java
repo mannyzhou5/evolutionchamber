@@ -1,5 +1,5 @@
 package com.fray.evo.action.upgrade;
-
+import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
@@ -24,7 +24,7 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
             @Override
             public void run() {
                 if (e.debug) {
-                    e.evolved(s, getName());
+                    e.evolved(s, messages.getString(getName().replace(" ",".")));
                 }
                 afterTime(s, e);
             }

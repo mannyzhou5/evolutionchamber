@@ -43,6 +43,8 @@ public class EcActionBuildHatchery extends EcActionBuildBuilding implements Seri
 		s.AddBuilding(BuildingLibrary.Hatchery);
 		s.hatcheriesBuilding -= 1;
 		s.hatcheryTimes.add(new Integer(s.seconds));
+		s.larva.add(1);
+		s.larvaProduction.add(1);
 	}
 
 	@Override

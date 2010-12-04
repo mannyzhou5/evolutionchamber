@@ -45,7 +45,7 @@ public abstract class EcAction implements Serializable
 		return result;
 	}
 
-	public boolean canExecute(EcBuildOrder s)
+	public boolean canExecute(EcBuildOrder s,EcEvolver e)
 	{
 		if (isPossible(s))
 			return true;
@@ -53,7 +53,7 @@ public abstract class EcAction implements Serializable
 		Runnable futureAction;
 		while( (futureAction = s.getFutureAction(s.seconds)) != null )
 			futureAction.run();
-		s.accumulateMaterials();
+		s.tick(e);
 		return false;
 	}
 

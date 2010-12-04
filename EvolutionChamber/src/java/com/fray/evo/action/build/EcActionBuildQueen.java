@@ -25,26 +25,15 @@ public class EcActionBuildQueen extends EcActionBuildUnit implements Serializabl
 	{
 		s.consumeHatch(this);
 	}
-	
+
 	@Override
 	protected void postExecute(final EcBuildOrder s, final EcEvolver e)
 	{
             s.unconsumeHatch(this);
 		s.AddUnits((Unit) buildable, 1);
-		if (s.hatcheriesSpawningLarva < s.bases())
+		if (s.larva.size() > s.hasQueen.size())
 		{
-			s.hatcheriesSpawningLarva++;
-			s.addFutureAction(45, new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					if (e.debug && s.getLarva() < s.bases() * 19)
-						e.obtained(s, " "+messages.getString("Larva") + (Math.min(s.bases()*19,s.getLarva()+4) - s.getLarva()));
-					s.setLarva(Math.min(s.bases() * 19, s.getLarva() + 4));
-					s.addFutureAction(45, this);
-				}
-			});
+			spawnLarva(s, e);
 		}
 		else
 			s.addFutureAction(5, new Runnable()
@@ -52,27 +41,55 @@ public class EcActionBuildQueen extends EcActionBuildUnit implements Serializabl
 				@Override
 				public void run()
 				{
-					if (s.hatcheriesSpawningLarva < s.bases())
-					{
-						s.hatcheriesSpawningLarva++;
-						s.addFutureAction(45, new Runnable()
-						{
-							@Override
-							public void run()
-							{
-								if (e.debug && s.getLarva() < s.bases() * 19)
-									e.obtained(s, " Larva+" + (Math.min(s.bases()*19,s.getLarva()+4) - s.getLarva()));
-								s.setLarva(Math.min(s.bases() * 19, s.getLarva() + 4));
-								s.addFutureAction(45, this);
-							}
-						});
-					}
+					if (s.larva.size() > s.hasQueen.size())
+						spawnLarva(s, e);
 					else
 						s.addFutureAction(5, this);
 				}
 			});
 	}
-	
+
+	private void spawnLarva(final EcBuildOrder s, final EcEvolver e)
+	{
+		int hatchWithoutQueen = 0;
+		if (s.larva.size() > s.hasQueen.size())
+		{
+			hatchWithoutQueen = s.hasQueen.size();
+			s.hasQueen.add(true);
+
+			final int hatchIndex = hatchWithoutQueen;
+			s.addFutureAction(40, new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					if (e.debug && s.getLarva() < s.bases() * 19)
+						e.obtained(s,  " @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
+								+ messages.getString("Larva")
+								+ " +"
+								+ (Math.min(19, s.getLarva(hatchIndex) + 2) - s
+										.getLarva(hatchIndex)));
+					s.setLarva(hatchIndex, Math.min(19, s.getLarva(hatchIndex) + 2));
+					s.addFutureAction(1, new Runnable()
+					{
+						public void run()
+						{
+							if (e.debug && s.getLarva() < s.bases() * 19)
+								e.obtained(s,  " @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
+										+ messages.getString("Larva")
+										+ " +"
+										+ (Math.min(19, s.getLarva(hatchIndex) + 2) - s
+												.getLarva(hatchIndex)));
+							s.setLarva(hatchIndex, Math.min(19, s.getLarva(hatchIndex) + 2));
+						}
+					});
+					s.addFutureAction(45, this);
+					s.larvaProduction.set(hatchIndex, s.larvaProduction.get(hatchIndex)-1);
+				}
+			});
+		}
+	}
+
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{

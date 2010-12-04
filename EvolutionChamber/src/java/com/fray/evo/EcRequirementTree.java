@@ -1,6 +1,8 @@
 package com.fray.evo;
 
 import com.fray.evo.action.ActionManager;
+
+import java.security.InvalidParameterException;
 import java.util.Map;
 
 import com.fray.evo.action.EcAction;
@@ -69,6 +71,7 @@ public class EcRequirementTree {
     }
 
     private static void add(Map<Integer, Class> actions, EcAction action) {
+    	if (action == null) throw new InvalidParameterException();
         if (!actions.containsValue(action.getClass())) {
             actions.put(max++, action.getClass());
         }

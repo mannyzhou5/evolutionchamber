@@ -1,12 +1,19 @@
 package com.fray.evo;
 
 import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
-import com.fray.evo.util.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+
+import com.fray.evo.util.Building;
+import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.Unit;
+import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.Upgrade;
+import com.fray.evo.util.UpgradeLibrary;
 
 public class EcState implements Serializable
 {
@@ -19,6 +26,8 @@ public class EcState implements Serializable
 	public EcState()
 	{
 		hatcheryTimes.add(new Integer(0));
+		larva.add(3);
+		larvaProduction.add(1);
 		units = new UnitCollection(UnitLibrary.zergUnits);
 		// Building test = ZergLibrary.Lair;
 		// for(Unit unit: UnitLibrary.zergUnits){
@@ -40,13 +49,15 @@ public class EcState implements Serializable
 	public double				timeBonus			= 0.0;
 
 
+	public ArrayList<Integer>	larva				= new ArrayList<Integer>();
+	public ArrayList<Boolean>   hasQueen 			= new ArrayList<Boolean>();
+	public ArrayList<Integer>   larvaProduction 	= new ArrayList<Integer>();
 	public double					minerals			= 50;
 	public double					gas					= 0;
 	public double					supplyUsed			= 6;
 	public int						requiredBases		= 1;
 
 
-	private int					larva				= 3;
 
 	public int					scoutDrone			= 0;
 
@@ -122,6 +133,10 @@ public class EcState implements Serializable
 		s.invalidActions = invalidActions;
 		s.actionLength = actionLength;
 		s.totalMineralsMined = totalMineralsMined;
+		
+		s.larva = (ArrayList<Integer>) larva.clone();
+		s.hasQueen = (ArrayList<Boolean>) hasQueen.clone();
+		s.larvaProduction = (ArrayList<Integer>) larvaProduction.clone();
 	}
 
 	public int supply()
@@ -448,7 +463,10 @@ public class EcState implements Serializable
 		append(sb, "Brood Lord", getBroodlords());
 		append(sb, "Total Minerals Mined", (int) totalMineralsMined);
 
-		append(sb, "Bases", bases());
+		if (bases()>= requiredBases)
+			append(sb, "Bases", bases());
+		else
+			append(sb, "Required Bases", requiredBases);
 		append(sb, "Lair", getLairs());
 		append(sb, "Hive", getHives());
 		append(sb, "Gas Extractor", getGasExtractors());
@@ -865,16 +883,25 @@ public class EcState implements Serializable
 	 */
 	public int getLarva()
 	{
-		return larva;
+		int sum = 0;
+		for (Integer i : larva)
+			sum += i;
+		return sum;
+	}
+	public int getLarva(int base)
+	{
+		return this.larva.get(base);
 	}
 
 	/**
 	 * @param larva
 	 *            the larva to set
 	 */
-	public void setLarva(int larva)
+	public void setLarva(int base, int larva)
 	{
-		this.larva = larva;
+		while (this.larva.size() <= base)
+			this.larva.add(new Integer(0));
+		this.larva.set(base, larva);
 	}
 
 	/**

@@ -16,7 +16,6 @@ public class EcBuildOrder extends EcState implements Serializable
 	public int				dronesGoingOnGas	= 0;
 	public int				dronesOnMinerals	= 0;
 	public int				dronesOnGas			= 0;
-	boolean					buildingLarva		= false;
 	public int				evolvingSpires		= 0;
 	public int				queensBuilding		= 0;
 	public int				spiresInUse			= 0;
@@ -47,6 +46,12 @@ public class EcBuildOrder extends EcState implements Serializable
 		importDestination.assign(this);
 	}
 
+	public void tick(EcEvolver e)
+	{
+		executeLarvaProduction(e);
+		accumulateMaterials();
+	}
+	
 	@Override
 	public EcBuildOrder clone() throws CloneNotSupportedException
 	{
@@ -57,12 +62,10 @@ public class EcBuildOrder extends EcState implements Serializable
 
 	private void assign(final EcBuildOrder s)
 	{
-		s.setLarva(getLarva());
 		s.dronesGoingOnMinerals = dronesGoingOnMinerals;
 		s.dronesGoingOnGas = dronesGoingOnGas;
 		s.dronesOnMinerals = dronesOnMinerals;
 		s.dronesOnGas = dronesOnGas;
-		s.buildingLarva = buildingLarva;
 		s.queensBuilding = queensBuilding;
 		s.evolutionChambersInUse = evolutionChambersInUse;
 		super.assign(s);
@@ -113,27 +116,42 @@ public class EcBuildOrder extends EcState implements Serializable
 	public void consumeLarva(final EcEvolver e)
 	{
 		final EcBuildOrder t = this;
-		setLarva(getLarva() - 1);
-		if (!buildingLarva)
-		{
-			buildingLarva = true;
-			addFutureAction(15, new Runnable()
+		
+		int highestLarvaHatch = 0;
+		int highestLarva = 0;
+		
+		for (int i = 0;i < larva.size();i++)
+			if (larva.get(i) > highestLarva)
 			{
-				@Override
-				public void run()
-				{
-					if (e.debug)
-						e.obtained(t, " "+messages.getString("Larva")+"+1");
-					setLarva(Math.max(Math.min(getLarva() + bases(), bases() * 3), getLarva()));
-					if (getLarva() < 3 * bases())
-						addFutureAction(15, this);
-					else
-						buildingLarva = false;
-				}
-			});
-		}
+				highestLarvaHatch = i;
+				highestLarva = larva.get(i); 
+			}
+		final int finalHighestLarvaHatch = highestLarvaHatch;
+				
+		setLarva(finalHighestLarvaHatch,getLarva(finalHighestLarvaHatch) - 1);
 	}
 
+	public void executeLarvaProduction(final EcEvolver e)
+	{
+		for (int hatchIndex = 0;hatchIndex < larva.size();hatchIndex++)
+			executeLarvaProduction(e,hatchIndex);
+	}
+	
+	private void executeLarvaProduction(final EcEvolver e, final int hatchIndex)
+	{
+		if (getLarva(hatchIndex) < 3)
+		{
+			if (larvaProduction.get(hatchIndex) == 15)
+			{
+				if (e.debug)
+					e.obtained(this, " @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva")+" +1");
+				setLarva(hatchIndex,getLarva(hatchIndex)+1);
+				larvaProduction.set(hatchIndex,0);
+			}
+			larvaProduction.set(hatchIndex,larvaProduction.get(hatchIndex)+1);
+		}
+	}
+	
 	public boolean hasSupply(double i)
 	{
 		if (supplyUsed + i <= supply())
@@ -152,7 +170,6 @@ public class EcBuildOrder extends EcState implements Serializable
 	public int	spawningPoolsInUse	= 0;
 	public int	roachWarrensInUse	= 0;
 	public int	infestationPitInUse	= 0;
-	public int	hatcheriesSpawningLarva = 0;
 	public int	nydusNetworkInUse = 0;
 
     static double[][] cachedMineralsMined = new double[200][200];
@@ -287,7 +304,7 @@ public class EcBuildOrder extends EcState implements Serializable
 		return gasMined;
 	}
 
-	public void accumulateMaterials()
+	protected void accumulateMaterials()
 	{
 		double mins = mineMinerals();
 		minerals += mins;

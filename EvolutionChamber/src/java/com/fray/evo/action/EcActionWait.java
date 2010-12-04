@@ -19,7 +19,7 @@ public class EcActionWait extends EcAction implements Serializable
 	}
 
 	@Override
-	public boolean canExecute(EcBuildOrder s)
+	public boolean canExecute(EcBuildOrder s,EcEvolver e)
 	{
 		if (isPossible(s))
 			return true;
@@ -29,7 +29,7 @@ public class EcActionWait extends EcAction implements Serializable
 			futureAction.run();
 			go = true;
 		}
-		s.accumulateMaterials();
+		s.tick(e);
 		return false;
 	}
 

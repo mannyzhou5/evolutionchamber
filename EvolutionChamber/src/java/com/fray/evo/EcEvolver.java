@@ -231,7 +231,7 @@ public class EcEvolver extends FitnessFunction
 			{
 				continue;
 			}
-			while (!a.canExecute(s))
+			while (!a.canExecute(s,this))
 			{
 				if (s.seconds >= s.targetSeconds || destination.waypointMissed(s))
 				{
@@ -286,7 +286,7 @@ public class EcEvolver extends FitnessFunction
 			{
 				continue;
 			}
-			while (!a.canExecute(s))
+			while (!a.canExecute(s,this))
 			{					
 				if (s.seconds >= s.targetSeconds || destination.waypointMissed(s))
 				{
@@ -389,9 +389,9 @@ public class EcEvolver extends FitnessFunction
 				s.invalidActions++;
 				continue;
 			}
-			while (!a.canExecute(s))
+			while (!a.canExecute(s,this))
 			{
-				if (s.seconds >= s.targetSeconds || destination.waypointMissed(s))
+				if (s.seconds > s.targetSeconds || destination.waypointMissed(s))
 				{
 					if (s.settings.overDrone && s.getDrones() < s.getOverDrones(s))
 					{
