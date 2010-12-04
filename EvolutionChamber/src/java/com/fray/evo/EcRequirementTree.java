@@ -3,6 +3,8 @@ package com.fray.evo;
 import com.fray.evo.action.ActionManager;
 
 import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import com.fray.evo.action.EcAction;
@@ -53,7 +55,7 @@ public class EcRequirementTree {
     }
 
     private static void actions(EcState destination,Map<Integer, Class> map) {
-        for (Upgrade upgrade : destination.getUpgrades()) {
+        for (Upgrade upgrade : (HashSet<Upgrade>)destination.getUpgrades().clone()) {
             require(upgrade, destination, map);
         }
         for (Entry<Building, Integer> entry : destination.getBuildings().entrySet()) {

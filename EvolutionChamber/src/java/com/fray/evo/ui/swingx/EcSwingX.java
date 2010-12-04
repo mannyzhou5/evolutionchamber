@@ -617,6 +617,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		outputText.setAlignmentY(0);
 		outputText.setTabSize(4);
 		outputText.setEditable(false);
+		outputText.setLineWrap(true);
+//		outputText.setPreferredSize(new Dimension(0,0));
 		String welcome = messages.getString("welcome");
 		simpleBuildOrder = welcome;
 		detailedBuildOrder = welcome;
@@ -716,6 +718,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Burrow);
+				else dest.RemoveUpgrade(UpgradeLibrary.Burrow);
 			}
 			void reverse(Object o)
 			{
@@ -741,6 +744,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.PneumatizedCarapace);
+				else dest.RemoveUpgrade(UpgradeLibrary.PneumatizedCarapace);
 			}
 			void reverse(Object o)
 			{
@@ -766,6 +770,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.VentralSacs);
+				else dest.RemoveUpgrade(UpgradeLibrary.VentralSacs);
 			}
 			void reverse(Object o)
 			{
@@ -779,6 +784,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.MetabolicBoost);
+				else dest.RemoveUpgrade(UpgradeLibrary.MetabolicBoost);
 			}
 			void reverse(Object o)
 			{
@@ -791,6 +797,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.AdrenalGlands);
+				else dest.RemoveUpgrade(UpgradeLibrary.AdrenalGlands);
 			}
 			void reverse(Object o)
 			{
@@ -815,7 +822,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.CentrifugalHooks);;
+				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.CentrifugalHooks);
+				else dest.RemoveUpgrade(UpgradeLibrary.CentrifugalHooks);
 			}
 			void reverse(Object o)
 			{
@@ -843,6 +851,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.GlialReconstitution);
+				else dest.RemoveUpgrade(UpgradeLibrary.GlialReconstitution);
 			}
 			void reverse(Object o)
 			{
@@ -855,6 +864,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.TunnelingClaws);
+				else dest.RemoveUpgrade(UpgradeLibrary.TunnelingClaws);
 			}
 			void reverse(Object o)
 			{
@@ -880,6 +890,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.GroovedSpines);
+				else dest.RemoveUpgrade(UpgradeLibrary.GroovedSpines);
 			}
 			void reverse(Object o)
 			{
@@ -906,6 +917,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.NeuralParasite);
+				else dest.RemoveUpgrade(UpgradeLibrary.NeuralParasite);
 			}
 			void reverse(Object o)
 			{
@@ -918,6 +930,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.PathogenGlands);
+				else dest.RemoveUpgrade(UpgradeLibrary.PathogenGlands);
 			}
 			void reverse(Object o)
 			{
@@ -956,6 +969,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.ChitinousPlating);
+				else dest.RemoveUpgrade(UpgradeLibrary.ChitinousPlating);
 			}
 			void reverse(Object o)
 			{
@@ -994,6 +1008,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Melee1);
+				else dest.RemoveUpgrade(UpgradeLibrary.Melee1);
 			}
 			void reverse(Object o)
 			{
@@ -1006,6 +1021,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Melee2);
+				else dest.RemoveUpgrade(UpgradeLibrary.Melee2);
 			}
 			void reverse(Object o)
 			{
@@ -1018,6 +1034,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Melee3);
+				else dest.RemoveUpgrade(UpgradeLibrary.Melee3);
 			}
 			void reverse(Object o)
 			{
@@ -1031,6 +1048,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Missile1);
+				else dest.RemoveUpgrade(UpgradeLibrary.Missile1);
 			}
 			void reverse(Object o)
 			{
@@ -1043,6 +1061,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Missile2);
+				else dest.RemoveUpgrade(UpgradeLibrary.Missile2);
 			}
 			void reverse(Object o)
 			{
@@ -1055,6 +1074,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Missile3);
+				else dest.RemoveUpgrade(UpgradeLibrary.Missile3);
 			}
 			void reverse(Object o)
 			{
@@ -1068,6 +1088,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Armor1);
+				else dest.RemoveUpgrade(UpgradeLibrary.Armor1);
 			}
 			void reverse(Object o)
 			{
@@ -1080,6 +1101,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Armor2);
+				else dest.RemoveUpgrade(UpgradeLibrary.Armor2);
 			}
 			void reverse(Object o)
 			{
@@ -1092,6 +1114,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Armor3);
+				else dest.RemoveUpgrade(UpgradeLibrary.Armor3);
 			}
 			void reverse(Object o)
 			{
@@ -1105,6 +1128,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerAttacks1);
+				else dest.RemoveUpgrade(UpgradeLibrary.FlyerAttacks1);
 			}
 			void reverse(Object o)
 			{
@@ -1117,6 +1141,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerAttacks2);
+				else dest.RemoveUpgrade(UpgradeLibrary.FlyerAttacks2);
 			}
 			void reverse(Object o)
 			{
@@ -1129,6 +1154,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerAttacks3);
+				else dest.RemoveUpgrade(UpgradeLibrary.FlyerAttacks3);
 			}
 			void reverse(Object o)
 			{
@@ -1142,6 +1168,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerArmor1);
+				else dest.RemoveUpgrade(UpgradeLibrary.FlyerArmor1);
 			}
 			void reverse(Object o)
 			{
@@ -1154,6 +1181,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerArmor2);
+				else dest.RemoveUpgrade(UpgradeLibrary.FlyerArmor2);
 			}
 			void reverse(Object o)
 			{
@@ -1166,6 +1194,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerArmor3);
+				else dest.RemoveUpgrade(UpgradeLibrary.FlyerArmor3);
 			}
 			void reverse(Object o)
 			{

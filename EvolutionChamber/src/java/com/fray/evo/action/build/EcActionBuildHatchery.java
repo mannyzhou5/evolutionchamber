@@ -9,6 +9,7 @@ import com.fray.evo.EcEvolver;
 import com.fray.evo.EcState;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.UnitLibrary;
 
 public class EcActionBuildHatchery extends EcActionBuildBuilding implements Serializable
 {
@@ -21,18 +22,22 @@ public class EcActionBuildHatchery extends EcActionBuildBuilding implements Seri
 	protected void preExecute(EcBuildOrder s)
 	{
 		s.hatcheriesBuilding += 1;
-		s.addFutureAction(getTime() - 30, new Runnable()
+		s.addFutureAction((int)(getTime() - BuildingLibrary.Extractor.getTime()), new Runnable()
 		{
 			@Override
 			public void run()
 			{
+				// This is a futureaction purely made for wait timing so that
+				// you can build a extractor to line up with this hatch.
 			}
 		});
-		s.addFutureAction(getTime() - 50, new Runnable()
+		s.addFutureAction((int)(getTime() - UnitLibrary.Queen.getTime()), new Runnable()
 		{
 			@Override
 			public void run()
 			{
+				// This is a futureaction purely made for wait timing so that
+				// you can build a queen to line up with this hatch.
 			}
 		});
 	}
@@ -54,6 +59,5 @@ public class EcActionBuildHatchery extends EcActionBuildBuilding implements Seri
 			return true;
 		return false;
 	}
-
 
 }

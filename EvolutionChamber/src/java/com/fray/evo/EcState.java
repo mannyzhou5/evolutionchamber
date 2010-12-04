@@ -607,6 +607,11 @@ public class EcState implements Serializable
 		units.put(unit, units.get(unit) - number);
 	}
 
+	public void RemoveUpgrade(Upgrade upgrade)
+	{
+		upgrades.remove(upgrade);
+	}
+
 	public void SetUnits(Unit unit, int number)
 	{
 		units.put(unit, number);
@@ -778,7 +783,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isMissile2()
 	{
-		return upgrades.contains(UpgradeLibrary.Melee2);
+		return upgrades.contains(UpgradeLibrary.Missile2);
 	}
 
 	/**

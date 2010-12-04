@@ -33,35 +33,35 @@ public class UpgradeLibrary {
     final public static Upgrade CentrifugalHooks = new Upgrade("Centrifugal Hooks", 150, 150, 110,BuildingLibrary.BanelingNest,
             createList(BuildingLibrary.Lair));
     final public static Upgrade Melee1 = new Upgrade("Melee +1", 100, 100, 160,BuildingLibrary.EvolutionChamber,
-            createList());
+            createList(BuildingLibrary.EvolutionChamber));
     final public static Upgrade Melee2 = new Upgrade("Melee +2", 150, 150, 190,BuildingLibrary.EvolutionChamber,
-            createList(BuildingLibrary.Lair));
+            createList(BuildingLibrary.Lair,UpgradeLibrary.Melee1));
     final public static Upgrade Melee3 = new Upgrade("Melee +3", 200, 200, 220,BuildingLibrary.EvolutionChamber,
-            createList(BuildingLibrary.Hive));
+            createList(BuildingLibrary.Hive,UpgradeLibrary.Melee2));
     final public static Upgrade Missile1 = new Upgrade("Missile +1", 100, 100, 160,BuildingLibrary.EvolutionChamber,
-            createList());
+            createList(BuildingLibrary.EvolutionChamber));
     final public static Upgrade Missile2 = new Upgrade("Missile +2", 150, 150, 190,BuildingLibrary.EvolutionChamber,
-            createList(BuildingLibrary.Lair));
+            createList(BuildingLibrary.Lair,UpgradeLibrary.Missile1));
     final public static Upgrade Missile3 = new Upgrade("Missile +3", 200, 200, 220,BuildingLibrary.EvolutionChamber,
-            createList(BuildingLibrary.Hive));
+            createList(BuildingLibrary.Hive,UpgradeLibrary.Missile2));
     final public static Upgrade Armor1 = new Upgrade("Carapace +1",150,150,160,BuildingLibrary.EvolutionChamber,
-            createList());
+            createList(BuildingLibrary.EvolutionChamber));
     final public static Upgrade Armor2 = new Upgrade("Carapace +2", 225, 225, 190,BuildingLibrary.EvolutionChamber,
-            createList(BuildingLibrary.Lair));
+            createList(BuildingLibrary.Lair,UpgradeLibrary.Armor1));
     final public static Upgrade Armor3 = new Upgrade("Carapace +3", 300, 300, 220,BuildingLibrary.EvolutionChamber,
-            createList(BuildingLibrary.Lair));
+            createList(BuildingLibrary.Lair,UpgradeLibrary.Armor2));
     final public static Upgrade FlyerAttacks1 = new Upgrade("Flyer Attacks +1", 100, 100, 160,BuildingLibrary.Spire,
-            createList());
+            createList(BuildingLibrary.Spire));
     final public static Upgrade FlyerAttacks2 = new Upgrade("Flyer Attacks +2", 175, 175, 190,BuildingLibrary.Spire,
-            createList(BuildingLibrary.Lair));
+            createList(BuildingLibrary.Lair,UpgradeLibrary.FlyerAttacks1));
     final public static Upgrade FlyerAttacks3 = new Upgrade("Flyer Attacks +3", 250, 250, 220,BuildingLibrary.Spire,
-            createList(BuildingLibrary.Hive));
+            createList(BuildingLibrary.Hive,UpgradeLibrary.FlyerAttacks2));
     final public static Upgrade FlyerArmor1 = new Upgrade("Flyer Armor +1", 150, 150, 160,BuildingLibrary.Spire,
-            createList());
+            createList(BuildingLibrary.Spire));
     final public static Upgrade FlyerArmor2 = new Upgrade("Flyer Armor +2", 225, 225, 190,BuildingLibrary.Spire,
-            createList(BuildingLibrary.Lair));
+            createList(BuildingLibrary.Lair,UpgradeLibrary.FlyerArmor1));
     final public static Upgrade FlyerArmor3 = new Upgrade("Flyer Armor +3", 300, 300, 220,BuildingLibrary.Spire,
-            createList(BuildingLibrary.Hive));
+            createList(BuildingLibrary.Hive,UpgradeLibrary.FlyerArmor2));
     final public static Upgrade GroovedSpines = new Upgrade("Grooved Spines", 150, 150, 80,BuildingLibrary.HydraliskDen,
             createList());
     final public static Upgrade NeuralParasite = new Upgrade("Neural Parasite", 150, 150, 110,BuildingLibrary.InfestationPit,

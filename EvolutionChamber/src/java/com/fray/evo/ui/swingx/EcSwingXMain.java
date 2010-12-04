@@ -72,7 +72,7 @@ public class EcSwingXMain
 				frame.setTitle(messages.getString("title", EC_VERSION));
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.getContentPane().add(new EcSwingX());
-				frame.setPreferredSize(new Dimension(900, 830));
+				frame.setPreferredSize(new Dimension(950, 830));
 				ImageIcon icon = new ImageIcon(EcSwingXMain.class.getResource(iconLocation));
 				frame.setIconImage(icon.getImage());
 				frame.pack();
