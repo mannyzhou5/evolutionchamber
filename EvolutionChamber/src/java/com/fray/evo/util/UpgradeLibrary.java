@@ -16,63 +16,63 @@ public class UpgradeLibrary {
     static private ArrayList<Buildable> createList(Buildable ...buildables){
         return new ArrayList<Buildable>(Arrays.asList(buildables));
     }
-    public static Upgrade MetabolicBoost = new Upgrade("MetabolicBoost", 100, 100, 110, BuildingLibrary.SpawningPool,
+    final public static Upgrade MetabolicBoost = new Upgrade("MetabolicBoost", 100, 100, 110, BuildingLibrary.SpawningPool,
             createList());
-    public static Upgrade AdrenalGlands = new Upgrade("AdrenalGlands", 200, 200, 130, BuildingLibrary.SpawningPool,
+    final public static Upgrade AdrenalGlands = new Upgrade("AdrenalGlands", 200, 200, 130, BuildingLibrary.SpawningPool,
             createList(BuildingLibrary.Hive));
-    public static Upgrade GlialReconstitution = new Upgrade("GlialReconstitution", 100, 100, 110, BuildingLibrary.RoachWarren,
+    final public static Upgrade GlialReconstitution = new Upgrade("GlialReconstitution", 100, 100, 110, BuildingLibrary.RoachWarren,
             createList(BuildingLibrary.Lair));
-    public static Upgrade TunnelingClaws = new Upgrade("TunnelingClaws", 150, 150, 110, BuildingLibrary.RoachWarren,
+    final public static Upgrade TunnelingClaws = new Upgrade("TunnelingClaws", 150, 150, 110, BuildingLibrary.RoachWarren,
             createList(BuildingLibrary.Lair));
-    public static Upgrade Burrow = new Upgrade("Burrow", 100, 100, 100, BuildingLibrary.Hatchery,
+    final public static Upgrade Burrow = new Upgrade("Burrow", 100, 100, 100, BuildingLibrary.Hatchery,
             createList(BuildingLibrary.Lair));
-    public static Upgrade PneumatizedCarapace = new Upgrade("PneumatizedCarapace", 100, 100, 60, BuildingLibrary.Hatchery,
+    final public static Upgrade PneumatizedCarapace = new Upgrade("PneumatizedCarapace", 100, 100, 60, BuildingLibrary.Hatchery,
             createList(BuildingLibrary.Lair));
-    public static Upgrade VentralSacs = new Upgrade("VentralSacs", 200, 200, 130,BuildingLibrary.Hatchery,
+    final public static Upgrade VentralSacs = new Upgrade("VentralSacs", 200, 200, 130,BuildingLibrary.Hatchery,
             createList(BuildingLibrary.Lair));
-    public static Upgrade CentrifugalHooks = new Upgrade("CentrifugalHooks", 150, 150, 110,BuildingLibrary.BanelingNest,
+    final public static Upgrade CentrifugalHooks = new Upgrade("CentrifugalHooks", 150, 150, 110,BuildingLibrary.BanelingNest,
             createList(BuildingLibrary.Lair));
-    public static Upgrade Melee1 = new Upgrade("Melee1", 100, 100, 160,BuildingLibrary.EvolutionChamber,
+    final public static Upgrade Melee1 = new Upgrade("Melee1", 100, 100, 160,BuildingLibrary.EvolutionChamber,
             createList());
-    public static Upgrade Melee2 = new Upgrade("Melee2", 150, 150, 190,BuildingLibrary.EvolutionChamber,
+    final public static Upgrade Melee2 = new Upgrade("Melee2", 150, 150, 190,BuildingLibrary.EvolutionChamber,
             createList(BuildingLibrary.Lair));
-    public static Upgrade Melee3 = new Upgrade("Melee3", 200, 200, 220,BuildingLibrary.EvolutionChamber,
+    final public static Upgrade Melee3 = new Upgrade("Melee3", 200, 200, 220,BuildingLibrary.EvolutionChamber,
             createList(BuildingLibrary.Hive));
-    public static Upgrade Missile1 = new Upgrade("Missile1", 100, 100, 160,BuildingLibrary.EvolutionChamber,
+    final public static Upgrade Missile1 = new Upgrade("Missile1", 100, 100, 160,BuildingLibrary.EvolutionChamber,
             createList());
-    public static Upgrade Missile2 = new Upgrade("Missile2", 150, 150, 190,BuildingLibrary.EvolutionChamber,
+    final public static Upgrade Missile2 = new Upgrade("Missile2", 150, 150, 190,BuildingLibrary.EvolutionChamber,
             createList(BuildingLibrary.Lair));
-    public static Upgrade Missile3 = new Upgrade("Missile3", 200, 200, 220,BuildingLibrary.EvolutionChamber,
+    final public static Upgrade Missile3 = new Upgrade("Missile3", 200, 200, 220,BuildingLibrary.EvolutionChamber,
             createList(BuildingLibrary.Hive));
-    public static Upgrade Armor1 = new Upgrade("Armor1",150,150,160,BuildingLibrary.EvolutionChamber,
+    final public static Upgrade Armor1 = new Upgrade("Armor1",150,150,160,BuildingLibrary.EvolutionChamber,
             createList());
-    public static Upgrade Armor2 = new Upgrade("Armor2", 225, 225, 190,BuildingLibrary.EvolutionChamber,
+    final public static Upgrade Armor2 = new Upgrade("Armor2", 225, 225, 190,BuildingLibrary.EvolutionChamber,
             createList(BuildingLibrary.Lair));
-    public static Upgrade Armor3 = new Upgrade("Armor3", 300, 300, 220,BuildingLibrary.EvolutionChamber,
+    final public static Upgrade Armor3 = new Upgrade("Armor3", 300, 300, 220,BuildingLibrary.EvolutionChamber,
             createList(BuildingLibrary.Lair));
-    public static Upgrade FlyerAttacks1 = new Upgrade("FlyerAttacks1", 100, 100, 160,BuildingLibrary.Spire,
+    final public static Upgrade FlyerAttacks1 = new Upgrade("FlyerAttacks1", 100, 100, 160,BuildingLibrary.Spire,
             createList());
-    public static Upgrade FlyerAttacks2 = new Upgrade("FlyerAttacks2", 175, 175, 190,BuildingLibrary.Spire,
+    final public static Upgrade FlyerAttacks2 = new Upgrade("FlyerAttacks2", 175, 175, 190,BuildingLibrary.Spire,
             createList(BuildingLibrary.Lair));
-    public static Upgrade FlyerAttacks3 = new Upgrade("FlyerAttacks3", 250, 250, 220,BuildingLibrary.Spire,
+    final public static Upgrade FlyerAttacks3 = new Upgrade("FlyerAttacks3", 250, 250, 220,BuildingLibrary.Spire,
             createList(BuildingLibrary.Hive));
-    public static Upgrade FlyerArmor1 = new Upgrade("FlyerArmor1", 150, 150, 160,BuildingLibrary.Spire,
+    final public static Upgrade FlyerArmor1 = new Upgrade("FlyerArmor1", 150, 150, 160,BuildingLibrary.Spire,
             createList());
-    public static Upgrade FlyerArmor2 = new Upgrade("FlyerArmor2", 225, 225, 190,BuildingLibrary.Spire,
+    final public static Upgrade FlyerArmor2 = new Upgrade("FlyerArmor2", 225, 225, 190,BuildingLibrary.Spire,
             createList(BuildingLibrary.Lair));
-    public static Upgrade FlyerArmor3 = new Upgrade("FlyerArmor3", 300, 300, 220,BuildingLibrary.Spire,
+    final public static Upgrade FlyerArmor3 = new Upgrade("FlyerArmor3", 300, 300, 220,BuildingLibrary.Spire,
             createList(BuildingLibrary.Hive));
-    public static Upgrade GroovedSpines = new Upgrade("GroovedSpines", 150, 150, 80,BuildingLibrary.HydraliskDen,
+    final public static Upgrade GroovedSpines = new Upgrade("GroovedSpines", 150, 150, 80,BuildingLibrary.HydraliskDen,
             createList());
-    public static Upgrade NeuralParasite = new Upgrade("NeuralParasite", 150, 150, 110,BuildingLibrary.InfestationPit,
+    final public static Upgrade NeuralParasite = new Upgrade("NeuralParasite", 150, 150, 110,BuildingLibrary.InfestationPit,
             createList());
-    public static Upgrade PathogenGlands = new Upgrade("PathogenGlands", 150, 150, 80,BuildingLibrary.InfestationPit,
+    final public static Upgrade PathogenGlands = new Upgrade("PathogenGlands", 150, 150, 80,BuildingLibrary.InfestationPit,
             createList());
-    public static Upgrade ChitinousPlating = new Upgrade("chitinousPlating", 150, 150, 110,BuildingLibrary.UltraliskCavern,
+    final public static Upgrade ChitinousPlating = new Upgrade("chitinousPlating", 150, 150, 110,BuildingLibrary.UltraliskCavern,
             createList());
 
     private static ArrayList<Upgrade> allZergUpgrades;
-    synchronized public static ArrayList<Upgrade> getAllZergUpgrades(){
+    synchronized final public static ArrayList<Upgrade> getAllZergUpgrades(){
         if(allZergUpgrades == null){
             allZergUpgrades = new ArrayList<Upgrade>();
             allZergUpgrades.add(MetabolicBoost);

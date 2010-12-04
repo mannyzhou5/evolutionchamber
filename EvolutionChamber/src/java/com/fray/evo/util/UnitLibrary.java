@@ -19,22 +19,22 @@ public class UnitLibrary {
     static private ArrayList<Buildable> createList(Buildable ...buildables){
         return new ArrayList<Buildable>(Arrays.asList(buildables));
     }
-    public static Unit Larva = ZergLibrary.Larva;
-    public static Unit Zergling = ZergLibrary.Zergling;
-    public static Unit Drone = ZergLibrary.Drone;
-    public static Unit Roach = ZergLibrary.Roach;
-    public static Unit Queen = ZergLibrary.Queen;
-    public static Unit Baneling = ZergLibrary.Baneling;
-    public static Unit Mutalisk = ZergLibrary.Mutalisk;
-    public static Unit Hydralisk = ZergLibrary.Hydralisk;
-    public static Unit Infestor = ZergLibrary.Infestor;
-    public static Unit Corruptor = ZergLibrary.Corruptor;
-    public static Unit Ultralisk = ZergLibrary.Ultralisk;
-    public static Unit Broodlord = ZergLibrary.Broodlord;
-    public static Unit Overlord = ZergLibrary.Overlord;
-    public static Unit Overseer = ZergLibrary.Overseer;
+    final public static Unit Larva = ZergLibrary.Larva;
+    final public static Unit Zergling = ZergLibrary.Zergling;
+    final public static Unit Drone = ZergLibrary.Drone;
+    final public static Unit Roach = ZergLibrary.Roach;
+    final public static Unit Queen = ZergLibrary.Queen;
+    final public static Unit Baneling = ZergLibrary.Baneling;
+    final public static Unit Mutalisk = ZergLibrary.Mutalisk;
+    final public static Unit Hydralisk = ZergLibrary.Hydralisk;
+    final public static Unit Infestor = ZergLibrary.Infestor;
+    final public static Unit Corruptor = ZergLibrary.Corruptor;
+    final public static Unit Ultralisk = ZergLibrary.Ultralisk;
+    final public static Unit Broodlord = ZergLibrary.Broodlord;
+    final public static Unit Overlord = ZergLibrary.Overlord;
+    final public static Unit Overseer = ZergLibrary.Overseer;
 
-    public static HashMap<Integer, Unit> idToZergUnit;
+    final public static HashMap<Integer, Unit> idToZergUnit;
     public static ArrayList<Unit> zergUnits;
     static {
         if(zergUnits == null){

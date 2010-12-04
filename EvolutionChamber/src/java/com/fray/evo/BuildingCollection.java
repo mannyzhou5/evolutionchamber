@@ -15,8 +15,8 @@ import java.util.HashMap;
  *
  * @author Cyrik
  */
-public class BuildingCollection implements Serializable{
-    private int[] arr;
+public final class BuildingCollection implements Serializable{
+    private final int[] arr;
 
     public BuildingCollection(Collection<Building> buildings){
         arr = new int[buildings.size()];

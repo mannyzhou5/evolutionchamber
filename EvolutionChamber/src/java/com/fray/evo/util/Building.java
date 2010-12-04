@@ -10,15 +10,15 @@ import java.util.ArrayList;
  *
  * @author Cyrik
  */
-public class Building implements Buildable {
+public final class Building implements Buildable {
 
-    private String name;
-    private int minerals;
-    private int gas;
-    private double time;
-    private Buildable consumes;
-    private ArrayList<Buildable> requierments;
-    private int id;
+    private final String name;
+    private final int minerals;
+    private final int gas;
+    private final double time;
+    private final Buildable consumes;
+    private final ArrayList<Buildable> requierments;
+    private final int id;
 
     public Building(String name, int minerals, int gas, double time, Buildable consumes, ArrayList<Buildable> requierments, int id) {
         this.name = name;

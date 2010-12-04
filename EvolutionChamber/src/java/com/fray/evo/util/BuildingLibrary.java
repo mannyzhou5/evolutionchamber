@@ -13,29 +13,29 @@ import java.util.HashMap;
  * @author Cyrik
  */
 public class BuildingLibrary {
-    public static HashMap<Integer, Building> idToZergBuilding;
+    final public static HashMap<Integer, Building> idToZergBuilding;
 
     static private ArrayList<Buildable> createList(Buildable... buildables) {
         return new ArrayList<Buildable>(Arrays.asList(buildables));
     }
-    static public Building Hatchery = ZergLibrary.Hatchery;
-    static public Building Extractor = ZergLibrary.Extractor;
-    static public Building SpawningPool = ZergLibrary.SpawningPool;
-    static public Building Lair = ZergLibrary.Lair;
-    static public Building InfestationPit = ZergLibrary.InfestationPit;
-    static public Building Hive = ZergLibrary.Hive;
-    static public Building RoachWarren = ZergLibrary.RoachWarren;
-    static public Building HydraliskDen = ZergLibrary.HydraliskDen;
-    static public Building BanelingNest = ZergLibrary.BanelingNest;
-    static public Building Spire = ZergLibrary.Spire;
-    static public Building GreaterSpire = ZergLibrary.GreaterSpire;
-    static public Building UltraliskCavern = ZergLibrary.UltraliskCavern;
-    static public Building EvolutionChamber = ZergLibrary.EvolutionChamber;
-    static public Building NydusNetwork = ZergLibrary.NydusNetwork;
-    static public Building NydusWorm = ZergLibrary.NydusWorm;
-    static public Building SpineCrawler = ZergLibrary.SpineCrawler;
-    static public Building SporeCrawler = ZergLibrary.SporeCrawler;
-    static public ArrayList<Building> allZergBuildings;
+    static final public Building Hatchery = ZergLibrary.Hatchery;
+    static final public Building Extractor = ZergLibrary.Extractor;
+    static final public Building SpawningPool = ZergLibrary.SpawningPool;
+    static final public Building Lair = ZergLibrary.Lair;
+    static final public Building InfestationPit = ZergLibrary.InfestationPit;
+    static final public Building Hive = ZergLibrary.Hive;
+    static final public Building RoachWarren = ZergLibrary.RoachWarren;
+    static final public Building HydraliskDen = ZergLibrary.HydraliskDen;
+    static final public Building BanelingNest = ZergLibrary.BanelingNest;
+    static final public Building Spire = ZergLibrary.Spire;
+    static final public Building GreaterSpire = ZergLibrary.GreaterSpire;
+    static final public Building UltraliskCavern = ZergLibrary.UltraliskCavern;
+    static final public Building EvolutionChamber = ZergLibrary.EvolutionChamber;
+    static final public Building NydusNetwork = ZergLibrary.NydusNetwork;
+    static final public Building NydusWorm = ZergLibrary.NydusWorm;
+    static final public Building SpineCrawler = ZergLibrary.SpineCrawler;
+    static final public Building SporeCrawler = ZergLibrary.SporeCrawler;
+    static final public ArrayList<Building> allZergBuildings;
 
     static {
             allZergBuildings = new ArrayList<Building>();

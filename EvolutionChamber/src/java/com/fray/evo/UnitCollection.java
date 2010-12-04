@@ -15,8 +15,8 @@ import java.util.HashMap;
  *
  * @author Cyrik
  */
-public class UnitCollection implements Serializable {
-    private int[] arr;
+public final class UnitCollection implements Serializable {
+    private final int[] arr;
 
     public UnitCollection(Collection<Unit> units){
         arr = new int[units.size()];

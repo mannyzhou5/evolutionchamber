@@ -10,16 +10,16 @@ import java.util.ArrayList;
  *
  * @author Cyrik
  */
-public class Unit implements Buildable {
+public final class Unit implements Buildable {
 
-    private double supply;
-    private String name;
-    private int minerals;
-    private int gas;
-    private double time;
-    private Buildable consumes;
-    private ArrayList<Buildable> requierments;
-    private int id;
+    private final double supply;
+    private final String name;
+    private final int minerals;
+    private final int gas;
+    private final double time;
+    private final Buildable consumes;
+    private final ArrayList<Buildable> requierments;
+    private final int id;
 
     public Unit(int id, String name, int minerals, int gas, double supply, double time, Buildable consumes, ArrayList<Buildable> requierments) {
         this.name = name;

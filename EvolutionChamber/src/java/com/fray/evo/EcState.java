@@ -234,12 +234,7 @@ public class EcState implements Serializable
 		return parityDrones;
 	}
 
-	public int bases()
-	{
-		return getHatcheries() + getLairs() + evolvingHatcheries + evolvingLairs + getHives() + evolvingHives;
-	}
-
-        public int basesClean()
+        public int bases()
 	{
 		return buildings.get(BuildingLibrary.Hatchery) + buildings.get(BuildingLibrary.Lair)
                         + evolvingHatcheries + evolvingLairs + buildings.get(BuildingLibrary.Hive) + evolvingHives;

@@ -11,13 +11,13 @@ import java.util.ArrayList;
  *
  * @author Cyrik
  */
-public class Upgrade implements Buildable{
-    private int minerals;
-    private int gas;
-    private double time;
-    private String name;
-    private ArrayList<Buildable> requierments;
-    private Building builtIn;
+public final class Upgrade implements Buildable{
+    private final int minerals;
+    private final int gas;
+    private final double time;
+    private final String name;
+    private final ArrayList<Buildable> requierments;
+    private final Building builtIn;
 
     public Upgrade(String name,int minerals, int gas, double time, Building builtIn, ArrayList<Buildable> requierments){
         this.name = name;
