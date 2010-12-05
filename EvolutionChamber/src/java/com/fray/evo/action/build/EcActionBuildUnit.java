@@ -79,15 +79,24 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
         return isPossibleResources(s);
     }
 
-	protected void postExecute(EcBuildOrder s, GameLog e){
-            s.AddUnits((Unit) buildable, 1);
+    protected void postExecute(EcBuildOrder s, GameLog e) {
+        Building builtFrom = ((Unit) buildable).getBuiltFrom();
+        if (builtFrom != null) {
+            s.makeBuildingNotBusy(this);
         }
+        s.AddUnits((Unit) buildable, 1);
+    }
 
-	protected void preExecute(EcBuildOrder s){
-            if(getConsumes() != UnitLibrary.Larva){
-                s.RemoveUnits((Unit)getConsumes(), 1);
-            }
+    protected void preExecute(EcBuildOrder s) {
+        Building builtFrom = ((Unit) buildable).getBuiltFrom();
+        if (builtFrom != null) {
+            s.makeBuildingBusy(builtFrom, this);
         }
+        Buildable consumes = getConsumes();
+        if (consumes != null && getConsumes() != UnitLibrary.Larva) {
+            s.RemoveUnits((Unit) getConsumes(), 1);
+        }
+    }
 
     @Override
     public boolean isInvalid(EcBuildOrder s) {
@@ -113,6 +122,10 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
                     return true;
                 }
             }
+        }
+        Building builtFrom = ((Unit) buildable).getBuiltFrom();
+        if (builtFrom != null && !s.doesNonBusyExist(((Unit)buildable).getBuiltFrom())) {
+            return true;
         }
         return false;
     }

@@ -19,16 +19,9 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 	}
 
 	@Override
-	protected void preExecute(EcBuildOrder s)
-	{
-		s.makeBuildingBusy(((Unit)buildable).getBuiltFrom(),this);
-	}
-
-	@Override
 	protected void postExecute(final EcBuildOrder s, final GameLog e)
 	{
-            s.makeBuildingNotBusy(this);
-		s.AddUnits((Unit) buildable, 1);
+            super.postExecute(s, e);
 		if (s.larva.size() > s.hasQueen.size())
 		{
 			spawnLarva(s, e);
@@ -88,16 +81,6 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 				}
 			});
 		}
-	}
-
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getSpawningPools() == 0)
-			return true;
-		if (!s.doesNonBusyExist(((Unit)buildable).getBuiltFrom()))
-			return true;
-		return false;
 	}
 
 }
