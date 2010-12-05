@@ -11,15 +11,4 @@ public final class EcActionBuildHydraliskDen extends EcActionBuildBuilding imple
 	{
 		super(BuildingLibrary.HydraliskDen);
 	}
-	
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getLairs() == 0 && s.getHives() == 0 )
-			return true;
-		if (s.getHydraliskDen() == 1)
-			return true;
-		return super.isInvalid(s);
-	}
-
 }

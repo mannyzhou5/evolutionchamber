@@ -12,14 +12,4 @@ public final class EcActionBuildInfestationPit extends EcActionBuildBuilding imp
 		super(BuildingLibrary.InfestationPit);
 	}
 	
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getLairs() == 0 && s.getHives() == 0 )
-			return true;
-		if (s.getInfestationPit() == 2)
-			return true;
-		return super.isInvalid(s);
-	}
-
 }

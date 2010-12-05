@@ -11,13 +11,4 @@ public final class EcActionBuildEvolutionChamber extends EcActionBuildBuilding i
 	{
 		super(BuildingLibrary.EvolutionChamber);
 	}
-
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getEvolutionChambers() == 3)
-			return true;
-		return super.isInvalid(s);
-	}
-
 }

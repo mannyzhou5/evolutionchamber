@@ -36,14 +36,4 @@ public final class EcActionBuildNydusWorm extends EcActionBuildBuilding implemen
 		return super.isPossible(s);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getLairs() == 0 && s.getHives() == 0 )
-			return true;
-		if (s.getNydusNetwork() == 0)
-			return true;
-		return super.isInvalid(s);
-	}
-
 }

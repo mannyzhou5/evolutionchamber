@@ -12,15 +12,4 @@ public final class EcActionBuildSpawningPool extends EcActionBuildBuilding imple
 		super(BuildingLibrary.SpawningPool);
 	}
 
-
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getSpawningPools() >= 1)
-			return true;
-		if(s.supplyUsed < s.settings.minimumPoolSupply)
-			return true;
-		return super.isInvalid(s);
-	}
-
 }

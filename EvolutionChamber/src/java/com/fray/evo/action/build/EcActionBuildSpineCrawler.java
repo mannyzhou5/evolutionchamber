@@ -13,13 +13,4 @@ public final class EcActionBuildSpineCrawler extends EcActionBuildBuilding imple
 		super(BuildingLibrary.SpineCrawler);
 	}
 
-	
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getSpawningPools() == 0)
-			return true;
-		return false;
-	}
-
 }

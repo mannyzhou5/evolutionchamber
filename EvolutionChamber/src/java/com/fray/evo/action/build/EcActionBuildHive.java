@@ -36,15 +36,4 @@ public final class EcActionBuildHive extends EcActionBuildBuilding implements Se
 	{
 		return s.doesNonBusyReallyExist((Building)buildable.getConsumes()) && super.isPossible(s);
 	}
-
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getLairs() == 0)
-			return true;
-		if (s.getInfestationPit() == 0)
-			return true;
-		return super.isInvalid(s);
-	}
-
 }

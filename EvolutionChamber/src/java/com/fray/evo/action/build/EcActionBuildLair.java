@@ -37,15 +37,5 @@ public final class EcActionBuildLair extends EcActionBuildBuilding implements Se
 		return super.isPossible(s);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getHatcheries() == 0)
-			return true;
-		if (s.getSpawningPools() == 0)
-			return true;
-		return super.isInvalid(s);
-	}
-
 
 }

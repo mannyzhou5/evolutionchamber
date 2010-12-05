@@ -11,13 +11,4 @@ public final class EcActionBuildUltraliskCavern extends EcActionBuildBuilding im
 	{
 		super(BuildingLibrary.UltraliskCavern);
 	}
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getHives() == 0 )
-			return true;
-		if (s.getUltraliskCavern() == 1)
-			return true;
-		return super.isInvalid(s);
-	}
 }

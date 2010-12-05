@@ -12,15 +12,4 @@ public final class EcActionBuildRoachWarren extends EcActionBuildBuilding implem
 		super(BuildingLibrary.RoachWarren);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getSpawningPools() == 0)
-			return true;
-		if (s.getRoachWarrens() >= 1)
-			return true;
-		return false;
-	}
-
-
 }

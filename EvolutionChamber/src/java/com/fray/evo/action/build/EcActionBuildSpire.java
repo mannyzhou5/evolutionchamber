@@ -11,15 +11,4 @@ public final class EcActionBuildSpire extends EcActionBuildBuilding implements S
 	{
 		super(BuildingLibrary.Spire);
 	}
-	
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getLairs() == 0  && s.getHives() == 0 )
-			return true;
-		if (s.getSpire() == 2)
-			return true;
-		return super.isInvalid(s);
-	}
-
 }

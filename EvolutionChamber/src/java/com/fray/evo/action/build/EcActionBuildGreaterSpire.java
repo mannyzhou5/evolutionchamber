@@ -37,16 +37,4 @@ public final class EcActionBuildGreaterSpire extends EcActionBuildBuilding imple
 		return super.isPossible(s);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getHives() == 0 )
-			return true;
-		if (s.getSpire() == 0)
-			return true;
-		if (s.getGreaterSpire() == 1)
-			return true;
-		return super.isInvalid(s);
-	}
-
 }

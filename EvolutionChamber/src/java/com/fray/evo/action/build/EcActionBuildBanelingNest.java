@@ -11,15 +11,5 @@ public final class EcActionBuildBanelingNest extends EcActionBuildBuilding imple
 	{
 		super(BuildingLibrary.BanelingNest);
 	}
-	
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getSpawningPools() == 0)
-			return true;
-		if (s.getBanelingNest() == 1)
-			return true;
-		return false;
-	}
 
 }

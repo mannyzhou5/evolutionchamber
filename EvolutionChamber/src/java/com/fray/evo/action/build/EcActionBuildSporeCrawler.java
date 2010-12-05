@@ -12,13 +12,4 @@ public final class EcActionBuildSporeCrawler extends EcActionBuildBuilding imple
 	{
 		super(BuildingLibrary.SporeCrawler);
 	}
-
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getEvolutionChambers() == 0)
-			return true;
-		return false;
-	}
-
 }

@@ -12,15 +12,4 @@ public final class EcActionBuildNydusNetwork extends EcActionBuildBuilding imple
 		super(BuildingLibrary.NydusNetwork);
 	}
 
-
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getLairs() == 0  && s.getHives() == 0)
-			return true;
-		if (s.getNydusNetwork() == 2)
-			return true;
-		return super.isInvalid(s);
-	}
-
 }
