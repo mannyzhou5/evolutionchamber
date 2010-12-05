@@ -53,7 +53,7 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 				@Override
 				public void run(GameLog e)
 				{
-					if (e.getEnable() && s.getLarva() < s.bases() * 19)
+					if (e.isEnabled() && s.getLarva() < s.bases() * 19)
 						e.printMessage(s, GameLog.MessageType.Obtained,
 								" @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
 								+ messages.getString("Larva")
@@ -66,7 +66,7 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 						@Override
 						public void run(GameLog e)
 						{
-							if (e.getEnable() && s.getLarva() < s.bases() * 19)
+							if (e.isEnabled() && s.getLarva() < s.bases() * 19)
 								e.printMessage(s, GameLog.MessageType.Obtained,
 										" @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
 										+ messages.getString("Larva")

@@ -30,7 +30,7 @@ public final class GameLog {
 		log = System.out;
 	}
 
-	public void setEnable (boolean on) {
+	public void setEnabled (boolean on) {
 		this.on = on;
 	}
 
@@ -38,7 +38,7 @@ public final class GameLog {
 		log = stream;
 	}
 
-	public boolean getEnable() {
+	public boolean isEnabled() {
 		return on;
 	}
 

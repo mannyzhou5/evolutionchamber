@@ -31,7 +31,7 @@ public final class EcActionMineGas extends EcAction implements Serializable
 			{
 				if (s.settings.pullThreeWorkersOnly) 
 				{
-					if (e.getEnable())
+					if (e.isEnabled())
 						e.printMessage(s, GameLog.MessageType.Mining, 
 								" " + messages.getString("3ongas"));
 					s.dronesGoingOnGas -= 3;
@@ -39,7 +39,7 @@ public final class EcActionMineGas extends EcAction implements Serializable
 				}
 				else
 				{
-					if (e.getEnable())
+					if (e.isEnabled())
 						e.printMessage(s, GameLog.MessageType.Mining, 
 								" " + messages.getString("1ongas"));
 					s.dronesGoingOnGas--;

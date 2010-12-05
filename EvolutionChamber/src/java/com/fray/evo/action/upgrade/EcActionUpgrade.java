@@ -25,7 +25,7 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
 
             @Override
             public void run(GameLog e) {
-            	if (e.getEnable())
+            	if (e.isEnabled())
 	            	e.printMessage(s, GameLog.MessageType.Evolved
 	            			, messages.getString(getName().replace(" ",".")));
                 afterTime(s, e);

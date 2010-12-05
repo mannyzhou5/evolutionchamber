@@ -31,7 +31,7 @@ public final class EcActionMineMineral extends EcAction implements Serializable
 			{
 				if (s.settings.pullThreeWorkersOnly) 
 				{
-					if (e.getEnable())
+					if (e.isEnabled())
 						e.printMessage(s, GameLog.MessageType.Mining,
 								" " + messages.getString("3onminerals"));
 					s.dronesGoingOnMinerals -= 3;

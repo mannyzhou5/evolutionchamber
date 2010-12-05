@@ -23,7 +23,7 @@ public final class EcActionExtractorTrick extends EcAction implements Serializab
 			@Override
 			public void run(GameLog e)
 			{
-				if (e.getEnable())
+				if (e.isEnabled())
 					e.printMessage(s, GameLog.MessageType.Obtained,
 							" " + messages.getString("finished.extractortrick"));
 				s.minerals += 19;

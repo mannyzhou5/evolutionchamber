@@ -25,7 +25,7 @@ public final class EcActionBuildZergling extends EcActionBuildUnit implements Se
 	@Override
 	protected void obtainOne(EcBuildOrder s, GameLog e)
 	{
-		if (e.getEnable())
+		if (e.isEnabled())
 			e.printMessage(s, GameLog.MessageType.Obtained,
 					" " + messages.getString(getName()) + "+2");
 	}

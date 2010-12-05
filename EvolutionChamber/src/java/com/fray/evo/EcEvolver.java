@@ -437,7 +437,7 @@ public final class EcEvolver extends FitnessFunction
 	}
 	
 	public void enableLogging (boolean log) {
-		this.log.setEnable(log);
+		this.log.setEnabled(log);
 	}
 	
 	public void setLoggingStream (PrintStream stream) {

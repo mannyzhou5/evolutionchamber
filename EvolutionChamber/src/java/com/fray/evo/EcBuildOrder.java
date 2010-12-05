@@ -146,7 +146,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 			{
 				if (larvaProduction.get(hatchIndex) == 15)
 				{
-					if (e.getEnable())
+					if (e.isEnabled())
 						e.printMessage(this, GameLog.MessageType.Obtained,
 								" @" + messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva") + " +1" );
 					setLarva(hatchIndex, getLarva(hatchIndex) + 1);
@@ -162,12 +162,12 @@ public final class EcBuildOrder extends EcState implements Serializable
 			if (dronesGoingOnMinerals > 0) {
 				droneIsScouting = true;
 				dronesGoingOnMinerals--;
-				if (e.getEnable())
+				if (e.isEnabled())
 					e.printMessage(this, GameLog.MessageType.Scout, " +1 Scouting Drone");
 			} else if (dronesOnMinerals > 0) {
 				droneIsScouting = true;
 				dronesOnMinerals--;
-				if (e.getEnable())
+				if (e.isEnabled())
 					e.printMessage(this, GameLog.MessageType.Scout, " +1 Scouting Drone");
 			}
 		}
