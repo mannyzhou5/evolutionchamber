@@ -107,17 +107,17 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
         ArrayList<Buildable> reqs = ((Unit) buildable).getRequirement();
         for (int i = 0; i < reqs.size(); i++) {
             Buildable req = reqs.get(i);
-            if (req.getClass() == Building.class) {
+            if (req instanceof  Building) {
                 if (!s.isBuilding((Building)req)) {
                     return true;
                 }
             }
-            if (req.getClass() == Unit.class) {
+            if (req instanceof  Unit) {
                 if (s.getUnitCount((Unit) req) < 1) {
                     return true;
                 }
             }
-            if (req.getClass() == Upgrade.class) {
+            if (req instanceof Upgrade) {
                 if (!s.isUpgrade((Upgrade) req)) {
                     return true;
                 }

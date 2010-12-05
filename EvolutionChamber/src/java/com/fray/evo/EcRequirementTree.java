@@ -81,12 +81,12 @@ public class EcRequirementTree {
         if(requirement == UnitLibrary.Larva){
             return;
         }
-        if (requirement.getClass() == Upgrade.class) {
+        if (requirement instanceof  Upgrade) {
             destination.AddUpgrade((Upgrade) requirement);
             require(((Upgrade)requirement).getBuiltIn(), destination, map);
-        } else if (requirement.getClass() == Building.class) {
+        } else if (requirement instanceof  Building) {
             destination.RequireBuilding((Building) requirement);
-        } else if (requirement.getClass() == Unit.class) {
+        } else if (requirement instanceof  Unit) {
             destination.RequireUnit((Unit) requirement);
         }
         for (int i = 0; i < requirement.getRequirement().size(); i++) {

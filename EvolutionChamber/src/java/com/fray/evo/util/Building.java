@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Cyrik
  */
 public final class Building extends Buildable {
-
+    
     public Building(String name, int minerals, int gas, double time, Buildable consumes, ArrayList<Buildable> requirements, int id) {
         super(name,minerals,gas,time,consumes,requirements,id);
     }
