@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.Locale;
 import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -27,8 +29,32 @@ import com.fray.evo.util.EcMessages;
  */
 public class EcSwingXMain
 {
-	public static final EcMessages	messages	= new EcMessages("com/fray/evo/ui/swingx/messages");
-	public static final UserSettings userSettings = new UserSettings();
+	private static final Logger logger = Logger.getLogger(EcSwingXMain.class.getName());
+	
+	/**
+	 * I18n messages.
+	 */
+	public static final EcMessages messages = new EcMessages("com/fray/evo/ui/swingx/messages");
+	
+	/**
+	 * The directory that stores the user's configuration files.
+	 */
+	public static final File userConfigDir;
+	
+	/**
+	 * The user's settings.
+	 */
+	public static final UserSettings userSettings;
+	
+	static{
+		userConfigDir = new File(System.getProperty("user.home"), ".evolutionchamber");
+		userConfigDir.mkdir();
+		userSettings = new UserSettings(new File(userConfigDir, "settings.properties"));
+	}
+
+	/**
+	 * The classpath location of the icon.
+	 */
 	public static final String iconLocation = "/com/fray/evo/ui/swingx/evolution_chamber.png";
 
 	public static void main(String args[])
@@ -50,14 +76,8 @@ public class EcSwingXMain
 			messages.changeLocale(locale);
 		}
 		
-		// run Mac OS X customizations if user is on a Mac
-		// this code must *literally* run before *anything* else
-		// graphics-related...putting this code at the beginning of
-		// EcSwingX.main() doesn't quite work--the application name (which
-		// appears as the first menu item in the Mac menu bar) does not get
-		// set--the only reason I can think of why this happens is that EcSwingX
-		// extends a class, so some static initialization code must be running
-		// before EcSwingX.main() gets executed
+		//run Mac OS X customizations if user is on a Mac
+		//this code must run before *anything* else graphics-related
 		MacSupport.initIfMac(messages.getString("title", EvolutionChamber.VERSION), false, iconLocation, new MacHandler()
 		{
 			@Override
@@ -85,7 +105,9 @@ public class EcSwingXMain
 //				}
 //				catch (Exception e)
 //				{
-//					e.printStackTrace();
+//					StringWriter sw = new StringWriter();
+//					e.printStackTrace(new PrintWriter(sw));
+//					logger.severe(sw.toString());
 //				}
 
 				final JFrame frame = new JFrame();

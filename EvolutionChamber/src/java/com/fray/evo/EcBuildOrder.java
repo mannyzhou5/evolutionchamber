@@ -193,7 +193,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public int	infestationPitInUse	= 0;
 	public int	nydusNetworkInUse = 0;
 
-    static double[][] cachedMineralsMined = new double[200][200];
+    private static double[][] cachedMineralsMined = new double[200][200];
 
     public double mineMinerals() {
         int mineralPatches = mineralPatches();
@@ -267,7 +267,7 @@ public final class EcBuildOrder extends EcState implements Serializable
         return mineralsMined;
 	}
 
-    static double[][] cachedGasMined = new double[200][200];
+    private static double[][] cachedGasMined = new double[200][200];
 
     public double mineGas()
     {

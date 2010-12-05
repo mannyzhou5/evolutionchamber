@@ -30,23 +30,10 @@ public class UserSettings {
 	private File file;
 
 	/**
-	 * Loads a user settings file at the default location.
-	 */
-	public UserSettings() {
-		File dir = new File(System.getProperty("user.home"), ".evolutionchamber");
-		dir.mkdir();
-		init(new File(dir, "settings.properties"));
-	}
-
-	/**
 	 * Loads a user settings file at the specified location.
 	 * @param file the location of the settings file
 	 */
 	public UserSettings(File file) {
-		init(file);
-	}
-
-	private void init(File file) {
 		properties = new Properties();
 		this.file = file;
 		if (file.exists()) {

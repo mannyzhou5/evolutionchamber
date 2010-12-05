@@ -32,65 +32,200 @@ import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
 
 import com.fray.evo.action.EcAction;
-import com.fray.evo.util.EcFileSystem;
+import com.fray.evo.fitness.EcFitnessType;
 
 public class EvolutionChamber
 {
 	private static final Logger logger = Logger.getLogger(EvolutionChamber.class.getName());
-	public static final String	VERSION	= "0022";
-	// The seeds files. (one and a backup, in case execution stops while the
-	// file is half written)
-	private static File			SEEDS_EVO				= null;
-	private static File			SEEDS_EVO_2				= null;
+	
+	/**
+	 * The version of EvolutionChamber.
+	 */
+	public static final String	VERSION = "0022";
 
-	//Chromosome length refers to the Genetic Algorithm's maximum number of potential actions that can be executed.
-	public int					CHROMOSOME_LENGTH		= 120;
-	//Population size refers to the number of chromosomes in the gene pool for a population.
-	public int					POPULATION_SIZE			= 200;
-	//Base mutation rate refers to the rate at which EcGeneticUtil mutations occur.
-	public double				BASE_MUTATION_RATE		= 5;
+	/**
+	 * The seed file.
+	 */
+	private File				SEEDS_EVO				= null;
+	
+	/**
+	 * The backup seed file (in case execution stops while the file is half written).
+	 */
+	private File				SEEDS_EVO_2				= null;
 
-	//Number of threads to run genetic simulators on.
-	int							NUM_THREADS				= Runtime.getRuntime().availableProcessors();
-	//Maximum allowed number of threads to run genetic simulators on.
-	int							MAX_NUM_THREADS			= Runtime.getRuntime().availableProcessors() * 4;
-	public List<Thread>			threads					= Collections.synchronizedList(new ArrayList<Thread>());
+	/**
+	 * Chromosome length refers to the Genetic Algorithm's maximum number of potential actions that can be executed. 
+	 */
+	private int					CHROMOSOME_LENGTH		= 120;
+
+	/**
+	 * Population size refers to the number of chromosomes in the gene pool for a population.
+	 */
+	private int					POPULATION_SIZE			= 200;
+	
+	/**
+	 * Base mutation rate refers to the rate at which EcGeneticUtil mutations occur.
+	 */
+	private double				BASE_MUTATION_RATE		= 5;
+
+	/**
+	 * Number of threads to run genetic simulators on.
+	 */
+	private int					NUM_THREADS				= Runtime.getRuntime().availableProcessors();
+	
+	/**
+	 * Maximum allowed number of threads to run genetic simulators on.
+	 */
+	private int					MAX_NUM_THREADS			= Runtime.getRuntime().availableProcessors() * 4;
+	
+	/**
+	 * The threads that are used for the running simulation.
+	 */
+	private List<Thread>		threads					= Collections.synchronizedList(new ArrayList<Thread>());
+	
+	/**
+	 * True to kill all running threads, false to let them continue running.
+	 */
 	private boolean				killThreads				= false;
 	
-	public Double				bestScore				= new Double(0);
-	public Integer				stagnationLimit			= new Integer(0);
-	public Double				waterMark				= new Double(0);
-	int							STAGNATION_LIMIT_MIN	= 200;
+	/**
+	 * The best fitness score a simulation generated.
+	 */
+	private Double				bestScore				= 0.0;
 	
-	public List<EcBuildOrder>	history					= new ArrayList<EcBuildOrder>();
+	private Integer				stagnationLimit			= 0;
+	private Double				waterMark				= 0.0;
+	private int					STAGNATION_LIMIT_MIN	= 200;
+	
+	/**
+	 * A list of all previously-run simulations.
+	 */
+	private List<EcBuildOrder>	history					= new ArrayList<EcBuildOrder>();
+	
+	/**
+	 * The final goal of the current simulation.
+	 */
 	private EcState				destination				= EcState.defaultDestination();
-	public EcReportable			reportInterface;
-	public static Double[]		bestScores;
-	public static Integer[]		evolutionsSinceDiscovery;
+	
+	/**
+	 * Allows for the results of a simulation to be outputted in real time.
+	 */
+	private EcReportable			reportInterface;
+	
+	/**
+	 * The best fitness score for each thread.
+	 */
+	private Double[]			bestScores;
+	
+	private Integer[]			evolutionsSinceDiscovery;
+	private EcEvolver[]			evolvers;
 	private boolean				firstrun				= true;
 	private boolean				newbestscore			= false;
-
-	static
+	
+	/**
+	 * The caluation to use for determining the fitness score of a gene.
+	 */
+	private EcFitnessType		fitnessType				= EcFitnessType.STANDARD;
+	
+	public EvolutionChamber()
 	{
-		try
-		{
-			SEEDS_EVO = new File(EcFileSystem.getTempPath(), "seeds.evo");
-			SEEDS_EVO.getParentFile().mkdirs();
-			SEEDS_EVO_2 = new File(EcFileSystem.getTempPath(), "seeds2.evo");
-		}
-		catch (IOException e)
-		{
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			logger.severe(sw.toString());
-		}
+	}
+	
+	/**
+	 * Creates a new object, loading the seeds from the given files.
+	 * @param seeds
+	 * @param backupSeeds
+	 */
+	public EvolutionChamber(File seeds, File backupSeeds)
+	{
+		SEEDS_EVO = seeds;
+		SEEDS_EVO_2 = backupSeeds;
+		loadSeeds();
+	}
+	
+	public List<EcBuildOrder> getHistory()
+	{
+		return history;
+	}
+	
+	public int getEvolutionsSinceDiscovery(int thread)
+	{
+		return evolutionsSinceDiscovery[thread];
+	}
+	
+	/**
+	 * Determines if a simulation is currently running.
+	 * @return true if a simulation is running, false if not.
+	 */
+	public boolean isRunning()
+	{
+		return threads.size() > 0;
+	}
+	
+	public Double[] getBestScores()
+	{
+		return bestScores;
+	}
+	
+	public int getStagnationLimit()
+	{
+		return stagnationLimit;
+	}
+	
+	public int getChromosomeLength()
+	{
+		return CHROMOSOME_LENGTH;
+	}
+	
+	public double getBaseMutationRate()
+	{
+		return BASE_MUTATION_RATE;
+	}
+	
+	public void setReportInterface(EcReportable reportInterface)
+	{
+		this.reportInterface = reportInterface;
 	}
 
-	public static void main(String[] args) throws InvalidConfigurationException
+	public void setSeedFile(File file)
 	{
-		new EvolutionChamber().go();
+		SEEDS_EVO = file;
+	}
+	
+	public void setBackupSeedFile(File file)
+	{
+		SEEDS_EVO_2 = file;
+	}
+	
+	/**
+	 * Sets the caluation to use for determining the fitness score of a gene.
+	 * 
+	 * @param fitnessType the fitness type
+	 */
+	public void setFitnessType(EcFitnessType fitnessType)
+	{
+		this.fitnessType = fitnessType;
+	}
+	
+	/**
+	 * Gets the total number of games played since the simulation started.
+	 * @return
+	 */
+	public long getGamesPlayed()
+	{
+		long total = 0;
+		for (int i = 0; i < evolvers.length; i++)
+		{
+			EcEvolver evolver = evolvers[i];
+			total += evolver.getEvaluations();
+		}
+		return total;
 	}
 
+	/**
+	 * Starts the simulation (asychronously).
+	 * @throws InvalidConfigurationException
+	 */
 	public void go() throws InvalidConfigurationException
 	{
 		reset();
@@ -98,6 +233,7 @@ public class EvolutionChamber
 		EcState s = importSource();
 		EcState d = getInternalDestination();
 		EcAction.setup(d);
+		d.settings.fitnessType = fitnessType;
 		CHROMOSOME_LENGTH = d.getEstimatedActions() + 70;
 
 		// We are using the 'many small villages' vs 'one large city' method of
@@ -106,31 +242,25 @@ public class EvolutionChamber
 		{
 			spawnEvolutionaryChamber(s, d, threadIndex);
 		}
-
-		if (reportInterface == null)
-			while (true)
-				try
-				{
-					Thread.sleep(10000);
-				}
-				catch (InterruptedException e)
-				{
-					StringWriter sw = new StringWriter();
-					e.printStackTrace(new PrintWriter(sw));
-					logger.severe(sw.toString());
-				}
 	}
 
+	/**
+	 * Resets the object so it can run a new simulation.
+	 */
 	private void reset()
 	{
 		killThreads = false;
 		firstrun = true;
 		haveSavedBefore = false;
-		bestScore = new Double(0);
+		bestScore = 0.0;
 		bestScores = new Double[NUM_THREADS];
 		evolutionsSinceDiscovery = new Integer[NUM_THREADS];
+		evolvers = new EcEvolver[NUM_THREADS];
 	}
 
+	/**
+	 * Stops the simulation.
+	 */
 	public void stopAllThreads()
 	{
 		killThreads = true;
@@ -154,6 +284,7 @@ public class EvolutionChamber
 		reset(threadIndex);
 
 		final EcEvolver myFunc = new EcEvolver(source, destination);
+		evolvers[threadIndex] = myFunc;
 
 		final Configuration conf = constructConfiguration(threadIndex, myFunc);
 
@@ -287,7 +418,10 @@ public class EvolutionChamber
 							reportInterface.bestScore(myFunc.evaluateGetBuildOrder(fittestChromosome), bestScore
 									.intValue(), exactBuildOrder, buildOrder, yabotBuildOrder);
 
-						displayChromosome(fittestChromosome);
+						if (logger.isLoggable(Level.FINE))
+						{
+							logger.fine(chromosomeToString(fittestChromosome));
+						}
 						saveSeeds(fittestChromosome);
 					}
 				}
@@ -299,6 +433,13 @@ public class EvolutionChamber
 		threads.add(thread);
 	}
 
+	/**
+	 * Restarts a thread.
+	 * @param source
+	 * @param destination
+	 * @param threadIndex
+	 * @param thread
+	 */
 	private void suicide(final EcState source, final EcState destination, final int threadIndex,
 			final Thread thread)
 	{
@@ -320,10 +461,18 @@ public class EvolutionChamber
 
 	private void reset(final int threadIndex)
 	{
-		bestScores[threadIndex] = new Double(0);
+		bestScores[threadIndex] = 0.0;
 		evolutionsSinceDiscovery[threadIndex] = 0;
+		evolvers[threadIndex] = null;
 	}
 
+	/**
+	 * Generates a build order string.
+	 * @param myFunc
+	 * @param fittestChromosome
+	 * @param fitnessValue
+	 * @return
+	 */
 	private String getOutput(final EcEvolver myFunc, IChromosome fittestChromosome, double fitnessValue)
 	{
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -337,16 +486,26 @@ public class EvolutionChamber
 		return results;
 	}
 
+	/**
+	 * Generates a build order string.
+	 * @param myFunc
+	 * @param fittestChromosome
+	 * @return
+	 */
 	public String getBuildOrder(final EcEvolver myFunc, IChromosome fittestChromosome)
 	{
-		String results = myFunc.getBuildOrder(fittestChromosome);
-		return results;
+		return myFunc.getBuildOrder(fittestChromosome);
 	}
 
+	/**
+	 * Builds the YABOT representation of a build order.
+	 * @param myFunc
+	 * @param fittestChromosome
+	 * @return
+	 */
 	public String getYabotBuildOrder(final EcEvolver myFunc, IChromosome fittestChromosome)
 	{
-		String results = myFunc.getYabotBuildOrder(fittestChromosome);
-		return results;
+		return myFunc.getYabotBuildOrder(fittestChromosome);
 	}
 
 	private Configuration constructConfiguration(final int threadIndex, final EcEvolver myFunc)
@@ -371,23 +530,26 @@ public class EvolutionChamber
 		conf.setSampleChromosome(c);
 		return conf;
 	}
-
-	public static void displayChromosome(IChromosome fittestChromosome)
+	
+	/**
+	 * Converts a {@link IChromosome} to its string representation.
+	 * @param chromosome
+	 * @return
+	 */
+	private static String chromosomeToString(IChromosome chromosome)
 	{
-		if (logger.isLoggable(Level.FINE)){
-			int i = 0;
-			StringBuilder sb = new StringBuilder();
-			for (Gene g : fittestChromosome.getGenes())
-			{
-				if (i++ == 100)
-					break;
-				if (((Integer) g.getAllele()).intValue() >= 10)
-					sb.append(((char) ((int) 'a' + (Integer) g.getAllele() - 10)));
-				else
-					sb.append(g.getAllele().toString());
-			}
-			logger.fine(sb.toString());
+		int i = 0;
+		StringBuilder sb = new StringBuilder();
+		for (Gene g : chromosome.getGenes())
+		{
+			if (i++ == 100)
+				break;
+			if (((Integer) g.getAllele()).intValue() >= 10)
+				sb.append(((char) ((int) 'a' + (Integer) g.getAllele() - 10)));
+			else
+				sb.append(g.getAllele().toString());
 		}
+		return sb.toString();
 	}
 
 	private static void displayBuildOrder(final EcEvolver myFunc, IChromosome fittestChromosome)
@@ -405,10 +567,10 @@ public class EvolutionChamber
 
 		Collections.sort(history, new Comparator<EcBuildOrder>()
 		{
-
 			@Override
 			public int compare(EcBuildOrder arg0, EcBuildOrder arg1)
 			{
+				//sort by fitness descending
 				double score = 0;
 				try
 				{
@@ -441,13 +603,23 @@ public class EvolutionChamber
 		}
 	}
 
+	/**
+	 * Loads the seeds from the seed file.
+	 */
 	public void loadSeeds()
 	{
 		try
 		{
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SEEDS_EVO));
-			history = (List<EcBuildOrder>) ois.readObject();
-			ois.close();
+			if (SEEDS_EVO != null)
+			{
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SEEDS_EVO));
+				history = (List<EcBuildOrder>) ois.readObject();
+				ois.close();
+			}
+			else
+			{
+				throw new IOException();
+			}
 		}
 		catch (FileNotFoundException e)
 		{
@@ -457,14 +629,21 @@ public class EvolutionChamber
 		{
 			logger.fine("Seeds file is in old format. Starting over. :-(");
 		}
+		catch (ClassNotFoundException e)
+		{
+			logger.fine("Seeds file is in old format. Starting over. :-(");
+		}
 		catch (IOException e)
 		{
 			try
 			{
-				ObjectInputStream ois;
-				ois = new ObjectInputStream(new FileInputStream(SEEDS_EVO_2));
-				history = (List<EcBuildOrder>) ois.readObject();
-				ois.close();
+				if (SEEDS_EVO_2 != null)
+				{
+					ObjectInputStream ois;
+					ois = new ObjectInputStream(new FileInputStream(SEEDS_EVO_2));
+					history = (List<EcBuildOrder>) ois.readObject();
+					ois.close();
+				}
 			}
 			catch (FileNotFoundException e1)
 			{
@@ -474,28 +653,22 @@ public class EvolutionChamber
 			{
 				logger.fine("Seeds 2 file is in old format. Starting over. :-(");
 			}
+			catch (ClassNotFoundException e1)
+			{
+				logger.fine("Seeds 2 file is in old format. Starting over. :-(");
+			}
 			catch (IOException e1)
 			{
 				StringWriter sw = new StringWriter();
 				e1.printStackTrace(new PrintWriter(sw));
 				logger.severe(sw.toString());
 			}
-			catch (ClassNotFoundException e1)
-			{
-				logger.fine("Seeds 2 file is in old format. Starting over. :-(");
-			}
-
 		}
-		catch (ClassNotFoundException e)
-		{
-			logger.fine("Seeds file is in old format. Starting over. :-(");
-		}
-
 	}
 
-	static boolean	haveSavedBefore	= false;
+	private boolean	haveSavedBefore	= false;
 
-	protected synchronized void saveSeeds(IChromosome fittestChromosome)
+	private synchronized void saveSeeds(IChromosome fittestChromosome)
 	{
 		EcBuildOrder bo = new EcBuildOrder(importDestination());
 		try
@@ -514,25 +687,27 @@ public class EvolutionChamber
 		}
 
 		saveSeeds();
-
 	}
 
+	/**
+	 * Saves the seeds to the seed file.
+	 */
 	public void saveSeeds()
 	{
 		try
 		{
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SEEDS_EVO, false));
-			oos.writeObject(history);
-			oos.close();
-			oos = new ObjectOutputStream(new FileOutputStream(SEEDS_EVO_2, false));
-			oos.writeObject(history);
-			oos.close();
-		}
-		catch (FileNotFoundException e)
-		{
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			logger.severe(sw.toString());
+			if (SEEDS_EVO != null)
+			{
+				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SEEDS_EVO, false));
+				oos.writeObject(history);
+				oos.close();
+			}
+			if (SEEDS_EVO_2 != null)
+			{
+				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SEEDS_EVO_2, false));
+				oos.writeObject(history);
+				oos.close();
+			}
 		}
 		catch (IOException e)
 		{
@@ -570,7 +745,7 @@ public class EvolutionChamber
 		return ecBuildOrder;
 	}
 
-	public EcState importDestination()
+	private EcState importDestination()
 	{
 		try
 		{
@@ -585,7 +760,7 @@ public class EvolutionChamber
 		return null;
 	}
 
-	Chromosome buildChromosome(Configuration conf, EcBuildOrder bo) throws InvalidConfigurationException
+	private Chromosome buildChromosome(Configuration conf, EcBuildOrder bo) throws InvalidConfigurationException
 	{
 		ArrayList<Gene> genes = new ArrayList<Gene>();
 		int CC = 0;
@@ -613,14 +788,23 @@ public class EvolutionChamber
 		return c;
 	}
 
-	public void setThreads(int digit)
+	/**
+	 * Sets the number of threads the simulation will use.
+	 * Defaults to the number of processors the system has.
+	 * @param threads the number of threads
+	 */
+	public void setThreads(int threads)
 	{
 		int availableProcessors = MAX_NUM_THREADS;
-		NUM_THREADS = digit;
+		NUM_THREADS = threads;
 		if (NUM_THREADS > availableProcessors || NUM_THREADS < 1)
 			NUM_THREADS = availableProcessors;
 	}
 
+	/**
+	 * Sets the final goal that the simulation must reach.
+	 * @param destination the final goal
+	 */
 	public void setDestination(EcState destination)
 	{
 		this.destination = destination;
@@ -630,7 +814,11 @@ public class EvolutionChamber
 	{
 		return destination;
 	}
-
+		
+	/**
+	 * Gets the number of threads the simulation will use.
+	 * @return the number of threads
+	 */
 	public int getThreads()
 	{
 		return NUM_THREADS;

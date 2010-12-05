@@ -22,28 +22,15 @@ public class EcSettings implements Serializable
 	public int minimumHatcherySupply = 2;
 	public Race race = Race.Zerg;
 
-
-	
-	private transient EcFitness ff;
-	
 	public EcFitness getFitnessFunction() {
-		
-		if(ff != null)
-			return ff;
-		
 		switch(fitnessType) {
 		case STANDARD:
-			ff = new EcStandardFitness();
-			break;
+			return new EcStandardFitness();
 		case ECON:
-			ff = new EcEconFitness();
-			break;
+			return new EcEconFitness();
 		default:
-			ff = new EcStandardFitness();
-			break;
+			return new EcStandardFitness();
 		}
-		
-		return ff;
 		
 	}
 	

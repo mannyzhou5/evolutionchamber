@@ -27,7 +27,7 @@ public class EcGeneticUtil
 			{
 				for (int i = 0; i < arg0.size(); i++)
 				{
-					if (Math.random() > c.BASE_MUTATION_RATE/c.CHROMOSOME_LENGTH)
+					if (Math.random() > c.getBaseMutationRate()/c.getChromosomeLength())
 						continue;
 					IChromosome chromosome = (IChromosome) ((ICloneable) arg0.getChromosome(i)).clone();
 					Gene[] beforeArray = chromosome.getGenes();
@@ -56,7 +56,7 @@ public class EcGeneticUtil
 			@Override
 			public void operate(Population arg0, List arg1)
 			{
-				if (Math.random() > c.BASE_MUTATION_RATE/c.CHROMOSOME_LENGTH)
+				if (Math.random() > c.getBaseMutationRate()/c.getChromosomeLength())
 					return;
 				IChromosome best = arg0.determineFittestChromosome();
 				for (int i = 0; i < best.getGenes().length; i++)
@@ -88,7 +88,7 @@ public class EcGeneticUtil
 			@Override
 			public void operate(Population arg0, List arg1)
 			{
-				if (Math.random() > c.BASE_MUTATION_RATE/c.CHROMOSOME_LENGTH)
+				if (Math.random() > c.getBaseMutationRate()/c.getChromosomeLength())
 					return;
 				IChromosome best = arg0.determineFittestChromosome();
 				int overlord = 0;
@@ -126,7 +126,7 @@ public class EcGeneticUtil
 			{
 				for (int i = 0; i < arg0.size(); i++)
 				{
-					if (Math.random() > c.BASE_MUTATION_RATE/c.CHROMOSOME_LENGTH)
+					if (Math.random() > c.getBaseMutationRate()/c.getChromosomeLength())
 						continue;
 					IChromosome chromosome = (IChromosome) ((ICloneable) arg0.getChromosome(i)).clone();
 					Gene[] beforeArray = chromosome.getGenes();
@@ -160,7 +160,7 @@ public class EcGeneticUtil
 			{
 				for (int i = 0; i < arg0.size(); i++)
 				{
-				if (Math.random() > c.BASE_MUTATION_RATE/c.CHROMOSOME_LENGTH)
+				if (Math.random() > c.getBaseMutationRate()/c.getChromosomeLength())
 					continue;
 					IChromosome chromosome = arg0.getChromosome(i);
 					Gene[] beforeArray = chromosome.getGenes();
@@ -206,7 +206,7 @@ public class EcGeneticUtil
 			@Override
 			public void operate(Population arg0, List arg1)
 			{
-				if (Math.random() > c.BASE_MUTATION_RATE/c.CHROMOSOME_LENGTH)
+				if (Math.random() > c.getBaseMutationRate()/c.getChromosomeLength())
 					return;
 				for (int i = 0; i < arg0.size(); i++)
 				{
@@ -254,7 +254,7 @@ public class EcGeneticUtil
 			{
 				for (int i = 0; i < arg0.size(); i++)
 				{
-					if (Math.random() > c.BASE_MUTATION_RATE/c.CHROMOSOME_LENGTH)
+					if (Math.random() > c.getBaseMutationRate()/c.getChromosomeLength())
 						continue;
 					IChromosome chromosome = (IChromosome) ((ICloneable) arg0.getChromosome(i)).clone();
 					Gene[] beforeArray = chromosome.getGenes();
@@ -288,7 +288,7 @@ public class EcGeneticUtil
 			{
 				for (int i = 0; i < arg0.size(); i++)
 				{
-					if (Math.random() > c.BASE_MUTATION_RATE/c.CHROMOSOME_LENGTH)
+					if (Math.random() > c.getBaseMutationRate()/c.getChromosomeLength())
 						continue;
 					IChromosome chromosome = (IChromosome) ((ICloneable) arg0.getChromosome(i)).clone();
 					Gene[] beforeArray = chromosome.getGenes();

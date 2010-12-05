@@ -86,8 +86,7 @@ public final class EcEvolver extends FitnessFunction
 	private EcState						destination;
 	private EcState						mergedDestination;
 	private GameLog						log;
-	public static long					evaluations	= 0;
-	public static long					cachehits	= 0;
+	private long					evaluations	= 0;
 	
 	/**
 	 * Maps Evolution Chamber classes with the appropriate action class of the YABOT encoder.
@@ -448,5 +447,10 @@ public final class EcEvolver extends FitnessFunction
 	public EcState getDestination()
 	{
 		return destination;
+	}
+	
+	public long getEvaluations()
+	{
+		return evaluations;
 	}
 }

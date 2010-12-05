@@ -22,6 +22,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -85,11 +86,11 @@ public class EcSwingX extends JXPanel implements EcReportable
 	private boolean				isDetailedBuildOrder;
 	private boolean				isYabotBuildOrder;
 	private boolean				isSimpleBuildOrder;
-	int							gridy			= 0;
+	private int					gridy			= 0;
 	private JXStatusBar			statusbar;
 	private List<JComponent>	inputControls	= new ArrayList<JComponent>();
 
-	EvolutionChamber			ec				= new EvolutionChamber();
+	private final EvolutionChamber ec;
 	List<EcState> destination = new ArrayList<EcState>();
 	
 	private JPanel historyPanel;
@@ -120,6 +121,9 @@ public class EcSwingX extends JXPanel implements EcReportable
 	 */
 	public EcSwingX(JFrame frame)
 	{
+		ec = new EvolutionChamber(new File(EcSwingXMain.userConfigDir, "seeds.evo"), new File(EcSwingXMain.userConfigDir, "seeds2.evo"));
+		ec.setReportInterface(this);
+		
 		this.frame = frame;
 		initializeWaypoints();
 
@@ -277,7 +281,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				ec.history.remove(historyList.getSelectedValue());
+				ec.getHistory().remove(historyList.getSelectedValue());
 				refreshHistory();
 				ec.saveSeeds();
 			}
@@ -308,7 +312,6 @@ public class EcSwingX extends JXPanel implements EcReportable
 				}
 			}
 		});
-		ec.loadSeeds();
 		refreshHistory();
 	}
 
@@ -370,7 +373,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 	private void refreshHistory()
 	{
 		ArrayList<EcBuildOrder> results = new ArrayList<EcBuildOrder>();
-		for (EcBuildOrder destination : ec.history)
+		for (EcBuildOrder destination : ec.getHistory())
 		{
 			EcBuildOrder source = new EcBuildOrder();
 			EcEvolver evolver = new EcEvolver(source, destination);
@@ -609,19 +612,20 @@ public class EcSwingX extends JXPanel implements EcReportable
 					long hours = minutes / 60;
 					status2.setText(messages.getString("status.lastUpdate", hours % 60, minutes % 60, seconds % 60));
 					{
+						double evaluations = ec.getGamesPlayed();
 						double evalseconds = (System.currentTimeMillis() - timeStarted);
 						evalseconds = evalseconds / 1000.0;
-						double permsPerSecond = EcEvolver.evaluations;
+						double permsPerSecond = evaluations;
 						permsPerSecond /= evalseconds;
 						StringBuilder stats = new StringBuilder();
 						int threadIndex = 0;
-						stats.append(messages.getString("stats.gamesPlayed", EcEvolver.evaluations / 1000));
-						stats.append("\n" + messages.getString("stats.maxBuildOrderLength", ec.CHROMOSOME_LENGTH));
-						stats.append("\n" + messages.getString("stats.stagnationLimit", ec.stagnationLimit));
+						stats.append(messages.getString("stats.gamesPlayed", evaluations / 1000));
+						stats.append("\n" + messages.getString("stats.maxBuildOrderLength", ec.getChromosomeLength()));
+						stats.append("\n" + messages.getString("stats.stagnationLimit", ec.getStagnationLimit()));
 						stats.append("\n" + messages.getString("stats.gamesPlayedPerSec", (int) permsPerSecond));
-						stats.append("\n" + messages.getString("stats.mutationRate", ec.BASE_MUTATION_RATE / ec.CHROMOSOME_LENGTH));
-						for (Double d : ec.bestScores)
-							stats.append("\n" + messages.getString("stats.processor", threadIndex, ec.evolutionsSinceDiscovery[threadIndex++], d));
+						stats.append("\n" + messages.getString("stats.mutationRate", ec.getBaseMutationRate() / ec.getChromosomeLength()));
+						for (Double d : ec.getBestScores())
+							stats.append("\n" + messages.getString("stats.processor", threadIndex, ec.getEvolutionsSinceDiscovery(threadIndex++), d));
 						statsText.setText(stats.toString());
 					}
 				}
@@ -1661,7 +1665,6 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				running = true;
-				ec.reportInterface = ri;
 
 				for (JComponent j : inputControls)
 					j.setEnabled(false);
@@ -1672,9 +1675,6 @@ public class EcSwingX extends JXPanel implements EcReportable
 				stopButton.setEnabled(true);
 				historyList.setEnabled(false);
 				localeComboBox.setEnabled(false);
-
-				EcEvolver.evaluations = 0;
-				EcEvolver.cachehits = 0;
 			}
 		});
 		gridy++;
@@ -1767,7 +1767,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 
 	private void restartChamber()
 	{
-		if (ec.threads.size() > 0)
+		if (ec.isRunning())
 			ec.stopAllThreads();
 		try
 		{
@@ -1881,7 +1881,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 	protected boolean getTrue(ActionEvent e)
 	{
 		JCheckBox tf = (JCheckBox) e.getSource();
-		this.ec.bestScore = new Double(0);
+		//this.ec.bestScore = new Double(0); //why is this here??
 		return tf.isSelected();
 	}
 

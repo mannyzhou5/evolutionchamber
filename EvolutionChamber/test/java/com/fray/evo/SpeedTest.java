@@ -1,11 +1,8 @@
 package com.fray.evo;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.LogManager;
-
-import org.jgap.InvalidConfigurationException;
 
 import com.fray.evo.util.UnitLibrary;
 import com.fray.evo.util.UpgradeLibrary;
@@ -34,8 +31,6 @@ public class SpeedTest {
 		System.out.println("Test 1: " + test1);
 		System.out.println("Test 2: " + test2);
 		System.out.println("Test 3: " + test3);
-
-		System.exit(0);
 	}
 
 	/**
@@ -132,34 +127,12 @@ public class SpeedTest {
 	 * @throws Exception
 	 */
 	private static double runTest(final EcState destination, int seconds, int processors) throws Exception {
-		//delete seeds
-		File etc = new File("etc");
-		if (etc.isDirectory()) {
-			for (File f : etc.listFiles()) {
-				f.delete();
-			}
-		}
-
-		//reset EC
-		EcEvolver.evaluations = 0;
-		EcEvolver.cachehits = 0;
-
-		final EvolutionChamber ec = new EvolutionChamber();
+		EvolutionChamber ec = new EvolutionChamber();
 		ec.setDestination(destination);
 		ec.setThreads(processors);
 
 		//start EvolutionChamber
-		Thread thread = new Thread() {
-			@Override
-			public void run() {
-				try {
-					ec.go();
-				} catch (InvalidConfigurationException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		thread.start();
+		ec.go();
 
 		//wait for X seconds
 		Thread.sleep(seconds * 1000);
@@ -167,6 +140,6 @@ public class SpeedTest {
 		//stop EvolutionChamber
 		ec.stopAllThreads();
 
-		return (double) EcEvolver.evaluations / seconds;
+		return (double) ec.getGamesPlayed() / seconds;
 	}
 }
