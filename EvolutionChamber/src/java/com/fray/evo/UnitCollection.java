@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 import com.fray.evo.util.Race;
 import com.fray.evo.util.Unit;
-import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 
 /**
  *
@@ -56,7 +56,7 @@ public final class UnitCollection implements Serializable {
     public HashMap<Unit,Integer> toHashMap(){
         HashMap<Unit, Integer> result = new HashMap<Unit, Integer>();
         for(int i=0;i < arr.length;i++){
-            result.put(UnitLibrary.getInstance().getIdToItemMap().get(i), arr[i]);
+            result.put(ZergUnitLibrary.getInstance().getIdToItemMap().get(i), arr[i]);
         }
         return result;
     }

@@ -19,7 +19,7 @@ import com.fray.evo.action.build.EcActionBuildSpawningPool;
 import com.fray.evo.util.Buildable;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.Unit;
-import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.Upgrade;
 
 public class EcRequirementTree {
@@ -78,7 +78,7 @@ public class EcRequirementTree {
     }
 
     private static void require(Buildable requirement, EcState destination, Map<Integer, Class> map) {
-        if(requirement == UnitLibrary.Larva){
+        if(requirement == ZergUnitLibrary.Larva){
             return;
         }
         if (requirement instanceof  Upgrade) {

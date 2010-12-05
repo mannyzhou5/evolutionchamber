@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.fray.evo.util.Building;
-import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.ZergBuildingLibrary;
 import com.fray.evo.util.RaceLibraries;
 import com.fray.evo.util.Unit;
-import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.Upgrade;
-import com.fray.evo.util.UpgradeLibrary;
+import com.fray.evo.util.ZergUpgradeLibrary;
 import com.fray.evo.util.optimization.ArrayListInt;
 
 public class EcState implements Serializable
@@ -36,7 +36,7 @@ public class EcState implements Serializable
 		larvaProduction.add(1);
 		units = new UnitCollection(RaceLibraries.getUnitLibrary(settings.race).getList(), settings.race);
 		// Building test = ZergLibrary.Lair;
-		// for(Unit unit: RaceLibraries.getUnitLibrary(settings.race).getList()){
+		// for(Unit unit: RaceLibraries.getZergUnitLibrary(settings.race).getList()){
 		// units.put(unit, 0);
 		// }
 		buildings = new BuildingCollection(RaceLibraries.getBuildingLibrary(settings.race).getList(), settings.race);
@@ -46,9 +46,9 @@ public class EcState implements Serializable
 		}
 		upgrades = new HashSet<Upgrade>();
 
-		units.put(UnitLibrary.Drone, 6);
-		units.put(UnitLibrary.Overlord, 1);
-		buildings.put(BuildingLibrary.Hatchery, 1);
+		units.put(ZergUnitLibrary.Drone, 6);
+		units.put(ZergUnitLibrary.Overlord, 1);
+		buildings.put(ZergBuildingLibrary.Hatchery, 1);
 	}
 
 	public double				preTimeScore		= 0.0;
@@ -149,20 +149,20 @@ public class EcState implements Serializable
 	public int supply()
 	{
 		int overSeers = 0;
-		if (units.containsKey(UnitLibrary.Overseer))
+		if (units.containsKey(ZergUnitLibrary.Overseer))
 		{
-			overSeers = units.get(UnitLibrary.Overseer);
+			overSeers = units.get(ZergUnitLibrary.Overseer);
 		}
-		return Math.min((units.get(UnitLibrary.Overlord) + overSeers) * 8 + 2 * bases(), 200);
+		return Math.min((units.get(ZergUnitLibrary.Overlord) + overSeers) * 8 + 2 * bases(), 200);
 	}
 
 	public static EcState defaultDestination()
 	{
 		EcState d = new EcState();
 
-		d.SetUnits(UnitLibrary.Drone, 0);
-		d.SetUnits(UnitLibrary.Overlord, 0);
-		d.SetBuilding(BuildingLibrary.Hatchery, 0);
+		d.SetUnits(ZergUnitLibrary.Drone, 0);
+		d.SetUnits(ZergUnitLibrary.Overlord, 0);
+		d.SetBuilding(ZergBuildingLibrary.Hatchery, 0);
 		d.targetSeconds = 60 * 120;
 
 		return d;
@@ -236,7 +236,7 @@ public class EcState implements Serializable
 		{
 			int overDrones = getOverDrones(candidate);
 
-			if (candidate.settings.overDrone && candidate.units.get(UnitLibrary.Drone) < overDrones)
+			if (candidate.settings.overDrone && candidate.units.get(ZergUnitLibrary.Drone) < overDrones)
 			{
 				return false;
 			}
@@ -244,7 +244,7 @@ public class EcState implements Serializable
 			{
 				int parityDrones = getParityDrones(candidate);
 
-				if (candidate.units.get(UnitLibrary.Drone) < parityDrones)
+				if (candidate.units.get(ZergUnitLibrary.Drone) < parityDrones)
 				{
 					return false;
 				}
@@ -273,7 +273,7 @@ public class EcState implements Serializable
 
 	public int getParityDronesClean(EcState s)
 	{
-		int optimalDrones = Math.min((Math.min(s.bases(), 3) * 16) + (s.buildings.get(BuildingLibrary.Extractor) * 3),
+		int optimalDrones = Math.min((Math.min(s.bases(), 3) * 16) + (s.buildings.get(ZergBuildingLibrary.Extractor) * 3),
 				maxOverDrones);
 		int parityDrones = Math.min(s.getOverDrones(s), optimalDrones);
 
@@ -282,8 +282,8 @@ public class EcState implements Serializable
 
 	public int bases()
 	{
-		return buildings.get(BuildingLibrary.Hatchery) + buildings.get(BuildingLibrary.Lair) +
-                        buildings.get(BuildingLibrary.Hive) ;
+		return buildings.get(ZergBuildingLibrary.Hatchery) + buildings.get(ZergBuildingLibrary.Lair) +
+                        buildings.get(ZergBuildingLibrary.Hive) ;
 
 	}
 
@@ -313,7 +313,7 @@ public class EcState implements Serializable
 	{
                 int total =  -1 ;
                 for(Building building: RaceLibraries.getBuildingLibrary(settings.race).getList()){
-                    if(building.getConsumes() == UnitLibrary.Drone){
+                    if(building.getConsumes() == ZergUnitLibrary.Drone){
                         total += buildings.get(building);
                     }
                 }
@@ -630,12 +630,12 @@ public class EcState implements Serializable
 
         public boolean isBuilding(Building building){
             if(buildings.get(building)== 0){
-                if(building == BuildingLibrary.Hatchery){
-                    return isBuilding(BuildingLibrary.Lair);
-                }else if(building == BuildingLibrary.Lair){
-                    return isBuilding(BuildingLibrary.Hive);
-                }else if(building == BuildingLibrary.Spire){
-                    return isBuilding(BuildingLibrary.GreaterSpire);
+                if(building == ZergBuildingLibrary.Hatchery){
+                    return isBuilding(ZergBuildingLibrary.Lair);
+                }else if(building == ZergBuildingLibrary.Lair){
+                    return isBuilding(ZergBuildingLibrary.Hive);
+                }else if(building == ZergBuildingLibrary.Spire){
+                    return isBuilding(ZergBuildingLibrary.GreaterSpire);
                 }else{
                     return false;
                 }
@@ -654,11 +654,11 @@ public class EcState implements Serializable
 
 	void RequireUnit(Unit unit)
 	{
-		if (unit == UnitLibrary.Zergling)
+		if (unit == ZergUnitLibrary.Zergling)
 			return; //Extra zerglings should not be required for banelings.
-		if (unit == UnitLibrary.Corruptor)
+		if (unit == ZergUnitLibrary.Corruptor)
 			return; //Extra corruptors should not be required for brood lords.
-		if (unit == UnitLibrary.Overlord)
+		if (unit == ZergUnitLibrary.Overlord)
 			return; //Extra overlords should not be required for overseers.
 		if (!units.containsKey(unit) || units.get(unit) < 1)
 		{
@@ -672,11 +672,11 @@ public class EcState implements Serializable
 
 	public void RequireBuilding(Building building)
 	{
-		if (building == BuildingLibrary.Spire)
+		if (building == ZergBuildingLibrary.Spire)
 			return; //Exemption due to greater spire satisfying spire.
-		if (building == BuildingLibrary.Lair)
+		if (building == ZergBuildingLibrary.Lair)
 			return; //Exemption due to hive satisfying lair.
-		if (building == BuildingLibrary.Hatchery)
+		if (building == ZergBuildingLibrary.Hatchery)
 			return; //Exemption due to lair satisfying hatchery.
 		if (buildings.get(building) < 1)
 		{
@@ -705,7 +705,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isMetabolicBoost()
 	{
-		return upgrades.contains(UpgradeLibrary.MetabolicBoost);
+		return upgrades.contains(ZergUpgradeLibrary.MetabolicBoost);
 	}
 
 	/**
@@ -713,7 +713,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isAdrenalGlands()
 	{
-		return upgrades.contains(UpgradeLibrary.AdrenalGlands);
+		return upgrades.contains(ZergUpgradeLibrary.AdrenalGlands);
 	}
 
 	/**
@@ -721,7 +721,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isGlialReconstitution()
 	{
-		return upgrades.contains(UpgradeLibrary.GlialReconstitution);
+		return upgrades.contains(ZergUpgradeLibrary.GlialReconstitution);
 	}
 
 	/**
@@ -729,7 +729,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isTunnelingClaws()
 	{
-		return upgrades.contains(UpgradeLibrary.TunnelingClaws);
+		return upgrades.contains(ZergUpgradeLibrary.TunnelingClaws);
 	}
 
 	/**
@@ -737,7 +737,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isBurrow()
 	{
-		return upgrades.contains(UpgradeLibrary.Burrow);
+		return upgrades.contains(ZergUpgradeLibrary.Burrow);
 	}
 
 	/**
@@ -745,7 +745,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isPneumatizedCarapace()
 	{
-		return upgrades.contains(UpgradeLibrary.PneumatizedCarapace);
+		return upgrades.contains(ZergUpgradeLibrary.PneumatizedCarapace);
 	}
 
 	/**
@@ -753,7 +753,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isVentralSacs()
 	{
-		return upgrades.contains(UpgradeLibrary.VentralSacs);
+		return upgrades.contains(ZergUpgradeLibrary.VentralSacs);
 	}
 
 	/**
@@ -761,7 +761,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isCentrifugalHooks()
 	{
-		return upgrades.contains(UpgradeLibrary.CentrifugalHooks);
+		return upgrades.contains(ZergUpgradeLibrary.CentrifugalHooks);
 	}
 
 	/**
@@ -769,7 +769,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isMelee1()
 	{
-		return upgrades.contains(UpgradeLibrary.Melee1);
+		return upgrades.contains(ZergUpgradeLibrary.Melee1);
 	}
 
 	/**
@@ -777,7 +777,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isMelee2()
 	{
-		return upgrades.contains(UpgradeLibrary.Melee2);
+		return upgrades.contains(ZergUpgradeLibrary.Melee2);
 	}
 
 	/**
@@ -785,7 +785,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isMelee3()
 	{
-		return upgrades.contains(UpgradeLibrary.Melee3);
+		return upgrades.contains(ZergUpgradeLibrary.Melee3);
 	}
 
 	/**
@@ -793,7 +793,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isMissile1()
 	{
-		return upgrades.contains(UpgradeLibrary.Missile1);
+		return upgrades.contains(ZergUpgradeLibrary.Missile1);
 	}
 
 	/**
@@ -801,7 +801,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isMissile2()
 	{
-		return upgrades.contains(UpgradeLibrary.Missile2);
+		return upgrades.contains(ZergUpgradeLibrary.Missile2);
 	}
 
 	/**
@@ -809,7 +809,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isMissile3()
 	{
-		return upgrades.contains(UpgradeLibrary.Missile3);
+		return upgrades.contains(ZergUpgradeLibrary.Missile3);
 	}
 
 	/**
@@ -817,7 +817,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isArmor1()
 	{
-		return upgrades.contains(UpgradeLibrary.Armor1);
+		return upgrades.contains(ZergUpgradeLibrary.Armor1);
 	}
 
 	/**
@@ -825,7 +825,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isArmor2()
 	{
-		return upgrades.contains(UpgradeLibrary.Armor2);
+		return upgrades.contains(ZergUpgradeLibrary.Armor2);
 	}
 
 	/**
@@ -833,7 +833,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isArmor3()
 	{
-		return upgrades.contains(UpgradeLibrary.Armor3);
+		return upgrades.contains(ZergUpgradeLibrary.Armor3);
 	}
 
 	/**
@@ -841,7 +841,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isGroovedSpines()
 	{
-		return upgrades.contains(UpgradeLibrary.GroovedSpines);
+		return upgrades.contains(ZergUpgradeLibrary.GroovedSpines);
 	}
 
 	/**
@@ -849,7 +849,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isNeuralParasite()
 	{
-		return upgrades.contains(UpgradeLibrary.NeuralParasite);
+		return upgrades.contains(ZergUpgradeLibrary.NeuralParasite);
 	}
 
 	/**
@@ -857,7 +857,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isPathogenGlands()
 	{
-		return upgrades.contains(UpgradeLibrary.PathogenGlands);
+		return upgrades.contains(ZergUpgradeLibrary.PathogenGlands);
 	}
 
 	/**
@@ -865,7 +865,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isFlyerAttack1()
 	{
-		return upgrades.contains(UpgradeLibrary.FlyerAttacks1);
+		return upgrades.contains(ZergUpgradeLibrary.FlyerAttacks1);
 	}
 
 	/**
@@ -873,7 +873,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isFlyerAttack2()
 	{
-		return upgrades.contains(UpgradeLibrary.FlyerAttacks2);
+		return upgrades.contains(ZergUpgradeLibrary.FlyerAttacks2);
 	}
 
 	/**
@@ -881,7 +881,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isFlyerAttack3()
 	{
-		return upgrades.contains(UpgradeLibrary.FlyerAttacks3);
+		return upgrades.contains(ZergUpgradeLibrary.FlyerAttacks3);
 	}
 
 	/**
@@ -889,7 +889,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isFlyerArmor1()
 	{
-		return upgrades.contains(UpgradeLibrary.FlyerArmor1);
+		return upgrades.contains(ZergUpgradeLibrary.FlyerArmor1);
 	}
 
 	/**
@@ -897,7 +897,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isFlyerArmor2()
 	{
-		return upgrades.contains(UpgradeLibrary.FlyerArmor2);
+		return upgrades.contains(ZergUpgradeLibrary.FlyerArmor2);
 	}
 
 	/**
@@ -905,7 +905,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isFlyerArmor3()
 	{
-		return upgrades.contains(UpgradeLibrary.FlyerArmor3);
+		return upgrades.contains(ZergUpgradeLibrary.FlyerArmor3);
 	}
 
 	/**
@@ -913,7 +913,7 @@ public class EcState implements Serializable
 	 */
 	public boolean isChitinousPlating()
 	{
-		return upgrades.contains(UpgradeLibrary.ChitinousPlating);
+		return upgrades.contains(ZergUpgradeLibrary.ChitinousPlating);
 	}
 
 	/**
@@ -947,9 +947,9 @@ public class EcState implements Serializable
 	 */
 	public int getDrones()
 	{
-		if (units.containsKey(UnitLibrary.Drone))
+		if (units.containsKey(ZergUnitLibrary.Drone))
 		{
-			return units.get(UnitLibrary.Drone);
+			return units.get(ZergUnitLibrary.Drone);
 		}
 		else
 		{
@@ -962,9 +962,9 @@ public class EcState implements Serializable
 	 */
 	public int getOverlords()
 	{
-		if (units.containsKey(UnitLibrary.Overlord))
+		if (units.containsKey(ZergUnitLibrary.Overlord))
 		{
-			return units.get(UnitLibrary.Overlord);
+			return units.get(ZergUnitLibrary.Overlord);
 		}
 		else
 		{
@@ -977,9 +977,9 @@ public class EcState implements Serializable
 	 */
 	public int getOverseers()
 	{
-		if (units.containsKey(UnitLibrary.Overseer))
+		if (units.containsKey(ZergUnitLibrary.Overseer))
 		{
-			return units.get(UnitLibrary.Overseer);
+			return units.get(ZergUnitLibrary.Overseer);
 		}
 		else
 		{
@@ -992,9 +992,9 @@ public class EcState implements Serializable
 	 */
 	public int getZerglings()
 	{
-		if (units.containsKey(UnitLibrary.Zergling))
+		if (units.containsKey(ZergUnitLibrary.Zergling))
 		{
-			return units.get(UnitLibrary.Zergling);
+			return units.get(ZergUnitLibrary.Zergling);
 		}
 		else
 		{
@@ -1007,9 +1007,9 @@ public class EcState implements Serializable
 	 */
 	public int getBanelings()
 	{
-		if (units.containsKey(UnitLibrary.Baneling))
+		if (units.containsKey(ZergUnitLibrary.Baneling))
 		{
-			return units.get(UnitLibrary.Baneling);
+			return units.get(ZergUnitLibrary.Baneling);
 		}
 		else
 		{
@@ -1022,9 +1022,9 @@ public class EcState implements Serializable
 	 */
 	public int getRoaches()
 	{
-		if (units.containsKey(UnitLibrary.Roach))
+		if (units.containsKey(ZergUnitLibrary.Roach))
 		{
-			return units.get(UnitLibrary.Roach);
+			return units.get(ZergUnitLibrary.Roach);
 		}
 		else
 		{
@@ -1037,9 +1037,9 @@ public class EcState implements Serializable
 	 */
 	public int getMutalisks()
 	{
-		if (units.containsKey(UnitLibrary.Mutalisk))
+		if (units.containsKey(ZergUnitLibrary.Mutalisk))
 		{
-			return units.get(UnitLibrary.Mutalisk);
+			return units.get(ZergUnitLibrary.Mutalisk);
 		}
 		else
 		{
@@ -1052,9 +1052,9 @@ public class EcState implements Serializable
 	 */
 	public int getInfestors()
 	{
-		if (units.containsKey(UnitLibrary.Infestor))
+		if (units.containsKey(ZergUnitLibrary.Infestor))
 		{
-			return units.get(UnitLibrary.Infestor);
+			return units.get(ZergUnitLibrary.Infestor);
 		}
 		else
 		{
@@ -1067,9 +1067,9 @@ public class EcState implements Serializable
 	 */
 	public int getQueens()
 	{
-		if (units.containsKey(UnitLibrary.Queen))
+		if (units.containsKey(ZergUnitLibrary.Queen))
 		{
-			return units.get(UnitLibrary.Queen);
+			return units.get(ZergUnitLibrary.Queen);
 		}
 		else
 		{
@@ -1082,9 +1082,9 @@ public class EcState implements Serializable
 	 */
 	public int getHydralisks()
 	{
-		if (units.containsKey(UnitLibrary.Hydralisk))
+		if (units.containsKey(ZergUnitLibrary.Hydralisk))
 		{
-			return units.get(UnitLibrary.Hydralisk);
+			return units.get(ZergUnitLibrary.Hydralisk);
 		}
 		else
 		{
@@ -1097,9 +1097,9 @@ public class EcState implements Serializable
 	 */
 	public int getCorruptors()
 	{
-		if (units.containsKey(UnitLibrary.Corruptor))
+		if (units.containsKey(ZergUnitLibrary.Corruptor))
 		{
-			return units.get(UnitLibrary.Corruptor);
+			return units.get(ZergUnitLibrary.Corruptor);
 		}
 		else
 		{
@@ -1112,9 +1112,9 @@ public class EcState implements Serializable
 	 */
 	public int getUltralisks()
 	{
-		if (units.containsKey(UnitLibrary.Ultralisk))
+		if (units.containsKey(ZergUnitLibrary.Ultralisk))
 		{
-			return units.get(UnitLibrary.Ultralisk);
+			return units.get(ZergUnitLibrary.Ultralisk);
 		}
 		else
 		{
@@ -1127,9 +1127,9 @@ public class EcState implements Serializable
 	 */
 	public int getBroodlords()
 	{
-		if (units.containsKey(UnitLibrary.Broodlord))
+		if (units.containsKey(ZergUnitLibrary.Broodlord))
 		{
-			return units.get(UnitLibrary.Broodlord);
+			return units.get(ZergUnitLibrary.Broodlord);
 		}
 		else
 		{
@@ -1142,7 +1142,7 @@ public class EcState implements Serializable
 	 */
 	public int getHatcheries()
 	{
-		return buildings.get(BuildingLibrary.Hatchery);
+		return buildings.get(ZergBuildingLibrary.Hatchery);
 	}
 
 	/**
@@ -1150,7 +1150,7 @@ public class EcState implements Serializable
 	 */
 	public int getLairs()
 	{
-		return buildings.get(BuildingLibrary.Lair);
+		return buildings.get(ZergBuildingLibrary.Lair);
 	}
 
 	/**
@@ -1158,7 +1158,7 @@ public class EcState implements Serializable
 	 */
 	public int getHives()
 	{
-		return buildings.get(BuildingLibrary.Hive);
+		return buildings.get(ZergBuildingLibrary.Hive);
 	}
 
 	/**
@@ -1166,7 +1166,7 @@ public class EcState implements Serializable
 	 */
 	public int getSpawningPools()
 	{
-		return buildings.get(BuildingLibrary.SpawningPool);
+		return buildings.get(ZergBuildingLibrary.SpawningPool);
 	}
 
 	/**
@@ -1174,7 +1174,7 @@ public class EcState implements Serializable
 	 */
 	public int getEvolutionChambers()
 	{
-		return buildings.get(BuildingLibrary.EvolutionChamber);
+		return buildings.get(ZergBuildingLibrary.EvolutionChamber);
 	}
 
 	/**
@@ -1182,7 +1182,7 @@ public class EcState implements Serializable
 	 */
 	public int getRoachWarrens()
 	{
-		return buildings.get(BuildingLibrary.RoachWarren);
+		return buildings.get(ZergBuildingLibrary.RoachWarren);
 	}
 
 	/**
@@ -1190,7 +1190,7 @@ public class EcState implements Serializable
 	 */
 	public int getHydraliskDen()
 	{
-		return buildings.get(BuildingLibrary.HydraliskDen);
+		return buildings.get(ZergBuildingLibrary.HydraliskDen);
 	}
 
 	/**
@@ -1198,7 +1198,7 @@ public class EcState implements Serializable
 	 */
 	public int getBanelingNest()
 	{
-		return buildings.get(BuildingLibrary.BanelingNest);
+		return buildings.get(ZergBuildingLibrary.BanelingNest);
 	}
 
 	/**
@@ -1206,7 +1206,7 @@ public class EcState implements Serializable
 	 */
 	public int getInfestationPit()
 	{
-		return buildings.get(BuildingLibrary.InfestationPit);
+		return buildings.get(ZergBuildingLibrary.InfestationPit);
 	}
 
 	/**
@@ -1214,7 +1214,7 @@ public class EcState implements Serializable
 	 */
 	public int getGreaterSpire()
 	{
-		return buildings.get(BuildingLibrary.GreaterSpire);
+		return buildings.get(ZergBuildingLibrary.GreaterSpire);
 	}
 
 	/**
@@ -1222,7 +1222,7 @@ public class EcState implements Serializable
 	 */
 	public int getUltraliskCavern()
 	{
-		return buildings.get(BuildingLibrary.UltraliskCavern);
+		return buildings.get(ZergBuildingLibrary.UltraliskCavern);
 	}
 
 	/**
@@ -1230,7 +1230,7 @@ public class EcState implements Serializable
 	 */
 	public int getGasExtractors()
 	{
-		return buildings.get(BuildingLibrary.Extractor);
+		return buildings.get(ZergBuildingLibrary.Extractor);
 	}
 
 	/**
@@ -1238,7 +1238,7 @@ public class EcState implements Serializable
 	 */
 	public int getSpire()
 	{
-		return buildings.get(BuildingLibrary.Spire);
+		return buildings.get(ZergBuildingLibrary.Spire);
 	}
 
 	/**
@@ -1246,7 +1246,7 @@ public class EcState implements Serializable
 	 */
 	public int getSpineCrawlers()
 	{
-		return buildings.get(BuildingLibrary.SpineCrawler);
+		return buildings.get(ZergBuildingLibrary.SpineCrawler);
 	}
 
 	/**
@@ -1254,7 +1254,7 @@ public class EcState implements Serializable
 	 */
 	public int getSporeCrawlers()
 	{
-		return buildings.get(BuildingLibrary.SporeCrawler);
+		return buildings.get(ZergBuildingLibrary.SporeCrawler);
 	}
 
 	/**
@@ -1262,7 +1262,7 @@ public class EcState implements Serializable
 	 */
 	public int getNydusNetwork()
 	{
-		return buildings.get(BuildingLibrary.NydusNetwork);
+		return buildings.get(ZergBuildingLibrary.NydusNetwork);
 	}
 
 	/**
@@ -1270,7 +1270,7 @@ public class EcState implements Serializable
 	 */
 	public int getNydusWorm()
 	{
-		return buildings.get(BuildingLibrary.NydusWorm);
+		return buildings.get(ZergBuildingLibrary.NydusWorm);
 	}
 
 }

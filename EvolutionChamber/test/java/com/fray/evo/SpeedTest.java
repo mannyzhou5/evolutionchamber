@@ -4,8 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.logging.LogManager;
 
-import com.fray.evo.util.UnitLibrary;
-import com.fray.evo.util.UpgradeLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
+import com.fray.evo.util.ZergUpgradeLibrary;
 
 /**
  * Runs a number of simulations and calculates the games played per second for
@@ -45,8 +45,8 @@ public class SpeedTest {
 
 		EcState destination = new EcState();
 		destination.targetSeconds = 120 * 60;
-		destination.SetUnits(UnitLibrary.Mutalisk, 7);
-		destination.AddUpgrade(UpgradeLibrary.FlyerAttacks1);
+		destination.SetUnits(ZergUnitLibrary.Mutalisk, 7);
+		destination.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
 
 		return runTest(destination, seconds, processors);
 	}
@@ -65,8 +65,8 @@ public class SpeedTest {
 
 		EcState waypoint = new EcState();
 		waypoint.targetSeconds = 120 * 60;
-		waypoint.SetUnits(UnitLibrary.Mutalisk, 7);
-		waypoint.AddUpgrade(UpgradeLibrary.FlyerAttacks1);
+		waypoint.SetUnits(ZergUnitLibrary.Mutalisk, 7);
+		waypoint.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
 		waypoints.add(waypoint);
 
 		EcState destination = new EcState();
@@ -89,30 +89,30 @@ public class SpeedTest {
 		ArrayList<EcState> waypoints = new ArrayList<EcState>();
 
 		EcState waypoint = new EcState();
-		waypoint.SetUnits(UnitLibrary.Zergling, 6);
+		waypoint.SetUnits(ZergUnitLibrary.Zergling, 6);
 		waypoint.targetSeconds = 3 * 60;
 		waypoints.add(waypoint);
 
 		waypoint = new EcState();
-		waypoint.SetUnits(UnitLibrary.Roach, 6);
+		waypoint.SetUnits(ZergUnitLibrary.Roach, 6);
 		waypoint.targetSeconds = 6 * 60;
 		waypoints.add(waypoint);
 
 		waypoint = new EcState();
-		waypoint.SetUnits(UnitLibrary.Hydralisk, 2);
+		waypoint.SetUnits(ZergUnitLibrary.Hydralisk, 2);
 		waypoint.targetSeconds = 9 * 60;
 		waypoints.add(waypoint);
 
 		waypoint = new EcState();
-		waypoint.SetUnits(UnitLibrary.Overseer, 3);
+		waypoint.SetUnits(ZergUnitLibrary.Overseer, 3);
 		waypoint.targetSeconds = 12 * 60;
 		waypoints.add(waypoint);
 
 		EcState destination = new EcState();
 		destination.targetSeconds = 120 * 60;
 		destination.waypoints = waypoints;
-		destination.SetUnits(UnitLibrary.Mutalisk, 7);
-		destination.AddUpgrade(UpgradeLibrary.FlyerAttacks1);
+		destination.SetUnits(ZergUnitLibrary.Mutalisk, 7);
+		destination.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
 
 		return runTest(destination, seconds, processors);
 	}

@@ -66,9 +66,9 @@ import com.fray.evo.EcReportable;
 import com.fray.evo.EcState;
 import com.fray.evo.EvolutionChamber;
 import com.fray.evo.action.EcAction;
-import com.fray.evo.util.BuildingLibrary;
-import com.fray.evo.util.UnitLibrary;
-import com.fray.evo.util.UpgradeLibrary;
+import com.fray.evo.util.ZergBuildingLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
+import com.fray.evo.util.ZergUpgradeLibrary;
 
 //TODO: Refactor this monster. - Lomilar
 public class EcSwingX extends JXPanel implements EcReportable
@@ -676,7 +676,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Drone, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Drone, getDigit(e));
 			}
 
 			@Override
@@ -704,7 +704,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Overlord, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Overlord, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -716,7 +716,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Overseer, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Overseer, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -745,8 +745,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Burrow);
-				else dest.RemoveUpgrade(UpgradeLibrary.Burrow);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Burrow);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Burrow);
 			}
 			void reverse(Object o)
 			{
@@ -759,7 +759,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Queen, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Queen, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -771,8 +771,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.PneumatizedCarapace);
-				else dest.RemoveUpgrade(UpgradeLibrary.PneumatizedCarapace);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.PneumatizedCarapace);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.PneumatizedCarapace);
 			}
 			void reverse(Object o)
 			{
@@ -785,7 +785,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Zergling, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Zergling, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -797,8 +797,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.VentralSacs);
-				else dest.RemoveUpgrade(UpgradeLibrary.VentralSacs);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.VentralSacs);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.VentralSacs);
 			}
 			void reverse(Object o)
 			{
@@ -811,8 +811,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.MetabolicBoost);
-				else dest.RemoveUpgrade(UpgradeLibrary.MetabolicBoost);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.MetabolicBoost);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.MetabolicBoost);
 			}
 			void reverse(Object o)
 			{
@@ -824,8 +824,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.AdrenalGlands);
-				else dest.RemoveUpgrade(UpgradeLibrary.AdrenalGlands);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.AdrenalGlands);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.AdrenalGlands);
 			}
 			void reverse(Object o)
 			{
@@ -838,7 +838,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Baneling, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Baneling, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -850,8 +850,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.CentrifugalHooks);
-				else dest.RemoveUpgrade(UpgradeLibrary.CentrifugalHooks);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.CentrifugalHooks);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.CentrifugalHooks);
 			}
 			void reverse(Object o)
 			{
@@ -864,7 +864,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Roach, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Roach, getDigit(e));
 
 			}
 			void reverse(Object o)
@@ -878,8 +878,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.GlialReconstitution);
-				else dest.RemoveUpgrade(UpgradeLibrary.GlialReconstitution);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.GlialReconstitution);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.GlialReconstitution);
 			}
 			void reverse(Object o)
 			{
@@ -891,8 +891,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.TunnelingClaws);
-				else dest.RemoveUpgrade(UpgradeLibrary.TunnelingClaws);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.TunnelingClaws);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.TunnelingClaws);
 			}
 			void reverse(Object o)
 			{
@@ -905,7 +905,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Hydralisk, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Hydralisk, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -917,8 +917,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.GroovedSpines);
-				else dest.RemoveUpgrade(UpgradeLibrary.GroovedSpines);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.GroovedSpines);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.GroovedSpines);
 			}
 			void reverse(Object o)
 			{
@@ -931,7 +931,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Infestor, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Infestor, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -944,8 +944,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.NeuralParasite);
-				else dest.RemoveUpgrade(UpgradeLibrary.NeuralParasite);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.NeuralParasite);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.NeuralParasite);
 			}
 			void reverse(Object o)
 			{
@@ -957,8 +957,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.PathogenGlands);
-				else dest.RemoveUpgrade(UpgradeLibrary.PathogenGlands);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.PathogenGlands);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.PathogenGlands);
 			}
 			void reverse(Object o)
 			{
@@ -971,7 +971,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Mutalisk, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Mutalisk, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -984,7 +984,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Ultralisk, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Ultralisk, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -996,8 +996,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.ChitinousPlating);
-				else dest.RemoveUpgrade(UpgradeLibrary.ChitinousPlating);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.ChitinousPlating);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.ChitinousPlating);
 			}
 			void reverse(Object o)
 			{
@@ -1010,7 +1010,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Corruptor, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Corruptor, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1022,7 +1022,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetUnits( UnitLibrary.Broodlord, getDigit(e));
+				dest.SetUnits( ZergUnitLibrary.Broodlord, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1035,8 +1035,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Melee1);
-				else dest.RemoveUpgrade(UpgradeLibrary.Melee1);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Melee1);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Melee1);
 			}
 			void reverse(Object o)
 			{
@@ -1048,8 +1048,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Melee2);
-				else dest.RemoveUpgrade(UpgradeLibrary.Melee2);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Melee2);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Melee2);
 			}
 			void reverse(Object o)
 			{
@@ -1061,8 +1061,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Melee3);
-				else dest.RemoveUpgrade(UpgradeLibrary.Melee3);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Melee3);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Melee3);
 			}
 			void reverse(Object o)
 			{
@@ -1075,8 +1075,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Missile1);
-				else dest.RemoveUpgrade(UpgradeLibrary.Missile1);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Missile1);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Missile1);
 			}
 			void reverse(Object o)
 			{
@@ -1088,8 +1088,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Missile2);
-				else dest.RemoveUpgrade(UpgradeLibrary.Missile2);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Missile2);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Missile2);
 			}
 			void reverse(Object o)
 			{
@@ -1101,8 +1101,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Missile3);
-				else dest.RemoveUpgrade(UpgradeLibrary.Missile3);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Missile3);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Missile3);
 			}
 			void reverse(Object o)
 			{
@@ -1115,8 +1115,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Armor1);
-				else dest.RemoveUpgrade(UpgradeLibrary.Armor1);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Armor1);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Armor1);
 			}
 			void reverse(Object o)
 			{
@@ -1128,8 +1128,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Armor2);
-				else dest.RemoveUpgrade(UpgradeLibrary.Armor2);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Armor2);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Armor2);
 			}
 			void reverse(Object o)
 			{
@@ -1141,8 +1141,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.Armor3);
-				else dest.RemoveUpgrade(UpgradeLibrary.Armor3);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Armor3);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.Armor3);
 			}
 			void reverse(Object o)
 			{
@@ -1155,8 +1155,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerAttacks1);
-				else dest.RemoveUpgrade(UpgradeLibrary.FlyerAttacks1);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
 			}
 			void reverse(Object o)
 			{
@@ -1168,8 +1168,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerAttacks2);
-				else dest.RemoveUpgrade(UpgradeLibrary.FlyerAttacks2);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks2);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerAttacks2);
 			}
 			void reverse(Object o)
 			{
@@ -1181,8 +1181,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerAttacks3);
-				else dest.RemoveUpgrade(UpgradeLibrary.FlyerAttacks3);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks3);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerAttacks3);
 			}
 			void reverse(Object o)
 			{
@@ -1195,8 +1195,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerArmor1);
-				else dest.RemoveUpgrade(UpgradeLibrary.FlyerArmor1);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerArmor1);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerArmor1);
 			}
 			void reverse(Object o)
 			{
@@ -1208,8 +1208,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerArmor2);
-				else dest.RemoveUpgrade(UpgradeLibrary.FlyerArmor2);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerArmor2);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerArmor2);
 			}
 			void reverse(Object o)
 			{
@@ -1221,8 +1221,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getTrue(e)) dest.AddUpgrade(UpgradeLibrary.FlyerArmor3);
-				else dest.RemoveUpgrade(UpgradeLibrary.FlyerArmor3);
+				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerArmor3);
+				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerArmor3);
 			}
 			void reverse(Object o)
 			{
@@ -1247,7 +1247,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.Lair, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.Lair, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1260,7 +1260,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.Hive, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.Hive, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1272,7 +1272,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.Extractor, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.Extractor, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1285,7 +1285,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.EvolutionChamber, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.EvolutionChamber, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1298,7 +1298,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.SpineCrawler, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.SpineCrawler, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1310,7 +1310,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.SporeCrawler, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.SporeCrawler, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1323,7 +1323,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.SpawningPool, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.SpawningPool, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1335,7 +1335,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.BanelingNest, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.BanelingNest, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1348,7 +1348,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.RoachWarren, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.RoachWarren, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1360,7 +1360,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.HydraliskDen, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.HydraliskDen, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1373,7 +1373,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.InfestationPit, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.InfestationPit, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1385,7 +1385,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.Spire, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.Spire, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1398,7 +1398,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.NydusNetwork, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.NydusNetwork, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1410,7 +1410,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.NydusWorm, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.NydusWorm, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1423,7 +1423,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.UltraliskCavern, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.UltraliskCavern, getDigit(e));
 			}
 			void reverse(Object o)
 			{
@@ -1435,7 +1435,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				dest.SetBuilding(BuildingLibrary.GreaterSpire, getDigit(e));
+				dest.SetBuilding(ZergBuildingLibrary.GreaterSpire, getDigit(e));
 			}
 			void reverse(Object o)
 			{

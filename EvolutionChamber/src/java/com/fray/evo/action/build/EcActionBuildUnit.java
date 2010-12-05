@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.fray.evo.EcBuildOrder;
-import com.fray.evo.EcEvolver;
 import com.fray.evo.util.Buildable;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.GameLog;
 import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.Unit;
-import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.Upgrade;
 
 public abstract class EcActionBuildUnit extends EcActionBuild implements Serializable
@@ -22,7 +21,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 	{
 		super(unit);
 		this.supply = unit.getSupply();
-		this.consumeLarva = (UnitLibrary.Larva == unit.getConsumes());
+		this.consumeLarva = (ZergUnitLibrary.Larva == unit.getConsumes());
 	}
 
 	@Override
@@ -71,7 +70,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
     @Override
     public boolean isPossible(EcBuildOrder s) {
         Buildable consumes = getConsumes();
-        if (consumes != UnitLibrary.Larva) {
+        if (consumes != ZergUnitLibrary.Larva) {
             if (consumes instanceof Unit && s.getUnitCount((Unit) consumes) < 1) {
                 return false;
             }
@@ -93,7 +92,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
             s.makeBuildingBusy(builtFrom, this);
         }
         Buildable consumes = getConsumes();
-        if (consumes != null && getConsumes() != UnitLibrary.Larva) {
+        if (consumes != null && getConsumes() != ZergUnitLibrary.Larva) {
             s.RemoveUnits((Unit) getConsumes(), 1);
         }
     }

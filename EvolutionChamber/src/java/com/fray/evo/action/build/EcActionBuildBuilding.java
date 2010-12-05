@@ -3,16 +3,14 @@ package com.fray.evo.action.build;
 import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
-import com.fray.evo.EcEvolver;
 import com.fray.evo.util.Buildable;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.GameLog;
 import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.Unit;
-import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.Upgrade;
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class EcActionBuildBuilding extends EcActionBuild implements Serializable
 {
@@ -27,9 +25,9 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 	{
 		s.minerals -= getMinerals();
 		s.gas -= getGas();
-		if (getConsumes() == UnitLibrary.Drone)
+		if (getConsumes() == ZergUnitLibrary.Drone)
 		{
-			s.RemoveUnits(UnitLibrary.Drone, 1);
+			s.RemoveUnits(ZergUnitLibrary.Drone, 1);
 			s.dronesOnMinerals -= 1;
 			s.supplyUsed -= 1;
 		}
@@ -53,7 +51,7 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 
     @Override
     public boolean isPossible(EcBuildOrder s) {
-        if (getConsumes() == UnitLibrary.Drone) {
+        if (getConsumes() == ZergUnitLibrary.Drone) {
             if (s.getDrones() < 1) {
                 return false;
             }

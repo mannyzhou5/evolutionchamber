@@ -11,9 +11,9 @@ package com.fray.evo.util;
  */
 public class RaceLibraries {
 	
-	public static final BuildingLibrary zergBuildingLibrary = BuildingLibrary.getInstance();
-	public static final UpgradeLibrary zergUpgradeLibrary = UpgradeLibrary.getInstance();
-	public static final UnitLibrary zergUnitLibrary = UnitLibrary.getInstance();
+	public static final ZergBuildingLibrary zergBuildingLibrary = ZergBuildingLibrary.getInstance();
+	public static final ZergUpgradeLibrary zergUpgradeLibrary = ZergUpgradeLibrary.getInstance();
+	public static final ZergUnitLibrary zergUnitLibrary = ZergUnitLibrary.getInstance();
 
 	public static Library<Building> getBuildingLibrary(Race race){
 		switch(race){

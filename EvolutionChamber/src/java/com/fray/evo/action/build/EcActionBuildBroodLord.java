@@ -3,14 +3,13 @@ package com.fray.evo.action.build;
 import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
-import com.fray.evo.util.Unit;
-import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildBroodLord extends EcActionBuildUnit implements Serializable
 {
 	public EcActionBuildBroodLord()
 	{
-		super(UnitLibrary.Broodlord);
+		super(ZergUnitLibrary.Broodlord);
 	}
 
 	@Override

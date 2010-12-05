@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import com.fray.evo.EcState;
 import com.fray.evo.util.RaceLibraries;
 import com.fray.evo.util.Unit;
-import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.Upgrade;
 
 public class EcStandardFitnessCleanup implements EcFitness {
@@ -32,10 +32,10 @@ public class EcStandardFitnessCleanup implements EcFitness {
         
         List<Unit> allUnitsList = RaceLibraries.getUnitLibrary(current.settings.race).getList();
         for (Unit unit : allUnitsList) {
-            if (unit == UnitLibrary.Overlord) {
+            if (unit == ZergUnitLibrary.Overlord) {
                 continue;
             }
-            if (unit == UnitLibrary.Larva) {
+            if (unit == ZergUnitLibrary.Larva) {
                 continue;
             }
 

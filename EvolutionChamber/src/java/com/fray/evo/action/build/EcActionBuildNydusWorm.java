@@ -3,16 +3,15 @@ package com.fray.evo.action.build;
 import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
-import com.fray.evo.EcEvolver;
 import com.fray.evo.util.Building;
-import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.ZergBuildingLibrary;
 import com.fray.evo.util.GameLog;
 
 public final class EcActionBuildNydusWorm extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildNydusWorm()
 	{
-		super(BuildingLibrary.NydusWorm);
+		super(ZergBuildingLibrary.NydusWorm);
 	}
 
 	@Override

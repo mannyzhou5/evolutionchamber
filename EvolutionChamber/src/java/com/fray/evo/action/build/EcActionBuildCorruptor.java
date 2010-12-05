@@ -2,14 +2,13 @@ package com.fray.evo.action.build;
 
 import java.io.Serializable;
 
-import com.fray.evo.EcBuildOrder;
-import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildCorruptor extends EcActionBuildUnit implements Serializable
 {	
 	public EcActionBuildCorruptor()
 	{
-		super(UnitLibrary.Corruptor);
+		super(ZergUnitLibrary.Corruptor);
 	}
 
 }

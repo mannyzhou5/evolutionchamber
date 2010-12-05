@@ -4,23 +4,23 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
-import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.ZergBuildingLibrary;
 import com.fray.evo.util.GameLog;
 import com.fray.evo.util.RunnableAction;
-import com.fray.evo.util.UnitLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildHatchery extends EcActionBuildBuilding implements Serializable
 {
 	public EcActionBuildHatchery()
 	{
-		super(BuildingLibrary.Hatchery);
+		super(ZergBuildingLibrary.Hatchery);
 	}
 
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{
 		s.hatcheriesBuilding += 1;
-		s.addFutureAction((int)(getTime() - BuildingLibrary.Extractor.getTime()), new RunnableAction()
+		s.addFutureAction((int)(getTime() - ZergBuildingLibrary.Extractor.getTime()), new RunnableAction()
 		{
 			@Override
 			public void run(GameLog e)
@@ -29,7 +29,7 @@ public final class EcActionBuildHatchery extends EcActionBuildBuilding implement
 				// you can build a extractor to line up with this hatch.
 			}
 		});
-		s.addFutureAction((int)(getTime() - UnitLibrary.Queen.getTime()), new RunnableAction()
+		s.addFutureAction((int)(getTime() - ZergUnitLibrary.Queen.getTime()), new RunnableAction()
 		{
 			@Override
 			public void run(GameLog e)
@@ -43,7 +43,7 @@ public final class EcActionBuildHatchery extends EcActionBuildBuilding implement
 	@Override
 	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
-		s.AddBuilding(BuildingLibrary.Hatchery);
+		s.AddBuilding(ZergBuildingLibrary.Hatchery);
 		s.hatcheriesBuilding -= 1;
 		s.hatcheryTimes.add(s.seconds);
 		s.larva.add(1);

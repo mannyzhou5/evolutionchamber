@@ -11,7 +11,7 @@ import com.fray.evo.util.ActionList;
 import com.fray.evo.util.GameLog;
 import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.Building;
-import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.ZergBuildingLibrary;
 import com.fray.evo.util.Race;
 import com.fray.evo.util.RaceLibraries;
 import java.util.HashMap;
@@ -354,10 +354,10 @@ public final class EcBuildOrder extends EcState implements Serializable
 	{
             //ArrayList<EcAction> acc = madeBusyBy.get(consumes);
             if(madeBusyBy.get(consumes).size() >= buildings.get(consumes)){
-                if(consumes == BuildingLibrary.Hatchery){
-                    makeBuildingBusy(BuildingLibrary.Lair, action);
-                }else if(consumes == BuildingLibrary.Lair){
-                    makeBuildingBusy(BuildingLibrary.Hive, action);
+                if(consumes == ZergBuildingLibrary.Hatchery){
+                    makeBuildingBusy(ZergBuildingLibrary.Lair, action);
+                }else if(consumes == ZergBuildingLibrary.Lair){
+                    makeBuildingBusy(ZergBuildingLibrary.Hive, action);
                 }else{
                     throw new RuntimeException("should not have been called with too few not busy main buildings");
                 }
@@ -375,12 +375,12 @@ public final class EcBuildOrder extends EcState implements Serializable
 
     public boolean doesNonBusyExist(Building building){
         if(!doesNonBusyReallyExist(building)){
-            if(building == BuildingLibrary.Hatchery){
-                return doesNonBusyExist(BuildingLibrary.Lair);
-            }else if(building == BuildingLibrary.Lair){
-                return doesNonBusyExist(BuildingLibrary.Hive);
-            }else if(building == BuildingLibrary.Spire){
-                return doesNonBusyExist(BuildingLibrary.GreaterSpire);
+            if(building == ZergBuildingLibrary.Hatchery){
+                return doesNonBusyExist(ZergBuildingLibrary.Lair);
+            }else if(building == ZergBuildingLibrary.Lair){
+                return doesNonBusyExist(ZergBuildingLibrary.Hive);
+            }else if(building == ZergBuildingLibrary.Spire){
+                return doesNonBusyExist(ZergBuildingLibrary.GreaterSpire);
             }
             return false;
         }else{
