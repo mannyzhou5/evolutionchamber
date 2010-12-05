@@ -73,8 +73,6 @@ public final class EcBuildOrder extends EcState implements Serializable
 		s.dronesGoingOnMinerals = dronesGoingOnMinerals;
 		s.dronesGoingOnGas = dronesGoingOnGas;
 		s.dronesOnMinerals = dronesOnMinerals;
-                s.actionBusyIn = new HashMap<EcAction, Building>(actionBusyIn);
-                s.madeBusyBy = new HashMap<Building, ArrayList<EcAction>>(madeBusyBy);
 		s.dronesOnGas = dronesOnGas;
 		s.evolutionChambersInUse = evolutionChambersInUse;
 		super.assign(s);
@@ -343,9 +341,10 @@ public final class EcBuildOrder extends EcState implements Serializable
                 }else{
                     throw new RuntimeException("should not have been called with too few not busy main buildings");
                 }
+            }else{
+                madeBusyBy.get(consumes).add(action);
+                actionBusyIn.put(action, consumes);
             }
-            madeBusyBy.get(consumes).add(action);
-            actionBusyIn.put(action, consumes);
 	}
 
     public void unconsumeHatch(EcAction action) {
