@@ -37,6 +37,7 @@ import com.fray.evo.util.EcFileSystem;
 public class EvolutionChamber
 {
 	private static final Logger logger = Logger.getLogger(EvolutionChamber.class.getName());
+	public static final String	VERSION	= "0022";
 	// The seeds files. (one and a backup, in case execution stops while the
 	// file is half written)
 	private static File			SEEDS_EVO				= null;

@@ -1,6 +1,7 @@
 package com.fray.evo.ui.swingx;
 
 import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
+import static com.fray.evo.ui.swingx.EcSwingXMain.userSettings;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
@@ -35,6 +37,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -99,6 +102,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 	
 	private JButton				goButton;
 	private JButton				stopButton;
+	private LocaleComboBox		localeComboBox;
 	private JButton				clipboardButton;
 	private JButton				switchSimpleButton;
 	private JButton				switchDetailedButton;
@@ -107,9 +111,16 @@ public class EcSwingX extends JXPanel implements EcReportable
 	private JTabbedPane			tabPane;
 	private Component			lastSelectedTab;
 	private JList				historyList;
+	
+	private JFrame				frame;
 
-	public EcSwingX()
+	/**
+	 * Constructor.
+	 * @param frame the window that holds this panel.
+	 */
+	public EcSwingX(JFrame frame)
 	{
+		this.frame = frame;
 		initializeWaypoints();
 
 		setLayout(new BorderLayout());
@@ -1569,6 +1580,49 @@ public class EcSwingX extends JXPanel implements EcReportable
 
 	private void addControlParts(JPanel component)
 	{
+		localeComboBox = new LocaleComboBox(new Locale[]{new Locale("en", "US"), new Locale("ko", "KR")}, messages.getLocale());
+		localeComboBox.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				Locale selected = localeComboBox.getSelectedLocale();
+				Locale current = messages.getLocale();
+				if (selected.getLanguage().equals(current.getLanguage()) && (current.getCountry() == null || selected.getCountry().equals(current.getCountry()))){
+					//do nothing if the current language was selected
+					return;
+				}
+				
+				//change the language
+				messages.changeLocale(selected);
+				userSettings.setLocale(selected);
+				
+				//re-create the window
+				JFrame newFrame = new JFrame();
+				newFrame.setTitle(messages.getString("title", EvolutionChamber.VERSION));
+				newFrame.setDefaultCloseOperation(frame.getDefaultCloseOperation());
+				newFrame.getContentPane().add(new EcSwingX(newFrame));
+				newFrame.setPreferredSize(frame.getPreferredSize());
+				newFrame.setIconImage(frame.getIconImage());
+				newFrame.pack();
+				newFrame.setLocationRelativeTo(null);
+				
+				//remove the old window
+				frame.dispose();
+				
+				//display the new window
+				newFrame.setVisible(true);
+			}
+		});
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.anchor = GridBagConstraints.WEST;
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.weightx = .25;
+		gridBagConstraints.gridy = gridy;
+		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.insets = new Insets(1, 1, 1, 1);
+		component.add(localeComboBox, gridBagConstraints);
+		
+		gridy++;
+		
 		addInput(component, messages.getString("processors"), new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -1591,6 +1645,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				goButton.setEnabled(true);
 				stopButton.setEnabled(false);
 				historyList.setEnabled(true);
+				localeComboBox.setEnabled(true);
 				timeStarted = 0;
 				for (JComponent j : inputControls)
 					j.setEnabled(true);
@@ -1616,6 +1671,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				goButton.setEnabled(false);
 				stopButton.setEnabled(true);
 				historyList.setEnabled(false);
+				localeComboBox.setEnabled(false);
 
 				EcEvolver.evaluations = 0;
 				EcEvolver.cachehits = 0;

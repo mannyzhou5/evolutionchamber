@@ -11,7 +11,9 @@ import java.util.ResourceBundle;
  * 
  */
 public class EcMessages {
-	private final ResourceBundle messages;
+	private final String bundleName;
+	private ResourceBundle messages;
+	private Locale locale;
 
 	/**
 	 * Constructor.
@@ -20,7 +22,12 @@ public class EcMessages {
 	 * class name
 	 */
 	public EcMessages(String bundleName) {
+		this.bundleName = bundleName;
 		messages = Utf8ResourceBundle.getBundle(bundleName);
+		locale = messages.getLocale();
+		if (locale == null){
+			locale = Locale.getDefault();
+		}
 	}
 
 	/**
@@ -42,5 +49,22 @@ public class EcMessages {
 	 */
 	public String getString(String key, Object... arguments) {
 		return MessageFormat.format(getString(key), arguments);
+	}
+	
+	/**
+	 * Changes the Locale.
+	 * @param locale the new Locale
+	 */
+	public void changeLocale(Locale locale){
+		this.locale = locale;
+		messages = Utf8ResourceBundle.getBundle(bundleName, locale);
+	}
+	
+	/**
+	 * Gets the current Locale.
+	 * @return
+	 */
+	public Locale getLocale(){
+		return locale;
 	}
 }

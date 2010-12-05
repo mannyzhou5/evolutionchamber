@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Locale;
 import java.util.logging.LogManager;
 
 import javax.swing.ImageIcon;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+import com.fray.evo.EvolutionChamber;
 import com.fray.evo.util.EcAutoUpdate;
 import com.fray.evo.util.EcMessages;
 
@@ -26,7 +28,7 @@ import com.fray.evo.util.EcMessages;
 public class EcSwingXMain
 {
 	public static final EcMessages	messages	= new EcMessages("com/fray/evo/ui/swingx/messages");
-	public static final String		EC_VERSION	= "0022";
+	public static final UserSettings userSettings = new UserSettings();
 	public static final String iconLocation = "/com/fray/evo/ui/swingx/evolution_chamber.png";
 
 	public static void main(String args[])
@@ -41,6 +43,13 @@ public class EcSwingXMain
 			e.printStackTrace();
 		}
 		
+		//setup i18n
+		Locale locale = userSettings.getLocale();
+		if (locale != null)
+		{
+			messages.changeLocale(locale);
+		}
+		
 		// run Mac OS X customizations if user is on a Mac
 		// this code must *literally* run before *anything* else
 		// graphics-related...putting this code at the beginning of
@@ -49,7 +58,7 @@ public class EcSwingXMain
 		// set--the only reason I can think of why this happens is that EcSwingX
 		// extends a class, so some static initialization code must be running
 		// before EcSwingX.main() gets executed
-		MacSupport.initIfMac(messages.getString("title", EC_VERSION), false, iconLocation, new MacHandler()
+		MacSupport.initIfMac(messages.getString("title", EvolutionChamber.VERSION), false, iconLocation, new MacHandler()
 		{
 			@Override
 			public void handleQuit(Object applicationEvent)
@@ -60,7 +69,7 @@ public class EcSwingXMain
 			@Override
 			public void handleAbout(Object applicationEvent)
 			{
-				JOptionPane.showMessageDialog(null, messages.getString("about.message", EC_VERSION), messages
+				JOptionPane.showMessageDialog(null, messages.getString("about.message", EvolutionChamber.VERSION), messages
 						.getString("about.title"), JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -80,9 +89,9 @@ public class EcSwingXMain
 //				}
 
 				final JFrame frame = new JFrame();
-				frame.setTitle(messages.getString("title", EC_VERSION));
+				frame.setTitle(messages.getString("title", EvolutionChamber.VERSION));
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.getContentPane().add(new EcSwingX());
+				frame.getContentPane().add(new EcSwingX(frame));
 				frame.setPreferredSize(new Dimension(950, 830));
 				ImageIcon icon = new ImageIcon(EcSwingXMain.class.getResource(iconLocation));
 				frame.setIconImage(icon.getImage());
@@ -117,7 +126,7 @@ public class EcSwingXMain
 
 	private static EcAutoUpdate checkForUpdates()
 	{
-		EcAutoUpdate ecUpdater = new EcAutoUpdate(EC_VERSION, new EcAutoUpdate.Callback(){
+		EcAutoUpdate ecUpdater = new EcAutoUpdate(EvolutionChamber.VERSION, new EcAutoUpdate.Callback(){
 			@Override
 			public void checksumFailed()
 			{
