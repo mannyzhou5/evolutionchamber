@@ -12,29 +12,4 @@ public final class EcActionUpgradeTunnelingClaws extends EcActionUpgrade
 	{
 		init(UpgradeLibrary.TunnelingClaws);
 	}
-
-	@Override
-	public void execute(EcBuildOrder s, GameLog e)
-	{
-		// TODO Auto-generated method stub
-		super.execute(s, e);
-		s.roachWarrensInUse++;
-	}
-	
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getRoachWarrens()-s.roachWarrensInUse == 0)
-			return true;
-		if (s.getLairs() == 0 && s.getHives() == 0 )
-			return true;
-		return false;
-	}
-
-	@Override
-	public void afterTime(EcBuildOrder s, GameLog e)
-	{
-		superAfterTime(s, e);
-		s.roachWarrensInUse--;
-	}
 }

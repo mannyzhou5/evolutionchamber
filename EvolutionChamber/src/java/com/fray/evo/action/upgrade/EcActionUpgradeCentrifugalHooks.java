@@ -13,19 +13,4 @@ public final class EcActionUpgradeCentrifugalHooks extends EcActionUpgrade
 		init(UpgradeLibrary.CentrifugalHooks);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getBanelingNest() == 0)
-			return true;
-		if (s.getLairs() == 0 && s.getHives() == 0 )
-			return true;
-		return false;
-	}
-
-	@Override
-	public void afterTime(EcBuildOrder s, GameLog e)
-	{
-		superAfterTime(s, e);
-	}
 }

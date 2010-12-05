@@ -6,6 +6,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.util.*;
+import java.util.ArrayList;
 
 public abstract class EcActionUpgrade extends EcAction implements Serializable {
 
@@ -19,6 +20,7 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
     public void execute(final EcBuildOrder s, final GameLog e) {
         s.minerals -= getMinerals();
         s.gas -= getGas();
+        s.consumeHatch(upgrade.getBuiltIn(),this);
         s.addFutureAction(getTime(), new RunnableAction() {
 
             @Override
@@ -39,7 +41,7 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
         if (s.gas < getGas()) {
             return false;
         }
-        return true;
+        return s.doesNonBusyExist(upgrade.getBuiltIn());
     }
 
     public abstract void init();
@@ -48,10 +50,14 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
         this.upgrade = upgrade;
     }
 
-    public abstract void afterTime(EcBuildOrder s, GameLog e);
-    protected void superAfterTime(EcBuildOrder s, GameLog e){
+    public void afterTime(EcBuildOrder s, GameLog e) {
+        s.unconsumeHatch(this);
+        superAfterTime(s, e);
+    }
+
+    protected void superAfterTime(EcBuildOrder s, GameLog e) {
         s.AddUpgrade(upgrade);
-    };
+    }
 
     public int getMinerals() {
         return upgrade.getMinerals();
@@ -67,5 +73,27 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
 
     public String getName() {
         return upgrade.getName();
+    }
+
+    @Override
+    public boolean isInvalid(EcBuildOrder s) {
+        ArrayList<Buildable> requirements = upgrade.getRequirement();
+        for (int i = 0; i < requirements.size(); i++) {
+            Buildable requirement = requirements.get(i);
+            if (requirement instanceof Building && !s.isBuilding((Building)requirement)) {
+                return true;
+            }else if(requirement instanceof Unit && s.getUnitCount((Unit)requirement) == 0){
+                return true;
+            }else if(requirement instanceof Upgrade && !s.isUpgrade((Upgrade)requirement)){
+                return true;
+            }
+        }
+        if(!s.isBuilding(upgrade.getBuiltIn())){
+            return true;
+        }
+        if(s.isUpgrade(upgrade)){
+            return true;
+        }
+        return false;
     }
 }

@@ -12,27 +12,5 @@ public final class EcActionUpgradeMetabolicBoost extends EcActionUpgrade
 	{
 		init(UpgradeLibrary.MetabolicBoost);
 	}
-
-	@Override
-	public void execute(EcBuildOrder s, GameLog e)
-	{
-		// TODO Auto-generated method stub
-		super.execute(s, e);
-		s.spawningPoolsInUse++;
-	}
 	
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getSpawningPools()-s.spawningPoolsInUse == 0)
-			return true;
-		return false;
-	}
-
-	@Override
-	public void afterTime(EcBuildOrder s, GameLog e)
-	{
-		superAfterTime(s, e);
-		s.spawningPoolsInUse--;
-	}
 }

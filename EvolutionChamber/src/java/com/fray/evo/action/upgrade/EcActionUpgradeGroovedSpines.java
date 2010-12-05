@@ -13,18 +13,4 @@ public final class EcActionUpgradeGroovedSpines extends EcActionUpgrade
 		init(UpgradeLibrary.GroovedSpines);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getHydraliskDen() == 0)
-			return true;
-		return false;
-	}
-
-	@Override
-	public void afterTime(EcBuildOrder s, GameLog e)
-	{
-		superAfterTime(s, e);
-	}
-
 }

@@ -628,6 +628,22 @@ public class EcState implements Serializable
             return buildings.getById(building.getId());
         }
 
+        public boolean isBuilding(Building building){
+            if(buildings.get(building)== 0){
+                if(building == BuildingLibrary.Hatchery){
+                    return isBuilding(BuildingLibrary.Lair);
+                }else if(building == BuildingLibrary.Lair){
+                    return isBuilding(BuildingLibrary.Hive);
+                }else if(building == BuildingLibrary.Spire){
+                    return isBuilding(BuildingLibrary.GreaterSpire);
+                }else{
+                    return false;
+                }
+            }else{
+                return true;
+            }
+        }
+
         public int getUnitCount(Unit unit){
             return units.getById(unit.getId());
         }

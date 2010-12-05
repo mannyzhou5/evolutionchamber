@@ -13,39 +13,4 @@ public final class EcActionUpgradeMissile3 extends EcActionUpgrade
 		init(UpgradeLibrary.Missile3);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getEvolutionChambers() == 0)
-			return true;
-		if (s.getHives() == 0 )
-			return true;
-		if (s.isMissile2() == false)
-			return true;
-		if (s.isMissile3() == true)
-			return true;
-		return false;
-	}
-
-	@Override
-	public void execute(EcBuildOrder s, GameLog e)
-	{
-		super.execute(s, e);
-		s.evolutionChambersInUse++;
-	}
-
-	@Override
-	public boolean isPossible(EcBuildOrder s)
-	{
-		if (s.evolutionChambersInUse == s.getEvolutionChambers())
-			return false;
-		return super.isPossible(s);
-	}
-
-	@Override
-	public void afterTime(EcBuildOrder s, GameLog e)
-	{
-		superAfterTime(s, e);
-		s.evolutionChambersInUse--;
-	}
 }

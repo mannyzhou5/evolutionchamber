@@ -13,27 +13,4 @@ public final class EcActionUpgradeAdrenalGlands extends EcActionUpgrade
 		init(UpgradeLibrary.AdrenalGlands);
 	}
 
-	@Override
-	public void execute(EcBuildOrder s, GameLog e)
-	{
-		super.execute(s, e);
-		s.spawningPoolsInUse++;
-	}
-	
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getSpawningPools() - s.spawningPoolsInUse == 0)
-			return true;
-		if (s.getHives() == 0 )
-			return true;
-		return false;
-	}
-
-	@Override
-	public void afterTime(EcBuildOrder s, GameLog e)
-	{
-		superAfterTime(s, e);
-		s.spawningPoolsInUse--;
-	}
 }

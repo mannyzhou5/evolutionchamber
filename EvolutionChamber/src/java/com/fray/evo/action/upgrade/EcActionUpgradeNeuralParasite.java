@@ -13,27 +13,4 @@ public final class EcActionUpgradeNeuralParasite extends EcActionUpgrade
 		init(UpgradeLibrary.NeuralParasite);
 	}
 
-	@Override
-	public void execute(EcBuildOrder s, GameLog e)
-	{
-		// TODO Auto-generated method stub
-		super.execute(s, e);
-		s.infestationPitInUse++;
-	}
-	
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getInfestationPit()-s.infestationPitInUse == 0)
-			return true;
-		return false;
-	}
-
-	@Override
-	public void afterTime(EcBuildOrder s, GameLog e)
-	{
-		superAfterTime(s, e);
-		s.infestationPitInUse--;
-	}
-
 }

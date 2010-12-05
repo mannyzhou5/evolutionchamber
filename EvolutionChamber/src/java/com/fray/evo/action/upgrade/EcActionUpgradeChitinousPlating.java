@@ -13,18 +13,4 @@ public final class EcActionUpgradeChitinousPlating extends EcActionUpgrade
 		init(UpgradeLibrary.ChitinousPlating);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getUltraliskCavern() == 0)
-			return true;
-		return false;
-	}
-
-	@Override
-	public void afterTime(EcBuildOrder s, GameLog e)
-	{
-		superAfterTime(s, e);
-	}
-
 }
