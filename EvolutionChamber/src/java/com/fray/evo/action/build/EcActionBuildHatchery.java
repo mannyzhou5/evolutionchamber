@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
-import com.fray.evo.Optimization;
 import com.fray.evo.util.BuildingLibrary;
 import com.fray.evo.util.GameLog;
 import com.fray.evo.util.RunnableAction;
@@ -46,9 +45,9 @@ public final class EcActionBuildHatchery extends EcActionBuildBuilding implement
 	{
 		s.AddBuilding(BuildingLibrary.Hatchery);
 		s.hatcheriesBuilding -= 1;
-		s.hatcheryTimes.add(Optimization.inte(s.seconds));
-		s.larva.add(Optimization.inte(1));
-		s.larvaProduction.add(Optimization.inte(1));
+		s.hatcheryTimes.add(s.seconds);
+		s.larva.add(1);
+		s.larvaProduction.add(1);
 	}
 
 	@Override

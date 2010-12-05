@@ -79,7 +79,7 @@ import com.fray.evo.util.EcUtil;
 import com.fray.evo.util.EcYabotEncoder;
 import com.fray.evo.util.GameLog;
 
-public class EcEvolver extends FitnessFunction
+public final class EcEvolver extends FitnessFunction
 {
 	private static final Logger logger = Logger.getLogger(EcEvolver.class.getName());
 	EcState								source;

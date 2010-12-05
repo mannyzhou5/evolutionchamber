@@ -49,10 +49,9 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 
 	private void spawnLarva(final EcBuildOrder s, final GameLog e)
 	{
-		int hatchWithoutQueen = 0;
-		if (s.larva.size() > s.hasQueen.size())
+		int hatchWithoutQueen = s.hasQueen.size();
+		if (s.larva.size() > hatchWithoutQueen)
 		{
-			hatchWithoutQueen = s.hasQueen.size();
 			s.hasQueen.add(true);
 
 			final int hatchIndex = hatchWithoutQueen;
@@ -71,6 +70,7 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 					s.setLarva(hatchIndex, Math.min(19, s.getLarva(hatchIndex) + 2));
 					s.addFutureAction(1, new RunnableAction()
 					{
+						@Override
 						public void run(GameLog e)
 						{
 							if (e.getEnable() && s.getLarva() < s.bases() * 19)

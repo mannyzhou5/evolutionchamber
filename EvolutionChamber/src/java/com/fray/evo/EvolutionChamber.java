@@ -57,7 +57,7 @@ public class EvolutionChamber
 	private boolean				killThreads				= false;
 	
 	public Double				bestScore				= new Double(0);
-	public Integer				stagnationLimit			= Optimization.inte(0);
+	public Integer				stagnationLimit			= new Integer(0);
 	public Double				waterMark				= new Double(0);
 	int							STAGNATION_LIMIT_MIN	= 200;
 	
@@ -320,7 +320,7 @@ public class EvolutionChamber
 	private void reset(final int threadIndex)
 	{
 		bestScores[threadIndex] = new Double(0);
-		evolutionsSinceDiscovery[threadIndex] = Optimization.inte(0);
+		evolutionsSinceDiscovery[threadIndex] = 0;
 	}
 
 	private String getOutput(final EcEvolver myFunc, IChromosome fittestChromosome, double fitnessValue)

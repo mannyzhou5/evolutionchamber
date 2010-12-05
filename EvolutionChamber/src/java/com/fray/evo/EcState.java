@@ -18,6 +18,7 @@ import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 import com.fray.evo.util.Upgrade;
 import com.fray.evo.util.UpgradeLibrary;
+import com.fray.evo.util.optimization.ArrayListInt;
 
 public class EcState implements Serializable
 {
@@ -30,9 +31,9 @@ public class EcState implements Serializable
 
 	public EcState()
 	{
-		hatcheryTimes.add(Optimization.inte(0));
-		larva.add(Optimization.inte(3));
-		larvaProduction.add(Optimization.inte(1));
+		hatcheryTimes.add(0);
+		larva.add(3);
+		larvaProduction.add(1);
 		units = new UnitCollection(RaceLibraries.getUnitLibrary(settings.race).getList(), settings.race);
 		// Building test = ZergLibrary.Lair;
 		// for(Unit unit: RaceLibraries.getUnitLibrary(settings.race).getList()){
@@ -54,14 +55,13 @@ public class EcState implements Serializable
 	public double				timeBonus			= 0.0;
 
 
-	public ArrayList<Integer>	larva				= new ArrayList<Integer>();
-	public ArrayList<Boolean>   hasQueen 			= new ArrayList<Boolean>();
-	public ArrayList<Integer>   larvaProduction 	= new ArrayList<Integer>();
-	public double					minerals			= 50;
-	public double					gas					= 0;
-	public double					supplyUsed			= 6;
-	public int						requiredBases		= 1;
-
+	public ArrayListInt			larva				= new ArrayListInt();
+	public ArrayList<Boolean>	hasQueen 			= new ArrayList<Boolean>();
+	public ArrayListInt			larvaProduction 	= new ArrayListInt();
+	public double				minerals			= 50;
+	public double				gas					= 0;
+	public double				supplyUsed			= 6;
+	public int					requiredBases		= 1;
 
 
 	public int					scoutDrone			= 0;
@@ -75,7 +75,7 @@ public class EcState implements Serializable
 	public int					maxOverDrones		= 50;
 	public int					overDroneEfficiency	= 80;
 
-	public List<Integer>		hatcheryTimes		= new ArrayList<Integer>();
+	public ArrayListInt			hatcheryTimes		= new ArrayListInt();
 
 	public ArrayList<EcState>	waypoints			= new ArrayList<EcState>();
 	public EcState				mergedWaypoints		= null;
@@ -141,9 +141,9 @@ public class EcState implements Serializable
 		s.actionLength = actionLength;
 		s.totalMineralsMined = totalMineralsMined;
 		
-		s.larva = (ArrayList<Integer>) larva.clone();
-		s.hasQueen = (ArrayList<Boolean>) hasQueen.clone();
-		s.larvaProduction = (ArrayList<Integer>) larvaProduction.clone();
+//		s.larva = (ArrayListInt) larva.clone();
+//		s.hasQueen = (ArrayList<Boolean>) hasQueen.clone();
+//		s.larvaProduction = (ArrayListInt) larvaProduction.clone();
 	}
 
 	public int supply()
@@ -922,8 +922,8 @@ public class EcState implements Serializable
 	public void setLarva(int base, int larva)
 	{
 		while (this.larva.size() <= base)
-			this.larva.add(Optimization.inte(0));
-		this.larva.set(base, Optimization.inte(larva));
+			this.larva.add(0);
+		this.larva.set(base, larva);
 	}
 
 	/**

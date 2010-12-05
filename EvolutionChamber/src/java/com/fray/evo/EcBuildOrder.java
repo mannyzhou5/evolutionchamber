@@ -60,7 +60,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public void tick(GameLog e)
 	{
 		executeLarvaProduction(e);
-		accumulateMaterials();
+		accumulateMaterials(e);
 		checkScoutingDrone(e);
 	}
 	
@@ -140,25 +140,21 @@ public final class EcBuildOrder extends EcState implements Serializable
 		setLarva(finalHighestLarvaHatch,getLarva(finalHighestLarvaHatch) - 1);
 	}
 
-	private void executeLarvaProduction(final GameLog e)
+	private void executeLarvaProduction(GameLog e)
 	{
-		for (int hatchIndex = 0;hatchIndex < larva.size();hatchIndex++)
-			executeLarvaProduction(e,hatchIndex);
-	}
-
-	private void executeLarvaProduction(final GameLog e, final int hatchIndex)
-	{
-		if (getLarva(hatchIndex) < 3)
-		{
-			if (larvaProduction.get(hatchIndex) == 15)
+		for (int hatchIndex = 0; hatchIndex < larva.size(); hatchIndex++) {
+			if (getLarva(hatchIndex) < 3)
 			{
-				if (e.getEnable())
-					e.printMessage(this, GameLog.MessageType.Obtained,
-							" @" + messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva") + " +1" );
-				setLarva(hatchIndex,getLarva(hatchIndex)+1);
-				larvaProduction.set(hatchIndex,0);
+				if (larvaProduction.get(hatchIndex) == 15)
+				{
+					if (e.getEnable())
+						e.printMessage(this, GameLog.MessageType.Obtained,
+								" @" + messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva") + " +1" );
+					setLarva(hatchIndex, getLarva(hatchIndex) + 1);
+					larvaProduction.set(hatchIndex, 0);
+				}
+				larvaProduction.set(hatchIndex, larvaProduction.get(hatchIndex) + 1);
 			}
-			larvaProduction.set(hatchIndex,Optimization.inte(larvaProduction.get(hatchIndex)+1));
 		}
 	}
 
@@ -331,7 +327,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 		return gasMined;
 	}
 
-	private void accumulateMaterials()
+	private void accumulateMaterials(GameLog e)
 	{
 		double mins = mineMinerals();
 		minerals += mins;
