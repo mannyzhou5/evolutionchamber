@@ -20,20 +20,14 @@ public final class EcActionBuildHive extends EcActionBuildBuilding implements Se
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{		
-		s.consumeHatch((Building)buildable.getConsumes(),this);
+		s.makeBuildingBusy((Building)buildable.getConsumes(),this);
 	}
 
 	@Override
 	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
-            s.unconsumeHatch(this);
+            s.makeBuildingNotBusy(this);
             s.RemoveBuilding(BuildingLibrary.Lair);
 		s.AddBuilding((Building) buildable);
-	}
-
-	@Override
-	public boolean isPossible(EcBuildOrder s)
-	{
-		return s.doesNonBusyReallyExist((Building)buildable.getConsumes()) && super.isPossible(s);
 	}
 }

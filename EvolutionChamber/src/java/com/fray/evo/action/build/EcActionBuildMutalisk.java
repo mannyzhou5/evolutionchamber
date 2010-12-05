@@ -12,12 +12,4 @@ public final class EcActionBuildMutalisk extends EcActionBuildUnit implements Se
 		super(UnitLibrary.Mutalisk);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getSpire() == 0 && s.evolvingSpires == 0 && s.getGreaterSpire() == 0)
-			return true;
-		return false;
-	}
-
 }

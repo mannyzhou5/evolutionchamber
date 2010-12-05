@@ -18,24 +18,14 @@ public final class EcActionBuildLair extends EcActionBuildBuilding implements Se
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{
-		s.consumeHatch((Building)buildable.getConsumes(),this);
+		s.makeBuildingBusy((Building)buildable.getConsumes(),this);
 	}
 
 	@Override
 	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
-            s.unconsumeHatch(this);
+            s.makeBuildingNotBusy(this);
             s.RemoveBuilding(BuildingLibrary.Hatchery);
 		s.AddBuilding((Building) buildable);
 	}
-
-	@Override
-	public boolean isPossible(EcBuildOrder s)
-	{
-		if (!s.doesNonBusyReallyExist((Building)buildable.getConsumes()))
-			return false;
-		return super.isPossible(s);
-	}
-
-
 }

@@ -13,19 +13,6 @@ public final class EcActionBuildBroodLord extends EcActionBuildUnit implements S
 		super(UnitLibrary.Broodlord);
 	}
 
-    @Override
-	protected void preExecute(final EcBuildOrder s)
-	{
-		s.RemoveUnits((Unit)getConsumes(), 1);
-	}
-	@Override
-	public boolean isPossible(EcBuildOrder s)
-	{
-		if (s.getCorruptors() < 1)
-			return false;
-		return isPossibleResources(s);
-	}
-
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{

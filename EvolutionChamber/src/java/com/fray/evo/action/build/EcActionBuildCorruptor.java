@@ -12,12 +12,4 @@ public final class EcActionBuildCorruptor extends EcActionBuildUnit implements S
 		super(UnitLibrary.Corruptor);
 	}
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-		if (s.getSpire() == 0 && s.getGreaterSpire() == 0 && s.evolvingSpires == 0)
-			return true;
-		return false;
-	}
-
 }

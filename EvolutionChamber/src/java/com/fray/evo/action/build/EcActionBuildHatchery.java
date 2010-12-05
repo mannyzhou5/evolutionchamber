@@ -55,7 +55,7 @@ public final class EcActionBuildHatchery extends EcActionBuildBuilding implement
 	{
 		if (s.supplyUsed < s.settings.minimumHatcherySupply)
 			return true;
-		return false;
+		return super.isPossible(s);
 	}
 
 }

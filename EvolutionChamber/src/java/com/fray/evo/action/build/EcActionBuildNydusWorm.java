@@ -27,13 +27,4 @@ public final class EcActionBuildNydusWorm extends EcActionBuildBuilding implemen
 		s.AddBuilding((Building)buildable);
 		s.nydusNetworkInUse -= 1;
 	}
-
-	@Override
-	public boolean isPossible(EcBuildOrder s)
-	{
-		if (s.nydusNetworkInUse == s.getNydusNetwork())
-			return false;
-		return super.isPossible(s);
-	}
-
 }

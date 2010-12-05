@@ -20,7 +20,7 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
     public void execute(final EcBuildOrder s, final GameLog e) {
         s.minerals -= getMinerals();
         s.gas -= getGas();
-        s.consumeHatch(upgrade.getBuiltIn(),this);
+        s.makeBuildingBusy(upgrade.getBuiltIn(),this);
         s.addFutureAction(getTime(), new RunnableAction() {
 
             @Override
@@ -51,7 +51,7 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
     }
 
     public void afterTime(EcBuildOrder s, GameLog e) {
-        s.unconsumeHatch(this);
+        s.makeBuildingNotBusy(this);
         superAfterTime(s, e);
     }
 

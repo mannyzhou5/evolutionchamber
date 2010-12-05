@@ -13,12 +13,6 @@ public final class EcActionBuildOverseer extends EcActionBuildUnit implements Se
 	}
 
 
-    @Override
-	protected void preExecute(EcBuildOrder s)
-	{
-		s.RemoveUnits(UnitLibrary.Overlord, 1);
-	}
-
 	@Override
 	public boolean isInvalid(EcBuildOrder s)
 	{
@@ -26,14 +20,4 @@ public final class EcActionBuildOverseer extends EcActionBuildUnit implements Se
 			return true;
 		return false;
 	}
-
-	@Override
-	public boolean isPossible(EcBuildOrder s)
-	{
-		if (s.getOverlords() < 1)
-			return false;
-		return super.isPossible(s);
-	}
-
-
 }

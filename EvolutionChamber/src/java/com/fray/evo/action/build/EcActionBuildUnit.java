@@ -68,44 +68,52 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
         return true;
 	}
 
-	@Override
-	public boolean isPossible(EcBuildOrder s)
-	{
-		return isPossibleResources(s);
-	}
-	
+    @Override
+    public boolean isPossible(EcBuildOrder s) {
+        Buildable consumes = getConsumes();
+        if (consumes != UnitLibrary.Larva) {
+            if (consumes instanceof Unit && s.getUnitCount((Unit) consumes) < 1) {
+                return false;
+            }
+        }
+        return isPossibleResources(s);
+    }
+
 	protected void postExecute(EcBuildOrder s, GameLog e){
             s.AddUnits((Unit) buildable, 1);
         }
 
-	protected void preExecute(EcBuildOrder s){}
+	protected void preExecute(EcBuildOrder s){
+            if(getConsumes() != UnitLibrary.Larva){
+                s.RemoveUnits((Unit)getConsumes(), 1);
+            }
+        }
 
-	@Override
-	public boolean isInvalid(EcBuildOrder s)
-	{
-        if(!s.hasSupply(((Unit)buildable).getSupply())){
+    @Override
+    public boolean isInvalid(EcBuildOrder s) {
+        if (!s.hasSupply(((Unit) buildable).getSupply())) {
             return true;
         }
 
-        ArrayList<Buildable> reqs = ((Unit)buildable).getRequirement();
-        for(int i = 0; i < reqs.size(); ++i) {
-        	Buildable req = reqs.get(i);
-            if(req.getClass() == Building.class){
-                if(s.getBuildingCount((Building)req) < 1){
+        ArrayList<Buildable> reqs = ((Unit) buildable).getRequirement();
+        for (int i = 0; i < reqs.size(); ++i) {
+            Buildable req = reqs.get(i);
+            if (req.getClass() == Building.class) {
+                if (s.isBuilding((Building)req)) {
                     return true;
                 }
             }
-            if(req.getClass() == Unit.class){
-                if(s.getUnitCount((Unit)req) < 1){
+            if (req.getClass() == Unit.class) {
+                if (s.getUnitCount((Unit) req) < 1) {
                     return true;
                 }
             }
-            if(req.getClass() == Upgrade.class){
-                if(!s.isUpgrade((Upgrade)req)){
+            if (req.getClass() == Upgrade.class) {
+                if (!s.isUpgrade((Upgrade) req)) {
                     return true;
                 }
             }
         }
         return false;
-	}
+    }
 }

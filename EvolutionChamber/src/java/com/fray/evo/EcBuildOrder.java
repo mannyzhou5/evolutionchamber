@@ -24,7 +24,6 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public int				dronesOnMinerals	= 0;
 	public int				dronesOnGas			= 0;
 	public int				evolvingSpires		= 0;
-	public int				spiresInUse			= 0;
 	public int				evolutionChambersInUse;
 	public HashMap<EcAction,Building>       actionBusyIn            = new HashMap<EcAction, Building>();
 	public HashMap<Building,ArrayList<EcAction>> madeBusyBy;
@@ -351,14 +350,14 @@ public final class EcBuildOrder extends EcState implements Serializable
 		return Math.min(bases() * 2, getGasExtractors());
 	}
 
-	public void consumeHatch(Building consumes,EcAction action)
+	public void makeBuildingBusy(Building consumes,EcAction action)
 	{
             //ArrayList<EcAction> acc = madeBusyBy.get(consumes);
             if(madeBusyBy.get(consumes).size() >= buildings.get(consumes)){
                 if(consumes == BuildingLibrary.Hatchery){
-                    consumeHatch(BuildingLibrary.Lair, action);
+                    makeBuildingBusy(BuildingLibrary.Lair, action);
                 }else if(consumes == BuildingLibrary.Lair){
-                    consumeHatch(BuildingLibrary.Hive, action);
+                    makeBuildingBusy(BuildingLibrary.Hive, action);
                 }else{
                     throw new RuntimeException("should not have been called with too few not busy main buildings");
                 }
@@ -368,7 +367,7 @@ public final class EcBuildOrder extends EcState implements Serializable
             }
 	}
 
-    public void unconsumeHatch(EcAction action) {
+    public void makeBuildingNotBusy(EcAction action) {
         Building busyBuilding = actionBusyIn.get(action);
         madeBusyBy.get(busyBuilding).remove(action);
         actionBusyIn.remove(action);
@@ -380,6 +379,8 @@ public final class EcBuildOrder extends EcState implements Serializable
                 return doesNonBusyExist(BuildingLibrary.Lair);
             }else if(building == BuildingLibrary.Lair){
                 return doesNonBusyExist(BuildingLibrary.Hive);
+            }else if(building == BuildingLibrary.Spire){
+                return doesNonBusyExist(BuildingLibrary.GreaterSpire);
             }
             return false;
         }else{

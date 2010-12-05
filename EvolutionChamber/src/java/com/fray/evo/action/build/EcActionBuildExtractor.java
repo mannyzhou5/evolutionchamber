@@ -42,7 +42,7 @@ public final class EcActionBuildExtractor extends EcActionBuildBuilding implemen
 			return true;
 		if (s.supplyUsed < s.settings.minimumExtractorSupply)
 			return true;
-		return false;
+		return super.isPossible(s);
 	}
 
 }

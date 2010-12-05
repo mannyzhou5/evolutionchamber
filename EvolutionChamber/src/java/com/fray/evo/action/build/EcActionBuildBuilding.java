@@ -12,6 +12,7 @@ import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 import com.fray.evo.util.Upgrade;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class EcActionBuildBuilding extends EcActionBuild implements Serializable
 {
@@ -50,14 +51,19 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 
 	}
 
-	@Override
-	public boolean isPossible(EcBuildOrder s)
-	{
-		if (getConsumes() == UnitLibrary.Drone)
-			if (s.getDrones() < 1)
-				return false;
-		return isPossibleResources(s);
-	}
+    @Override
+    public boolean isPossible(EcBuildOrder s) {
+        if (getConsumes() == UnitLibrary.Drone) {
+            if (s.getDrones() < 1) {
+                return false;
+            }
+        } else if (getConsumes() instanceof Building) {
+            if(!s.doesNonBusyReallyExist((Building)buildable.getConsumes())){
+                return false;
+            }
+        }
+        return isPossibleResources(s);
+    }
 
 	protected void postExecute(EcBuildOrder s, GameLog e){
             s.AddBuilding((Building) buildable);

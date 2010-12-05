@@ -21,13 +21,13 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{
-		s.consumeHatch(((Unit)buildable).getBuiltFrom(),this);
+		s.makeBuildingBusy(((Unit)buildable).getBuiltFrom(),this);
 	}
 
 	@Override
 	protected void postExecute(final EcBuildOrder s, final GameLog e)
 	{
-            s.unconsumeHatch(this);
+            s.makeBuildingNotBusy(this);
 		s.AddUnits((Unit) buildable, 1);
 		if (s.larva.size() > s.hasQueen.size())
 		{
