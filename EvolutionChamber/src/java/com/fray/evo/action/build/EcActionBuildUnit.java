@@ -7,6 +7,8 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.util.Buildable;
 import com.fray.evo.util.Building;
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 import com.fray.evo.util.Upgrade;
@@ -24,7 +26,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 	}
 
 	@Override
-	public void execute(final EcBuildOrder s, final EcEvolver e)
+	public void execute(final EcBuildOrder s, final GameLog e)
 	{
 		s.minerals -= getMinerals();
 		s.gas -= getGas();
@@ -32,10 +34,10 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 		if (consumeLarva)
 			s.consumeLarva(e);
 		preExecute(s);
-		s.addFutureAction(getTime(), new Runnable()
+		s.addFutureAction(getTime(), new RunnableAction()
 		{
 			@Override
-			public void run()
+			public void run(GameLog e)
 			{
 				obtainOne(s, e);
 				postExecute(s,e);
@@ -72,7 +74,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 		return isPossibleResources(s);
 	}
 	
-	protected void postExecute(EcBuildOrder s, EcEvolver e){
+	protected void postExecute(EcBuildOrder s, GameLog e){
             s.AddUnits((Unit) buildable, 1);
         }
 

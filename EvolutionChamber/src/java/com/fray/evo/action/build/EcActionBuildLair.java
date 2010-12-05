@@ -6,6 +6,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.GameLog;
 
 public final class EcActionBuildLair extends EcActionBuildBuilding implements Serializable
 {
@@ -21,7 +22,7 @@ public final class EcActionBuildLair extends EcActionBuildBuilding implements Se
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
+	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
             s.unconsumeHatch(this);
             s.RemoveBuilding(BuildingLibrary.Hatchery);

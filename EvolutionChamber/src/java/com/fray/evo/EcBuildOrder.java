@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import com.fray.evo.action.EcAction;
 import com.fray.evo.util.ActionList;
+
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
 import com.fray.evo.util.Race;
@@ -38,9 +41,9 @@ public final class EcBuildOrder extends EcState implements Serializable
         for(int i = 0; i < buildingList.size(); i++){
             madeBusyBy.put(buildingList.get(i), new ArrayList<EcAction>());
         }
-        addFutureAction(5, new Runnable(){
+        addFutureAction(5, new RunnableAction(){
             @Override
-            public void run()
+            public void run(GameLog e)
             {
                     dronesOnMinerals +=6;
                     dronesGoingOnMinerals -=6;
@@ -54,7 +57,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 		importDestination.assign(this);
 	}
 
-	public void tick(EcEvolver e)
+	public void tick(GameLog e)
 	{
 		executeLarvaProduction(e);
 		accumulateMaterials();
@@ -100,7 +103,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 		actions.add(ecActionBuildDrone);
 	}
 
-	public void addFutureAction(int time, Runnable runnable)
+	public void addFutureAction(int time, RunnableAction runnable)
 	{
 		time = seconds + time;
 		if (futureAction == null)
@@ -109,9 +112,9 @@ public final class EcBuildOrder extends EcState implements Serializable
 		actionLength++;
 	}
 
-	public Runnable getFutureAction(int time)
+	public RunnableAction getFutureAction(int time)
 	{
-		Runnable result = futureAction.get(time);
+		RunnableAction result = futureAction.get(time);
 		return result;
 	}
 
@@ -120,10 +123,8 @@ public final class EcBuildOrder extends EcState implements Serializable
 		return futureAction.hasFutureActions();
 	}
 
-	public void consumeLarva(final EcEvolver e)
+	public void consumeLarva(final GameLog e)
 	{
-		final EcBuildOrder t = this;
-		
 		int highestLarvaHatch = 0;
 		int highestLarva = 0;
 		
@@ -138,20 +139,21 @@ public final class EcBuildOrder extends EcState implements Serializable
 		setLarva(finalHighestLarvaHatch,getLarva(finalHighestLarvaHatch) - 1);
 	}
 
-	private void executeLarvaProduction(final EcEvolver e)
+	private void executeLarvaProduction(final GameLog e)
 	{
 		for (int hatchIndex = 0;hatchIndex < larva.size();hatchIndex++)
 			executeLarvaProduction(e,hatchIndex);
 	}
 	
-	private void executeLarvaProduction(final EcEvolver e, final int hatchIndex)
+	private void executeLarvaProduction(final GameLog e, final int hatchIndex)
 	{
 		if (getLarva(hatchIndex) < 3)
 		{
 			if (larvaProduction.get(hatchIndex) == 15)
 			{
-				if (e.debug)
-					e.obtained(this, " @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva")+" +1");
+				if (e.getEnable())
+					e.printMessage(this, GameLog.MessageType.Obtained,
+							" @" + messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva") + " +1" );
 				setLarva(hatchIndex,getLarva(hatchIndex)+1);
 				larvaProduction.set(hatchIndex,0);
 			}

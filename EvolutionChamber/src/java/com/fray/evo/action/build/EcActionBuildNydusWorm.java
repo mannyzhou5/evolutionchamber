@@ -6,6 +6,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.GameLog;
 
 public final class EcActionBuildNydusWorm extends EcActionBuildBuilding implements Serializable
 {
@@ -21,7 +22,7 @@ public final class EcActionBuildNydusWorm extends EcActionBuildBuilding implemen
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
+	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
 		s.AddBuilding((Building)buildable);
 		s.nydusNetworkInUse -= 1;

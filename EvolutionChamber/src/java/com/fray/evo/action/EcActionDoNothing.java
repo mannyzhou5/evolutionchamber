@@ -2,14 +2,14 @@ package com.fray.evo.action;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
 
 public final class EcActionDoNothing extends EcAction
 {
 
 	@Override
-	public void execute(EcBuildOrder s, EcEvolver e)
+	public void execute(EcBuildOrder s, GameLog e)
 	{
-		
 	}
 
 	@Override

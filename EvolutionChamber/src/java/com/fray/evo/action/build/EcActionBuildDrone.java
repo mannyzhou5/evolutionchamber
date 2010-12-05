@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 
@@ -15,21 +17,21 @@ public final class EcActionBuildDrone extends EcActionBuildUnit implements Seria
 	}
 
 	@Override
-	protected void postExecute(final EcBuildOrder s, final EcEvolver e)
+	protected void postExecute(final EcBuildOrder s, final GameLog e)
 	{
 		s.AddUnits((Unit) buildable, 1);
 		s.dronesGoingOnMinerals += 1;
-		s.addFutureAction(2, new Runnable()
+		s.addFutureAction(2, new RunnableAction()
 		{
 			@Override
-			public void run()
+			public void run(GameLog e)
 			{
-				if (s.droneIsScouting == false && s.getDrones() >= e.getDestination().scoutDrone
-						&& e.getDestination().scoutDrone != 0)
+				if (s.droneIsScouting == false && s.getDrones() >= s.scoutDrone
+						&& s.scoutDrone != 0)
 				{
 					s.droneIsScouting = true;
-					if (e.debug)
-						e.scout(s, " +1 Scouting Drone");
+					if (e.getEnable())
+						e.printMessage(s, GameLog.MessageType.Scout, " +1 Scouting Drone");
 				}
 				else
 				{

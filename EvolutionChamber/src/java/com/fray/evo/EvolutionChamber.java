@@ -328,10 +328,10 @@ public class EvolutionChamber
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(byteArrayOutputStream);
 		if (reportInterface != null)
-			myFunc.log = ps;
+			myFunc.setLoggingStream(ps);
 
 		displayBuildOrder(myFunc, fittestChromosome);
-		myFunc.log.println(new Date() + ": " + fitnessValue);
+		ps.println(new Date() + ": " + fitnessValue);
 		String results = new String(byteArrayOutputStream.toByteArray());
 		return results;
 	}
@@ -391,9 +391,9 @@ public class EvolutionChamber
 
 	private static void displayBuildOrder(final EcEvolver myFunc, IChromosome fittestChromosome)
 	{
-		myFunc.debug = true;
+		myFunc.enableLogging(true);
 		myFunc.evaluateGetBuildOrder(fittestChromosome);
-		myFunc.debug = false;
+		myFunc.enableLogging(false);
 	}
 
 	private synchronized void loadOldBuildOrders(Genotype population, final Configuration conf, final EcEvolver myFunc)

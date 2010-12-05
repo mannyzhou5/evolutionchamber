@@ -13,13 +13,13 @@ public final class ActionList {
 		pq = new PriorityQueue<TWrapper>( 11, new Comparitor() );
 	}
 	
-	public void put( int i, Runnable r )
+	public void put( int i, RunnableAction r )
 	{
 		pq.add( new TWrapper( i, r ) );
 		numLeft++;
 	}
 	
-	public Runnable get( int i )
+	public RunnableAction get( int i )
 	{
 		if( pq.peek() != null && pq.peek().time == i ) {
 			numLeft--;
@@ -35,9 +35,9 @@ public final class ActionList {
 
 	private class TWrapper {
 		public int time;
-		public Runnable object;
+		public RunnableAction object;
 		
-		public TWrapper( int i, Runnable r ) {
+		public TWrapper( int i, RunnableAction r ) {
 			this.time = i;
 			this.object = r;
 		}

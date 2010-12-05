@@ -6,11 +6,13 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 
 public final class EcActionMineMineral extends EcAction implements Serializable
 {
 	@Override
-	public void execute(final EcBuildOrder s, final EcEvolver e)
+	public void execute(final EcBuildOrder s, final GameLog e)
 	{
 		if (s.settings.pullThreeWorkersOnly) 
 		{
@@ -22,22 +24,23 @@ public final class EcActionMineMineral extends EcAction implements Serializable
 			s.dronesGoingOnMinerals += 1;
 			s.dronesOnGas -= 1;
 		}
-		s.addFutureAction(2, new Runnable()
+		s.addFutureAction(2, new RunnableAction()
 		{
 			@Override
-			public void run()
+			public void run(GameLog e)
 			{
 				if (s.settings.pullThreeWorkersOnly) 
 				{
-					if (e.debug)
-						e.mining(s," "+messages.getString("3onminerals"));
+					if (e.getEnable())
+						e.printMessage(s, GameLog.MessageType.Mining,
+								" " + messages.getString("3onminerals"));
 					s.dronesGoingOnMinerals -= 3;
 					s.dronesOnMinerals += 3;
 				}
 				else
 				{
-					if (e.debug)
-						e.mining(s," "+messages.getString("1onminerals"));
+					e.printMessage(s, GameLog.MessageType.Mining,
+							" " + messages.getString("1onminerals"));
 					s.dronesGoingOnMinerals--;
 					s.dronesOnMinerals++;
 				}

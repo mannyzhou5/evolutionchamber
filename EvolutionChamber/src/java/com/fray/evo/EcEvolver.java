@@ -77,6 +77,7 @@ import com.fray.evo.action.upgrade.EcActionUpgradePneumatizedCarapace;
 import com.fray.evo.action.upgrade.EcActionUpgradeTunnelingClaws;
 import com.fray.evo.util.EcUtil;
 import com.fray.evo.util.EcYabotEncoder;
+import com.fray.evo.util.GameLog;
 
 public class EcEvolver extends FitnessFunction
 {
@@ -84,9 +85,9 @@ public class EcEvolver extends FitnessFunction
 	EcState								source;
 	private EcState						destination;
 	private EcState						mergedDestination;
-	public boolean						debug		= false;
-	public static long evaluations = 0;
-	public static long cachehits = 0;
+	private GameLog						log;
+	public static long					evaluations	= 0;
+	public static long					cachehits	= 0;
 	
 	/**
 	 * Maps Evolution Chamber classes with the appropriate action class of the YABOT encoder.
@@ -158,6 +159,7 @@ public class EcEvolver extends FitnessFunction
 		this.source = source;
 		this.destination = destination;
 		this.mergedDestination = destination.getMergedState();
+		this.log = new GameLog();
 	}
 
 	protected String getAlleleAsString(IChromosome c)
@@ -242,7 +244,7 @@ public class EcEvolver extends FitnessFunction
 			{
 				continue;
 			}
-			while (!a.canExecute(s,this))
+			while (!a.canExecute(s, log))
 			{
 				if (s.seconds >= s.targetSeconds || destination.waypointMissed(s))
 				{
@@ -260,7 +262,7 @@ public class EcEvolver extends FitnessFunction
 				sb.append((int)s.supplyUsed + "  " + a.toBuildOrderString(s) + "\tM:" + (int)s.minerals + "\tG:" + (int)s.gas + "\n");	
 			}
 			
-			a.execute(s, this);
+			a.execute(s, log);
 		}
 
 		return messages.getString("RanOutOfThingsToDo");
@@ -299,7 +301,7 @@ public class EcEvolver extends FitnessFunction
 			{
 				continue;
 			}
-			while (!a.canExecute(s,this))
+			while (!a.canExecute(s, log))
 			{					
 				if (s.seconds >= s.targetSeconds || destination.waypointMissed(s))
 				{
@@ -358,7 +360,7 @@ public class EcEvolver extends FitnessFunction
 				}
 			}
 			
-			a.execute(s, this);
+			a.execute(s, log);
 		}
 
 		return messages.getString("RanOutOfThingsToDo")+"\n"+EcUtil.toString(warnings);
@@ -393,8 +395,6 @@ public class EcEvolver extends FitnessFunction
 		return s;
 	}
 
-	public PrintStream	log	= System.out;
-
 	public EcBuildOrder doEvaluate(EcBuildOrder s)
 	{
 		int i = 0;
@@ -408,90 +408,41 @@ public class EcEvolver extends FitnessFunction
 				s.invalidActions++;
 				continue;
 			}
-			while (!a.canExecute(s,this))
+			while (!a.canExecute(s, log))
 			{
 				if (s.seconds > s.targetSeconds || destination.waypointMissed(s))
 				{
 					if (s.settings.overDrone && s.getDrones() < s.getOverDrones(s))
-					{
-						if (debug)
-						{
-							log.print("-------"+messages.getString("Goal")+"-------");
-							log.println(mergedDestination.toUnitsOnlyString());
-							log.println(messages.getString("FailedToHaveRequired")+" " + s.getOverDrones(s) + " "+messages.getString("waypoint.drones"));
-							log.println(s.toCompleteString());
-						}
-					}
+						log.printFailure( GameLog.FailReason.OverDrone, mergedDestination, s );
 					else
-					{
-						if (debug)
-						{
-							log.print("-------"+messages.getString("Goal")+"-------");
-							log.println(mergedDestination.toUnitsOnlyString());
-							log.println(messages.getString("FailedToMeetWaypoint") + a);
-							log.println(s.toCompleteString());
-						}
-					}
+						log.printFailure( GameLog.FailReason.Waypoint, mergedDestination, s );
 					return s;
 				}
-				if (debug)
-				{
-					int waypointIndex = destination.getCurrWaypointIndex(s);
-					if (waypointIndex != -1)
-						if (destination.getWaypointActions(waypointIndex) > 0) {
-							log.println("---"+messages.getString("Waypoint")+" " + waypointIndex + "---");
-							log.println(s.toCompleteString());
-							log.println("----------------");
-						}
-				}
+				int waypointIndex = destination.getCurrWaypointIndex(s);
+				if (waypointIndex != -1 && destination.getWaypointActions(waypointIndex) > 0)
+					log.printWaypoint( waypointIndex, s );
 				if (destination.getMergedWaypoints().isSatisfied(s))
-				{ 
-					if (debug)
-					{
-						log.println(messages.getString("Satisfied"));
-						log.println(messages.getString("NumberOfActions")+" " + (i - s.invalidActions));
-
-						log.print("-------"+messages.getString("Goal")+"-------");
-						log.println(mergedDestination.toUnitsOnlyString());
-						log.println("---"+messages.getString("FinalOutput")+"---");
-						log.println(s.toCompleteString());
-						log.println("------------------");
-					}
+				{
+					log.printSatisfied(i - s.invalidActions, s, mergedDestination);
 					return s;
 				}
 			}
 			
-			if (debug && !(a instanceof EcActionWait))
-				log.println(s.toShortString() + "\t" + a);
+			if (!(a instanceof EcActionWait))
+				log.printAction(s, a);
 
-			a.execute(s, this);
+			a.execute(s, log);
 		}
-		if (debug)
-		{
-			log.println(messages.getString("OutOfActions"));
-			log.println(s.toCompleteString());
-		}
+		log.printFailure(GameLog.FailReason.OutOfActions, s, null);
 		return s;
 	}
-
-	public void obtained(EcBuildOrder s, String string)
-	{
-		log.println("@" + s.timestamp() + "\t"+messages.getString("Spawned")+":\t" + string.trim());
+	
+	public void enableLogging (boolean log) {
+		this.log.setEnable(log);
 	}
-
-	public void evolved(EcBuildOrder s, String string)
-	{
-		log.println("@" + s.timestamp() + "\t"+messages.getString("Evolved")+":\t" + string.trim());
-	}
-
-	public void mining(EcBuildOrder s, String string)
-	{
-		log.println("@" + s.timestamp() + "\t"+messages.getString("Mining")+": \t" + string.trim());
-	}
-
-	public void scout(EcBuildOrder s, String string)
-	{
-		log.println("@" + s.timestamp() + "\t"+messages.getString("Scout")+": \t" + string.trim());
+	
+	public void setLoggingStream (PrintStream stream) {
+		this.log.setPrintStream(stream);
 	}
 
 	public EcState getDestination()

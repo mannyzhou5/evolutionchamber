@@ -7,6 +7,7 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.util.Buildable;
+import com.fray.evo.util.GameLog;
 
 public abstract class EcActionBuild extends EcAction implements Serializable {
 
@@ -26,10 +27,10 @@ public abstract class EcActionBuild extends EcAction implements Serializable {
         return true;
     }
 
-    protected void obtainOne(final EcBuildOrder s, EcEvolver e) {
-        if (e.debug) {
-            e.obtained(s, " " + messages.getString(getName().replace(" ", ".")) + "+1");
-        }
+    protected void obtainOne(final EcBuildOrder s, GameLog e) {
+    	if (e.getEnable())
+			e.printMessage(s, GameLog.MessageType.Obtained,
+					" " + messages.getString(getName().replace(" ", ".")) + "+1");
     }
 
     public int getMinerals() {

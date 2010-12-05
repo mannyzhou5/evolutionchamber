@@ -4,25 +4,28 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.UnitLibrary;
 
 public final class EcActionExtractorTrick extends EcAction implements Serializable
 {
 	@Override
-	public void execute(final EcBuildOrder s, final EcEvolver e)
+	public void execute(final EcBuildOrder s, final GameLog e)
 	{
 		s.minerals -= 25;
 		s.RemoveUnits(UnitLibrary.Drone, 1);
 		s.dronesOnMinerals -= 1;
 		s.supplyUsed -= 1;
 		s.extractorsBuilding++;
-		s.addFutureAction(2, new Runnable()
+		s.addFutureAction(2, new RunnableAction()
 		{
 			@Override
-			public void run()
+			public void run(GameLog e)
 			{
-				if (e.debug)
-					e.obtained(s," "+messages.getString("finished.extractortrick"));
+				if (e.getEnable())
+					e.printMessage(s, GameLog.MessageType.Obtained,
+							" " + messages.getString("finished.extractortrick"));
 				s.minerals += 19;
 				s.AddUnits(UnitLibrary.Drone, 1);
 				s.dronesOnMinerals += 1;

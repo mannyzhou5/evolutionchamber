@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
 import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 
@@ -16,17 +17,17 @@ public final class EcActionBuildZergling extends EcActionBuildUnit implements Se
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
+	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
 		s.AddUnits((Unit) buildable, 2);
-
 	}
 
 	@Override
-	protected void obtainOne(EcBuildOrder s, EcEvolver e)
+	protected void obtainOne(EcBuildOrder s, GameLog e)
 	{
-		if (e.debug)
-			e.obtained(s, " " + messages.getString(getName()) + "+2");
+		if (e.getEnable())
+			e.printMessage(s, GameLog.MessageType.Obtained,
+					" " + messages.getString(getName()) + "+2");
 	}
 
 	@Override

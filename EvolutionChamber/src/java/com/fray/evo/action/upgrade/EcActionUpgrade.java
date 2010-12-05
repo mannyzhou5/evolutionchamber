@@ -16,16 +16,16 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
     }
 
     @Override
-    public void execute(final EcBuildOrder s, final EcEvolver e) {
+    public void execute(final EcBuildOrder s, final GameLog e) {
         s.minerals -= getMinerals();
         s.gas -= getGas();
-        s.addFutureAction(getTime(), new Runnable() {
+        s.addFutureAction(getTime(), new RunnableAction() {
 
             @Override
-            public void run() {
-                if (e.debug) {
-                    e.evolved(s, messages.getString(getName().replace(" ",".")));
-                }
+            public void run(GameLog e) {
+            	if (e.getEnable())
+	            	e.printMessage(s, GameLog.MessageType.Evolved
+	            			, messages.getString(getName().replace(" ",".")));
                 afterTime(s, e);
             }
         });
@@ -48,8 +48,8 @@ public abstract class EcActionUpgrade extends EcAction implements Serializable {
         this.upgrade = upgrade;
     }
 
-    public abstract void afterTime(EcBuildOrder s, EcEvolver e);
-    protected void superAfterTime(EcBuildOrder s, EcEvolver e){
+    public abstract void afterTime(EcBuildOrder s, GameLog e);
+    protected void superAfterTime(EcBuildOrder s, GameLog e){
         s.AddUpgrade(upgrade);
     };
 

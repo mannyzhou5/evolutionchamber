@@ -2,6 +2,7 @@ package com.fray.evo.action.upgrade;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
 import com.fray.evo.util.UpgradeLibrary;
 
 public final class EcActionUpgradeTunnelingClaws extends EcActionUpgrade
@@ -13,7 +14,7 @@ public final class EcActionUpgradeTunnelingClaws extends EcActionUpgrade
 	}
 
 	@Override
-	public void execute(EcBuildOrder s, EcEvolver e)
+	public void execute(EcBuildOrder s, GameLog e)
 	{
 		// TODO Auto-generated method stub
 		super.execute(s, e);
@@ -31,7 +32,7 @@ public final class EcActionUpgradeTunnelingClaws extends EcActionUpgrade
 	}
 
 	@Override
-	public void afterTime(EcBuildOrder s, EcEvolver e)
+	public void afterTime(EcBuildOrder s, GameLog e)
 	{
 		superAfterTime(s, e);
 		s.roachWarrensInUse--;

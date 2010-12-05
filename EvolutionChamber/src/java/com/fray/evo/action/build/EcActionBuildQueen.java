@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.Unit;
 import com.fray.evo.util.UnitLibrary;
 
@@ -23,7 +25,7 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 	}
 
 	@Override
-	protected void postExecute(final EcBuildOrder s, final EcEvolver e)
+	protected void postExecute(final EcBuildOrder s, final GameLog e)
 	{
             s.unconsumeHatch(this);
 		s.AddUnits((Unit) buildable, 1);
@@ -32,10 +34,10 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 			spawnLarva(s, e);
 		}
 		else
-			s.addFutureAction(5, new Runnable()
+			s.addFutureAction(5, new RunnableAction()
 			{
 				@Override
-				public void run()
+				public void run(GameLog e)
 				{
 					if (s.larva.size() > s.hasQueen.size())
 						spawnLarva(s, e);
@@ -45,7 +47,7 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 			});
 	}
 
-	private void spawnLarva(final EcBuildOrder s, final EcEvolver e)
+	private void spawnLarva(final EcBuildOrder s, final GameLog e)
 	{
 		int hatchWithoutQueen = 0;
 		if (s.larva.size() > s.hasQueen.size())
@@ -54,24 +56,26 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 			s.hasQueen.add(true);
 
 			final int hatchIndex = hatchWithoutQueen;
-			s.addFutureAction(40, new Runnable()
+			s.addFutureAction(40, new RunnableAction()
 			{
 				@Override
-				public void run()
+				public void run(GameLog e)
 				{
-					if (e.debug && s.getLarva() < s.bases() * 19)
-						e.obtained(s,  " @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
+					if (e.getEnable() && s.getLarva() < s.bases() * 19)
+						e.printMessage(s, GameLog.MessageType.Obtained,
+								" @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
 								+ messages.getString("Larva")
 								+ " +"
 								+ (Math.min(19, s.getLarva(hatchIndex) + 2) - s
 										.getLarva(hatchIndex)));
 					s.setLarva(hatchIndex, Math.min(19, s.getLarva(hatchIndex) + 2));
-					s.addFutureAction(1, new Runnable()
+					s.addFutureAction(1, new RunnableAction()
 					{
-						public void run()
+						public void run(GameLog e)
 						{
-							if (e.debug && s.getLarva() < s.bases() * 19)
-								e.obtained(s,  " @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
+							if (e.getEnable() && s.getLarva() < s.bases() * 19)
+								e.printMessage(s, GameLog.MessageType.Obtained,
+										" @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
 										+ messages.getString("Larva")
 										+ " +"
 										+ (Math.min(19, s.getLarva(hatchIndex) + 2) - s

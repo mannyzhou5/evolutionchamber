@@ -6,6 +6,8 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.Optimization;
 import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.UnitLibrary;
 
 public final class EcActionBuildHatchery extends EcActionBuildBuilding implements Serializable
@@ -19,19 +21,19 @@ public final class EcActionBuildHatchery extends EcActionBuildBuilding implement
 	protected void preExecute(EcBuildOrder s)
 	{
 		s.hatcheriesBuilding += 1;
-		s.addFutureAction((int)(getTime() - BuildingLibrary.Extractor.getTime()), new Runnable()
+		s.addFutureAction((int)(getTime() - BuildingLibrary.Extractor.getTime()), new RunnableAction()
 		{
 			@Override
-			public void run()
+			public void run(GameLog e)
 			{
 				// This is a futureaction purely made for wait timing so that
 				// you can build a extractor to line up with this hatch.
 			}
 		});
-		s.addFutureAction((int)(getTime() - UnitLibrary.Queen.getTime()), new Runnable()
+		s.addFutureAction((int)(getTime() - UnitLibrary.Queen.getTime()), new RunnableAction()
 		{
 			@Override
-			public void run()
+			public void run(GameLog e)
 			{
 				// This is a futureaction purely made for wait timing so that
 				// you can build a queen to line up with this hatch.
@@ -40,13 +42,13 @@ public final class EcActionBuildHatchery extends EcActionBuildBuilding implement
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
+	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
 		s.AddBuilding(BuildingLibrary.Hatchery);
 		s.hatcheriesBuilding -= 1;
 		s.hatcheryTimes.add(Optimization.inte(s.seconds));
-		s.larva.add(1);
-		s.larvaProduction.add(1);
+		s.larva.add(Optimization.inte(1));
+		s.larvaProduction.add(Optimization.inte(1));
 	}
 
 	@Override

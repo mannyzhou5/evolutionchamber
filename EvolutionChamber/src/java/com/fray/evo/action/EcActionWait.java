@@ -4,26 +4,28 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 
 public final class EcActionWait extends EcAction implements Serializable
 {
 	boolean	go	= false;
 
 	@Override
-	public void execute(EcBuildOrder s, EcEvolver e)
+	public void execute(EcBuildOrder s, GameLog e)
 	{
 		s.waits += 1;
 	}
 
 	@Override
-	public boolean canExecute(EcBuildOrder s,EcEvolver e)
+	public boolean canExecute(EcBuildOrder s, GameLog e)
 	{
 		if (isPossible(s))
 			return true;
 		s.seconds += 1;
-		Runnable futureAction;
+		RunnableAction futureAction;
 		while( ( futureAction = s.getFutureAction( s.seconds ) ) != null ) {
-			futureAction.run();
+			futureAction.run(e);
 			go = true;
 		}
 		s.tick(e);

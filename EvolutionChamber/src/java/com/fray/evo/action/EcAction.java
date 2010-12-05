@@ -11,12 +11,14 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.EcRequirementTree;
 import com.fray.evo.EcState;
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 
 public abstract class EcAction implements Serializable
 {
 	public static Map<Integer, Class>	actions = Collections.synchronizedMap(new HashMap<Integer, Class>());
 
-	public abstract void execute(EcBuildOrder s, EcEvolver e);
+	public abstract void execute(EcBuildOrder s, GameLog e);
 
 	@Override
 	public String toString()
@@ -43,14 +45,14 @@ public abstract class EcAction implements Serializable
 		return result;
 	}
 
-	public boolean canExecute(EcBuildOrder s,EcEvolver e)
+	public boolean canExecute(EcBuildOrder s, GameLog e)
 	{
 		if (isPossible(s))
 			return true;
 		s.seconds += 1;
-		Runnable futureAction;
+		RunnableAction futureAction;
 		while( (futureAction = s.getFutureAction(s.seconds)) != null )
-			futureAction.run();
+			futureAction.run(e);
 		s.tick(e);
 		return false;
 	}

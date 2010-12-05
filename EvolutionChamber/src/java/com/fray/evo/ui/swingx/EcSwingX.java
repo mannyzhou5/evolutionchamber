@@ -313,8 +313,8 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			evolver = new EcEvolver(source, destination.clone());
 			ByteArrayOutputStream baos;
-			evolver.log = new PrintStream(baos = new ByteArrayOutputStream());
-			evolver.debug = true;
+			evolver.setLoggingStream(new PrintStream(baos = new ByteArrayOutputStream()));
+			evolver.enableLogging(true);
 			for (EcAction a : destination.actions)
 			{
 				source.addAction(a.getClass().newInstance());
@@ -360,7 +360,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		{
 			EcBuildOrder source = new EcBuildOrder();
 			EcEvolver evolver = new EcEvolver(source, destination);
-			evolver.debug = true;
+			evolver.enableLogging(true);
 			for (EcAction a : destination.actions)
 				source.addAction(a);
 			source.targetSeconds = destination.targetSeconds;

@@ -6,6 +6,8 @@ import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.GameLog;
+
 import org.jdesktop.swingx.plaf.BusyLabelUI;
 
 public final class EcActionBuildHive extends EcActionBuildBuilding implements Serializable
@@ -22,7 +24,7 @@ public final class EcActionBuildHive extends EcActionBuildBuilding implements Se
 	}
 
 	@Override
-	protected void postExecute(EcBuildOrder s, EcEvolver e)
+	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
             s.unconsumeHatch(this);
             s.RemoveBuilding(BuildingLibrary.Lair);

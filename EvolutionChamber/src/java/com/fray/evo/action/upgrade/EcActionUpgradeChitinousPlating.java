@@ -2,6 +2,7 @@ package com.fray.evo.action.upgrade;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
 import com.fray.evo.util.UpgradeLibrary;
 
 public final class EcActionUpgradeChitinousPlating extends EcActionUpgrade
@@ -21,7 +22,7 @@ public final class EcActionUpgradeChitinousPlating extends EcActionUpgrade
 	}
 
 	@Override
-	public void afterTime(EcBuildOrder s, EcEvolver e)
+	public void afterTime(EcBuildOrder s, GameLog e)
 	{
 		superAfterTime(s, e);
 	}

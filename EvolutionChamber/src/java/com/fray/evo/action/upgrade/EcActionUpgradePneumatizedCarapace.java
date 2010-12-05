@@ -2,6 +2,7 @@ package com.fray.evo.action.upgrade;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
+import com.fray.evo.util.GameLog;
 import com.fray.evo.util.UpgradeLibrary;
 
 public final class EcActionUpgradePneumatizedCarapace extends EcActionUpgrade
@@ -13,7 +14,7 @@ public final class EcActionUpgradePneumatizedCarapace extends EcActionUpgrade
 	}
 
 	@Override
-	public void execute(EcBuildOrder s, EcEvolver e)
+	public void execute(EcBuildOrder s, GameLog e)
 	{
 		super.execute(s, e);
 		s.consumeHatch(upgrade.getBuiltIn(),this);
@@ -34,7 +35,7 @@ public final class EcActionUpgradePneumatizedCarapace extends EcActionUpgrade
 	}
 
 	@Override
-	public void afterTime(EcBuildOrder s, EcEvolver e)
+	public void afterTime(EcBuildOrder s, GameLog e)
 	{
             s.unconsumeHatch(this);
 		superAfterTime(s, e);

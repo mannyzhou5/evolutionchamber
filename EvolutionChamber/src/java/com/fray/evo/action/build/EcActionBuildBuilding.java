@@ -5,6 +5,8 @@ import java.io.Serializable;
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.EcEvolver;
 import com.fray.evo.util.Building;
+import com.fray.evo.util.GameLog;
+import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.UnitLibrary;
 
 public abstract class EcActionBuildBuilding extends EcActionBuild implements Serializable
@@ -16,7 +18,7 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 	}
 
 	@Override
-	public void execute(final EcBuildOrder s, final EcEvolver e)
+	public void execute(final EcBuildOrder s, final GameLog e)
 	{
 		s.minerals -= getMinerals();
 		s.gas -= getGas();
@@ -27,10 +29,10 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 			s.supplyUsed -= 1;
 		}
 		preExecute(s);
-		s.addFutureAction(getTime(), new Runnable()
+		s.addFutureAction(getTime(), new RunnableAction()
 		{
 			@Override
-			public void run()
+			public void run(GameLog e)
 			{
 				obtainOne(s, e);
 				postExecute(s, e);
@@ -53,7 +55,7 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 		return isPossibleResources(s);
 	}
 
-	protected void postExecute(EcBuildOrder s, EcEvolver e){
+	protected void postExecute(EcBuildOrder s, GameLog e){
             s.AddBuilding((Building) buildable);
         };
 
