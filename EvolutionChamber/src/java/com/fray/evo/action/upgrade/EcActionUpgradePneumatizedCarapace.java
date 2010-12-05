@@ -23,7 +23,7 @@ public final class EcActionUpgradePneumatizedCarapace extends EcActionUpgrade
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		return !s.doesNonBusyExist(upgrade.getBuiltIn()) && super.isPossible(s);
+		return s.doesNonBusyExist(upgrade.getBuiltIn()) && super.isPossible(s);
 	};
 
 	@Override

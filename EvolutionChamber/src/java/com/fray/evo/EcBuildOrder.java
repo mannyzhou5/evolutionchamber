@@ -335,6 +335,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 
         public void consumeHatch(Building consumes,EcAction action)
 	{
+            //ArrayList<EcAction> acc = madeBusyBy.get(consumes);
             if(madeBusyBy.get(consumes).size() >= buildings.get(consumes)){
                 if(consumes == BuildingLibrary.Hatchery){
                     consumeHatch(BuildingLibrary.Lair, action);
