@@ -1,6 +1,8 @@
 package com.fray.evo.util.optimization;
 
 /*
+ *  Adapted by Nafets.st from Apache's work 
+ * 
  *  Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
