@@ -11,9 +11,10 @@ import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.Population;
 import org.jgap.impl.IntegerGene;
+import org.jgap.util.ICloneable;
 
 import com.fray.evo.action.EcAction;
-import org.jgap.util.ICloneable;
+import com.fray.evo.action.build.EcActionBuildOverlord;
 
 public class EcGeneticUtil
 {
@@ -81,7 +82,7 @@ public class EcGeneticUtil
 		};
 	}
 
-	static GeneticOperator getOverlordingOperator(final EvolutionChamber c)
+	static GeneticOperator getOverlordingOperator(final EvolutionChamber c, final List<Class<? extends EcAction>> actions)
 	{
 		return new GeneticOperator()
 		{
@@ -91,10 +92,10 @@ public class EcGeneticUtil
 				if (Math.random() > c.getBaseMutationRate()/c.getChromosomeLength())
 					return;
 				IChromosome best = arg0.determineFittestChromosome();
-				int overlord = 0;
-				for (Integer c : EcAction.actions.keySet())
-					if (EcAction.actions.get(c).getName().contains("BuildOverlord"))
-						overlord = c;
+				
+				// TODO expects that there is ALWAYS an overlord action which won't work for other races. But then, this is the Overlording action.
+				int overlord = actions.indexOf(EcActionBuildOverlord.class);			
+				
 				for (int i = 0; i < best.getGenes().length; i++)
 				{
 					IChromosome chromosome = (IChromosome) ((ICloneable) best).clone();

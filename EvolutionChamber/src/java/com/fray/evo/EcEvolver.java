@@ -7,6 +7,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -87,6 +88,7 @@ public final class EcEvolver extends FitnessFunction
 	private EcState						mergedDestination;
 	private GameLog						log;
 	private long					evaluations	= 0;
+	private final List<Class<? extends EcAction>> actions;
 	
 	/**
 	 * Maps Evolution Chamber classes with the appropriate action class of the YABOT encoder.
@@ -153,12 +155,13 @@ public final class EcEvolver extends FitnessFunction
 		yabotMapping = Collections.unmodifiableMap(m);
 	}
 
-	public EcEvolver(EcState source, EcState destination)
+	public EcEvolver(EcState source, EcState destination, List<Class<? extends EcAction>> actions)
 	{
 		this.source = source;
 		this.destination = destination;
 		this.mergedDestination = destination.getMergedState();
 		this.log = new GameLog();
+		this.actions = actions;
 	}
 
 	protected String getAlleleAsString(IChromosome c)
@@ -175,14 +178,14 @@ public final class EcEvolver extends FitnessFunction
 	}
 
 	@Override
-	protected double evaluate(IChromosome arg0)
+	protected double evaluate(IChromosome chromosome)
 	{
 		EcBuildOrder s;
 		try
 		{
 			Double score;
 			evaluations++;
-			s = populateBuildOrder((EcBuildOrder) source, arg0);
+			s = populateBuildOrder((EcBuildOrder) source, chromosome, actions);
 			score = destination.score(doEvaluate(s));
 			return score;
 		}
@@ -195,12 +198,12 @@ public final class EcEvolver extends FitnessFunction
 		return Double.NEGATIVE_INFINITY;
 	}
 
-	public EcState evaluateGetBuildOrder(IChromosome arg0)
+	public EcState evaluateGetBuildOrder(IChromosome chromosome)
 	{
 		EcBuildOrder s;
 		try
 		{
-			s = populateBuildOrder((EcBuildOrder) source, arg0);
+			s = populateBuildOrder((EcBuildOrder) source, chromosome, actions);
 
 			return doEvaluate(s);
 		}
@@ -213,13 +216,13 @@ public final class EcEvolver extends FitnessFunction
 		return null;
 	}
 
-	public String getBuildOrder(IChromosome arg0)
+	public String getBuildOrder(IChromosome chromosome)
 	{
 		//this is basically just a copy from the doEvaluate() function adjusted to return a build order string
 		EcBuildOrder s;
 		try
 		{
-			s = populateBuildOrder((EcBuildOrder) source, arg0);
+			s = populateBuildOrder((EcBuildOrder) source, chromosome, actions);
 			return doSimpleEvaluate(s);
 		}
 		catch (CloneNotSupportedException e)
@@ -267,13 +270,13 @@ public final class EcEvolver extends FitnessFunction
 		return messages.getString("RanOutOfThingsToDo");
 	}
 
-	public String getYabotBuildOrder(IChromosome arg0)
+	public String getYabotBuildOrder(IChromosome chromosome)
 	{
 		//Yabot build order encoder
 		EcBuildOrder s;
 		try
 		{
-			s = populateBuildOrder((EcBuildOrder) source, arg0);
+			s = populateBuildOrder((EcBuildOrder) source, chromosome, actions);
 			
 			return doYABOTEvaluate(s);
 		}
@@ -365,7 +368,7 @@ public final class EcEvolver extends FitnessFunction
 		return messages.getString("RanOutOfThingsToDo")+"\n"+EcUtil.toString(warnings);
 	}
 	
-	public static EcBuildOrder populateBuildOrder(EcBuildOrder source, IChromosome arg0)
+	public static EcBuildOrder populateBuildOrder(EcBuildOrder source, IChromosome arg0, List<Class<? extends EcAction>> requiredActions)
 			throws CloneNotSupportedException
 	{
 		EcBuildOrder s;
@@ -376,7 +379,7 @@ public final class EcEvolver extends FitnessFunction
 			Integer i = (Integer) g.getAllele();
 			try
 			{
-				s.addAction((EcAction) EcAction.actions.get(i).newInstance());
+				s.addAction((EcAction) requiredActions.get(i).newInstance());
 			}
 			catch (InstantiationException e)
 			{

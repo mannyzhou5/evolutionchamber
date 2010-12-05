@@ -325,7 +325,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		EcEvolver evolver;
 		try
 		{
-			evolver = new EcEvolver(source, destination.clone());
+			evolver = new EcEvolver(source, destination.clone(), ec.getActions());
 			ByteArrayOutputStream baos;
 			evolver.setLoggingStream(new PrintStream(baos = new ByteArrayOutputStream()));
 			evolver.enableLogging(true);
@@ -376,7 +376,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		for (EcBuildOrder destination : ec.getHistory())
 		{
 			EcBuildOrder source = new EcBuildOrder();
-			EcEvolver evolver = new EcEvolver(source, destination);
+			EcEvolver evolver = new EcEvolver(source, destination, ec.getActions());
 			evolver.enableLogging(true);
 			for (EcAction a : destination.actions)
 				source.addAction(a);

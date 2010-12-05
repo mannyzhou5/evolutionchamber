@@ -2,7 +2,7 @@ package com.fray.evo;
 
 import java.security.InvalidParameterException;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Map.Entry;
 
 import com.fray.evo.action.ActionManager;
@@ -22,82 +22,93 @@ import com.fray.evo.util.Unit;
 import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.Upgrade;
 
+/**
+ * Utility to populate the list of require actions for the evolver
+ */
 public class EcRequirementTree {
 
-    static int max;
+    /**
+     * fills a List with all required actions for a EcState
+     * @param destination the destination to build the action list for
+     * @return a list of all required actions
+     */
+    public static void setupActionList(EcState destination, List<Class<? extends EcAction>> actions) {
 
-    public static void execute(EcState destination) {
-        max = 0;
-        //BIG AND EVIL GLOBAL STATE, BE VERY CAREFUL HERE!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //TODO take this out!
-        Map<Integer, Class> actions = EcAction.actions;
         actions.clear();
-
-        add(actions, new EcActionWait());
-        add(actions, new EcActionBuildQueen());
-        add(actions, new EcActionBuildDrone());
+        actions.add(EcActionWait.class);
+        actions.add(EcActionBuildQueen.class);
+        actions.add(EcActionBuildDrone.class);
         if (destination.settings.useExtractorTrick) {
-            add(actions, new EcActionExtractorTrick());
+            actions.add(EcActionExtractorTrick.class);
         }
-        add(actions, new EcActionBuildHatchery());
-        add(actions, new EcActionBuildOverlord());
-        add(actions, new EcActionBuildSpawningPool());
+        actions.add(EcActionBuildHatchery.class);
+        actions.add(EcActionBuildOverlord.class);
+        actions.add(EcActionBuildSpawningPool.class);
         //TODO take this out and add dynamic gass needed checks
-        add(actions, new EcActionBuildExtractor());
-        add(actions, new EcActionMineGas());
+        actions.add(EcActionBuildExtractor.class);
+        actions.add(EcActionMineGas.class);
 
-        actions(destination, actions);
-
+        populateActionList(destination, actions);
     }
 
-    private static void actions(EcState destination,Map<Integer, Class> map) {
+    /**
+     * populates the action list with the actions of a state
+     * @param destination state to take actions from
+     * @param actions actionlist
+     */
+    private static void populateActionList(EcState destination,List<Class<? extends EcAction>> actions) {
         for (Upgrade upgrade : (HashSet<Upgrade>)destination.getUpgrades().clone()) {
-            require(upgrade, destination, map);
+            require(upgrade, destination, actions);
         }
         for (Entry<Building, Integer> entry : destination.getBuildings().entrySet()) {
             if (entry.getValue() > 0) {
-                require(entry.getKey(), destination,map);
+                require(entry.getKey(), destination,actions);
             }
         }
         for (Entry<Unit, Integer> entry : destination.getUnits().entrySet()) {
             if (entry.getValue() > 0) {
-                require(entry.getKey(), destination, map);
+                require(entry.getKey(), destination, actions);
             }
         }
         for (EcState s : destination.waypoints) {
-            actions(s,map);
+            populateActionList(s,actions);
         }
     }
 
-    private static void add(Map<Integer, Class> actions, EcAction action) {
+    /**
+     * adds an action to the list of required actions
+     * @param actions list of required actions
+     * @param action an action to add
+     */
+    private static void addActionToList(List<Class<? extends EcAction>> actions, EcAction action) {
     	if (action == null) throw new InvalidParameterException();
-        if (!actions.containsValue(action.getClass())) {
-            actions.put(max++, action.getClass());
+        if (!actions.contains(action.getClass())) {
+            actions.add(action.getClass());
         }
     }
 
-    private static void require(Buildable requirement, EcState destination, Map<Integer, Class> map) {
+
+    private static void require(Buildable requirement, EcState destination, List<Class<? extends EcAction>> actions) {
         if(requirement == ZergUnitLibrary.Larva){
             return;
         }
         if (requirement instanceof  Upgrade) {
             destination.AddUpgrade((Upgrade) requirement);
-            require(((Upgrade)requirement).getBuiltIn(), destination, map);
+            require(((Upgrade)requirement).getBuiltIn(), destination, actions);
         } else if (requirement instanceof  Building) {
             destination.RequireBuilding((Building) requirement);
         } else if (requirement instanceof  Unit) {
             destination.RequireUnit((Unit) requirement);
         }
         for (int i = 0; i < requirement.getRequirement().size(); i++) {
-            require(requirement.getRequirement().get(i), destination, map);
+            require(requirement.getRequirement().get(i), destination, actions);
         }
         if(requirement.getConsumes()!=null){
-            require(requirement.getConsumes(), destination, map);
+            require(requirement.getConsumes(), destination, actions);
         }
-        add(map, ActionManager.getActionFor(requirement));
+        addActionToList(actions, ActionManager.getActionFor(requirement));
         for (Buildable buildable : requirement.getRequirement()) {
-            require(buildable, destination, map);
+            require(buildable, destination, actions);
         }
 
     }

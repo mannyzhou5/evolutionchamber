@@ -3,21 +3,15 @@ package com.fray.evo.action;
 import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import com.fray.evo.EcBuildOrder;
-import com.fray.evo.EcEvolver;
-import com.fray.evo.EcRequirementTree;
 import com.fray.evo.EcState;
 import com.fray.evo.util.GameLog;
 import com.fray.evo.util.RunnableAction;
 
 public abstract class EcAction implements Serializable
 {
-	public static Map<Integer, Class>	actions = Collections.synchronizedMap(new HashMap<Integer, Class>());
-
 	public abstract void execute(EcBuildOrder s, GameLog e);
 
 	@Override
@@ -64,27 +58,30 @@ public abstract class EcAction implements Serializable
 
 	public abstract boolean isPossible(EcBuildOrder s);
 
-	public static Integer findAllele(EcAction a)
+	public static Integer findAllele(List<Class<? extends EcAction>> actionList, EcAction a)
 	{
-		Integer allele = null;
-		for (Integer i : actions.keySet())
-		{
-			Class a2 = actions.get(i);
-			if (!actions.containsValue(a.getClass()))
-				break;
-			if (a2.getName().equals(a.getClass().getName()))
-			{
-				allele = i;
-				break;
-			}
+		int actionIndex = actionList.indexOf(a);
+		if( actionIndex < 0){
+			return null;
 		}
-		return allele;
-	}
-
-	public static void setup(EcState target)
-	{
-//		actions = new HashMap<Integer, Class>();
-		EcRequirementTree.execute(target);
+		else{
+			return Integer.valueOf(actionIndex);
+		}
+		
+		
+//		Integer allele = null;
+//		for (Integer i : actions.keySet())
+//		{
+//			Class a2 = actions.get(i);
+//			if (!actions.containsValue(a.getClass()))
+//				break;
+//			if (a2.getName().equals(a.getClass().getName()))
+//			{
+//				allele = i;
+//				break;
+//			}
+//		}
+//		return allele;
 	}
 
 }
