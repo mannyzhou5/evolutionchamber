@@ -349,8 +349,13 @@ public final class EcBuildOrder extends EcState implements Serializable
 	{
 		return (bases() + hatcheriesBuilding) * 2;
 	}
+	
+	public int getMineableGasExtractors()
+	{
+		return Math.min(bases() * 2, getGasExtractors());
+	}
 
-        public void consumeHatch(Building consumes,EcAction action)
+	public void consumeHatch(Building consumes,EcAction action)
 	{
             //ArrayList<EcAction> acc = madeBusyBy.get(consumes);
             if(madeBusyBy.get(consumes).size() >= buildings.get(consumes)){

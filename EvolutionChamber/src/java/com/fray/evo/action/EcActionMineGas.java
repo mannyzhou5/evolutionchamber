@@ -58,9 +58,9 @@ public final class EcActionMineGas extends EcAction implements Serializable
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if ((s.dronesOnGas+s.dronesGoingOnGas) >= 3*s.getGasExtractors())
+		if ((s.dronesOnGas + s.dronesGoingOnGas) >= 3 * s.getMineableGasExtractors())
 			return false;
-		if (s.dronesOnMinerals == 0)
+		if (s.dronesOnMinerals == 0 || s.settings.pullThreeWorkersOnly && s.dronesOnMinerals < 3)
 			return false;
 		return true;
 	}
