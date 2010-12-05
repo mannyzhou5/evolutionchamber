@@ -83,7 +83,7 @@ public class EcRequirementTree {
         }
         if (requirement.getClass() == Upgrade.class) {
             destination.AddUpgrade((Upgrade) requirement);
-
+            require(((Upgrade)requirement).getBuiltIn(), destination, map);
         } else if (requirement.getClass() == Building.class) {
             destination.RequireBuilding((Building) requirement);
         } else if (requirement.getClass() == Unit.class) {
