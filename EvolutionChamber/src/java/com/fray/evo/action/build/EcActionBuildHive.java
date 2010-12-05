@@ -18,12 +18,13 @@ public final class EcActionBuildHive extends EcActionBuildBuilding implements Se
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{		
-		s.busyMainBuildings++;
+		s.consumeHatch((Building)buildable.getConsumes(),this);
 	}
 
 	@Override
 	protected void postExecute(EcBuildOrder s, EcEvolver e)
 	{
+            s.unconsumeHatch(this);
             s.RemoveBuilding(BuildingLibrary.Lair);
 		s.AddBuilding((Building) buildable);
 	}
@@ -31,9 +32,7 @@ public final class EcActionBuildHive extends EcActionBuildBuilding implements Se
 	@Override
 	public boolean isPossible(EcBuildOrder s)
 	{
-		if (s.getLairs() < 1 || s.getLairs() <= s.busyLairs.size())
-			return false;
-		return super.isPossible(s);
+		return s.doesNonBusyReallyExist((Building)buildable.getConsumes()) && super.isPossible(s);
 	}
 
 	@Override

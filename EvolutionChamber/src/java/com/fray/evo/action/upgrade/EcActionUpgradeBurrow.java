@@ -16,14 +16,12 @@ public final class EcActionUpgradeBurrow extends EcActionUpgrade
 	public void execute(EcBuildOrder s, EcEvolver e)
 	{
 		super.execute(s, e);
-		s.consumeHatch(this);
+		s.consumeHatch(upgrade.getBuiltIn(),this);
 	}
 	
 	@Override
 	public boolean isPossible(EcBuildOrder s) {
-		if (s.getHatcheries() + s.getLairs() + s.getHives() == s.busyMainBuildings)
-			return false;
-		return super.isPossible(s);
+		return s.doesNonBusyExist(upgrade.getBuiltIn()) && super.isPossible(s);
 	};
 
 	@Override

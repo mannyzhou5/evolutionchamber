@@ -7,6 +7,11 @@ import java.util.ArrayList;
 
 import com.fray.evo.action.EcAction;
 import com.fray.evo.util.ActionList;
+import com.fray.evo.util.Building;
+import com.fray.evo.util.BuildingLibrary;
+import com.fray.evo.util.Race;
+import com.fray.evo.util.RaceLibraries;
+import java.util.HashMap;
 
 public final class EcBuildOrder extends EcState implements Serializable
 {
@@ -16,11 +21,10 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public int				dronesOnMinerals	= 0;
 	public int				dronesOnGas			= 0;
 	public int				evolvingSpires		= 0;
-	public int				queensBuilding		= 0;
 	public int				spiresInUse			= 0;
 	public int				evolutionChambersInUse;
-        public int                              busyMainBuildings        = 0;
-        public ArrayList<EcAction>              busyLairs                = new ArrayList<EcAction>();
+        public HashMap<EcAction,Building>       actionBusyIn            = new HashMap<EcAction, Building>();
+        public HashMap<Building,ArrayList<EcAction>> madeBusyBy;
 	public boolean 			droneIsScouting		= false;
 
 	transient ActionList	futureAction		= new ActionList();
@@ -29,6 +33,11 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public EcBuildOrder()
 	{
         super();
+        madeBusyBy = new HashMap<Building, ArrayList<EcAction>>();
+        ArrayList<Building> buildingList = RaceLibraries.getBuildingLibrary(settings.race).getList();
+        for(int i = 0; i < buildingList.size(); i++){
+            madeBusyBy.put(buildingList.get(i), new ArrayList<EcAction>());
+        }
         addFutureAction(5, new Runnable(){
             @Override
             public void run()
@@ -64,8 +73,9 @@ public final class EcBuildOrder extends EcState implements Serializable
 		s.dronesGoingOnMinerals = dronesGoingOnMinerals;
 		s.dronesGoingOnGas = dronesGoingOnGas;
 		s.dronesOnMinerals = dronesOnMinerals;
+                s.actionBusyIn = new HashMap<EcAction, Building>(actionBusyIn);
+                s.madeBusyBy = new HashMap<Building, ArrayList<EcAction>>(madeBusyBy);
 		s.dronesOnGas = dronesOnGas;
-		s.queensBuilding = queensBuilding;
 		s.evolutionChambersInUse = evolutionChambersInUse;
 		super.assign(s);
 	}
@@ -323,18 +333,45 @@ public final class EcBuildOrder extends EcState implements Serializable
 		return (bases() + hatcheriesBuilding) * 2;
 	}
 
-        public void consumeHatch(EcAction action)
+        public void consumeHatch(Building consumes,EcAction action)
 	{
-		busyMainBuildings++;
-                if(getHatcheries() - busyMainBuildings < 0){
-                    busyLairs.add(action);
+            if(madeBusyBy.get(consumes).size() >= buildings.get(consumes)){
+                if(consumes == BuildingLibrary.Hatchery){
+                    consumeHatch(BuildingLibrary.Lair, action);
+                }else if(consumes == BuildingLibrary.Lair){
+                    consumeHatch(BuildingLibrary.Hive, action);
+                }else{
+                    throw new RuntimeException("should not have been called with too few not busy main buildings");
                 }
+            }
+            madeBusyBy.get(consumes).add(action);
+            actionBusyIn.put(action, consumes);
 	}
 
     public void unconsumeHatch(EcAction action) {
-        busyMainBuildings--;
-        if(busyLairs.contains(action)){
-            busyLairs.remove(action);
+        Building busyBuilding = actionBusyIn.get(action);
+        madeBusyBy.get(busyBuilding).remove(action);
+        actionBusyIn.remove(action);
+    }
+
+    public boolean doesNonBusyExist(Building building){
+        if(!doesNonBusyReallyExist(building)){
+            if(building == BuildingLibrary.Hatchery){
+                return doesNonBusyExist(BuildingLibrary.Lair);
+            }else if(building == BuildingLibrary.Lair){
+                return doesNonBusyExist(BuildingLibrary.Hive);
+            }
+            return false;
+        }else{
+            return true;
         }
     }
+    public boolean doesNonBusyReallyExist(Building building){
+        if(madeBusyBy.get(building).size() >= buildings.get(building)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 }

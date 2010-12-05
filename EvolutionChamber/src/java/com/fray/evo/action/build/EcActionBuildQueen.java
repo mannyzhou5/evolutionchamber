@@ -19,7 +19,7 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 	@Override
 	protected void preExecute(EcBuildOrder s)
 	{
-		s.consumeHatch(this);
+		s.consumeHatch(((Unit)buildable).getBuiltFrom(),this);
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 	{
 		if (s.getSpawningPools() == 0)
 			return true;
-		if (s.getHatcheries() + s.getLairs() + s.getHives() == s.busyMainBuildings)
+		if (!s.doesNonBusyExist(((Unit)buildable).getBuiltFrom()))
 			return true;
 		return false;
 	}

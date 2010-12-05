@@ -25,4 +25,7 @@ public final class Unit extends Buildable {
     public double getSupply() {
         return supply;
     }
+    public Building getBuiltFrom(){
+        return builtFrom;
+    }
 }
