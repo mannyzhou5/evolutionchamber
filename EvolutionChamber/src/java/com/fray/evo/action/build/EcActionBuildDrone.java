@@ -26,18 +26,8 @@ public final class EcActionBuildDrone extends EcActionBuildUnit implements Seria
 			@Override
 			public void run(GameLog e)
 			{
-				if (s.droneIsScouting == false && s.getDrones() >= s.scoutDrone
-						&& s.scoutDrone != 0)
-				{
-					s.droneIsScouting = true;
-					if (e.getEnable())
-						e.printMessage(s, GameLog.MessageType.Scout, " +1 Scouting Drone");
-				}
-				else
-				{
-					s.dronesGoingOnMinerals--;
-					s.dronesOnMinerals++;
-				}
+				s.dronesGoingOnMinerals--;
+				s.dronesOnMinerals++;
 			}
 		});
 	}

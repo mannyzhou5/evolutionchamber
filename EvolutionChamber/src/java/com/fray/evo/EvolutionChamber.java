@@ -565,6 +565,7 @@ public class EvolutionChamber
 		EcBuildOrder ecBuildOrder = new EcBuildOrder();
 		ecBuildOrder.targetSeconds = importDestination().targetSeconds;
 		ecBuildOrder.settings = importDestination().settings;
+		ecBuildOrder.scoutDrone = importDestination().scoutDrone;
 		return ecBuildOrder;
 	}
 

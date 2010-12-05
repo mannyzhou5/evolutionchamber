@@ -327,6 +327,9 @@ public class EcSwingX extends JXPanel implements EcReportable
 			source.settings = destination.settings;
 			source2.settings = destination.settings;
 			source3.settings = destination.settings;
+			source.scoutDrone = destination.scoutDrone;
+			source2.scoutDrone = destination.scoutDrone;
+			source3.scoutDrone = destination.scoutDrone;
 			EcBuildOrder result = evolver.doEvaluate(source);
 			String detailedText = new String(baos.toByteArray());
 			String simpleText = evolver.doSimpleEvaluate(source2);
@@ -364,6 +367,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			for (EcAction a : destination.actions)
 				source.addAction(a);
 			source.targetSeconds = destination.targetSeconds;
+			source.scoutDrone = destination.scoutDrone;
 			EcBuildOrder result = evolver.doEvaluate(source);
 			if (result.seconds > 60)
 				results.add(destination);
@@ -672,18 +676,14 @@ public class EcSwingX extends JXPanel implements EcReportable
 			public void actionPerformed(ActionEvent e)
 			{
 				dest.targetSeconds = getDigit(e);
-				((JTextField)e.getSource()).setText(
-						Integer.toString(dest.targetSeconds / 60) + ":"
-								+ Integer.toString(dest.targetSeconds % 60));
+				((JTextField)e.getSource()).setText( formatAsTime(dest.targetSeconds) );
 			}
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
 				c.setText(Integer.toString(dest.targetSeconds));
 			}
-		}).setText(
-				Integer.toString(dest.targetSeconds / 60) + ":"
-						+ Integer.toString(dest.targetSeconds % 60));
+		}).setText(formatAsTime(dest.targetSeconds));
 		gridy++;
 		addInput(components, messages.getString("waypoint.overlords"), new CustomActionListener()
 		{
@@ -717,13 +717,14 @@ public class EcSwingX extends JXPanel implements EcReportable
 				public void actionPerformed(ActionEvent e)
 				{
 					destination.get(destination.size()-1).scoutDrone = getDigit(e);
+					((JTextField)e.getSource()).setText( formatAsTime(dest.scoutDrone) );
 				}
 				void reverse(Object o)
 				{
 					JTextField c = (JTextField) o;
 					c.setText(Integer.toString(destination.get(destination.size()-1).scoutDrone));
 				}
-			});
+			}).setText( formatAsTime(dest.scoutDrone));
 		}
 		addCheck(components, messages.getString("waypoint.burrow"), new CustomActionListener()
 		{
@@ -1936,6 +1937,15 @@ public class EcSwingX extends JXPanel implements EcReportable
 		}
 	}
 
+	private String formatAsTime(int time) {
+		int minutes = time / 60;
+		int seconds = time % 60;
+		
+		return Integer.toString(minutes) + ":"
+			+ (seconds < 10 ? "0" : "")
+			+ Integer.toString(seconds);
+	}
+	
 	@Override
 	public void threadScore(int threadIndex, String output)
 	{

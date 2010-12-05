@@ -26,8 +26,8 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public int				evolvingSpires		= 0;
 	public int				spiresInUse			= 0;
 	public int				evolutionChambersInUse;
-        public HashMap<EcAction,Building>       actionBusyIn            = new HashMap<EcAction, Building>();
-        public HashMap<Building,ArrayList<EcAction>> madeBusyBy;
+	public HashMap<EcAction,Building>       actionBusyIn            = new HashMap<EcAction, Building>();
+	public HashMap<Building,ArrayList<EcAction>> madeBusyBy;
 	public boolean 			droneIsScouting		= false;
 
 	transient ActionList	futureAction		= new ActionList();
@@ -45,8 +45,8 @@ public final class EcBuildOrder extends EcState implements Serializable
             @Override
             public void run(GameLog e)
             {
-                    dronesOnMinerals +=6;
-                    dronesGoingOnMinerals -=6;
+            	dronesOnMinerals +=6;
+            	dronesGoingOnMinerals -=6;
             }});
 	}
 	
@@ -61,6 +61,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 	{
 		executeLarvaProduction(e);
 		accumulateMaterials();
+		checkScoutingDrone(e);
 	}
 	
 	@Override
@@ -144,7 +145,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 		for (int hatchIndex = 0;hatchIndex < larva.size();hatchIndex++)
 			executeLarvaProduction(e,hatchIndex);
 	}
-	
+
 	private void executeLarvaProduction(final GameLog e, final int hatchIndex)
 	{
 		if (getLarva(hatchIndex) < 3)
@@ -160,7 +161,23 @@ public final class EcBuildOrder extends EcState implements Serializable
 			larvaProduction.set(hatchIndex,Optimization.inte(larvaProduction.get(hatchIndex)+1));
 		}
 	}
-	
+
+	private void checkScoutingDrone(GameLog e) {
+		if(!droneIsScouting && scoutDrone != 0 && seconds >= scoutDrone ) {
+			if (dronesGoingOnMinerals > 0) {
+				droneIsScouting = true;
+				dronesGoingOnMinerals--;
+				if (e.getEnable())
+					e.printMessage(this, GameLog.MessageType.Scout, " +1 Scouting Drone");
+			} else if (dronesOnMinerals > 0) {
+				droneIsScouting = true;
+				dronesOnMinerals--;
+				if (e.getEnable())
+					e.printMessage(this, GameLog.MessageType.Scout, " +1 Scouting Drone");
+			}
+		}
+	}
+
 	public boolean hasSupply(double i)
 	{
 		if (supplyUsed + i <= supply())
