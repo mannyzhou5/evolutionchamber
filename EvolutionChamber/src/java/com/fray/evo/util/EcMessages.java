@@ -1,6 +1,8 @@
 package com.fray.evo.util;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -12,8 +14,34 @@ import java.util.ResourceBundle;
  */
 public class EcMessages {
 	private final String bundleName;
-	private ResourceBundle messages;
+	private ResourceBundle resourceBundle;
 	private Locale locale;
+	
+	private static EcMessages messages;
+	
+	public static void init(String bundleName){
+		messages = new EcMessages(bundleName);
+	}
+	
+	public static EcMessages getMessages(){
+		return messages;
+	}
+	
+	ResourceBundle.Control localeCandidateSelector = new ResourceBundle.Control() {
+		@Override
+		public List<Locale> getCandidateLocales(String baseName, Locale locale) {
+			if (baseName == null)
+				throw new NullPointerException();
+			
+			if (locale.equals(Locale.ROOT)) {
+				// look up for english instead the root, since we really hate to maintain the English locale twice
+				return Arrays.asList(Locale.ENGLISH, Locale.ROOT);
+			}
+			List<Locale> defaultCandidates =  super.getCandidateLocales(baseName, locale);
+			return defaultCandidates;
+		}
+	};
+
 
 	/**
 	 * Constructor.
@@ -23,8 +51,7 @@ public class EcMessages {
 	 */
 	public EcMessages(String bundleName) {
 		this.bundleName = bundleName;
-		messages = Utf8ResourceBundle.getBundle(bundleName);
-		locale = messages.getLocale();
+		resourceBundle = Utf8ResourceBundle.getBundle(bundleName, Locale.getDefault(), localeCandidateSelector);
 		if (locale == null){
 			locale = Locale.getDefault();
 		}
@@ -37,7 +64,7 @@ public class EcMessages {
 	 * @return the message
 	 */
 	public String getString(String key) {
-		return messages.getString(key);
+		return resourceBundle.getString(key);
 	}
 
 	/**
@@ -57,7 +84,7 @@ public class EcMessages {
 	 */
 	public void changeLocale(Locale locale){
 		this.locale = locale;
-		messages = Utf8ResourceBundle.getBundle(bundleName, locale);
+		resourceBundle = Utf8ResourceBundle.getBundle(bundleName, locale);
 	}
 	
 	/**
