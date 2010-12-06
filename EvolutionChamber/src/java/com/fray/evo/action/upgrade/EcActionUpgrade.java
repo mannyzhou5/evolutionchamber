@@ -4,10 +4,11 @@ import java.io.Serializable;
 
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.action.EcAction;
+import com.fray.evo.action.EcActionMakeBuildable;
 import com.fray.evo.util.*;
 import java.util.ArrayList;
 
-public abstract class EcActionUpgrade extends EcAction implements Serializable {
+public abstract class EcActionUpgrade extends EcActionMakeBuildable implements Serializable {
 
     protected  Upgrade upgrade;
 

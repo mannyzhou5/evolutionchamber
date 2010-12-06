@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.fray.evo.action.EcAction;
+import com.fray.evo.action.EcActionMakeBuildable;
 import com.fray.evo.util.ActionList;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.GameLog;
@@ -348,27 +349,13 @@ public final class EcBuildOrder extends EcState implements Serializable
 		return Math.min(bases() * 2, getGasExtractors());
 	}
 
-	public void makeBuildingBusy(Building consumes,EcAction action)
+	public void makeBuildingBusy(Building consumes,EcActionMakeBuildable action)
 	{
-            //ArrayList<EcAction> acc = madeBusyBy.get(consumes);
-            if(madeBusyBy.get(consumes.getId()).size() >= buildings.get(consumes)){
-                if(consumes == ZergBuildingLibrary.Hatchery){
-                    makeBuildingBusy(ZergBuildingLibrary.Lair, action);
-                }else if(consumes == ZergBuildingLibrary.Lair){
-                    makeBuildingBusy(ZergBuildingLibrary.Hive, action);
-                }else{
-                    throw new RuntimeException("should not have been called with too few not busy main buildings");
-                }
-            }else{
-                madeBusyBy.get(consumes.getId()).add(action);
-                actionBusyIn.put(action, consumes);
-            }
+            action.makeBusy(madeBusyBy, actionBusyIn, consumes, buildings);
 	}
 
-    public void makeBuildingNotBusy(EcAction action) {
-        Building busyBuilding = actionBusyIn.get(action);
-        madeBusyBy.get(busyBuilding.getId()).remove(action);
-        actionBusyIn.remove(action);
+    public void makeBuildingNotBusy(EcActionMakeBuildable action) {
+        action.makeNotBusy(madeBusyBy, actionBusyIn);
     }
 
     public boolean doesNonBusyExist(Building building){
