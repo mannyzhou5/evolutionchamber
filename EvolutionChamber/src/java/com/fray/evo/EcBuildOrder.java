@@ -26,7 +26,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public int				evolvingSpires		= 0;
 	public int				evolutionChambersInUse;
 	public HashMap<EcAction,Building>       actionBusyIn            = new HashMap<EcAction, Building>();
-	public HashMap<Building,ArrayList<EcAction>> madeBusyBy;
+	public ArrayList<ArrayList<EcAction>> madeBusyBy;
 	public boolean 			droneIsScouting		= false;
 
 	transient ActionList	futureAction		= new ActionList();
@@ -35,11 +35,11 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public EcBuildOrder()
 	{
         super();
-        madeBusyBy = new HashMap<Building, ArrayList<EcAction>>();
         ArrayList<Building> buildingList = RaceLibraries.getBuildingLibrary(settings.race).getList();
-        for(int i = 0; i < buildingList.size(); i++){
-            madeBusyBy.put(buildingList.get(i), new ArrayList<EcAction>());
-        }
+        madeBusyBy = new ArrayList<ArrayList<EcAction>>(buildingList.size());
+        for(int i = 0; i < buildingList.size(); ++i)
+        	madeBusyBy.add(new ArrayList<EcAction>());
+
         addFutureAction(5, new RunnableAction(){
             @Override
             public void run(GameLog e)
@@ -136,7 +136,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 			}
 		final int finalHighestLarvaHatch = highestLarvaHatch;
 				
-		setLarva(finalHighestLarvaHatch,getLarva(finalHighestLarvaHatch) - 1);
+		decrementLarva(finalHighestLarvaHatch);
 	}
 
 	private void executeLarvaProduction(GameLog e)
@@ -149,10 +149,10 @@ public final class EcBuildOrder extends EcState implements Serializable
 					if (e.isEnabled())
 						e.printMessage(this, GameLog.MessageType.Obtained,
 								" @" + messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva") + " +1" );
-					setLarva(hatchIndex, getLarva(hatchIndex) + 1);
+					incrementLarva(hatchIndex);
 					larvaProduction.set(hatchIndex, 0);
 				}
-				larvaProduction.set(hatchIndex, larvaProduction.get(hatchIndex) + 1);
+				larvaProduction.increment(hatchIndex);
 			}
 		}
 	}
@@ -353,7 +353,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public void makeBuildingBusy(Building consumes,EcAction action)
 	{
             //ArrayList<EcAction> acc = madeBusyBy.get(consumes);
-            if(madeBusyBy.get(consumes).size() >= buildings.get(consumes)){
+            if(madeBusyBy.get(consumes.getId()).size() >= buildings.get(consumes)){
                 if(consumes == ZergBuildingLibrary.Hatchery){
                     makeBuildingBusy(ZergBuildingLibrary.Lair, action);
                 }else if(consumes == ZergBuildingLibrary.Lair){
@@ -362,14 +362,14 @@ public final class EcBuildOrder extends EcState implements Serializable
                     throw new RuntimeException("should not have been called with too few not busy main buildings");
                 }
             }else{
-                madeBusyBy.get(consumes).add(action);
+                madeBusyBy.get(consumes.getId()).add(action);
                 actionBusyIn.put(action, consumes);
             }
 	}
 
     public void makeBuildingNotBusy(EcAction action) {
         Building busyBuilding = actionBusyIn.get(action);
-        madeBusyBy.get(busyBuilding).remove(action);
+        madeBusyBy.get(busyBuilding.getId()).remove(action);
         actionBusyIn.remove(action);
     }
 
@@ -387,12 +387,8 @@ public final class EcBuildOrder extends EcState implements Serializable
             return true;
         }
     }
-    public boolean doesNonBusyReallyExist(Building building){
-        if(madeBusyBy.get(building).size() >= buildings.get(building)){
-            return false;
-        }else{
-            return true;
-        }
-    }
 
+    public boolean doesNonBusyReallyExist(Building building){
+    	return madeBusyBy.get(building.getId()).size() < buildings.get(building);
+    }
 }

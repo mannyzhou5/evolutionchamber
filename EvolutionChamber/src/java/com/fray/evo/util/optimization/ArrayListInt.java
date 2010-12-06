@@ -33,6 +33,8 @@ public final class ArrayListInt implements Serializable {
 
     private transient int lastIndex;
 
+    private transient int total;
+
     private transient int[] array;
 
     /**
@@ -71,6 +73,7 @@ public final class ArrayListInt implements Serializable {
      *             when {@code location < 0 || > size()}
      */
     public void add(int location, int object) {
+    	total += object;
         int size = lastIndex - firstIndex;
         if (0 < location && location < size) {
             if (firstIndex == 0 && lastIndex == array.length) {
@@ -113,6 +116,7 @@ public final class ArrayListInt implements Serializable {
             growAtEnd(1);
         }
         array[lastIndex++] = object;
+    	total += object;
         return true;
     }
 
@@ -126,6 +130,7 @@ public final class ArrayListInt implements Serializable {
         if (firstIndex != lastIndex) {
             Arrays.fill(array, firstIndex, lastIndex, 0);
             firstIndex = lastIndex = 0;
+        	total = 0;
         }
     }
 
@@ -142,6 +147,7 @@ public final class ArrayListInt implements Serializable {
             newList.array = array.clone();
             newList.firstIndex = firstIndex;
             newList.lastIndex = lastIndex;
+            newList.total = total;
             return newList;
         } catch (CloneNotSupportedException e) {
             return null;
@@ -163,6 +169,26 @@ public final class ArrayListInt implements Serializable {
             }
         }
         return false;
+    }
+
+    /**
+     * Decrements the element at the specified location in this {@code ArrayListInt}
+     * with the specified object.
+     * 
+     * @param location
+     *            the index at which to put the specified object.
+     * @return the previous element at the index.
+     * @throws IndexOutOfBoundsException
+     *             when {@code location < 0 || >= size()}
+     */
+    public int decrement(int location) {
+        if (0 <= location && location < (lastIndex - firstIndex)) {
+            int result = array[firstIndex + location];
+            array[firstIndex + location]--;
+            total--;
+            return result;
+        }
+        throw new IndexOutOfBoundsException();
     }
 
     /**
@@ -272,6 +298,26 @@ public final class ArrayListInt implements Serializable {
         array = newArray;
     }
 
+    /**
+     * Increments the element at the specified location in this {@code ArrayListInt}
+     * with the specified object.
+     * 
+     * @param location
+     *            the index at which to put the specified object.
+     * @return the previous element at the index.
+     * @throws IndexOutOfBoundsException
+     *             when {@code location < 0 || >= size()}
+     */
+    public int increment(int location) {
+        if (0 <= location && location < (lastIndex - firstIndex)) {
+            int result = array[firstIndex + location];
+            array[firstIndex + location]++;
+            total++;
+            return result;
+        }
+        throw new IndexOutOfBoundsException();
+    }
+    
     public boolean isEmpty() {
         return lastIndex == firstIndex;
     }
@@ -314,43 +360,8 @@ public final class ArrayListInt implements Serializable {
         } else {
             throw new IndexOutOfBoundsException();
         }
-
+        total -= result;
         return result;
-    }
-
-    /**
-     * Removes the objects in the specified range from the start to the end, but
-     * not including the end index.
-     * 
-     * @param start
-     *            the index at which to start removing.
-     * @param end
-     *            the index one after the end of the range to remove.
-     * @throws IndexOutOfBoundsException
-     *             when {@code start < 0, start > end} or {@code end > size()}
-     */
-    protected void removeRange(int start, int end) {
-        if (start >= 0 && start <= end && end <= (lastIndex - firstIndex)) {
-            if (start == end) {
-                return;
-            }
-            int size = lastIndex - firstIndex;
-            if (end == size) {
-                Arrays.fill(array, firstIndex + start, lastIndex, 0);
-                lastIndex = firstIndex + start;
-            } else if (start == 0) {
-                Arrays.fill(array, firstIndex, firstIndex + end, 0);
-                firstIndex += end;
-            } else {
-                System.arraycopy(array, firstIndex + end, array, firstIndex
-                        + start, size - end);
-                int newLast = lastIndex + start - end;
-                Arrays.fill(array, newLast, lastIndex, 0);
-                lastIndex = newLast;
-            }
-        } else {
-            throw new IndexOutOfBoundsException();
-        }
     }
 
     /**
@@ -369,6 +380,7 @@ public final class ArrayListInt implements Serializable {
         if (0 <= location && location < (lastIndex - firstIndex)) {
             int result = array[firstIndex + location];
             array[firstIndex + location] = object;
+            total += object - result;
             return result;
         }
         throw new IndexOutOfBoundsException();
@@ -394,6 +406,16 @@ public final class ArrayListInt implements Serializable {
         Object[] result = new Object[size];
         System.arraycopy(array, firstIndex, result, 0, size);
         return result;
+    }
+
+    /**
+     * Returns a the total of all elements contained in this
+     * {@code ArrayListInt}.
+     * 
+     * @return the total of the elements from this {@code ArrayListInt}
+     */
+    public int total() {
+    	return total;
     }
 
     /**

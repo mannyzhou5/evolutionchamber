@@ -75,7 +75,7 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 						}
 					});
 					s.addFutureAction(45, this);
-					s.larvaProduction.set(hatchIndex, s.larvaProduction.get(hatchIndex)-1);
+					s.larvaProduction.decrement(hatchIndex);
 				}
 			});
 		}

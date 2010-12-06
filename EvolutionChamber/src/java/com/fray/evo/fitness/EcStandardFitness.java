@@ -2,7 +2,7 @@ package com.fray.evo.fitness;
 
 import com.fray.evo.EcState;
 
-public class EcStandardFitness implements EcFitness {
+public final class EcStandardFitness implements EcFitness {
 
 	public double augmentScore(EcState current, EcState destination, double score, boolean waypoint)
 	{
@@ -122,8 +122,9 @@ public class EcStandardFitness implements EcFitness {
 
 		boolean keepgoing = true;
 		EcState state = EcState.defaultDestination();
-		for (EcState s : metric.waypoints)
+		for (int i = 0; i < metric.waypoints.size(); ++i)
 		{
+			EcState s = metric.waypoints.get(i);
 			if (keepgoing)
 				state.union(s);
 			if (!s.isSatisfied(c))
@@ -165,6 +166,4 @@ public class EcStandardFitness implements EcFitness {
 		// candidate.actionLength - candidate.waits, 0);
 		return score;
 	}
-
-
 }

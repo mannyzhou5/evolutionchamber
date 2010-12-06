@@ -37,9 +37,6 @@ public final class UnitCollection implements Serializable {
     public int get(Unit unit){
         return arr[unit.getId()];
     }
-    public boolean  containsKey(Unit unit){
-        return (arr[unit.getId()] != 0);
-    }
     public int getById(int id){
         return arr[id];
     }

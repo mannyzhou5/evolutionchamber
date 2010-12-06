@@ -26,7 +26,7 @@ public abstract class EcActionBuild extends EcAction implements Serializable {
         return true;
     }
 
-    protected void obtainOne(final EcBuildOrder s, GameLog e) {
+    protected void obtainOne(EcBuildOrder s, GameLog e) {
     	if (e.isEnabled())
 			e.printMessage(s, GameLog.MessageType.Obtained,
 					" " + messages.getString(getName().replace(" ", ".")) + "+1");

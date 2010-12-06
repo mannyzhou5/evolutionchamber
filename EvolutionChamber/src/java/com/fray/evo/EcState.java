@@ -24,9 +24,9 @@ public class EcState implements Serializable
 {
 	private static final Logger logger = Logger.getLogger(EcState.class.getName());
 	public EcSettings	settings	= new EcSettings();
-        protected HashSet<Upgrade> upgrades;
-        protected BuildingCollection buildings;
-        protected UnitCollection units;
+	protected HashSet<Upgrade> upgrades;
+	protected BuildingCollection buildings;
+	protected UnitCollection units;
 
 
 	public EcState()
@@ -40,10 +40,10 @@ public class EcState implements Serializable
 		// units.put(unit, 0);
 		// }
 		buildings = new BuildingCollection(RaceLibraries.getBuildingLibrary(settings.race).getList(), settings.race);
-		for (Building building : RaceLibraries.getBuildingLibrary(settings.race).getList())
-		{
-			buildings.put(building, 0);
-		}
+		ArrayList<Building> buildingList = RaceLibraries.getBuildingLibrary(settings.race).getList();
+		for (int i = 0; i < buildingList.size(); ++i)
+			buildings.put(buildingList.get(i), 0);
+
 		upgrades = new HashSet<Upgrade>();
 
 		units.put(ZergUnitLibrary.Drone, 6);
@@ -148,12 +148,7 @@ public class EcState implements Serializable
 
 	public int supply()
 	{
-		int overSeers = 0;
-		if (units.containsKey(ZergUnitLibrary.Overseer))
-		{
-			overSeers = units.get(ZergUnitLibrary.Overseer);
-		}
-		return Math.min((units.get(ZergUnitLibrary.Overlord) + overSeers) * 8 + 2 * bases(), 200);
+		return Math.min((units.get(ZergUnitLibrary.Overlord) + units.get(ZergUnitLibrary.Overseer)) * 8 + 2 * bases(), 200);
 	}
 
 	public static EcState defaultDestination()
@@ -593,15 +588,7 @@ public class EcState implements Serializable
 
 	public void AddUnits(Unit unit, int number)
 	{
-		if (units.containsKey(unit))
-		{
-			units.put(unit, units.get(unit) + number);
-		}
-		else
-		{
-			SetUnits(unit, number);
-
-		}
+		units.put(unit, units.get(unit) + number);
 	}
 
 	public void RemoveUnits(Unit unit, int number)
@@ -660,7 +647,7 @@ public class EcState implements Serializable
 			return; //Extra corruptors should not be required for brood lords.
 		if (unit == ZergUnitLibrary.Overlord)
 			return; //Extra overlords should not be required for overseers.
-		if (!units.containsKey(unit) || units.get(unit) < 1)
+		if (units.get(unit) < 1)
 		{
 			units.put(unit, 1);
 		}
@@ -921,10 +908,7 @@ public class EcState implements Serializable
 	 */
 	public int getLarva()
 	{
-		int sum = 0;
-		for(int i = 0; i < larva.size(); ++i)
-			sum += larva.get(i);
-		return sum;
+		return larva.total();
 	}
 	public int getLarva(int base)
 	{
@@ -943,18 +927,33 @@ public class EcState implements Serializable
 	}
 
 	/**
+	 * @param larva
+	 *            the larva to increment
+	 */
+	public void incrementLarva(int base)
+	{
+		while (this.larva.size() <= base)
+			this.larva.add(0);
+		this.larva.increment(base);
+	}
+
+	/**
+	 * @param larva
+	 *            the larva to decrement
+	 */
+	public void decrementLarva(int base)
+	{
+		while (this.larva.size() <= base)
+			this.larva.add(0);
+		this.larva.decrement(base);
+	}
+
+	/**
 	 * @return the drones
 	 */
 	public int getDrones()
 	{
-		if (units.containsKey(ZergUnitLibrary.Drone))
-		{
-			return units.get(ZergUnitLibrary.Drone);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Drone);
 	}
 
 	/**
@@ -962,14 +961,7 @@ public class EcState implements Serializable
 	 */
 	public int getOverlords()
 	{
-		if (units.containsKey(ZergUnitLibrary.Overlord))
-		{
-			return units.get(ZergUnitLibrary.Overlord);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Overlord);
 	}
 
 	/**
@@ -977,14 +969,7 @@ public class EcState implements Serializable
 	 */
 	public int getOverseers()
 	{
-		if (units.containsKey(ZergUnitLibrary.Overseer))
-		{
-			return units.get(ZergUnitLibrary.Overseer);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Overseer);
 	}
 
 	/**
@@ -992,14 +977,7 @@ public class EcState implements Serializable
 	 */
 	public int getZerglings()
 	{
-		if (units.containsKey(ZergUnitLibrary.Zergling))
-		{
-			return units.get(ZergUnitLibrary.Zergling);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Zergling);
 	}
 
 	/**
@@ -1007,14 +985,7 @@ public class EcState implements Serializable
 	 */
 	public int getBanelings()
 	{
-		if (units.containsKey(ZergUnitLibrary.Baneling))
-		{
-			return units.get(ZergUnitLibrary.Baneling);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Baneling);
 	}
 
 	/**
@@ -1022,14 +993,7 @@ public class EcState implements Serializable
 	 */
 	public int getRoaches()
 	{
-		if (units.containsKey(ZergUnitLibrary.Roach))
-		{
-			return units.get(ZergUnitLibrary.Roach);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Roach);
 	}
 
 	/**
@@ -1037,14 +1001,7 @@ public class EcState implements Serializable
 	 */
 	public int getMutalisks()
 	{
-		if (units.containsKey(ZergUnitLibrary.Mutalisk))
-		{
-			return units.get(ZergUnitLibrary.Mutalisk);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Mutalisk);
 	}
 
 	/**
@@ -1052,14 +1009,7 @@ public class EcState implements Serializable
 	 */
 	public int getInfestors()
 	{
-		if (units.containsKey(ZergUnitLibrary.Infestor))
-		{
-			return units.get(ZergUnitLibrary.Infestor);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Infestor);
 	}
 
 	/**
@@ -1067,14 +1017,7 @@ public class EcState implements Serializable
 	 */
 	public int getQueens()
 	{
-		if (units.containsKey(ZergUnitLibrary.Queen))
-		{
-			return units.get(ZergUnitLibrary.Queen);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Queen);
 	}
 
 	/**
@@ -1082,14 +1025,7 @@ public class EcState implements Serializable
 	 */
 	public int getHydralisks()
 	{
-		if (units.containsKey(ZergUnitLibrary.Hydralisk))
-		{
-			return units.get(ZergUnitLibrary.Hydralisk);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Hydralisk);
 	}
 
 	/**
@@ -1097,14 +1033,7 @@ public class EcState implements Serializable
 	 */
 	public int getCorruptors()
 	{
-		if (units.containsKey(ZergUnitLibrary.Corruptor))
-		{
-			return units.get(ZergUnitLibrary.Corruptor);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Corruptor);
 	}
 
 	/**
@@ -1112,14 +1041,7 @@ public class EcState implements Serializable
 	 */
 	public int getUltralisks()
 	{
-		if (units.containsKey(ZergUnitLibrary.Ultralisk))
-		{
-			return units.get(ZergUnitLibrary.Ultralisk);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Ultralisk);
 	}
 
 	/**
@@ -1127,14 +1049,7 @@ public class EcState implements Serializable
 	 */
 	public int getBroodlords()
 	{
-		if (units.containsKey(ZergUnitLibrary.Broodlord))
-		{
-			return units.get(ZergUnitLibrary.Broodlord);
-		}
-		else
-		{
-			return 0;
-		}
+		return units.get(ZergUnitLibrary.Broodlord);
 	}
 
 	/**
