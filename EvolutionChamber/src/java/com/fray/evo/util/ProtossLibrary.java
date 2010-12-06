@@ -49,7 +49,7 @@ public class ProtossLibrary {
 	/* TODO: Special case for Interceptors */
 	public static final Unit Interceptor			= new Unit(14, "Interceptor", 25, 0, 0, 8, null, createList(), null);
 
-	public static final Upgrade Blink				= new Upgrade(0, "Blink", 150, 150, 110, CyberneticsCore, createList());
+	public static final Upgrade Blink				= new Upgrade(0, "Blink", 150, 150, 110, TwilightCouncil, createList());
 	public static final Upgrade Charge				= new Upgrade(1, "Charge", 200, 200, 140, TwilightCouncil, createList());
 	public static final Upgrade ExtendedThermalLance	= new Upgrade(2, "Extended Termal Lance", 200, 200, 140, RoboticsBay, createList());
 	public static final Upgrade FluxVanes			= new Upgrade(3, "Flux Vanes", 150, 150, 80, FleetBeacon, createList());
