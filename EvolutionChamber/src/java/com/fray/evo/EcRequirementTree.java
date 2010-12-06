@@ -1,6 +1,8 @@
 package com.fray.evo;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
@@ -19,8 +21,8 @@ import com.fray.evo.action.build.EcActionBuildSpawningPool;
 import com.fray.evo.util.Buildable;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.Unit;
-import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.Upgrade;
+import com.fray.evo.util.ZergUnitLibrary;
 
 /**
  * Utility to populate the list of require actions for the evolver
@@ -30,10 +32,10 @@ public class EcRequirementTree {
     /**
      * fills a List with all required actions for a EcState
      * @param destination the destination to build the action list for
-     * @return a list of all required actions
+     * @return a unmodifiable list of all required actions
      */
-    public static void setupActionList(EcState destination, List<Class<? extends EcAction>> actions) {
-
+    public static List<Class<? extends EcAction>> createActionList(EcState destination) {
+    	List<Class<? extends EcAction>> actions = new ArrayList<Class<? extends EcAction>>();
         actions.clear();
         actions.add(EcActionWait.class);
         actions.add(EcActionBuildQueen.class);
@@ -49,6 +51,8 @@ public class EcRequirementTree {
         actions.add(EcActionMineGas.class);
 
         populateActionList(destination, actions);
+        
+        return Collections.unmodifiableList(actions);
     }
 
     /**

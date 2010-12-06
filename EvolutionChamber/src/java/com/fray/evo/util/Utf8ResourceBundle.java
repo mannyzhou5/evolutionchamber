@@ -39,7 +39,7 @@ private static class Utf8PropertyResourceBundle extends ResourceBundle {
   /* (non-Javadoc)
    * @see java.util.ResourceBundle#getKeys()
    */
-  public Enumeration getKeys() {
+  public Enumeration<String> getKeys() {
     return bundle.getKeys();
   }
   /* (non-Javadoc)

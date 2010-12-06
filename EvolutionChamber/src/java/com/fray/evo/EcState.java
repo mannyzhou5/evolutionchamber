@@ -8,15 +8,14 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.fray.evo.util.Building;
-import com.fray.evo.util.ZergBuildingLibrary;
 import com.fray.evo.util.RaceLibraries;
 import com.fray.evo.util.Unit;
-import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.Upgrade;
+import com.fray.evo.util.ZergBuildingLibrary;
+import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.ZergUpgradeLibrary;
 import com.fray.evo.util.optimization.ArrayListInt;
 

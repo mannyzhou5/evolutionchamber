@@ -4,17 +4,15 @@ import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.fray.evo.action.EcAction;
 import com.fray.evo.util.ActionList;
-
-import com.fray.evo.util.GameLog;
-import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.Building;
-import com.fray.evo.util.ZergBuildingLibrary;
-import com.fray.evo.util.Race;
+import com.fray.evo.util.GameLog;
 import com.fray.evo.util.RaceLibraries;
-import java.util.HashMap;
+import com.fray.evo.util.RunnableAction;
+import com.fray.evo.util.ZergBuildingLibrary;
 
 public final class EcBuildOrder extends EcState implements Serializable
 {

@@ -127,7 +127,10 @@ public class EvolutionChamber
 	 */
 	private EcFitnessType		fitnessType				= EcFitnessType.STANDARD;
 	
-	private final List<Class<? extends EcAction>> actions = new ArrayList<Class<? extends EcAction>>();
+	/**
+	 * the minimum of required actions, determined by analyzing the destination state
+	 */
+	private List<Class<? extends EcAction>> requiredActions = new ArrayList<Class<? extends EcAction>>();
 	
 	public EvolutionChamber()
 	{
@@ -235,7 +238,7 @@ public class EvolutionChamber
 		EcState s = importSource();
 		EcState d = getInternalDestination();
 		
-		EcRequirementTree.setupActionList(d, actions);
+		requiredActions = EcRequirementTree.createActionList(d);
 
 		d.settings.fitnessType = fitnessType;
 		CHROMOSOME_LENGTH = d.getEstimatedActions() + 70;
@@ -287,7 +290,7 @@ public class EvolutionChamber
 	{
 		reset(threadIndex);
 
-		final EcEvolver myFunc = new EcEvolver(source, destination, actions);
+		final EcEvolver myFunc = new EcEvolver(source, destination, requiredActions);
 		evolvers[threadIndex] = myFunc;
 
 		final Configuration conf = constructConfiguration(threadIndex, myFunc);
@@ -519,7 +522,7 @@ public class EvolutionChamber
 		final Configuration conf = new DefaultConfiguration(threadIndex + " thread.", threadIndex + " thread.");
 		conf.setFitnessFunction(myFunc);
 		conf.addGeneticOperator(EcGeneticUtil.getCleansingOperator(this));
-		conf.addGeneticOperator(EcGeneticUtil.getOverlordingOperator(this, actions));
+		conf.addGeneticOperator(EcGeneticUtil.getOverlordingOperator(this, requiredActions));
 		conf.addGeneticOperator(EcGeneticUtil.getInsertionOperator(this));
 		conf.addGeneticOperator(EcGeneticUtil.getDeletionOperator(this));
 		conf.addGeneticOperator(EcGeneticUtil.getTwiddleOperator(this));
@@ -677,7 +680,7 @@ public class EvolutionChamber
 		EcBuildOrder bo = new EcBuildOrder(importDestination());
 		try
 		{
-			bo = EcEvolver.populateBuildOrder(bo, fittestChromosome, actions);
+			bo = EcEvolver.populateBuildOrder(bo, fittestChromosome, requiredActions);
 			if (haveSavedBefore)
 				history.remove(history.size() - 1);
 			haveSavedBefore = true;
@@ -727,7 +730,7 @@ public class EvolutionChamber
 		for (int i = 0; i < CHROMOSOME_LENGTH; i++)
 			try
 			{
-				IntegerGene g = new IntegerGene(conf, 0, actions.size() - 1);
+				IntegerGene g = new IntegerGene(conf, 0, requiredActions.size() - 1);
 				g.setAllele(0);
 				genes.add(g);
 			}
@@ -772,8 +775,8 @@ public class EvolutionChamber
 		{
 			if (++CC > CHROMOSOME_LENGTH)
 				continue;
-			IntegerGene g = new IntegerGene(conf, 0, actions.size() - 1);
-			Integer allele = EcAction.findAllele(actions, a);
+			IntegerGene g = new IntegerGene(conf, 0, requiredActions.size() - 1);
+			Integer allele = EcAction.findAllele(requiredActions, a);
 			if (allele == null)
 				break;
 			g.setAllele(allele);
@@ -782,7 +785,7 @@ public class EvolutionChamber
 		}
 		while (genes.size() < CHROMOSOME_LENGTH)
 		{
-			IntegerGene g = new IntegerGene(conf, 0, actions.size() - 1);
+			IntegerGene g = new IntegerGene(conf, 0, requiredActions.size() - 1);
 			g.setAllele(0);
 			genes.add(g);
 		}
@@ -833,6 +836,6 @@ public class EvolutionChamber
 	 * @return
 	 */
 	public List<Class<? extends EcAction>> getActions(){
-		return actions;
+		return requiredActions;
 	}
 }
