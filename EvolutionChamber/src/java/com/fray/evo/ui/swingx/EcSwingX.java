@@ -1584,7 +1584,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 
 	private void addControlParts(JPanel component)
 	{
-		localeComboBox = new LocaleComboBox(new Locale[]{new Locale("en", "US"), new Locale("ko", "KR")}, messages.getLocale());
+		localeComboBox = new LocaleComboBox(new Locale[]{new Locale("en"), new Locale("ko"), new Locale("de")}, messages.getLocale());
 		localeComboBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent event) {
