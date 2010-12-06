@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public abstract class Utf8ResourceBundle {
@@ -42,6 +43,7 @@ public abstract class Utf8ResourceBundle {
 
 		private Utf8PropertyResourceBundle(PropertyResourceBundle bundle) {
 			this.bundle = bundle;
+			
 		}
 
 		/*
@@ -71,6 +73,33 @@ public abstract class Utf8ResourceBundle {
 				return key;
 			}
 		}
-
+		
+		/**
+		 * @return
+		 * @see java.util.ResourceBundle#getLocale()
+		 */
+		@Override
+		public Locale getLocale() {
+		    return bundle.getLocale();
+		}
+		
+		/**
+		 * @return
+		 * @see java.util.ResourceBundle#keySet()
+		 */
+		@Override
+		public Set<String> keySet() {
+		    return bundle.keySet();
+		}
+		
+		/**
+		 * @param aKey
+		 * @return
+		 * @see java.util.ResourceBundle#containsKey(java.lang.String)
+		 */
+		@Override
+		public boolean containsKey(String aKey) {
+		    return bundle.containsKey(aKey);
+		}
 	}
 }

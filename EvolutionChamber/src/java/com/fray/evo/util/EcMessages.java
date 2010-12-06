@@ -1,7 +1,7 @@
 package com.fray.evo.util;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -32,13 +32,20 @@ public class EcMessages {
 		public List<Locale> getCandidateLocales(String baseName, Locale locale) {
 			if (baseName == null)
 				throw new NullPointerException();
-			
-			if (locale.equals(Locale.ROOT)) {
-				// look up for english instead the root, since we really hate to maintain the English locale twice
-				return Arrays.asList(Locale.ENGLISH, Locale.ROOT);
-			}
+
 			List<Locale> defaultCandidates =  super.getCandidateLocales(baseName, locale);
-			return defaultCandidates;
+			
+			
+			List<Locale> enhancedCandidates = new ArrayList<Locale>();
+			for (Locale defaultLocale : defaultCandidates) {
+				if( Locale.ROOT.equals(defaultLocale)){
+					// add the root locale in front of the root locale
+	            	enhancedCandidates.add(Locale.ENGLISH);
+	            }
+				
+	            enhancedCandidates.add(defaultLocale);
+            }
+			return enhancedCandidates;
 		}
 	};
 
@@ -51,7 +58,10 @@ public class EcMessages {
 	 */
 	public EcMessages(String bundleName) {
 		this.bundleName = bundleName;
-		resourceBundle = Utf8ResourceBundle.getBundle(bundleName, Locale.getDefault(), localeCandidateSelector);
+		
+		Locale localeToLoad = Locale.getDefault();
+		resourceBundle = Utf8ResourceBundle.getBundle(bundleName, localeToLoad, localeCandidateSelector);
+		locale = resourceBundle.getLocale();
 		if (locale == null){
 			locale = Locale.getDefault();
 		}
