@@ -16,14 +16,14 @@ import java.util.HashMap;
  */
 public abstract class Library<T> {
 	
-    final protected ArrayList<T> libaryList = new ArrayList<T>();
+    final protected ArrayList<T> libraryList = new ArrayList<T>();
     final protected HashMap<Integer, T> idToItemMap = new HashMap<Integer, T>();
     
 	/**
 	 * @return a list containing all elements of this library
 	 */
 	public ArrayList<T> getList(){
-	    return libaryList;
+	    return libraryList;
 	}
 	
 	public HashMap<Integer, T> getIdToItemMap(){

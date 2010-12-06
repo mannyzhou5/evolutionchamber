@@ -5,7 +5,6 @@
 
 package com.fray.evo.util;
 
-
 /**
  * The singleton instance contains all Zerg Units
  * @author Cyrik
@@ -13,20 +12,20 @@ package com.fray.evo.util;
  */
 public class ZergUnitLibrary extends Library<Unit> {
 
-    final public static Unit Larva = ZergLibrary.Larva;
-    final public static Unit Zergling = ZergLibrary.Zergling;
-    final public static Unit Drone = ZergLibrary.Drone;
-    final public static Unit Roach = ZergLibrary.Roach;
-    final public static Unit Queen = ZergLibrary.Queen;
-    final public static Unit Baneling = ZergLibrary.Baneling;
-    final public static Unit Mutalisk = ZergLibrary.Mutalisk;
-    final public static Unit Hydralisk = ZergLibrary.Hydralisk;
-    final public static Unit Infestor = ZergLibrary.Infestor;
-    final public static Unit Corruptor = ZergLibrary.Corruptor;
-    final public static Unit Ultralisk = ZergLibrary.Ultralisk;
-    final public static Unit Broodlord = ZergLibrary.Broodlord;
-    final public static Unit Overlord = ZergLibrary.Overlord;
-    final public static Unit Overseer = ZergLibrary.Overseer;
+    public static final Unit Larva = ZergLibrary.Larva;
+    public static final Unit Zergling = ZergLibrary.Zergling;
+    public static final Unit Drone = ZergLibrary.Drone;
+    public static final Unit Roach = ZergLibrary.Roach;
+    public static final Unit Queen = ZergLibrary.Queen;
+    public static final Unit Baneling = ZergLibrary.Baneling;
+    public static final Unit Mutalisk = ZergLibrary.Mutalisk;
+    public static final Unit Hydralisk = ZergLibrary.Hydralisk;
+    public static final Unit Infestor = ZergLibrary.Infestor;
+    public static final Unit Corruptor = ZergLibrary.Corruptor;
+    public static final Unit Ultralisk = ZergLibrary.Ultralisk;
+    public static final Unit Broodlord = ZergLibrary.Broodlord;
+    public static final Unit Overlord = ZergLibrary.Overlord;
+    public static final Unit Overseer = ZergLibrary.Overseer;
 
     /**
      * initializes the lists
@@ -34,30 +33,29 @@ public class ZergUnitLibrary extends Library<Unit> {
     private ZergUnitLibrary() {
         // execute parent constructor to init the lists first
         super();
-        libaryList.add(Drone);
-        libaryList.add(Zergling);
-        libaryList.add(Roach);
-        libaryList.add(Queen);
-        libaryList.add(Baneling);
-        libaryList.add(Mutalisk);
-        libaryList.add(Hydralisk);
-        libaryList.add(Infestor);
-        libaryList.add(Corruptor);
-        libaryList.add(Broodlord);
-        libaryList.add(Ultralisk);
-        libaryList.add(Overlord);
-        libaryList.add(Overseer);
-        libaryList.add(Larva);
+        libraryList.add(Drone);
+        libraryList.add(Zergling);
+        libraryList.add(Roach);
+        libraryList.add(Queen);
+        libraryList.add(Baneling);
+        libraryList.add(Mutalisk);
+        libraryList.add(Hydralisk);
+        libraryList.add(Infestor);
+        libraryList.add(Corruptor);
+        libraryList.add(Broodlord);
+        libraryList.add(Ultralisk);
+        libraryList.add(Overlord);
+        libraryList.add(Overseer);
+        libraryList.add(Larva);
 
-        for (Unit unit : libaryList) {
+        for (Unit unit : libraryList) {
             idToItemMap.put(unit.getId(), unit);
         }
     }
 
-    
     // has to be at the end of the class to keep the class initialization in order
-    final private static ZergUnitLibrary instance = new ZergUnitLibrary();
-    final public static ZergUnitLibrary getInstance() {
+    private static final ZergUnitLibrary instance = new ZergUnitLibrary();
+    public static final ZergUnitLibrary getInstance() {
         return instance;
     }
 }

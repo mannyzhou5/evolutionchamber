@@ -11,10 +11,10 @@ import java.util.ArrayList;
  *
  * @author Cyrik
  */
-public final class Upgrade extends Buildable{
+public final class Upgrade extends Buildable {
     private final Building builtFrom;
 
-    public Upgrade(String name,int minerals, int gas, double time, Building builtIn, int id, ArrayList<Buildable> requirements){
+    public Upgrade(int id, String name,int minerals, int gas, double time, Building builtIn, ArrayList<Buildable> requirements){
         super(name,minerals,gas,time,null,requirements, id);
 
         this.builtFrom = builtIn;
