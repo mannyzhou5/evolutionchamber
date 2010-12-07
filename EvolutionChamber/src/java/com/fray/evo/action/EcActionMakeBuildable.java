@@ -5,6 +5,7 @@
 
 package com.fray.evo.action;
 
+import com.fray.evo.BuildableCollection;
 import com.fray.evo.BuildingCollection;
 import com.fray.evo.util.Building;
 import com.fray.evo.util.ZergBuildingLibrary;
@@ -16,7 +17,7 @@ import java.util.HashMap;
  * @author Cyrik
  */
 public abstract class EcActionMakeBuildable extends EcAction{
-    public void makeBusy(ArrayList<ArrayList<EcAction>> madeBusyBy,HashMap<EcAction,Building> actionBusyIn, Building consumes,BuildingCollection buildings )
+    public void makeBusy(ArrayList<ArrayList<EcAction>> madeBusyBy,HashMap<EcAction,Building> actionBusyIn, Building consumes,BuildableCollection<Building> buildings )
             	{
             //ArrayList<EcAction> acc = madeBusyBy.get(consumes);
             if(madeBusyBy.get(consumes.getId()).size() >= buildings.get(consumes)){

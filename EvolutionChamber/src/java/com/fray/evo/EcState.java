@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.logging.Logger;
 
 import com.fray.evo.util.Building;
+import com.fray.evo.util.Library;
 import com.fray.evo.util.RaceLibraries;
 import com.fray.evo.util.Unit;
 import com.fray.evo.util.Upgrade;
@@ -24,8 +25,8 @@ public class EcState implements Serializable
 	private static final Logger logger = Logger.getLogger(EcState.class.getName());
 	public EcSettings	settings	= new EcSettings();
 	protected HashSet<Upgrade> upgrades;
-	protected BuildingCollection buildings;
-	protected UnitCollection units;
+	protected BuildableCollection<Building> buildings;
+	protected BuildableCollection<Unit> units;
 
 
 	public EcState()
@@ -33,15 +34,15 @@ public class EcState implements Serializable
 		hatcheryTimes.add(0);
 		larva.add(3);
 		larvaProduction.add(1);
-		units = new UnitCollection(RaceLibraries.getUnitLibrary(settings.race).getList(), settings.race);
+		units = new BuildableCollection<Unit>(RaceLibraries.getUnitLibrary(settings.race).getList(), settings.race);
 		// Building test = ZergLibrary.Lair;
 		// for(Unit unit: RaceLibraries.getZergUnitLibrary(settings.race).getList()){
 		// units.put(unit, 0);
 		// }
-		buildings = new BuildingCollection(RaceLibraries.getBuildingLibrary(settings.race).getList(), settings.race);
-		ArrayList<Building> buildingList = RaceLibraries.getBuildingLibrary(settings.race).getList();
-		for (int i = 0; i < buildingList.size(); ++i)
-			buildings.put(buildingList.get(i), 0);
+		ArrayList<Building> allBuildingsList = RaceLibraries.getBuildingLibrary(settings.race).getList();
+		buildings = new BuildableCollection<Building>(allBuildingsList, settings.race);
+		for (int i = 0; i < allBuildingsList.size(); ++i)
+			buildings.put(allBuildingsList.get(i), 0);
 
 		upgrades = new HashSet<Upgrade>();
 
@@ -173,7 +174,7 @@ public class EcState implements Serializable
 			requiredBases = s.requiredBases;
 
 		units = unionUnits(units, s.units);
-		BuildingCollection temp = new BuildingCollection(buildings.getSize(), settings.race);
+		BuildableCollection<Building> temp = new BuildableCollection<Building>(buildings.getSize(), settings.race);
 		for (int i = 0; i < buildings.getSize(); i++)
 		{
 			temp.putById(i, Math.max(buildings.getById(i), s.buildings.getById(i)));
@@ -182,9 +183,9 @@ public class EcState implements Serializable
 		upgrades.addAll(s.upgrades);
 	}
 
-	private UnitCollection unionUnits(UnitCollection map, UnitCollection s)
+	private BuildableCollection<Unit> unionUnits(BuildableCollection<Unit> map, BuildableCollection<Unit> s)
 	{
-		UnitCollection result = new UnitCollection(units.getSize(), settings.race);
+		BuildableCollection<Unit> result = new BuildableCollection<Unit>(units.getSize(), settings.race);
 		for (int i = 0; i < map.getSize(); i++)
 		{
 			result.putById(i, Math.max(map.getById(i), s.getById(i)));
@@ -673,12 +674,14 @@ public class EcState implements Serializable
 
 	public HashMap<Building, Integer> getBuildings()
 	{
-		return buildings.toHashMap();
+		Library<Building> allBuildings = RaceLibraries.getBuildingLibrary(settings.race);
+		return buildings.toHashMap(allBuildings);
 	}
 
 	public HashMap<Unit, Integer> getUnits()
 	{
-		return units.toHashMap();
+		Library<Unit> allUnits = RaceLibraries.getUnitLibrary(settings.race);
+		return units.toHashMap(allUnits);
 	}
 
 	public void SetBuilding(Building building, int number)
