@@ -124,8 +124,12 @@ public class EcSwingXMain
 					@Override
 					public void windowClosing(WindowEvent windowevent) {
 						// save the window settings on exit
-						Dimension currentSize = frame.getSize();
 						int currentExtendedState = frame.getExtendedState();
+						
+						// get the preferred size of the non-maximized view
+						if( currentExtendedState != JFrame.NORMAL)
+							frame.setExtendedState(JFrame.NORMAL);
+						Dimension currentSize = frame.getSize();
 						
 						userSettings.setWindowExtensionState(currentExtendedState);
 						userSettings.setWindowSize(currentSize);
