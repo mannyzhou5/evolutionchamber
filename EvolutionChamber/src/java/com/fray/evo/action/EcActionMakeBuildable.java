@@ -21,9 +21,9 @@ public abstract class EcActionMakeBuildable extends EcAction{
             //ArrayList<EcAction> acc = madeBusyBy.get(consumes);
             if(madeBusyBy.get(consumes.getId()).size() >= buildings.get(consumes)){
                 if(consumes == ZergBuildingLibrary.Hatchery){
-                    makeBusy(madeBusyBy, actionBusyIn, consumes, buildings);
+                    makeBusy(madeBusyBy, actionBusyIn, ZergBuildingLibrary.Lair, buildings);
                 }else if(consumes == ZergBuildingLibrary.Lair){
-                    makeBusy(madeBusyBy, actionBusyIn, consumes, buildings);
+                    makeBusy(madeBusyBy, actionBusyIn, ZergBuildingLibrary.Hive, buildings);
                 }else{
                     throw new RuntimeException("should not have been called with too few not busy main buildings");
                 }
