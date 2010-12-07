@@ -20,8 +20,8 @@ public class ZergLibrary {
 	//		cannot use a static counter since the array will now start from 0
 	//		if we switch races at any point.
 
-	public final static Unit Larva					= new Unit(0, "Larva", 0, 0, 0, 0, null, createList(), null);
-	public final static Unit Drone					= new Unit(1, "Drone", 50, 0, 1, 17, Larva, createList(), null);
+	public final static Unit Larva					= new Unit(0, "Larva", 0, 0, 0, 0, null, null, createList());
+	public final static Unit Drone					= new Unit(1, "Drone", 50, 0, 1, 17, Larva, null, createList());
 
 	public static final Building Hatchery			= new Building(0, "Hatchery", 300, 0, 100, Drone, createList());
 	public static final Building Extractor			= new Building(1, "Extractor", 25, 0, 30, Drone, createList());
@@ -41,18 +41,18 @@ public class ZergLibrary {
 	public static final Building SpineCrawler		= new Building(15, "Spine Crawler", 100, 0, 50, Drone, createList(SpawningPool));
 	public static final Building SporeCrawler		= new Building(16, "Spore Crawler", 75, 0, 30, Drone, createList(EvolutionChamber));
 
-	public static final Unit Zergling				= new Unit(2,"Zergling", 50, 0, 1, 24.0, Larva, createList(SpawningPool),null);
-	public static final Unit Roach					= new Unit(3,"Roach", 75, 25, 2, 27, Larva, createList(RoachWarren),null);
-	public static final Unit Queen					= new Unit(4,"Queen", 150, 0, 2, 50, null, createList(SpawningPool),Hatchery);
-	public static final Unit Baneling				= new Unit(5,"Baneling", 25, 25, 0.5, 20, Zergling, createList(BanelingNest),null);
-	public static final Unit Mutalisk				= new Unit(6,"Mutalisk", 100, 100, 2, 33, Larva, createList(Spire),null);
-	public static final Unit Hydralisk				= new Unit(7,"Hydralisk", 100, 50, 2, 33, Larva, createList(HydraliskDen),null);
-	public static final Unit Infestor				= new Unit(8,"Infestor", 100, 150, 2, 50, Larva, createList(InfestationPit),null);
-	public static final Unit Corruptor				= new Unit(9,"Corruptor", 150, 100, 2, 40, Larva, createList(Spire),null);
-	public static final Unit Ultralisk				= new Unit(10,"Ultralisk", 300, 200, 6, 70, Larva, createList(UltraliskCavern),null);
-	public static final Unit Broodlord				= new Unit(11,"Brood Lord", 150, 150, 4, 34, Corruptor, createList(GreaterSpire),null);
-	public static final Unit Overlord				= new Unit(12,"Overlord", 100, 0, 0, 25, Larva, createList(),null);
-	public static final Unit Overseer				= new Unit(13,"Overseer", 50, 100, 0, 17, Overlord, createList(Lair),null);
+	public static final Unit Zergling				= new Unit(2,"Zergling", 50, 0, 1, 24.0, Larva, null, createList(SpawningPool));
+	public static final Unit Roach					= new Unit(3,"Roach", 75, 25, 2, 27, Larva, null, createList(RoachWarren));
+	public static final Unit Queen					= new Unit(4,"Queen", 150, 0, 2, 50, null, Hatchery, createList(SpawningPool));
+	public static final Unit Baneling				= new Unit(5,"Baneling", 25, 25, 0.5, 20, Zergling, null, createList(BanelingNest));
+	public static final Unit Mutalisk				= new Unit(6,"Mutalisk", 100, 100, 2, 33, Larva, null, createList(Spire));
+	public static final Unit Hydralisk				= new Unit(7,"Hydralisk", 100, 50, 2, 33, Larva, null, createList(HydraliskDen));
+	public static final Unit Infestor				= new Unit(8,"Infestor", 100, 150, 2, 50, Larva, null, createList(InfestationPit));
+	public static final Unit Corruptor				= new Unit(9,"Corruptor", 150, 100, 2, 40, Larva, null, createList(Spire));
+	public static final Unit Ultralisk				= new Unit(10,"Ultralisk", 300, 200, 6, 70, Larva, null, createList(UltraliskCavern));
+	public static final Unit Broodlord				= new Unit(11,"Brood Lord", 150, 150, 4, 34, Corruptor, null, createList(GreaterSpire));
+	public static final Unit Overlord				= new Unit(12,"Overlord", 100, 0, 0, 25, Larva, null, createList());
+	public static final Unit Overseer				= new Unit(13,"Overseer", 50, 100, 0, 17, Overlord, null, createList(Lair));
 	
 	public static final Upgrade MetabolicBoost		= new Upgrade(0, "Metabolic Boost", 100, 100, 110, SpawningPool, createList());
 	public static final Upgrade AdrenalGlands		= new Upgrade(1, "Adrenal Glands", 200, 200, 130, SpawningPool, createList(Hive));

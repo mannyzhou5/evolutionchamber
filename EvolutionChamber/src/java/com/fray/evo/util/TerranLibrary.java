@@ -45,21 +45,21 @@ public class TerranLibrary {
 	public static final Building StarportTechLab	= new Building(19, "Starport Tech Lab", 50, 25, 25, Starport, createList());
 	public static final Building StarportReactor	= new Building(20, "Starport Reactor", 50, 50, 50, Starport, createList());
 
-	public static final Unit SCV					= new Unit(0, "SCV", 50, 0, 1, 17, null, createList(), CommandCenter);
+	public static final Unit SCV					= new Unit(0, "SCV", 50, 0, 1, 17, null, CommandCenter, createList());
 	// TODO: MULES will likely have to be a special case like larva, especially if we want the build to consider Extra Supplies as well
-	public static final Unit MULE					= new Unit(1, "MULE", 0, 0, 0, 0, null, createList(), null);
-	public static final Unit Marine					= new Unit(2, "Marine", 50, 0, 1, 25, null, createList(), Barracks);
-	public static final Unit Marauder				= new Unit(3, "Marauder", 100, 25, 2, 30, null, createList(), BarracksTechLab);
-	public static final Unit Reaper					= new Unit(4, "Reaper", 50, 50, 1, 45, null, createList(), BarracksTechLab);
-	public static final Unit Ghost					= new Unit(5, "Ghost", 150, 150, 2, 40, null, createList(GhostAcademy), BarracksTechLab);
-	public static final Unit Hellion				= new Unit(6, "Hellion", 100, 0, 2, 30, null, createList(), Factory);
-	public static final Unit SiegeTank				= new Unit(7, "Siege Tank", 150, 125, 3, 45, null, createList(), FactoryTechLab);
-	public static final Unit Thor					= new Unit(8, "Thor", 300, 200, 6, 60, null, createList(Armory), FactoryTechLab);
-	public static final Unit Viking					= new Unit(9, "Viking", 150, 75, 2, 42, null, createList(), Starport);
-	public static final Unit Medivac				= new Unit(10, "Medivac", 100, 100, 2, 42, null, createList(), Starport);
-	public static final Unit Raven					= new Unit(11, "Raven", 100, 200, 2, 60, null, createList(), StarportTechLab);
-	public static final Unit Banshee				= new Unit(12, "Banshee", 150, 100, 3, 60, null, createList(), StarportTechLab);
-	public static final Unit Battlecruiser			= new Unit(13, "Battlecruiser", 400, 300, 6, 90, null, createList(FusionCore), StarportTechLab);
+	public static final Unit MULE					= new Unit(1, "MULE", 0, 0, 0, 0, null, null, createList());
+	public static final Unit Marine					= new Unit(2, "Marine", 50, 0, 1, 25, null, Barracks, createList());
+	public static final Unit Marauder				= new Unit(3, "Marauder", 100, 25, 2, 30, null, BarracksTechLab, createList());
+	public static final Unit Reaper					= new Unit(4, "Reaper", 50, 50, 1, 45, null, BarracksTechLab, createList());
+	public static final Unit Ghost					= new Unit(5, "Ghost", 150, 150, 2, 40, null, BarracksTechLab, createList(GhostAcademy));
+	public static final Unit Hellion				= new Unit(6, "Hellion", 100, 0, 2, 30, null, Factory, createList());
+	public static final Unit SiegeTank				= new Unit(7, "Siege Tank", 150, 125, 3, 45, null, FactoryTechLab, createList());
+	public static final Unit Thor					= new Unit(8, "Thor", 300, 200, 6, 60, null, FactoryTechLab, createList(Armory));
+	public static final Unit Viking					= new Unit(9, "Viking", 150, 75, 2, 42, null, Starport, createList());
+	public static final Unit Medivac				= new Unit(10, "Medivac", 100, 100, 2, 42, null, Starport, createList());
+	public static final Unit Raven					= new Unit(11, "Raven", 100, 200, 2, 60, null, StarportTechLab, createList());
+	public static final Unit Banshee				= new Unit(12, "Banshee", 150, 100, 3, 60, null, StarportTechLab, createList());
+	public static final Unit Battlecruiser			= new Unit(13, "Battlecruiser", 400, 300, 6, 90, null, StarportTechLab, createList(FusionCore));
 
 	public static final Upgrade T250mmStrikeCannons	= new Upgrade(0, "250mm Strike Cannons", 150, 150, 110, FactoryTechLab, createList(Armory));
 	/* TODO: Special case should nukes be units? */

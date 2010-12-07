@@ -31,23 +31,23 @@ public class ProtossLibrary {
 	public static final Building RoboticsBay		= new Building(12, "Robotics Bay", 200, 200, 65, null, createList(RoboticsFacility));
 	public static final Building FleetBeacon		= new Building(13, "FleetBeacon", 300, 200, 60, null, createList(Stargate));
 	
-	public static final Unit Probe					= new Unit(0, "Probe", 50, 0, 1, 17, null, createList(), Nexus);
-	public static final Unit Zealot					= new Unit(1, "Zealot", 100, 0, 2, 38, null, createList(), Gateway);
-	public static final Unit Stalker				= new Unit(2, "Stalker", 125, 50, 2, 42, null, createList(CyberneticsCore), Gateway);
-	public static final Unit Sentry					= new Unit(3, "Sentry", 50, 100, 2, 42, null, createList(CyberneticsCore), Gateway);
-	public static final Unit Observer				= new Unit(4, "Observer", 50, 100, 1, 40, null, createList(), RoboticsFacility);
-	public static final Unit Immortal				= new Unit(5, "Immortal", 250, 100, 4, 55, null, createList(), RoboticsFacility);
-	public static final Unit WarpPrism				= new Unit(6, "Warp Prism", 200, 0, 2, 60, null, createList(), RoboticsFacility);
-	public static final Unit Colossus				= new Unit(7, "Colossus", 300, 200, 6, 75, null, createList(RoboticsBay), RoboticsFacility);
-	public static final Unit VoidRay				= new Unit(8, "Void Ray", 250, 150, 3, 60, null, createList(), Stargate);
-	public static final Unit HighTemplar			= new Unit(9, "High Templar", 50, 150, 2, 55, null, createList(TemplarArchives), Gateway);
-	public static final Unit DarkTemplar			= new Unit(10, "Dark Templar", 125, 125, 2, 55, null, createList(DarkShrine), Gateway);
+	public static final Unit Probe					= new Unit(0, "Probe", 50, 0, 1, 17, null, Nexus, createList());
+	public static final Unit Zealot					= new Unit(1, "Zealot", 100, 0, 2, 38, null, Gateway, createList());
+	public static final Unit Stalker				= new Unit(2, "Stalker", 125, 50, 2, 42, null, Gateway, createList(CyberneticsCore));
+	public static final Unit Sentry					= new Unit(3, "Sentry", 50, 100, 2, 42, null, Gateway, createList(CyberneticsCore));
+	public static final Unit Observer				= new Unit(4, "Observer", 50, 100, 1, 40, null, RoboticsFacility, createList());
+	public static final Unit Immortal				= new Unit(5, "Immortal", 250, 100, 4, 55, null, RoboticsFacility, createList());
+	public static final Unit WarpPrism				= new Unit(6, "Warp Prism", 200, 0, 2, 60, null, RoboticsFacility, createList());
+	public static final Unit Colossus				= new Unit(7, "Colossus", 300, 200, 6, 75, null, RoboticsFacility, createList(RoboticsBay));
+	public static final Unit VoidRay				= new Unit(8, "Void Ray", 250, 150, 3, 60, null, Stargate, createList());
+	public static final Unit HighTemplar			= new Unit(9, "High Templar", 50, 150, 2, 55, null, Gateway, createList(TemplarArchives));
+	public static final Unit DarkTemplar			= new Unit(10, "Dark Templar", 125, 125, 2, 55, null, Gateway, createList(DarkShrine));
 	/* TODO: Special case for Archon morphing from two HighTemplar */
-	public static final Unit Archon					= new Unit(11, "Archon", 0, 0, 0, 12, HighTemplar, createList(), null);
-	public static final Unit Carrier				= new Unit(12, "Carrier", 350, 250, 6, 120, null, createList(FleetBeacon), Stargate);
-	public static final Unit Mothership				= new Unit(13, "Mothership", 400, 400, 8, 160, null, createList(FleetBeacon), Nexus);
+	public static final Unit Archon					= new Unit(11, "Archon", 0, 0, 0, 12, HighTemplar, null, createList());
+	public static final Unit Carrier				= new Unit(12, "Carrier", 350, 250, 6, 120, null, Stargate, createList(FleetBeacon));
+	public static final Unit Mothership				= new Unit(13, "Mothership", 400, 400, 8, 160, null, Nexus, createList(FleetBeacon));
 	/* TODO: Special case for Interceptors */
-	public static final Unit Interceptor			= new Unit(14, "Interceptor", 25, 0, 0, 8, null, createList(), null);
+	public static final Unit Interceptor			= new Unit(14, "Interceptor", 25, 0, 0, 8, null, null, createList());
 
 	public static final Upgrade Blink				= new Upgrade(0, "Blink", 150, 150, 110, TwilightCouncil, createList());
 	public static final Upgrade Charge				= new Upgrade(1, "Charge", 200, 200, 140, TwilightCouncil, createList());

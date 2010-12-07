@@ -15,7 +15,7 @@ public final class Unit extends Buildable {
     private final double supply;
     private final Building builtFrom;
     
-    public Unit(int id, String name, int minerals, int gas, double supply, double time, Buildable consumes, ArrayList<Buildable> requirements,Building builtFrom) {
+    public Unit(int id, String name, int minerals, int gas, double supply, double time, Buildable consumes, Building builtFrom, ArrayList<Buildable> requirements) {
         super(name, minerals, gas, time, consumes, requirements, id);
 
         this.supply = supply;
