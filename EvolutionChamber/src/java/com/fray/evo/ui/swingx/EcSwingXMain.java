@@ -2,6 +2,11 @@ package com.fray.evo.ui.swingx;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -114,11 +119,29 @@ public class EcSwingXMain
 				frame.setTitle(messages.getString("title", EvolutionChamber.VERSION));
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.getContentPane().add(new EcSwingX(frame));
-				frame.setPreferredSize(new Dimension(950, 830));
+				
+				frame.addWindowListener(new WindowAdapter() {				
+					@Override
+					public void windowClosing(WindowEvent windowevent) {
+						// save the window settings on exit
+						Dimension currentSize = frame.getSize();
+						int currentExtendedState = frame.getExtendedState();
+						
+						userSettings.setWindowExtensionState(currentExtendedState);
+						userSettings.setWindowSize(currentSize);
+					}
+				});
+				
+				
+				frame.setPreferredSize(calculateOptimalAppSize(1200, 850));
 				ImageIcon icon = new ImageIcon(EcSwingXMain.class.getResource(iconLocation));
 				frame.setIconImage(icon.getImage());
 				frame.pack();
 				frame.setLocationRelativeTo(null);
+				
+				frame.setExtendedState(getOptimalExtendedState(frame));
+				
+				
 
 				final JFrame updateFrame = new JFrame();
 				updateFrame.setTitle(messages.getString("update.title"));
@@ -144,6 +167,66 @@ public class EcSwingXMain
 				});
 			}
 		});
+	}
+	
+	/**
+	 * checks if this JFrame is too big to be viewed on the main screen and returns the recommended extension state
+	 * if the userSettings contains an preference, this is used as initial value. However, this may get overwritten if the screen resolution changed.
+	 * @param frame the frame to check
+	 * @return the state, to tell if this window should be maximized in any direction
+	 * @see JFrame#setExtendedState(int)
+	 */
+	private static int getOptimalExtendedState(JFrame frame){
+		int extendedState = frame.getExtendedState();
+		
+		Integer userPrefExtensionState = userSettings.getWindowExtensionState();
+		if( userPrefExtensionState != null){
+			extendedState = userPrefExtensionState.intValue();
+		}
+		
+		
+		int width = frame.getPreferredSize().width;
+		int height = frame.getPreferredSize().height;
+		
+		Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();
+		if( screenDimensions.getHeight() <= height){
+			height = screenDimensions.height;
+			extendedState = extendedState | JFrame.MAXIMIZED_VERT;
+		}
+		
+		if( screenDimensions.getWidth() <= width){
+			width = screenDimensions.width;
+			extendedState = extendedState | JFrame.MAXIMIZED_HORIZ;
+		}
+		
+		return extendedState;
+	}
+	
+	/**
+	 * fits the app size to the resolution of the users screen
+	 * if user settings exist, those get used as default value. However, if the screen size is too low, this value is overwritten.
+	 * 
+	 * @param width the default width
+	 * @param height the default height
+	 * @return the preferred values or lower sizes if the screen resolution is too low
+	 */
+	private static Dimension calculateOptimalAppSize(int width, int height){
+		Dimension userWindowSize = userSettings.getWindowSize();
+		if( userWindowSize != null ){
+			width = userWindowSize.width;
+			height = userWindowSize.height;
+		}
+		
+		Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();
+		if( screenDimensions.getHeight() < height){
+			height = screenDimensions.height;
+		}
+		
+		if( screenDimensions.getWidth() < width){
+			width = screenDimensions.width;
+		}
+		
+		return new Dimension(width, height);
 	}
 
 	private static EcAutoUpdate checkForUpdates()

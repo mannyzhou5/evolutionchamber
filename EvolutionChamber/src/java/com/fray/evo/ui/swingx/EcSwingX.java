@@ -242,7 +242,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		}
 
 		add(outside);
-		outside.setDividerLocation(430);
+		outside.setDividerLocation(490);
 	}
 	
 	private void refreshTabs(){

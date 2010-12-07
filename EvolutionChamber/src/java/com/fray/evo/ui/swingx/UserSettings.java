@@ -1,5 +1,6 @@
 package com.fray.evo.ui.swingx;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -76,6 +77,68 @@ public class UserSettings {
 	public void setLocale(Locale locale) {
 		setPropertyAndSave("locale", locale.getLanguage() + "_" + locale.getCountry());
 	}
+	
+	
+	/**
+	 * retrieves a property as integer
+	 * 
+	 * @param propertyName the property key
+	 * @return the integer value or null if it is not set or could not be parsed
+	 */
+	private Integer getAsInteger(String propertyName){
+		String stringVal = properties.getProperty(propertyName);
+		try {
+			Integer integerVal = Integer.valueOf(stringVal);
+			return integerVal;
+		} catch (NumberFormatException e) {
+			logger.warning("The value of the UserSetting '" + propertyName + "' could not be parsed to a integer");
+		}
+		return null;
+	}
+	
+	/**
+	 * Gets the preferred window extension state (normal, maximized)
+	 * @return
+	 */
+	public Integer getWindowExtensionState(){
+		return getAsInteger("gui.windowExtendedState");
+	}
+	
+	/**
+	 * Gets the preferred window extension state (normal, maximized)
+	 * @return
+	 */
+	public Dimension getWindowSize(){
+		Integer height =  getAsInteger("gui.windowHeight");
+		Integer width =  getAsInteger("gui.windowWidth");
+		
+		if( height != null && width != null){
+			return new Dimension(width.intValue(), height.intValue());
+		}
+		return null;
+
+	}
+	
+	/**
+	 * save the window dimensions
+	 * @param dimension
+	 */
+	public void setWindowSize(Dimension dimension){
+		if(dimension != null){
+			properties.setProperty("gui.windowHeight", Integer.toString(dimension.height));
+			properties.setProperty("gui.windowWidth", Integer.toString(dimension.width));
+			save();
+		}
+	}
+	
+	/**
+	 * save the preferred window state (normal,maximized)
+	 * @param state
+	 */
+	public void setWindowExtensionState(int state){
+		setPropertyAndSave("gui.windowExtendedState", Integer.toString(state));
+	}
+	
 
 	/**
 	 * Gets the version of the file.
