@@ -483,6 +483,20 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		}).setSelected(destination.get(destination.size()-1).settings.pullThreeWorkersOnly);
 		gridy++;
+		addCheck(settings, messages.getString("settings.avoidMiningGas"), new CustomActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				destination.get(destination.size()-1).settings.avoidMiningGas = getTrue(e);
+			}
+			@Override
+			void reverse(Object o)
+			{
+				JCheckBox c = (JCheckBox) o;
+				c.setSelected(destination.get(destination.size()-1).settings.avoidMiningGas);
+			}
+		}).setSelected(destination.get(destination.size()-1).settings.avoidMiningGas);
+		gridy++;
 		addInput(settings, messages.getString("settings.maxExtractorTrickSupply"), new CustomActionListener()
 		{
 			@Override

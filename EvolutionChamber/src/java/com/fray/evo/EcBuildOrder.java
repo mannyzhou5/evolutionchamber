@@ -22,18 +22,21 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public int				dronesGoingOnGas	= 0;
 	public int				dronesOnMinerals	= 0;
 	public int				dronesOnGas			= 0;
-	public int				evolvingSpires		= 0;
-	public int				evolutionChambersInUse;
-	public HashMap<EcAction,Building>       actionBusyIn            = new HashMap<EcAction, Building>();
-	public ArrayList<ArrayList<EcAction>> madeBusyBy;
+	
 	public boolean 			droneIsScouting		= false;
+	
+	public final HashMap<EcAction,Building> actionBusyIn = new HashMap<EcAction, Building>();
+	public ArrayList<ArrayList<EcAction>> 	madeBusyBy;
+	
+	private transient ActionList	futureAction;
+	public ArrayList<EcAction>		actions				 = new ArrayList<EcAction>();
 
-	transient ActionList	futureAction		= new ActionList();
-	public ArrayList<EcAction>		actions				= new ArrayList<EcAction>();
-
+	
 	public EcBuildOrder()
 	{
         super();
+        futureAction = new ActionList();
+        
         ArrayList<Building> buildingList = RaceLibraries.getBuildingLibrary(settings.race).getList();
         madeBusyBy = new ArrayList<ArrayList<EcAction>>(buildingList.size());
         for(int i = 0; i < buildingList.size(); ++i)
@@ -50,6 +53,8 @@ public final class EcBuildOrder extends EcState implements Serializable
 	
 	public EcBuildOrder(EcState importDestination)
 	{
+		futureAction = new ActionList();
+		
 		//Fixed: Need to assign this to the variable, not the other way around.
 		//-Lomilar
 		importDestination.assign(this);
@@ -109,7 +114,6 @@ public final class EcBuildOrder extends EcState implements Serializable
 		s.dronesGoingOnGas = dronesGoingOnGas;
 		s.dronesOnMinerals = dronesOnMinerals;
 		s.dronesOnGas = dronesOnGas;
-		s.evolutionChambersInUse = evolutionChambersInUse;
 		super.assign(s);
 	}
 
@@ -138,8 +142,6 @@ public final class EcBuildOrder extends EcState implements Serializable
 	public void addFutureAction(int time, RunnableAction runnable)
 	{
 		time = seconds + time;
-		if (futureAction == null)
-			futureAction = new ActionList();
 		futureAction.put(time, runnable);
 		actionLength++;
 	}

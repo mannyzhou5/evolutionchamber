@@ -13,6 +13,7 @@ public final class EcSettings implements Serializable
 	public boolean workerParity = false;
 	public boolean overDrone = false;
 	public boolean useExtractorTrick = true;
+	public boolean avoidMiningGas = true;
 	public boolean pullWorkersFromGas = true;
 	public boolean pullThreeWorkersOnly = false;
 	public EcFitnessType fitnessType = EcFitnessType.STANDARD;
