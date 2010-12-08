@@ -9,7 +9,7 @@ package com.fray.evo.util;
  * The singleton instance contains all Terran Upgrades
  * 
  */
-public class TerranUpgradeLibrary extends Library<Upgrade>  {
+public final class TerranUpgradeLibrary extends Library<Upgrade>  {
     public static final Upgrade T250mmStrikeCannons = TerranLibrary.T250mmStrikeCannons;
 	public static final Upgrade ArmSilowithNuke = TerranLibrary.ArmSilowithNuke;
 	public static final Upgrade BehemothReactor = TerranLibrary.BehemothReactor;

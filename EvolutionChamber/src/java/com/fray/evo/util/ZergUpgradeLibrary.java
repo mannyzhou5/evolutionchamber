@@ -10,7 +10,7 @@ package com.fray.evo.util;
  * @author Cyrik
  * 
  */
-public class ZergUpgradeLibrary extends Library<Upgrade> {
+public final class ZergUpgradeLibrary extends Library<Upgrade> {
     
     public static final Upgrade MetabolicBoost = ZergLibrary.MetabolicBoost;
     public static final Upgrade AdrenalGlands = ZergLibrary.AdrenalGlands;

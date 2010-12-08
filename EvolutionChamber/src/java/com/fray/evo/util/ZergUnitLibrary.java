@@ -10,7 +10,7 @@ package com.fray.evo.util;
  * @author Cyrik
  * 
  */
-public class ZergUnitLibrary extends Library<Unit> {
+public final class ZergUnitLibrary extends Library<Unit> {
 
     public static final Unit Larva = ZergLibrary.Larva;
     public static final Unit Zergling = ZergLibrary.Zergling;

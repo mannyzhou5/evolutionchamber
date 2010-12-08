@@ -8,7 +8,7 @@ package com.fray.evo.util;
  *
  * Contains all libraries
  */
-public class RaceLibraries {
+public final class RaceLibraries {
 	
 	public static final ZergBuildingLibrary zergBuildingLibrary = ZergBuildingLibrary.getInstance();
 	public static final ZergUpgradeLibrary zergUpgradeLibrary = ZergUpgradeLibrary.getInstance();

@@ -34,7 +34,7 @@ import org.jgap.impl.IntegerGene;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.fitness.EcFitnessType;
 
-public class EvolutionChamber
+public final class EvolutionChamber
 {
 	private static final Logger logger = Logger.getLogger(EvolutionChamber.class.getName());
 	

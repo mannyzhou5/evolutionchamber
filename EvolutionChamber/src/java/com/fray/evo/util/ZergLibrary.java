@@ -11,7 +11,7 @@ import java.util.Arrays;
  *
  * @author Cyrik
  */
-public class ZergLibrary {
+public final class ZergLibrary {
 	static private ArrayList<Buildable> createList(Buildable... buildables) {
 		return new ArrayList<Buildable>(Arrays.asList(buildables));
 	}

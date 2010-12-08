@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
-public class EcCacheMap<E, T> implements Map<E, T>
+public final class EcCacheMap<E, T> implements Map<E, T>
 {
 	private static final Logger logger = Logger.getLogger(EcCacheMap.class.getName());
 	private static final long		serialVersionUID	= 1L;

@@ -9,7 +9,7 @@ package com.fray.evo.util;
  * @author Cyrik
  * 
  */
-public class ZergBuildingLibrary extends Library<Building> {
+public final class ZergBuildingLibrary extends Library<Building> {
 
     public static final Building Hatchery = ZergLibrary.Hatchery;
     public static final Building Extractor = ZergLibrary.Extractor;

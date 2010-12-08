@@ -7,7 +7,7 @@ package com.fray.evo.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ProtossLibrary {
+public final class ProtossLibrary {
 	static private ArrayList<Buildable> createList(Buildable... buildables) {
 		return new ArrayList<Buildable>(Arrays.asList(buildables));
 	}

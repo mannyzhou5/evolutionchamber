@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * @author mike.angstadt
  */
-public class EcYabotEncoder {
+public final class EcYabotEncoder {
 	/**
 	 * Represents a unit, building, or upgrade.
 	 * 

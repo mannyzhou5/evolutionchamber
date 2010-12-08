@@ -8,7 +8,7 @@ package com.fray.evo.util;
  * The singleton instance contains all Protoss Buildings
  * 
  */
-public class ProtossBuildingLibrary extends Library<Building> {
+public final class ProtossBuildingLibrary extends Library<Building> {
 
 	public static final Building Nexus = ProtossLibrary.Nexus;
 	public static final Building Pylon = ProtossLibrary.Pylon;

@@ -9,7 +9,7 @@ package com.fray.evo.util;
  * The singleton instance contains all Terran Units
  * 
  */
-public class TerranUnitLibrary extends Library<Unit> {
+public final class TerranUnitLibrary extends Library<Unit> {
     public static final Unit SCV = TerranLibrary.SCV;
     public static final Unit MULE = TerranLibrary.MULE;
     public static final Unit Marine = TerranLibrary.Marine;

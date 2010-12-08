@@ -11,7 +11,7 @@ import com.fray.evo.EcState;
  *
  * @author Cyrik
  */
-public class MaxDronesFitness implements EcFitness {
+public final class MaxDronesFitness implements EcFitness {
 
     @Override
     public double score(EcState candidate, EcState metric) {

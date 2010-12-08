@@ -8,7 +8,7 @@ import com.fray.evo.fitness.EcFitnessType;
 import com.fray.evo.fitness.EcStandardFitness;
 import com.fray.evo.util.Race;
 
-public class EcSettings implements Serializable
+public final class EcSettings implements Serializable
 {
 	public boolean workerParity = false;
 	public boolean overDrone = false;

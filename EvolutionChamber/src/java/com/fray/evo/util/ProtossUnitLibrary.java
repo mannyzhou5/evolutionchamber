@@ -9,7 +9,7 @@ package com.fray.evo.util;
  * The singleton instance contains all Protoss Units
  * 
  */
-public class ProtossUnitLibrary extends Library<Unit> {
+public final class ProtossUnitLibrary extends Library<Unit> {
     public static final Unit Probe = ProtossLibrary.Probe;
     public static final Unit Zealot = ProtossLibrary.Zealot;
     public static final Unit Stalker = ProtossLibrary.Stalker;

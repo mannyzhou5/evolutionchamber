@@ -16,7 +16,7 @@ import org.jgap.util.ICloneable;
 import com.fray.evo.action.EcAction;
 import com.fray.evo.action.build.EcActionBuildOverlord;
 
-public class EcGeneticUtil
+public final class EcGeneticUtil
 {
 	private static final Logger logger = Logger.getLogger(EcGeneticUtil.class.getName());
 	static GeneticOperator getDeletionOperator(final EvolutionChamber c)

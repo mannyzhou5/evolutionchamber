@@ -27,7 +27,7 @@ import com.fray.evo.util.ZergUnitLibrary;
 /**
  * Utility to populate the list of require actions for the evolver
  */
-public class EcRequirementTree {
+public final class EcRequirementTree {
 
     /**
      * fills a List with all required actions for a EcState

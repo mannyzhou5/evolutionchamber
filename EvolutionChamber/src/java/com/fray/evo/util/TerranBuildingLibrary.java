@@ -8,7 +8,7 @@ package com.fray.evo.util;
  * The singleton instance contains all Terran Buildings
  * 
  */
-public class TerranBuildingLibrary extends Library<Building> {
+public final class TerranBuildingLibrary extends Library<Building> {
 
 	public static final Building CommandCenter = TerranLibrary.CommandCenter;
 	public static final Building SupplyDepot = TerranLibrary.SupplyDepot;

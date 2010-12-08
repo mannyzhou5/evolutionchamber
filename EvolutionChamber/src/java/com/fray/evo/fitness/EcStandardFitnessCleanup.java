@@ -18,7 +18,7 @@ import com.fray.evo.util.Unit;
 import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.Upgrade;
 
-public class EcStandardFitnessCleanup implements EcFitness {
+public final class EcStandardFitnessCleanup implements EcFitness {
 
     public double augmentScore(EcState current, EcState destination, double score, boolean waypoint) {
 

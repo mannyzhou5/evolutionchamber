@@ -3,7 +3,7 @@ package com.fray.evo.util;
 import java.io.File;
 import java.io.IOException;
 
-public class EcFileSystem
+public final class EcFileSystem
 {
 
 	public static String getTempPath()

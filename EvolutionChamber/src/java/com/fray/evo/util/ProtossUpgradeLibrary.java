@@ -9,7 +9,7 @@ package com.fray.evo.util;
  * The singleton instance contains all Protoss Upgrades
  * 
  */
-public class ProtossUpgradeLibrary extends Library<Upgrade>  {
+public final class ProtossUpgradeLibrary extends Library<Upgrade>  {
     public static final Upgrade Blink = ProtossLibrary.Blink;
     public static final Upgrade Charge = ProtossLibrary.Charge;
     public static final Upgrade ExtendedThermalLance = ProtossLibrary.ExtendedThermalLance;

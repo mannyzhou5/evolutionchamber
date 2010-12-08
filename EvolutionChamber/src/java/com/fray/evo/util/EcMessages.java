@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * @author mike.angstadt
  * 
  */
-public class EcMessages {
+public final class EcMessages {
 	private final String bundleName;
 	private ResourceBundle resourceBundle;
 	private Locale locale;

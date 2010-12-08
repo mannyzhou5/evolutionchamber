@@ -2,7 +2,7 @@ package com.fray.evo.fitness;
 
 import com.fray.evo.EcState;
 
-public class EcEconFitness implements EcFitness {
+public final class EcEconFitness implements EcFitness {
 
 	public double augmentScore(EcState current, EcState destination, double score, boolean waypoint)
 	{
