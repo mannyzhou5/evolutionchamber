@@ -552,7 +552,7 @@ public class EcState implements Serializable
 
 		for (int i = 0; i < waypoints.size(); ++i) {
 			EcState s = waypoints.get(i);
-			if (candidate.seconds >= s.targetSeconds)
+			if (candidate.seconds == s.targetSeconds)
 				if (!s.isSatisfied(candidate))
 					return true;
 		}

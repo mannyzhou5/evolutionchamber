@@ -57,9 +57,42 @@ public final class EcBuildOrder extends EcState implements Serializable
 
 	public void tick(GameLog e)
 	{
-		executeLarvaProduction(e);
-		accumulateMaterials(e);
-		checkScoutingDrone(e);
+		//Larva Production
+		for (int hatchIndex = 0; hatchIndex < larva.size(); hatchIndex++) {
+			if (getLarva(hatchIndex) < 3)
+			{
+				if (larvaProduction.get(hatchIndex) == 15)
+				{
+					if (e.isEnabled())
+						e.printMessage(this, GameLog.MessageType.Obtained,
+								" @" + messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva") + " +1" );
+					incrementLarva(hatchIndex);
+					larvaProduction.set(hatchIndex, 0);
+				}
+				larvaProduction.increment(hatchIndex);
+			}
+		}
+
+		//Accumulate Materials
+		double mins = mineMinerals();
+		minerals += mins;
+		totalMineralsMined += mins;
+		gas += mineGas();
+
+		//Check Scouting Drone
+		if(!droneIsScouting && scoutDrone != 0 && seconds >= scoutDrone ) {
+			if (dronesGoingOnMinerals > 0) {
+				droneIsScouting = true;
+				dronesGoingOnMinerals--;
+				if (e.isEnabled())
+					e.printMessage(this, GameLog.MessageType.Scout, " +1 Scouting Drone");
+			} else if (dronesOnMinerals > 0) {
+				droneIsScouting = true;
+				dronesOnMinerals--;
+				if (e.isEnabled())
+					e.printMessage(this, GameLog.MessageType.Scout, " +1 Scouting Drone");
+			}
+		}
 	}
 	
 	@Override
@@ -136,40 +169,6 @@ public final class EcBuildOrder extends EcState implements Serializable
 		final int finalHighestLarvaHatch = highestLarvaHatch;
 				
 		decrementLarva(finalHighestLarvaHatch);
-	}
-
-	private void executeLarvaProduction(GameLog e)
-	{
-		for (int hatchIndex = 0; hatchIndex < larva.size(); hatchIndex++) {
-			if (getLarva(hatchIndex) < 3)
-			{
-				if (larvaProduction.get(hatchIndex) == 15)
-				{
-					if (e.isEnabled())
-						e.printMessage(this, GameLog.MessageType.Obtained,
-								" @" + messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva") + " +1" );
-					incrementLarva(hatchIndex);
-					larvaProduction.set(hatchIndex, 0);
-				}
-				larvaProduction.increment(hatchIndex);
-			}
-		}
-	}
-
-	private void checkScoutingDrone(GameLog e) {
-		if(!droneIsScouting && scoutDrone != 0 && seconds >= scoutDrone ) {
-			if (dronesGoingOnMinerals > 0) {
-				droneIsScouting = true;
-				dronesGoingOnMinerals--;
-				if (e.isEnabled())
-					e.printMessage(this, GameLog.MessageType.Scout, " +1 Scouting Drone");
-			} else if (dronesOnMinerals > 0) {
-				droneIsScouting = true;
-				dronesOnMinerals--;
-				if (e.isEnabled())
-					e.printMessage(this, GameLog.MessageType.Scout, " +1 Scouting Drone");
-			}
-		}
 	}
 
 	public boolean hasSupply(double i)
@@ -323,14 +322,6 @@ public final class EcBuildOrder extends EcState implements Serializable
 				gasMined += 114.0 / 60.0; // Per TeamLiquid
 
 		return gasMined;
-	}
-
-	private void accumulateMaterials(GameLog e)
-	{
-		double mins = mineMinerals();
-		minerals += mins;
-		totalMineralsMined += mins;
-		gas += mineGas();
 	}
 
 	public String timestampIncremented(int increment)

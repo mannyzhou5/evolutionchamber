@@ -21,7 +21,7 @@ public final class ActionList {
 	
 	public RunnableAction get( int i )
 	{
-		if( pq.peek() != null && pq.peek().time == i ) {
+		if( hasFutureActions() && pq.peek().time == i ) {
 			numLeft--;
 			return pq.poll().object;
 		}

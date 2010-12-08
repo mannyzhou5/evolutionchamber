@@ -24,8 +24,7 @@ import java.util.Arrays;
 
 /**
  * ArrayListInt is an implementation of {@link List}, backed by an array. All
- * optional operations adding, removing, and replacing are supported. The
- * elements can be any objects.
+ * optional operations adding, removing, and replacing are supported.
  */
 public final class ArrayListInt implements Serializable {
 
@@ -57,6 +56,7 @@ public final class ArrayListInt implements Serializable {
         }
         firstIndex = lastIndex = 0;
         array = new int[capacity];
+        total = 0;
     }
 
     /**
