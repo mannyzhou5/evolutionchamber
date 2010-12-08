@@ -21,6 +21,8 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
@@ -1600,10 +1602,28 @@ public class EcSwingX extends JXPanel implements EcReportable
 				userSettings.setLocale(selected);
 				
 				//re-create the window
-				JFrame newFrame = new JFrame();
+				final JFrame newFrame = new JFrame();
+				EcSwingXMain.mainWindow = newFrame; //for when a Mac user selects "Quit" from the application menu
 				newFrame.setTitle(messages.getString("title", EvolutionChamber.VERSION));
 				newFrame.setDefaultCloseOperation(frame.getDefaultCloseOperation());
 				newFrame.getContentPane().add(new EcSwingX(newFrame));
+				
+				newFrame.addWindowListener(new WindowAdapter() {				
+					@Override
+					public void windowClosing(WindowEvent windowevent) {
+						// save the window settings on exit
+						int currentExtendedState = newFrame.getExtendedState();
+						
+						// get the preferred size of the non-maximized view
+						if( currentExtendedState != JFrame.NORMAL)
+							newFrame.setExtendedState(JFrame.NORMAL);
+						Dimension currentSize = frame.getSize();
+						
+						userSettings.setWindowExtensionState(currentExtendedState);
+						userSettings.setWindowSize(currentSize);
+					}
+				});
+				
 				newFrame.setPreferredSize(frame.getPreferredSize());
 				newFrame.setIconImage(frame.getIconImage());
 				newFrame.pack();

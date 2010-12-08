@@ -75,7 +75,11 @@ public class UserSettings {
 	 * @param locale
 	 */
 	public void setLocale(Locale locale) {
-		setPropertyAndSave("locale", locale.getLanguage() + "_" + locale.getCountry());
+		String localeStr = locale.getLanguage();
+		if (locale.getCountry() != null && !locale.getCountry().isEmpty()){
+			localeStr += "_" + locale.getCountry();
+		}
+		setPropertyAndSave("locale", localeStr);
 	}
 	
 	

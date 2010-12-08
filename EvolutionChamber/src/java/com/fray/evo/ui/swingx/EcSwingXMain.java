@@ -3,8 +3,6 @@ package com.fray.evo.ui.swingx;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
@@ -62,6 +60,8 @@ public class EcSwingXMain
 	 */
 	public static final String iconLocation = "/com/fray/evo/ui/swingx/evolution_chamber.png";
 
+	public static JFrame mainWindow;
+
 	public static void main(String args[])
 	{
 		//setup the logger
@@ -88,6 +88,17 @@ public class EcSwingXMain
 			@Override
 			public void handleQuit(Object applicationEvent)
 			{
+				// save the window settings on exit
+				int currentExtendedState = mainWindow.getExtendedState();
+				
+				// get the preferred size of the non-maximized view
+				if( currentExtendedState != JFrame.NORMAL)
+					mainWindow.setExtendedState(JFrame.NORMAL);
+				Dimension currentSize = mainWindow.getSize();
+				
+				userSettings.setWindowExtensionState(currentExtendedState);
+				userSettings.setWindowSize(currentSize);
+				
 				System.exit(0);
 			}
 
@@ -116,6 +127,7 @@ public class EcSwingXMain
 //				}
 
 				final JFrame frame = new JFrame();
+				mainWindow = frame; //for when a Mac user selects "Quit" from the application menu
 				frame.setTitle(messages.getString("title", EvolutionChamber.VERSION));
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.getContentPane().add(new EcSwingX(frame));
