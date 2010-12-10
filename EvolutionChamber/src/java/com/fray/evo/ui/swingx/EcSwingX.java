@@ -712,7 +712,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			void reverse(Object o)
 			{
 				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.targetSeconds));
+				c.setText(formatAsTime(dest.targetSeconds));
 			}
 		}).setText(formatAsTime(dest.targetSeconds));
 		gridy++;
