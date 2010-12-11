@@ -15,7 +15,8 @@ public final class EcYabotEncoder {
 	 * @author mike.angstadt
 	 */
 	public static enum Action {
-		BanelingNest(0, 33), EvolutionChamber(0, 34), Extractor(0, 35), Hatchery(0, 36), HydraliskDen(0, 37), InfestationPit(0, 38), NydusNetwork(0, 39), RoachWarren(0, 40), SpawningPool(0, 41), SpineCrawler(0, 42), GreaterSpire(2, 5), Spire(0, 43), SporeCrawler(0, 44), UltraliskCavern(0, 45), Corruptor(1, 27), Drone(1, 28), Hydralisk(1, 29), Infestor(1, 38), Mutalisk(1, 30), Overlord(1, 31), Queen(1, 32), Roach(1, 33), Ultralisk(1, 34), Zergling(1, 035), Lair(2, 3), Hive(2, 4), BroodLord(2, 6), Baneling(2, 7), Overseer(2, 8), Carapace(3, 28), Melee(3, 29), FlyerAttack(3, 31), FlyerArmor(3, 30), Missile(3, 32), GroovedSpines(3, 33), PneumatizedCarapace(3, 34), GlialReconstitution(3, 36), TunnelingClaws(3, 38), ChitinousPlating(3, 40), AdrenalGlands(3, 41), MetabolicBoost(3, 42), Burrow(3, 44), CentrifugalHooks(3, 45), NeuralParasite(3, 49), PathogenGlands(3, 50);
+		//TODO find the correct data for Ventral Sacs
+		BanelingNest(0, 33), EvolutionChamber(0, 34), Extractor(0, 35), Hatchery(0, 36), HydraliskDen(0, 37), InfestationPit(0, 38), NydusNetwork(0, 39), RoachWarren(0, 40), SpawningPool(0, 41), SpineCrawler(0, 42), GreaterSpire(2, 5), Spire(0, 43), SporeCrawler(0, 44), UltraliskCavern(0, 45), Corruptor(1, 27), Drone(1, 28), Hydralisk(1, 29), Infestor(1, 38), Mutalisk(1, 30), Overlord(1, 31), Queen(1, 32), Roach(1, 33), Ultralisk(1, 34), Zergling(1, 035), Lair(2, 3), Hive(2, 4), BroodLord(2, 6), Baneling(2, 7), Overseer(2, 8), Carapace(3, 28), Melee(3, 29), FlyerAttack(3, 31), FlyerArmor(3, 30), Missile(3, 32), GroovedSpines(3, 33), PneumatizedCarapace(3, 34), GlialReconstitution(3, 36), TunnelingClaws(3, 38), ChitinousPlating(3, 40), AdrenalGlands(3, 41), MetabolicBoost(3, 42), Burrow(3, 44), CentrifugalHooks(3, 45), NeuralParasite(3, 49), PathogenGlands(3, 50), VentralSacs(3, 0);
 
 		public final int type;
 		public final int item;

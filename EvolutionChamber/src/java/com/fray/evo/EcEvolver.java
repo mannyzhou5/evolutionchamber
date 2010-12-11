@@ -76,6 +76,7 @@ import com.fray.evo.action.upgrade.EcActionUpgradeNeuralParasite;
 import com.fray.evo.action.upgrade.EcActionUpgradePathogenGlands;
 import com.fray.evo.action.upgrade.EcActionUpgradePneumatizedCarapace;
 import com.fray.evo.action.upgrade.EcActionUpgradeTunnelingClaws;
+import com.fray.evo.action.upgrade.EcActionUpgradeVentralSacs;
 import com.fray.evo.util.EcUtil;
 import com.fray.evo.util.EcYabotEncoder;
 import com.fray.evo.util.GameLog;
@@ -152,6 +153,7 @@ public final class EcEvolver extends FitnessFunction
 		m.put(EcActionUpgradeCentrifugalHooks.class, EcYabotEncoder.Action.CentrifugalHooks);
 		m.put(EcActionUpgradeNeuralParasite.class, EcYabotEncoder.Action.NeuralParasite);
 		m.put(EcActionUpgradePathogenGlands.class, EcYabotEncoder.Action.PathogenGlands);
+		m.put(EcActionUpgradeVentralSacs.class, EcYabotEncoder.Action.VentralSacs);
 		yabotMapping = Collections.unmodifiableMap(m);
 	}
 
