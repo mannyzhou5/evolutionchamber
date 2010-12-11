@@ -59,6 +59,10 @@ public abstract class Buildable implements Serializable {
         return time;
     }
 
+    /**
+     * The i18n property name of the unit/upgrade/building.
+     * @return
+     */
     public String getName() {
         return name;
     }

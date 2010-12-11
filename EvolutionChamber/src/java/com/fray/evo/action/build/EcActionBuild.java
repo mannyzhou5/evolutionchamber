@@ -30,7 +30,7 @@ public abstract class EcActionBuild extends EcActionMakeBuildable implements Ser
     protected void obtainOne(EcBuildOrder s, GameLog e) {
     	if (e.isEnabled())
 			e.printMessage(s, GameLog.MessageType.Obtained,
-					" " + messages.getString(getName().replace(" ", ".")) + "+1");
+					" " + messages.getString(getName()) + "+1");
     }
 
     public int getMinerals() {
@@ -50,6 +50,11 @@ public abstract class EcActionBuild extends EcActionMakeBuildable implements Ser
     }
     public Buildable getConsumes(){
         return buildable.getConsumes();
+    }
+    
+    @Override
+    public String toString(){
+		return messages.getString(buildable.getName() + ".build");
     }
 
 }

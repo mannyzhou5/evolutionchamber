@@ -16,6 +16,7 @@ import com.fray.evo.util.RaceLibraries;
 import com.fray.evo.util.Unit;
 import com.fray.evo.util.Upgrade;
 import com.fray.evo.util.ZergBuildingLibrary;
+import com.fray.evo.util.ZergLibrary;
 import com.fray.evo.util.ZergUnitLibrary;
 import com.fray.evo.util.ZergUpgradeLibrary;
 import com.fray.evo.util.optimization.ArrayListInt;
@@ -450,69 +451,69 @@ public class EcState implements Serializable
 
 	private void appendBuildStuff(StringBuilder sb)
 	{
-		append(sb, "Drone", getDrones());
-		append(sb, "Overlord", getOverlords());
-		append(sb, "Overseer", getOverseers());
-		append(sb, "Queen", getQueens());
-		append(sb, "Zergling", getZerglings());
-		append(sb, "Baneling", getBanelings());
-		append(sb, "Roach", getRoaches());
-		append(sb, "Hydralisk", getHydralisks());
-		append(sb, "Infestor", getInfestors());
-		append(sb, "Mutalisk", getMutalisks());
-		append(sb, "Corruptor", getCorruptors());
-		append(sb, "Ultralisk", getUltralisks());
-		append(sb, "Brood Lord", getBroodlords());
-		append(sb, "Total Minerals Mined", (int) totalMineralsMined);
+		append(sb, ZergLibrary.Drone.getName(), getDrones());
+		append(sb, ZergLibrary.Overlord.getName(), getOverlords());
+		append(sb, ZergLibrary.Overseer.getName(), getOverseers());
+		append(sb, ZergLibrary.Queen.getName(), getQueens());
+		append(sb, ZergLibrary.Zergling.getName(), getZerglings());
+		append(sb, ZergLibrary.Baneling.getName(), getBanelings());
+		append(sb, ZergLibrary.Roach.getName(), getRoaches());
+		append(sb, ZergLibrary.Hydralisk.getName(), getHydralisks());
+		append(sb, ZergLibrary.Infestor.getName(), getInfestors());
+		append(sb, ZergLibrary.Mutalisk.getName(), getMutalisks());
+		append(sb, ZergLibrary.Corruptor.getName(), getCorruptors());
+		append(sb, ZergLibrary.Ultralisk.getName(), getUltralisks());
+		append(sb, ZergLibrary.Broodlord.getName(), getBroodlords());
+		append(sb, "Total.Minerals.Mined", (int) totalMineralsMined);
 
 		if (bases()>= requiredBases)
 			append(sb, "Bases", bases());
 		else
-			append(sb, "Required Bases", requiredBases);
-		append(sb, "Lair", getLairs());
-		append(sb, "Hive", getHives());
-		append(sb, "Gas Extractor", getGasExtractors());
-		append(sb, "Spawning Pool", getSpawningPools());
-		append(sb, "Baneling Nest", getBanelingNest());
-		append(sb, "Roach Warren", getRoachWarrens());
-		append(sb, "Hydralisk Den", getHydraliskDen());
-		append(sb, "Infestation Pit", getInfestationPit());
-		append(sb, "Spire", getSpire());
-		append(sb, "Ultralisk Cavern", getUltraliskCavern());
-		append(sb, "Greater Spire", getGreaterSpire());
-		append(sb, "Evolution Chamber", getEvolutionChambers());
-		append(sb, "Spine Crawler", getSpineCrawlers());
-		append(sb, "Spore Crawler", getSporeCrawlers());
-		append(sb, "Nydus Network", getNydusNetwork());
-		append(sb, "Nydus Worm", getNydusWorm());
+			append(sb, "Required.Bases", requiredBases);
+		append(sb, ZergLibrary.Lair.getName(), getLairs());
+		append(sb, ZergLibrary.Hive.getName(), getHives());
+		append(sb, ZergLibrary.Extractor.getName(), getGasExtractors());
+		append(sb, ZergLibrary.SpawningPool.getName(), getSpawningPools());
+		append(sb, ZergLibrary.BanelingNest.getName(), getBanelingNest());
+		append(sb, ZergLibrary.RoachWarren.getName(), getRoachWarrens());
+		append(sb, ZergLibrary.HydraliskDen.getName(), getHydraliskDen());
+		append(sb, ZergLibrary.InfestationPit.getName(), getInfestationPit());
+		append(sb, ZergLibrary.Spire.getName(), getSpire());
+		append(sb, ZergLibrary.UltraliskCavern.getName(), getUltraliskCavern());
+		append(sb, ZergLibrary.GreaterSpire.getName(), getGreaterSpire());
+		append(sb, ZergLibrary.EvolutionChamber.getName(), getEvolutionChambers());
+		append(sb, ZergLibrary.SpineCrawler.getName(), getSpineCrawlers());
+		append(sb, ZergLibrary.SporeCrawler.getName(), getSporeCrawlers());
+		append(sb, ZergLibrary.NydusNetwork.getName(), getNydusNetwork());
+		append(sb, ZergLibrary.NydusWorm.getName(), getNydusWorm());
 
-		append(sb, "Melee +1", isMelee1());
-		append(sb, "Melee +2", isMelee2());
-		append(sb, "Melee +3", isMelee3());
-		append(sb, "Missile +1", isMissile1());
-		append(sb, "Missile +2", isMissile2());
-		append(sb, "Missile +3", isMissile3());
-		append(sb, "Carapace +1", isArmor1());
-		append(sb, "Carapace +2", isArmor2());
-		append(sb, "Carapace +3", isArmor3());
-		append(sb, "Flyer Attacks +1", isFlyerAttack1());
-		append(sb, "Flyer Attacks +2", isFlyerAttack2());
-		append(sb, "Flyer Attacks +3", isFlyerAttack3());
-		append(sb, "Flyer Armor +1", isFlyerArmor1());
-		append(sb, "Flyer Armor +2", isFlyerArmor2());
-		append(sb, "Flyer Armor +3", isFlyerArmor3());
-		append(sb, "Metabolic Boost", isMetabolicBoost());
-		append(sb, "Adrenal Glands", isAdrenalGlands());
-		append(sb, "Glial Reconstitution", isGlialReconstitution());
-		append(sb, "Tunneling Claws", isTunnelingClaws());
-		append(sb, "Burrow", isBurrow());
-		append(sb, "Pneumatized Carapace", isPneumatizedCarapace());
-		append(sb, "Ventral Sacs", isVentralSacs());
-		append(sb, "Centrifugal Hooks", isCentrifugalHooks());
-		append(sb, "Grooved Spines", isGroovedSpines());
-		append(sb, "Neural Parasite", isNeuralParasite());
-		append(sb, "Pathogen Glands", isPathogenGlands());
-		append(sb, "Chitinous Plating", isChitinousPlating());
+		append(sb, ZergLibrary.Melee1.getName(), isMelee1());
+		append(sb, ZergLibrary.Melee2.getName(), isMelee2());
+		append(sb, ZergLibrary.Melee3.getName(), isMelee3());
+		append(sb, ZergLibrary.Missile1.getName(), isMissile1());
+		append(sb, ZergLibrary.Missile2.getName(), isMissile2());
+		append(sb, ZergLibrary.Missile3.getName(), isMissile3());
+		append(sb, ZergLibrary.Armor1.getName(), isArmor1());
+		append(sb, ZergLibrary.Armor2.getName(), isArmor2());
+		append(sb, ZergLibrary.Armor3.getName(), isArmor3());
+		append(sb, ZergLibrary.FlyerAttacks1.getName(), isFlyerAttack1());
+		append(sb, ZergLibrary.FlyerAttacks2.getName(), isFlyerAttack2());
+		append(sb, ZergLibrary.FlyerAttacks3.getName(), isFlyerAttack3());
+		append(sb, ZergLibrary.FlyerArmor1.getName(), isFlyerArmor1());
+		append(sb, ZergLibrary.FlyerArmor2.getName(), isFlyerArmor2());
+		append(sb, ZergLibrary.FlyerArmor3.getName(), isFlyerArmor3());
+		append(sb, ZergLibrary.MetabolicBoost.getName(), isMetabolicBoost());
+		append(sb, ZergLibrary.AdrenalGlands.getName(), isAdrenalGlands());
+		append(sb, ZergLibrary.GlialReconstitution.getName(), isGlialReconstitution());
+		append(sb, ZergLibrary.TunnelingClaws.getName(), isTunnelingClaws());
+		append(sb, ZergLibrary.Burrow.getName(), isBurrow());
+		append(sb, ZergLibrary.PneumatizedCarapace.getName(), isPneumatizedCarapace());
+		append(sb, ZergLibrary.VentralSacs.getName(), isVentralSacs());
+		append(sb, ZergLibrary.CentrifugalHooks.getName(), isCentrifugalHooks());
+		append(sb, ZergLibrary.GroovedSpines.getName(), isGroovedSpines());
+		append(sb, ZergLibrary.NeuralParasite.getName(), isNeuralParasite());
+		append(sb, ZergLibrary.PathogenGlands.getName(), isPathogenGlands());
+		append(sb, ZergLibrary.ChitinousPlating.getName(), isChitinousPlating());
 	}
 
 	private void appendBuildStuffClean(StringBuilder sb)
@@ -536,13 +537,13 @@ public class EcState implements Serializable
 	private void append(StringBuilder sb, String name, boolean doit)
 	{
 		if (doit)
-			sb.append("\n" + messages.getString(name.replace(' ', '.')));
+			sb.append("\n" + messages.getString(name));
 	}
 
 	private void append(StringBuilder sb, String name, int count)
 	{
 		if (count > 0)
-			sb.append("\n" + messages.getString(name.replace(' ', '.')) + ": " + count);
+			sb.append("\n" + messages.getString(name) + ": " + count);
 	}
 
 	public boolean waypointMissed(EcBuildOrder candidate)

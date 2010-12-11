@@ -14,6 +14,7 @@ import com.fray.evo.util.GameLog;
 import com.fray.evo.util.RaceLibraries;
 import com.fray.evo.util.RunnableAction;
 import com.fray.evo.util.ZergBuildingLibrary;
+import com.fray.evo.util.ZergLibrary;
 
 public final class EcBuildOrder extends EcState implements Serializable
 {
@@ -70,7 +71,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 				{
 					if (e.isEnabled())
 						e.printMessage(this, GameLog.MessageType.Obtained,
-								" @" + messages.getString("Hatchery") + " #" + (hatchIndex+1) + " " + messages.getString("Larva") + " +1" );
+								" @" + messages.getString(ZergLibrary.Hatchery.getName()) + " #" + (hatchIndex+1) + " " + messages.getString(ZergLibrary.Larva.getName()) + " +1" );
 					incrementLarva(hatchIndex);
 					larvaProduction.set(hatchIndex, 0);
 				}

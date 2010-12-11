@@ -7,6 +7,7 @@ import java.io.Serializable;
 import com.fray.evo.EcBuildOrder;
 import com.fray.evo.util.GameLog;
 import com.fray.evo.util.RunnableAction;
+import com.fray.evo.util.ZergLibrary;
 import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildQueen extends EcActionBuildUnit implements Serializable
@@ -53,8 +54,8 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 				{
 					if (e.isEnabled() && s.getLarva() < s.bases() * 19)
 						e.printMessage(s, GameLog.MessageType.Obtained,
-								" @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
-								+ messages.getString("Larva")
+								" @"+messages.getString(ZergLibrary.Hatchery.getName()) + " #" + (hatchIndex+1) +" "
+								+ messages.getString(ZergLibrary.Larva.getName())
 								+ " +"
 								+ (Math.min(19, s.getLarva(hatchIndex) + 2) - s
 										.getLarva(hatchIndex)));
@@ -66,8 +67,8 @@ public final class EcActionBuildQueen extends EcActionBuildUnit implements Seria
 						{
 							if (e.isEnabled() && s.getLarva() < s.bases() * 19)
 								e.printMessage(s, GameLog.MessageType.Obtained,
-										" @"+messages.getString("Hatchery") + " #" + (hatchIndex+1) +" "
-										+ messages.getString("Larva")
+										" @"+messages.getString(ZergLibrary.Hatchery.getName()) + " #" + (hatchIndex+1) +" "
+										+ messages.getString(ZergLibrary.Larva.getName())
 										+ " +"
 										+ (Math.min(19, s.getLarva(hatchIndex) + 2) - s
 												.getLarva(hatchIndex)));

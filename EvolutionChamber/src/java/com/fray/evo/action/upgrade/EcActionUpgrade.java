@@ -27,7 +27,7 @@ public abstract class EcActionUpgrade extends EcActionMakeBuildable implements S
             public void run(GameLog e) {
             	if (e.isEnabled())
 	            	e.printMessage(s, GameLog.MessageType.Evolved
-	            			, messages.getString(getName().replace(" ",".")));
+	            			, messages.getString(getName()));
                 afterTime(s, e);
             }
         });
@@ -95,5 +95,10 @@ public abstract class EcActionUpgrade extends EcActionMakeBuildable implements S
             return true;
         }
         return false;
+    }
+    
+    @Override
+    public String toString(){
+		return messages.getString(upgrade.getName() + ".upgrade");
     }
 }
