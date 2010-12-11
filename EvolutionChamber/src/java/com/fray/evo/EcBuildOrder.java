@@ -209,62 +209,80 @@ public final class EcBuildOrder extends EcState implements Serializable
         return cachedMineralsMined[mineralPatches][dronesOnMinerals];
     }
 
-	// Mines minerals on all bases perfectly per one second.
+
+    /**
+     * Mines minerals on all bases perfectly per one second.
+     * 
+     * okay, we got x patches, and y drones. so the amount of drones per patch should be (y - (y%x))/x
+	 * the drones%patches represent the amount of patches that have one worker more than the average.
+	 * also account for the far and near patches here, assuming half of the workes go to far patches and other half onto the near ones. 
+     */
 	private double mineMineralsImpl()
 	{
-		int drones = dronesOnMinerals;
-        int mineralPatches = mineralPatches();
-        if (patches.length < bases() * 8)
-			patches = new int[bases() * 8];
-
-		for (int i = 0; i < mineralPatches; i++)
-			patches[i] = 0;
-		for (int i = 0; i < mineralPatches; i++)
-			// Assign first drone
-			if (drones > 0)
-			{
-				patches[i]++;
-				drones--;
-			}
-		if (drones > 0)
-			for (int i = 0; i < mineralPatches; i++)
-				// Assign second drone
-				if (drones > 0)
-				{
-					patches[i]++;
-					drones--;
-				}
-		if (drones > 0)
-			for (int i = 0; i < mineralPatches; i++)
-				// Assign third drone
-				if (drones > 0)
-				{
-					patches[i]++;
-					drones--;
-				}
-		// Assume half the patches are close, and half are far, and the close
-		// ones have more SCVs. (perfect)
-		double mineralsMined = 0.0;
-		for (int i = 0; i < mineralPatches; i++)
-			if (i < mineralPatches / 2) // Close patch
-				if (patches[i] == 0)
-					;
-				else if (patches[i] == 1)
-					mineralsMined += 45.0 / 60.0; // Per TeamLiquid
-				else if (patches[i] == 2)
-					mineralsMined += 90.0 / 60.0; // Per TeamLiquid
-				else
-					mineralsMined += 102.0 / 60.0; // Per TeamLiquid
-			else if (patches[i] == 0)
-				;
-			else if (patches[i] == 1)
-				mineralsMined += 35.0 / 60.0; // Per TeamLiquid
-			else if (patches[i] == 2)
-				mineralsMined += 75.0 / 60.0; // Per TeamLiquid
-			else
-				mineralsMined += 100.0 / 60.0; // Per TeamLiquid
-
-        return mineralsMined;
+		final int drones = dronesOnMinerals;
+		final int mineralPatches = mineralPatches();
+	    
+	    if(drones == 0 || mineralPatches == 0){
+	    	return 0;
+	    }
+	    
+	    
+	    // an amount of workers do not fill a complete collection of patches
+	    int droneOverflow = drones % mineralPatches ;
+	    
+	    int avgPatchLoad = (drones - droneOverflow) / mineralPatches;
+	    
+	    // above 3 per patch is overmining and does not provide any improvement 
+	    if( avgPatchLoad >= 3 ){
+	    	avgPatchLoad = 3;
+	    	droneOverflow = 0;
+	    }
+	    
+	    // since the overflow is also mining, those patches have a higher worker load!
+	    int lowerMiningWorkload = (mineralPatches > drones) ? 0 : (mineralPatches-droneOverflow);
+	    int higherMiningWorload = droneOverflow;
+	    
+	    // those are the patches with average load. We assume the half is on far patches, if the amount is odd, one more is on near patches
+	    int farPatchesLowLoad = Math.round(lowerMiningWorkload / 2.0f);
+	    int nearPatchesLowLoad = lowerMiningWorkload - farPatchesLowLoad;
+	    
+	    // those patches have average+1 load
+	    int nearPatchesHighLoad =  Math.round(higherMiningWorload / 2.0f);
+	    int farPatchesHighLoad = higherMiningWorload - nearPatchesHighLoad;
+	    
+	    
+	    
+	    double mineralsMined = 0.0;
+	    switch(avgPatchLoad){
+	    	case 0:
+	    		// only the overflow is mining
+	    		mineralsMined += nearPatchesHighLoad * 45.0 / 60.0;
+	    		mineralsMined += farPatchesHighLoad * 35.0 / 60.0;
+	    		break;
+	    	case 1:
+	    		// with one workers on it
+	    		mineralsMined += nearPatchesLowLoad * 45.0 / 60.0;
+	    		mineralsMined += farPatchesLowLoad * 35.0 / 60.0;
+	    		
+	    		// with two worker on it
+	    		mineralsMined += nearPatchesHighLoad * 90.0 / 60.0;
+	    		mineralsMined += farPatchesHighLoad * 75.0 / 60.0;
+	    		break;
+	    	case 2:
+	    		// with two workers on it
+	    		mineralsMined += nearPatchesLowLoad * 90.0 / 60.0;
+	    		mineralsMined += farPatchesLowLoad * 75.0 / 60.0;
+	    		
+	    		// with three worker on it
+	    		mineralsMined += nearPatchesHighLoad * 102.0 / 60.0;
+	    		mineralsMined += farPatchesHighLoad * 100.0 / 60.0;
+	    		break;
+	    	case 3:
+	    		// all patches have three workers on it
+	    		mineralsMined += nearPatchesLowLoad * 102.0 / 60.0;
+	    		mineralsMined += farPatchesLowLoad * 100.0 / 60.0;
+	    }
+	    return mineralsMined;
 	}
 
     private static double[][] cachedGasMined = new double[200][200];
