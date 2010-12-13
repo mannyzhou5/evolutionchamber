@@ -17,18 +17,20 @@ public final class EcActionWait extends EcAction implements Serializable
 	}
 
 	@Override
-	public boolean canExecute(EcBuildOrder s, GameLog e)
+	public EcAction.CanExecuteResult canExecute(EcBuildOrder s, GameLog e)
 	{
 		if (isPossible(s))
-			return true;
+			return new CanExecuteResult(true, false);
 		s.seconds += 1;
 		RunnableAction futureAction;
+                boolean changed = false;
 		while( ( futureAction = s.getFutureAction( s.seconds ) ) != null ) {
 			futureAction.run(e);
 			go = true;
+                        changed = true;
 		}
 		s.tick(e);
-		return false;
+		return new CanExecuteResult(true, changed);
 	}
 
 	@Override

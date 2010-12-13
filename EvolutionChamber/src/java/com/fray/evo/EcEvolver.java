@@ -248,7 +248,7 @@ public final class EcEvolver extends FitnessFunction
 			{
 				continue;
 			}
-			while (!a.canExecute(s, log))
+			while (!a.canExecute(s, log).can)
 			{
 				if (s.seconds >= s.targetSeconds || destination.waypointMissed(s))
 				{
@@ -305,7 +305,7 @@ public final class EcEvolver extends FitnessFunction
 			{
 				continue;
 			}
-			while (!a.canExecute(s, log))
+			while (!a.canExecute(s, log).can)
 			{					
 				if (s.seconds >= s.targetSeconds || destination.waypointMissed(s))
 				{
@@ -412,7 +412,8 @@ public final class EcEvolver extends FitnessFunction
 				s.invalidActions++;
 				continue;
 			}
-			while (!a.canExecute(s, log))
+                        EcAction.CanExecuteResult canExecute;
+			while (!(canExecute= a.canExecute(s, log)).can)
 			{
 				if (s.seconds > s.targetSeconds || destination.waypointMissed(s))
 				{
@@ -425,11 +426,12 @@ public final class EcEvolver extends FitnessFunction
 				int waypointIndex = destination.getCurrWaypointIndex(s);
 				if (waypointIndex != -1 && destination.getWaypointActions(waypointIndex) > 0)
 					log.printWaypoint( waypointIndex, s );
+                                if(canExecute.somethingChanged){
 				if (destination.getMergedWaypoints().isSatisfied(s))
 				{
 					log.printSatisfied(i - s.invalidActions, s, mergedDestination);
 					return s;
-				}
+				}}
 			}
 			
 			if (!(a instanceof EcActionWait))

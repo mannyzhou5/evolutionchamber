@@ -12,6 +12,14 @@ import com.fray.evo.util.RunnableAction;
 
 public abstract class EcAction implements Serializable
 {
+    public class CanExecuteResult{
+        public boolean can;
+        public boolean somethingChanged;
+        public CanExecuteResult(boolean can, boolean somethingChanged){
+            this.can = can;
+            this.somethingChanged = somethingChanged;
+        }
+    }
 	public abstract void execute(EcBuildOrder s, GameLog e);
 
 	@Override
@@ -39,16 +47,20 @@ public abstract class EcAction implements Serializable
 		return result;
 	}
 
-	public boolean canExecute(EcBuildOrder s, GameLog e)
+	public CanExecuteResult canExecute(EcBuildOrder s, GameLog e)
 	{
 		if (isPossible(s))
-			return true;
+			return new CanExecuteResult(true, false);
 		s.seconds += 1;
 		RunnableAction futureAction;
-		while( (futureAction = s.getFutureAction(s.seconds)) != null )
+                boolean changed = false;
+		while( (futureAction = s.getFutureAction(s.seconds)) != null ){
 			futureAction.run(e);
+                        changed = true;
+            }
 		s.tick(e);
-		return false;
+
+		return new CanExecuteResult(false, changed);
 	}
 
 	public boolean isInvalid(EcBuildOrder s)
