@@ -21,16 +21,60 @@ public class SpeedTest {
 			LogManager.getLogManager().readConfiguration(new ByteArrayInputStream(".level=OFF".getBytes()));
 		} catch (Exception e) {
 		}
+		
+		int testRuns = 10;
+		int processors = 1;
+		int runtimeSec = 20;
+		
+		double results[][] = new double[testRuns][3];
+		
+		// do all test multiple times to get the average, 
+		// since it might only be luck with a lot of invalid builds (which process faster by aborting early)
+		for(int i=0; i < testRuns;i++){
 
-		//run the tests
-		double test1 = finalWaypoint();
-		double test2 = oneWaypoint();
-		double test3 = multipleWaypoints();
-
-		//print the results
-		System.out.println("Test 1: " + test1);
-		System.out.println("Test 2: " + test2);
-		System.out.println("Test 3: " + test3);
+			//run the tests
+			double test1 = finalWaypoint(processors, runtimeSec);
+			double test2 = oneWaypoint(processors, runtimeSec);
+			double test3 = multipleWaypoints(processors, runtimeSec);
+	
+			//print the results
+			System.out.println("Test 1: " + test1);
+			System.out.println("Test 2: " + test2);
+			System.out.println("Test 3: " + test3);
+			
+			results[i][0] = test1;
+			results[i][1] = test2;
+			results[i][2] = test3;
+		}
+		
+		
+		double overallTime[] = new double[3];
+		
+		// list all test results
+		for(int i=0;i < testRuns; i++){
+			int t=0;
+			
+			System.out.println("Test Run " + (i+1) + ", Test " + t + ":" + results[i][t]);
+			overallTime[t]+=results[i][t];
+			
+			t++;
+			System.out.println("Test Run " + (i+1) + ", Test " + t + ":" + results[i][t]);
+			overallTime[t]+=results[i][t];
+			
+			t++;
+			System.out.println("Test Run " + (i+1) + ", Test " + t + ":" + results[i][t]);
+			overallTime[t]+=results[i][t];
+		}
+		
+		// list the average results per test
+		System.out.println("----------------------------------------------");
+		System.out.println("Threads used: " + processors);
+		System.out.println("Test duration: " + runtimeSec + " seconds.");
+		System.out.println("Test Runs made:" + testRuns);
+		System.out.println("The average games/second for Test 1 is " + (overallTime[0] / testRuns));
+		System.out.println("The average games/second for Test 2 is " + (overallTime[1] / testRuns));
+		System.out.println("The average games/second for Test 3 is " + (overallTime[2] / testRuns));
+		
 	}
 
 	/**
@@ -39,9 +83,7 @@ public class SpeedTest {
 	 * @return the average games played per second
 	 * @throws Exception
 	 */
-	private static double finalWaypoint() throws Exception {
-		final int seconds = 20;
-		final int processors = 1;
+	private static double finalWaypoint(int processors, int seconds) throws Exception {
 
 		EcState destination = new EcState();
 		destination.targetSeconds = 120 * 60;
@@ -57,9 +99,7 @@ public class SpeedTest {
 	 * @return the average games played per second
 	 * @throws Exception
 	 */
-	private static double oneWaypoint() throws Exception {
-		final int seconds = 20;
-		final int processors = 1;
+	private static double oneWaypoint(int processors, int seconds) throws Exception {
 
 		ArrayList<EcState> waypoints = new ArrayList<EcState>();
 
@@ -82,9 +122,7 @@ public class SpeedTest {
 	 * @return the average games played per second
 	 * @throws Exception
 	 */
-	private static double multipleWaypoints() throws Exception {
-		final int seconds = 20;
-		final int processors = 1;
+	private static double multipleWaypoints(int processors, int seconds) throws Exception {
 
 		ArrayList<EcState> waypoints = new ArrayList<EcState>();
 
