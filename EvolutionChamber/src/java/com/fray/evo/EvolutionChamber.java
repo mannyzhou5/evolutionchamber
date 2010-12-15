@@ -705,6 +705,7 @@ public final class EvolutionChamber
 		{
 			if (SEEDS_EVO != null)
 			{
+				SEEDS_EVO.getParentFile().mkdirs();
 				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SEEDS_EVO, false));
 				oos.writeObject(history);
 				oos.close();
