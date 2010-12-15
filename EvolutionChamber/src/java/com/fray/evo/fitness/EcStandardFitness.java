@@ -144,6 +144,7 @@ public final class EcStandardFitness implements EcFitness {
 			score = augmentScore(score, (int) c.minerals, (int) state.minerals, .011, .011, false);
 			score = augmentScore(score, (int) c.gas, (int) state.gas, .015, .015, false);
 			score = Math.max(score, 0);
+			score += 500;
 			c.preTimeScore = score;
 			score *= ((double) c.targetSeconds / (double) c.seconds) * ((double) c.targetSeconds / (double) c.seconds);
 			c.timeBonus = score - c.preTimeScore;

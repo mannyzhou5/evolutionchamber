@@ -25,6 +25,8 @@ public abstract class EcActionMakeBuildable extends EcAction{
                     makeBusy(madeBusyBy, actionBusyIn, ZergBuildingLibrary.Lair, buildings);
                 }else if(consumes == ZergBuildingLibrary.Lair){
                     makeBusy(madeBusyBy, actionBusyIn, ZergBuildingLibrary.Hive, buildings);
+                }else if(consumes == ZergBuildingLibrary.Spire){
+                    makeBusy(madeBusyBy, actionBusyIn, ZergBuildingLibrary.GreaterSpire, buildings);
                 }else{
                     throw new RuntimeException("should not have been called with too few not busy main buildings");
                 }

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import com.fray.evo.util.Building;
 import com.fray.evo.util.Library;
+import com.fray.evo.util.Race;
 import com.fray.evo.util.RaceLibraries;
 import com.fray.evo.util.Unit;
 import com.fray.evo.util.Upgrade;
@@ -203,9 +204,14 @@ public class EcState implements Serializable
 				mergedWaypoints = getMergedState();
 			return mergedWaypoints.isSatisfied(candidate);
 		}
+		else
+			mergedWaypoints = null;
 
 		for (int i = 0; i < units.getSize(); i++)
 		{
+			//Don't make larva a requirement for satisfaction.
+			if (i == 0 && units.race.equals(Race.Zerg))
+				continue;
 			if (candidate.units.getById(i) < units.getById(i))
 			{
 				return false;
@@ -338,57 +344,57 @@ public class EcState implements Serializable
 		if (isMetabolicBoost())
 			i++;
 		if (isAdrenalGlands())
-			i++;
+			i+=3;
 		if (isGlialReconstitution())
-			i++;
+			i+=2;
 		if (isTunnelingClaws())
-			i++;
+			i+=2;
 		if (isBurrow())
-			i++;
+			i+=2;
 		if (isPneumatizedCarapace())
-			i++;
+			i+=2;
 		if (isVentralSacs())
-			i++;
+			i+=2;
 		if (isCentrifugalHooks())
-			i++;
+			i+=2;
 		if (isMelee1())
 			i++;
 		if (isMelee2())
-			i++;
+			i+=2;
 		if (isMelee3())
-			i++;
+			i+=3;
 		if (isMissile1())
 			i++;
 		if (isMissile2())
-			i++;
+			i+=2;
 		if (isMissile3())
-			i++;
+			i+=3;
 		if (isArmor1())
 			i++;
 		if (isArmor2())
-			i++;
+			i+=2;
 		if (isArmor3())
-			i++;
+			i+=3;
 		if (isGroovedSpines())
-			i++;
+			i+=2;
 		if (isNeuralParasite())
-			i++;
+			i+=2;
 		if (isPathogenGlands())
-			i++;
+			i+=2;
 		if (isFlyerAttack1())
 			i++;
 		if (isFlyerAttack2())
-			i++;
+			i+=2;
 		if (isFlyerAttack3())
-			i++;
+			i+=3;
 		if (isFlyerArmor1())
 			i++;
 		if (isFlyerArmor2())
-			i++;
+			i+=2;
 		if (isFlyerArmor3())
-			i++;
+			i+=3;
 		if (isChitinousPlating())
-			i++;
+			i+=3;
 		for (EcState s : waypoints)
 			i += s.getEstimatedActions();
 		return i;

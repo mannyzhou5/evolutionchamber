@@ -159,7 +159,9 @@ public final class EcRequirementTree {
         if(requirement.getConsumes()!=null){
             require(requirement.getConsumes(), destination, actions);
         }
-        addActionToList(actions, ActionManager.getActionFor(requirement));
+        //Lomilar says: Larva causes action to be null, which seems like an OK thing.    	
+        if (!requirement.equals(ZergUnitLibrary.Larva))
+        	addActionToList(actions, ActionManager.getActionFor(requirement));
         for (Buildable buildable : requirement.getRequirement()) {
             require(buildable, destination, actions);
         }

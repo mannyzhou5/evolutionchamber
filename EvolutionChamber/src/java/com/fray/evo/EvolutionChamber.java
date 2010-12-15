@@ -41,7 +41,7 @@ public final class EvolutionChamber
 	/**
 	 * The version of EvolutionChamber.
 	 */
-	public static final String	VERSION = "0022";
+	public static final String	VERSION = "0023";
 
 	/**
 	 * The seed file.
@@ -814,6 +814,7 @@ public final class EvolutionChamber
 	 */
 	public void setDestination(EcState destination)
 	{
+		destination.mergedWaypoints = null;
 		this.destination = destination;
 	}
 

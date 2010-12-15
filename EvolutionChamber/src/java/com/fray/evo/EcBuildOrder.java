@@ -363,7 +363,7 @@ public final class EcBuildOrder extends EcState implements Serializable
 
 	public void makeBuildingBusy(Building consumes,EcActionMakeBuildable action)
 	{
-            action.makeBusy(madeBusyBy, actionBusyIn, consumes, buildings);
+        action.makeBusy(madeBusyBy, actionBusyIn, consumes, buildings);
 	}
 
     public void makeBuildingNotBusy(EcActionMakeBuildable action) {
