@@ -753,7 +753,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				void reverse(Object o)
 				{
 					JTextField c = (JTextField) o;
-					c.setText(Integer.toString(destination.get(destination.size()-1).scoutDrone));
+					c.setText(formatAsTime((destination.get(destination.size()-1).scoutDrone)));
 				}
 			}).setText( formatAsTime(dest.scoutDrone));
 		}
