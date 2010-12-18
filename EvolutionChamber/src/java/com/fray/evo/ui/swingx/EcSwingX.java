@@ -123,7 +123,9 @@ public class EcSwingX extends JXPanel implements EcReportable
 	 */
 	public EcSwingX(JFrame frame)
 	{
-		ec = new EvolutionChamber(new File(new File(EcSwingXMain.userConfigDir,EvolutionChamber.VERSION), "seeds.evo"), new File(new File(EcSwingXMain.userConfigDir,EvolutionChamber.VERSION), "seeds2.evo"));
+		File seedsDir = new File(EcSwingXMain.userConfigDir, EvolutionChamber.VERSION);
+		seedsDir.mkdirs();
+		ec = new EvolutionChamber(new File(seedsDir, "seeds.evo"), new File(seedsDir, "seeds2.evo"));
 		ec.setReportInterface(this);
 		
 		this.frame = frame;
