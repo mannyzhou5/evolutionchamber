@@ -10,12 +10,20 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.Proxy;
+import java.net.ProxySelector;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -93,11 +101,36 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 	 * @param ecVersion the version of the currently running application. For example, "0017".
 	 */
 	public EcAutoUpdate(String ecVersion, Callback callback) {
+		configureProxy();
 		this.callback = callback;
 		this.latestVersion	 	= findLatestVersion(ecVersion);
 		
 		if( !this.latestVersion.equals( ecVersion ) )
 			this.updateAvailable = true;
+	}
+	
+	/**
+	 * Allows the auto-update process to work if the user is behind a proxy.
+	 * @see http://stackoverflow.com/questions/376101/setting-jvm-jre-to-use-windows-proxy-automatically
+	 */
+	private void configureProxy(){
+		System.setProperty("java.net.useSystemProxies", "true");
+
+		try {
+			List<Proxy> proxies = ProxySelector.getDefault().select(new URI(downloadsPageUrl));
+			for (Proxy proxy : proxies){
+		        InetSocketAddress addr = (InetSocketAddress) proxy.address();
+		        if (addr == null){
+		        	//user is not using a proxy
+		        } else {
+	                System.setProperty("http.proxyHost", addr.getHostName());
+	                System.setProperty("http.proxyPort", Integer.toString(addr.getPort()));
+		        }
+		    }
+		} 
+		catch (URISyntaxException e) {
+		    logger.log(Level.SEVERE, "Download list URL is invalid.", e);
+		}
 	}
 	
 	/**
