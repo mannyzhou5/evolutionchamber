@@ -119,6 +119,7 @@ public final class EvolutionChamber
 	
 	private Integer[]			evolutionsSinceDiscovery;
 	private EcEvolver[]			evolvers;
+        private int                             forgottenEvolutions;
 	private boolean				firstrun				= true;
 	private boolean				newbestscore			= false;
 	
@@ -224,7 +225,7 @@ public final class EvolutionChamber
 			EcEvolver evolver = evolvers[i];
 			total += evolver.getEvaluations();
 		}
-		return total;
+		return total+forgottenEvolutions;
 	}
 
 	/**
@@ -263,6 +264,7 @@ public final class EvolutionChamber
 		bestScores = new Double[NUM_THREADS];
 		evolutionsSinceDiscovery = new Integer[NUM_THREADS];
 		evolvers = new EcEvolver[NUM_THREADS];
+                forgottenEvolutions = 0;
 	}
 
 	/**
@@ -450,6 +452,7 @@ public final class EvolutionChamber
 	private void suicide(final EcState source, final EcState destination, final int threadIndex,
 			final Thread thread)
 	{
+            forgottenEvolutions += evolvers[threadIndex].getEvaluations();
 		// Stagnation. Suicide village and try again.
 		logger.fine("Restarting thread " + threadIndex);
 		try
