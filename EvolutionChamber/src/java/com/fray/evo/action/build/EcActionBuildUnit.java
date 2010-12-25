@@ -51,8 +51,10 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 	@Override
 	protected final boolean isPossibleResources(EcBuildOrder s)
 	{
+            if(supply > 0){
 		if (!s.hasSupply(supply-consumesUnitSupply()))
 			return false;
+            }
 		if (consumeLarva)
 			if (s.getLarva() < 1)
 				return false;
