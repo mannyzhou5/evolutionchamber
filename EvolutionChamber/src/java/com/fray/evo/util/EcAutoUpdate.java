@@ -53,7 +53,7 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 	/**
 	 * The regular expression used to scrape the checksum from the webpage of the JAR file.
 	 */
-	private static final Pattern checksumPattern = Pattern.compile("SHA1 Checksum: ([0-9a-f]{40})", Pattern.CASE_INSENSITIVE);
+	private static final Pattern checksumPattern = Pattern.compile("SHA1 Checksum: </th><td style=\"white-space:nowrap\"> ([0-9a-f]{40})", Pattern.CASE_INSENSITIVE);
 	
 	/**
 	 * The URL of the project's download page.
