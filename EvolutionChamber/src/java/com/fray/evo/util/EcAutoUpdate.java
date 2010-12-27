@@ -7,8 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
@@ -21,7 +19,6 @@ import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,7 +76,7 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 	/**
 	 * The version number of the latest version. For example, "0017".
 	 */
-	private String				latestVersion  = "";
+	private String				latestVersion  = null;
 	
 	/**
 	 * The name of the downloaded JAR file.
@@ -94,19 +91,26 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 	/**
      * Allows the code calling this class to handle certain auto-updater events.
      */
-	protected final Callback callback;
+	protected final DownloadCallback callback;
+	
+	/**
+	 * The current version of the application.
+	 */
+	private final String currentVersion;
+	
+	/**
+	 * True if the updated JAR file finished downloading, false if it was never downloaded or if the user canceled the download operation.
+	 */
+	private boolean downloadFinished = false;
 
 	/**
 	 * Constructor.
 	 * @param ecVersion the version of the currently running application. For example, "0017".
 	 */
-	public EcAutoUpdate(String ecVersion, Callback callback) {
+	public EcAutoUpdate(String ecVersion, DownloadCallback callback) {
 		configureProxy();
+		this.currentVersion = ecVersion;
 		this.callback = callback;
-		this.latestVersion	 	= findLatestVersion(ecVersion);
-		
-		if( !this.latestVersion.equals( ecVersion ) )
-			this.updateAvailable = true;
 	}
 	
 	/**
@@ -131,6 +135,30 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 		catch (URISyntaxException e) {
 		    logger.log(Level.SEVERE, "Download list URL is invalid.", e);
 		}
+	}
+	
+	/**
+	 * Asynchronously finds the latest version of the application.
+	 * @param callback
+	 */
+	public Thread findLatestVersion(final FindLatestVersionCallback callback){
+		Thread t = new Thread(){
+			@Override
+			public void run(){
+				latestVersion = findLatestVersion(currentVersion);
+				if( !latestVersion.equals( currentVersion ) )
+					updateAvailable = true;
+				
+				if (updateAvailable){
+					callback.updateAvailable(latestVersion);
+				} else {
+					callback.noUpdateAvailable();
+				}
+			}
+		};
+		t.start();
+		
+		return t;
 	}
 	
 	/**
@@ -162,6 +190,9 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 	 * @return the latest version number
 	 */
 	public String getLatestVersion() {
+		if (latestVersion == null){
+			latestVersion = findLatestVersion(currentVersion);
+		}
 		return latestVersion;
 	}
 	
@@ -182,18 +213,7 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 		String latestVersion = ecVersion;
 		try {
 			//get the HTML for the page that lists all the downloads
-			String html = null;
-			{
-				URL url = new URL(downloadsPageUrl);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				int read;
-				while ((read = in.read()) != -1) {
-					out.write(read);
-				}
-				html = new String(out.toByteArray());
-			}
+			String html = getDownloadPageHtml();
 
 			//loop through all the links that point to various versions of the application
 			//find the greatest version number
@@ -207,19 +227,32 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 				}
 			}
 		} catch (MalformedURLException e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			logger.severe(sw.toString());
+			logger.log(Level.SEVERE, "Download page URL is invalid.", e);
 		} catch (UnknownHostException e) {
 			// If this happens then our network connection is probably down.
 			// We return the current version as there is no way to download any updates.
 			callback.updateCheckFailed();
 		} catch (IOException e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			logger.severe(sw.toString());
+			logger.log(Level.SEVERE, "Problem getting the download page.", e);
 		}
 		return latestVersion;
+	}
+	
+	/**
+	 * Gets the HTML for the page that lists all the downloads. 
+	 * @return the HTML of the download page
+	 * @throws IOException
+	 */
+	private String getDownloadPageHtml() throws IOException {
+		URL url = new URL(downloadsPageUrl);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		int read;
+		while ((read = in.read()) != -1) {
+			out.write(read);
+		}
+		return new String(out.toByteArray());
 	}
 	
 	/**
@@ -242,6 +275,11 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 	
     @Override
     public Void doInBackground() {
+    	//find the latest version
+    	if (latestVersion == null){
+    		latestVersion = findLatestVersion(currentVersion);
+    	}
+    	
         int progress = 0;
         setProgress(0);
         this.updating = true;
@@ -296,8 +334,8 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 				    fileChecksum = convertToHex(md.digest());
 				    in.close();
 				    out.close();
-				    
-				    if (offset != info.length) {
+
+				    if (!isCancelled() && offset != info.length) {
 				        throw new IOException("Only read " + offset + " bytes; Expected " + info.length + " bytes");
 				    }
 			    }
@@ -308,19 +346,14 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 			}
 
 			this.jarFile = file.getName();
+			downloadFinished = true;
 		} catch (MalformedURLException e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			logger.severe(sw.toString());
+			logger.log(Level.SEVERE, "Bad URL.", e);
 		} catch (IOException e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			logger.severe(sw.toString());
+			logger.log(Level.SEVERE, "Problem downloading JAR file.", e);
 		} catch (NoSuchAlgorithmException e) {
 			//thrown if the JVM doesn't recognize the "SHA-1" hash algorithm, which should never happen
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			logger.severe(sw.toString());
+			logger.log(Level.SEVERE, "Hash algorithm not recognized.", e);
 		}
         return null;
     }
@@ -363,6 +396,11 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
      */
     @Override
     public void done() {
+    	if (!downloadFinished){
+    		//user canceled the download before it completed
+    		return;
+    	}
+    	
     	setProgress(100);
     	
     	if (checksumMatches){
@@ -372,9 +410,7 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 	        try {
 				Runtime.getRuntime().exec( restartCmd );
 			} catch (IOException e) {
-				StringWriter sw = new StringWriter();
-				e.printStackTrace(new PrintWriter(sw));
-				logger.severe(sw.toString());
+				logger.log(Level.SEVERE, "Problem starting the new version.", e);
 			}
     	} else {
     		callback.checksumFailed();
@@ -412,7 +448,7 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
      * @author mike.angstadt
      *
      */
-    public interface Callback
+    public interface DownloadCallback
     {
     	/**
     	 * Called when the checksum of the downloaded JAR file did not match its expected checksum.
@@ -423,6 +459,25 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
     	 * Called if there is a problem determining what the latest version is.
     	 */
     	void updateCheckFailed();
+    }
+    
+    /**
+     * Callback methods for when it checks for the latest version of the application.
+     * @author mike.angstadt
+     *
+     */
+    public interface FindLatestVersionCallback
+    {
+    	/**
+    	 * Called when a newer version is available.
+    	 * @param version the newest version number (for example, "0023")
+    	 */
+    	void updateAvailable(String version);
+    	
+    	/**
+    	 * Called when the user is already running the latest version.
+    	 */
+    	void noUpdateAvailable();
     }
     
     protected static class FileInfo

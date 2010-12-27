@@ -247,7 +247,7 @@ public class EcSwingXMain
 
 	private static EcAutoUpdate checkForUpdates()
 	{
-		EcAutoUpdate ecUpdater = new EcAutoUpdate(EvolutionChamber.VERSION, new EcAutoUpdate.Callback(){
+		EcAutoUpdate ecUpdater = new EcAutoUpdate(EvolutionChamber.VERSION, new EcAutoUpdate.DownloadCallback(){
 			@Override
 			public void checksumFailed()
 			{

@@ -29,6 +29,12 @@ public class EcState implements Serializable
 	protected HashSet<Upgrade> upgrades;
 	protected BuildableCollection<Building> buildings;
 	protected BuildableCollection<Unit> units;
+	
+	/**
+	 * The name that the user has given this build order. Null if no name was
+	 * given.
+	 */
+	protected String name;
 
 
 	public EcState()
@@ -146,6 +152,8 @@ public class EcState implements Serializable
 //		s.larva = (ArrayListInt) larva.clone();
 //		s.hasQueen = (ArrayList<Boolean>) hasQueen.clone();
 //		s.larvaProduction = (ArrayListInt) larvaProduction.clone();
+		
+		s.name = name;
 	}
 
 	public int supply()
@@ -1195,6 +1203,24 @@ public class EcState implements Serializable
 	public int getNydusWorm()
 	{
 		return buildings.get(ZergBuildingLibrary.NydusWorm);
+	}
+	
+	/**
+	 * Sets the name that the user has given this build order.
+	 * @param name
+	 */
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	/**
+	 * Gets the name that the user has given this build order. Null if no name
+	 * was given.
+	 * 
+	 * @return
+	 */
+	public String getName(){
+		return name;
 	}
 
 }

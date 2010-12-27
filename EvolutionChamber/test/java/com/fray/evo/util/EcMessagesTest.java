@@ -43,6 +43,19 @@ public class EcMessagesTest {
 		File dir = new File("src/java");
 		EcMessages messages = new EcMessages("com/fray/evo/ui/swingx/messages");
 		List<File> exclude = new ArrayList<File>();
+		exclude.add(new File("src/java/com/fray/evo/ui/swingx2"));
+		go(dir, messages, new JavaAndDirsFilter(exclude));
+	}
+	
+	/**
+	 * Checks the source code to make sure all properties requested during run
+	 * time match up to real properties in the properties file.
+	 */
+	@Test
+	public void testAllPropertiesInNewGUICode() {
+		File dir = new File("src/java/com/fray/evo/ui/swingx2");
+		EcMessages messages = new EcMessages("com/fray/evo/ui/swingx2/messages");
+		List<File> exclude = new ArrayList<File>();
 		go(dir, messages, new JavaAndDirsFilter(exclude));
 	}
 

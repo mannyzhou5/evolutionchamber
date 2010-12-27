@@ -6,9 +6,9 @@
         <jar destfile="output/evolutionchamber.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
-                <attribute name="Rsrc-Main-Class" value="com.fray.evo.ui.swingx.EcSwingXMain"/>
+                <attribute name="Rsrc-Main-Class" value="com.fray.evo.ui.swingx2.EcSwingXMain"/>
                 <attribute name="Class-Path" value="."/>
-                <attribute name="Rsrc-Class-Path" value="./ commons-collections-3.2.jar jgap.jar swingx-core-1.6.2.jar looks-2.1.4.jar org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+                <attribute name="Rsrc-Class-Path" value="./ commons-collections-3.2.jar jgap.jar swingx-core-1.6.2.jar looks-2.1.4.jar miglayout-3.7.3.1-swing.jar org.hamcrest.core_1.1.0.v20090501071000.jar"/>
             </manifest>
             <zipfileset src="jar-in-jar-loader.zip"/>
             <fileset dir="bin">
@@ -20,6 +20,7 @@
             <zipfileset dir="lib" includes="jgap.jar"/>
             <zipfileset dir="lib" includes="swingx-core-1.6.2.jar"/>
             <zipfileset dir="lib" includes="looks-2.1.4.jar"/>
+        	<zipfileset dir="lib" includes="miglayout-3.7.3.1-swing.jar"/>
             <zipfileset dir="${eclipse.home}/plugins" includes="org.hamcrest.core_1.1.0.v20090501071000.jar"/>
         </jar>
     </target>

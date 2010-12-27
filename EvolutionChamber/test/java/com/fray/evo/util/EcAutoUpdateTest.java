@@ -36,14 +36,25 @@ public class EcAutoUpdateTest {
 	@Test
 	public void testUpdate() throws Exception {
 		//version "0013" is an old version so there should be a newer one available
-		String oldVersion = "0013";
+		final String oldVersion = "0013";
 		EcAutoUpdate auto = new EcAutoUpdate(oldVersion, new CallbackImpl());
 		auto.addPropertyChangeListener(new DisplayDownloadProgress());
+		Thread t = auto.findLatestVersion(new EcAutoUpdate.FindLatestVersionCallback(){
+			@Override
+			public void noUpdateAvailable() {
+				Assert.fail();
+			}
+
+			@Override
+			public void updateAvailable(String version) {
+				Assert.assertTrue(Integer.parseInt(oldVersion) < Integer.parseInt(version));
+			}
+			
+		});
+		t.join();
+		
 		String latestVersion = auto.getLatestVersion();
 		file = new File("evolutionchamber-version-" + latestVersion + ".jar");
-
-		Assert.assertTrue(auto.isUpdateAvailable());
-		Assert.assertTrue(Integer.parseInt(oldVersion) < Integer.parseInt(latestVersion));
 
 		//download the file
 		Assert.assertFalse(auto.isUpdating());
@@ -165,7 +176,7 @@ public class EcAutoUpdateTest {
 	 * @author mike.angstadt
 	 * 
 	 */
-	private class CallbackImpl implements EcAutoUpdate.Callback {
+	private class CallbackImpl implements EcAutoUpdate.DownloadCallback {
 		@Override
 		public void checksumFailed() {
 			Assert.fail("File's checksum does not match its expected checksum.");

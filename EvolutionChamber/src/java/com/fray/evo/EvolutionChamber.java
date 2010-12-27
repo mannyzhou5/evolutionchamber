@@ -32,7 +32,6 @@ import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
 
 import com.fray.evo.action.EcAction;
-import com.fray.evo.fitness.EcFitnessType;
 
 public final class EvolutionChamber
 {
@@ -124,11 +123,6 @@ public final class EvolutionChamber
 	private boolean				newbestscore			= false;
 	
 	/**
-	 * The caluation to use for determining the fitness score of a gene.
-	 */
-	private EcFitnessType		fitnessType				= EcFitnessType.STANDARD;
-	
-	/**
 	 * the minimum of required actions, determined by analyzing the destination state
 	 */
 	private List<Class<? extends EcAction>> requiredActions = new ArrayList<Class<? extends EcAction>>();
@@ -204,16 +198,6 @@ public final class EvolutionChamber
 	}
 	
 	/**
-	 * Sets the caluation to use for determining the fitness score of a gene.
-	 * 
-	 * @param fitnessType the fitness type
-	 */
-	public void setFitnessType(EcFitnessType fitnessType)
-	{
-		this.fitnessType = fitnessType;
-	}
-	
-	/**
 	 * Gets the total number of games played since the simulation started.
 	 * @return
 	 */
@@ -241,7 +225,6 @@ public final class EvolutionChamber
 		
 		requiredActions = EcRequirementTree.createActionList(d);
 
-		d.settings.fitnessType = fitnessType;
 		CHROMOSOME_LENGTH = d.getEstimatedActions() + 70;
 
 		// We are using the 'many small villages' vs 'one large city' method of
