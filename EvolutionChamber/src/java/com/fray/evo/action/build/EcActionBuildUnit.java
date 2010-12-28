@@ -46,7 +46,14 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
 
 	private double consumesUnitSupply()
 	{
-		return (getConsumes() != null ? ((Unit)getConsumes()).getSupply() : 0);
+            if(getConsumes() != null){
+                Unit consumes = (Unit) getConsumes();
+                if(consumes == ZergUnitLibrary.Zergling){
+                    return 0.5;
+                }
+                return consumes.getSupply();
+            }
+            return 0;
 	}
 	@Override
 	protected final boolean isPossibleResources(EcBuildOrder s)
