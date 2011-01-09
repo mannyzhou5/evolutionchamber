@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
@@ -499,7 +500,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		}).setSelected(destination.get(destination.size()-1).settings.avoidMiningGas);
 		gridy++;
-		addInput(settings, messages.getString("settings.maxExtractorTrickSupply"), new CustomActionListener()
+		addInput(settings, messages.getString("settings.maxExtractorTrickSupply"), NumberTextField.class, new CustomActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -514,7 +515,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		}).setText("200");
 		gridy++;
-		addInput(settings, messages.getString("settings.minPoolSupply"), new CustomActionListener()
+		addInput(settings, messages.getString("settings.minPoolSupply"), NumberTextField.class, new CustomActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -529,7 +530,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		}).setText("2");
 		gridy++;
-		addInput(settings, messages.getString("settings.minExtractorSupply"), new CustomActionListener()
+		addInput(settings, messages.getString("settings.minExtractorSupply"), NumberTextField.class, new CustomActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -544,7 +545,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		}).setText("2");
 		gridy++;
-		addInput(settings, messages.getString("settings.minHatcherySupply"), new CustomActionListener()
+		addInput(settings, messages.getString("settings.minHatcherySupply"), NumberTextField.class, new CustomActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -690,7 +691,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		// ec.CHROMOSOME_LENGTH = getDigit(e);
 		// }
 		// }).setText("120");
-		addInput(components, messages.getString("waypoint.drones"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.drones"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -704,7 +705,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getDrones()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.deadline"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.deadline"), TimeTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -718,7 +719,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		}).setText(formatAsTime(dest.targetSeconds));
 		gridy++;
-		addInput(components, messages.getString("waypoint.overlords"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.overlords"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -730,7 +731,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getOverlords()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.overseers"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.overseers"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -745,7 +746,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		gridy++;
 		if (dest == destination.get(destination.size()-1)) // only put this option on the Final waypoint.
 		{
-			addInput(components, messages.getString("waypoint.scoutTiming"), new CustomActionListener()
+			addInput(components, messages.getString("waypoint.scoutTiming"), TimeTextField.class, new CustomActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
 				{
@@ -773,7 +774,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.queens"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.queens"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -799,7 +800,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.zerglings"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.zerglings"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -852,7 +853,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.banelings"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.banelings"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -878,7 +879,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.roaches"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.roaches"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -919,7 +920,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.hydralisks"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.hydralisks"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -945,7 +946,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.infestors"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.infestors"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -985,7 +986,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.mutalisks"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.mutalisks"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -998,7 +999,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.ultralisks"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.ultralisks"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1024,7 +1025,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.corruptors"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.corruptors"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1036,7 +1037,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getCorruptors()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.broodlords"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.broodlords"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1249,7 +1250,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.bases"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.bases"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1261,7 +1262,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.requiredBases));
 			}
 		});
-		addInput(components, messages.getString("waypoint.lairs"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.lairs"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1274,7 +1275,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.hives"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.hives"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1286,7 +1287,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getHives()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.gasExtractors"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.gasExtractors"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1299,7 +1300,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.evolutionChambers"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.evolutionChambers"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1312,7 +1313,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.spineCrawlers"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.spineCrawlers"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1324,7 +1325,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getSpineCrawlers()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.sporeCrawlers"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.sporeCrawlers"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1337,7 +1338,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.spawningPools"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.spawningPools"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1349,7 +1350,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getSpawningPools()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.banelingNests"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.banelingNests"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1362,7 +1363,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.roachWarrens"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.roachWarrens"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1374,7 +1375,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getRoachWarrens()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.hydraliskDens"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.hydraliskDens"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1387,7 +1388,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.infestationPits"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.infestationPits"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1399,7 +1400,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getInfestationPit()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.spires"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.spires"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1412,7 +1413,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.nydusNetworks"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.nydusNetworks"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1424,7 +1425,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getNydusNetwork()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.nydusWorms"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.nydusWorms"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1437,7 +1438,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		gridy++;
-		addInput(components, messages.getString("waypoint.ultraliskCaverns"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.ultraliskCaverns"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1449,7 +1450,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 				c.setText(Integer.toString(dest.getUltraliskCavern()));
 			}
 		});
-		addInput(components, messages.getString("waypoint.greaterSpires"), new CustomActionListener()
+		addInput(components, messages.getString("waypoint.greaterSpires"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1663,7 +1664,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		
 		gridy++;
 		
-		addInput(component, messages.getString("processors"), new CustomActionListener()
+		addInput(component, messages.getString("processors"), NumberTextField.class, new CustomActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1920,48 +1921,56 @@ public class EcSwingX extends JXPanel implements EcReportable
 		//this.ec.bestScore = new Double(0); //why is this here??
 		return tf.isSelected();
 	}
-
-	private JTextField addInput(JPanel container, String name, final CustomActionListener a)
+	
+	private JTextField addInput(JPanel container, String name, Class<? extends JTextField> clazz, final CustomActionListener a)
 	{
-		GridBagConstraints gridBagConstraints;
-
-		JXLabel label = new JXLabel("  " + name);
-		label.setAlignmentX(.5f);
-		gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
-		gridBagConstraints.weightx = .25;
-		gridBagConstraints.gridy = gridy;
-		gridBagConstraints.insets = new Insets(1, 1, 1, 1);
-		container.add(label, gridBagConstraints);
-
-		final JTextField textField = new JTextField();
-		textField.setColumns(5);
-		textField.setText("0");
-		gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.weightx = .25;
-		gridBagConstraints.gridy = gridy;
-		gridBagConstraints.insets = new Insets(1, 1, 1, 1);
-		container.add(textField, gridBagConstraints);
-		textField.addActionListener(a);
-		textField.addFocusListener(new FocusListener()
-		{
-			@Override
-			public void focusLost(FocusEvent e)
+		try{
+			GridBagConstraints gridBagConstraints;
+			
+			final JTextField textField = (JTextField)clazz.newInstance();
+			textField.setColumns(5);
+			textField.setText("0");
+			textField.addActionListener(a);
+			textField.addFocusListener(new FocusListener()
 			{
-				a.actionPerformed(new ActionEvent(e.getSource(), 0, "changed"));
-			}
-
-			@Override
-			public void focusGained(FocusEvent e)
-			{
-			}
-		});
-		inputControls.add(label);
-		inputControls.add(textField);
-		return textField;
+				@Override
+				public void focusLost(FocusEvent e)
+				{
+					a.actionPerformed(new ActionEvent(e.getSource(), 0, "changed"));
+				}
+	
+				@Override
+				public void focusGained(FocusEvent e)
+				{
+				}
+			});
+	
+			JXLabel label = new JXLabel("  " + name);
+			label.setAlignmentX(.5f);
+			
+			gridBagConstraints = new GridBagConstraints();
+			gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+			gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+			gridBagConstraints.weightx = .25;
+			gridBagConstraints.gridy = gridy;
+			gridBagConstraints.insets = new Insets(1, 1, 1, 1);
+			container.add(label, gridBagConstraints);
+			inputControls.add(label);
+			
+			gridBagConstraints = new GridBagConstraints();
+			gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+			gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+			gridBagConstraints.weightx = .25;
+			gridBagConstraints.gridy = gridy;
+			gridBagConstraints.insets = new Insets(1, 1, 1, 1);
+			container.add(textField, gridBagConstraints);
+			inputControls.add(textField);
+			
+			return textField;
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "Error creating input field object.", e);
+			return null;
+		}
 	}
 
 	private JCheckBox addCheck(JPanel container, String name, final CustomActionListener a)
