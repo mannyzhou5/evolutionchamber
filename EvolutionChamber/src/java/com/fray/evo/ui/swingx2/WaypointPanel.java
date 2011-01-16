@@ -94,7 +94,7 @@ public class WaypointPanel extends JPanel {
 				targetTable.addRow(ZergLibrary.Drone, 1);
 			}
 		});
-		add(add, "width 25!, split 2, span 3");
+		add(add, "split 2, span 3");
 
 		delete = new JXButton("-");
 		delete.setToolTipText("Remove the selected targets from the waypoint.");
@@ -112,7 +112,7 @@ public class WaypointPanel extends JPanel {
 				targetTable.clearSelection();
 			}
 		});
-		add(delete, "width 25!");
+		add(delete);
 	}
 
 	@Override
