@@ -12,9 +12,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import com.fray.evo.EvolutionChamber;
 import com.fray.evo.ui.swingx.MacHandler;
 import com.fray.evo.ui.swingx.MacSupport;
-import com.fray.evo.ui.swingx.UserSettings;
 import com.fray.evo.util.EcMessages;
 
 /**
@@ -70,6 +70,12 @@ public class EcSwingXMain {
 			messages.changeLocale(locale);
 		}
 		
+		//if the user upgraded to a new version
+		if (!EvolutionChamber.VERSION.equals(userSettings.getVersion())){
+			//show the welcome screen
+			userSettings.setShowWelcome(true);
+		}
+		
 		//run Mac OS X customizations if user is on a Mac
 		//this code must run before *anything* else graphics-related
 		if (MacSupport.isMac()){
@@ -112,6 +118,11 @@ public class EcSwingXMain {
 					@Override
 					public void windowClosed(WindowEvent event){
 						frame.setVisible(true);
+						if (userSettings.getShowWelcome()){
+							//if the welcome screen is 
+							WelcomeDialog welcome = new WelcomeDialog(frame);
+							welcome.setVisible(true);
+						}
 					}
 				});
 				updateFrame.setResizable(false);

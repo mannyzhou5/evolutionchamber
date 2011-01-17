@@ -17,10 +17,6 @@ import org.jdesktop.swingx.JXTextField;
  */
 @SuppressWarnings("serial")
 public class TimeTextField extends JXTextField {
-	public TimeTextField(){
-		super("mm:ss");
-	}
-
 	@Override
 	protected Document createDefaultModel() {
 		return new TimeDocument();

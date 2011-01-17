@@ -1,0 +1,48 @@
+<html>
+
+<b>v0023</b><br>
+- Security enhancement: Auto-updater now does a file integrity check.<br>
+- Auto-updater download progress bar now displays properly.<br>
+- Fixed a Mac bug that displayed the "Preferences" menu option when it shouldn't have been shown at all.<br>
+- Window size and selected language preferences are now saved in the user's profile.<br>
+- Added Korean and German language support.<br>
+- Added an option to supress Extractors for gas-free builds.<br>
+- Increased games played per second by another 110%!<br>
+<br>
+
+<b>v0022</b><br>
+- Added better Mac support<br>
+- Added internationalization support for the GUI<br>
+- Waypoints can be added/removed in the GUI<br>
+- Increased games played per second by 40% using a caching mechanism<br>
+- Fixed issue with waypoints ignoring bases and Goals not reporting bases<br>
+- Added a History tab<br>
+- Fixed an issue where parts of the window were cut off on smaller screen resolutions<br>
+<br>
+
+<b>v0020</b><br>
+- Added drone scout timing to final way point.<br>
+<br>
+
+<b>v0017</b><br>
+- Fixed bug where any build with waypoints was not being solved.<br>
+<br>
+
+<b>v0016</b><br>
+- Carapace upgrades now cost the correct amount.<br>
+- Auto updater now implemented. Will now ask if you want to go to a new version!<br>
+- Ability to switch drones on/off gas<br>
+- Drone movements to/from gas now have 2 second delay<br>
+- Fixed max larva bug, now is hatches times 19.<br>
+- Fixed max supply bug, now caps at 200.<br>
+- Implemented settings screen, to turn on/off extractor trick, and other things.<br>
+- Spore crawler now is a final destination.<br>
+- Can now have a waypoint without a final, and it will still calculate.<br>
+- Gas extractors now contribute to score.<br>
+- Now have simplified build format, with just supply/major buildings<br>
+- Slightly increased value of drones on satisfied builds.<br>
+- Gave mad props to some awesome contributors.<br>
+- Processors now limited to 4 times your computer's processor count. Overloading your processors can be good, because it spawns more strains, which has a higher chance of getting a more complete build over a long period of time.<br>
+- Evolution rate renamed to Mutation rate, more representative.<br>
+
+</html>
