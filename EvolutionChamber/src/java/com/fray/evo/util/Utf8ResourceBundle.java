@@ -34,6 +34,9 @@ public abstract class Utf8ResourceBundle {
 	private static ResourceBundle createUtf8PropertyResourceBundle(ResourceBundle bundle) {
 		if (!(bundle instanceof PropertyResourceBundle))
 			return bundle;
+		
+		if ("es".equals(bundle.getLocale().getLanguage()))
+			return bundle;
 
 		return new Utf8PropertyResourceBundle((PropertyResourceBundle) bundle);
 	}
