@@ -41,7 +41,7 @@ public final class EvolutionChamber
 	/**
 	 * The version of EvolutionChamber.
 	 */
-	public static final String	VERSION = "0023";
+	public static final String	VERSION = "0024";
 
 	/**
 	 * The seed file.
