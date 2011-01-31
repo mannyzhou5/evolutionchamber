@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.Timer;
 
@@ -13,6 +14,7 @@ import com.fray.evo.EcReportable;
 import com.fray.evo.EcState;
 import com.fray.evo.EvolutionChamber;
 import com.fray.evo.ui.swingx.EcSwingXMain;
+import com.fray.evo.util.EcMessages;
 
 /**
  * Runs Evolution Chamber from the command line.
@@ -21,6 +23,8 @@ import com.fray.evo.ui.swingx.EcSwingXMain;
  * 
  */
 public class EcCommandLine {
+	public static final EcMessages messages = new EcMessages("com/fray/evo/ui/cli/messages");
+	
 	/**
 	 * The detailed build order text that was last generated.
 	 */
@@ -138,7 +142,7 @@ public class EcCommandLine {
 		ageTimer.stop();
 		ec.stopAllThreads();
 		if (lastDetailed == null) {
-			System.out.println("Unable to find a valid build.");
+			System.out.println(messages.getString("cli.noBuild"));
 		} else {
 			if (onlyOutputFinal) {
 				System.out.println(lastDetailed);
@@ -150,26 +154,18 @@ public class EcCommandLine {
 	}
 
 	private static void getArguments(String args[]) throws Exception {
+		int index;
+		
+		index = findArg(args, "-l");
+		if (index >= 0) {
+			Locale lang = new Locale(args[index + 1]);
+			EcSwingXMain.messages.changeLocale(lang);
+			messages.changeLocale(lang);
+		}
+		
 		//print help message
 		if (args.length == 0 || findArg(args, "--help") >= 0) {
-			final String br = "\n\t\t";
-			System.out.println("Evolution Chamber v" + EvolutionChamber.VERSION + " Command-Line Interface");
-			System.out.println();
-			System.out.println("Usage:\njava -jar evolutionchamber-cli-version-" + EvolutionChamber.VERSION + ".jar [arguments] file");
-			System.out.println();
-			System.out.println("Example:\njava -jar evolutionchamber-cli-version-" + EvolutionChamber.VERSION + ".jar -a 200 -f input.txt");
-			System.out.println();
-			System.out.println("Generate sample input file:\njava -jar evolutionchamber-cli-version-" + EvolutionChamber.VERSION + ".jar -s > sample.txt");
-			System.out.println();
-			System.out.println("Arguments:");
-			System.out.println("\t-t\tThe number of threads to spawn." + br + "(default: number of available processors)");
-			System.out.println("\t-a\tThe max age that the fittest build of each thread can be before" + br + "the simulation is terminated (a good value is 200)." + br + "(default: keep running forever)");
-			System.out.println("\t-i\tMinutes that the simulation should run for." + br + "(default: keep running forever)");
-			System.out.println("\t-f\tOnly output the final build order" + br + "(default: output all build orders).");
-			System.out.println("\t-y\tOutput YABOT string too.");
-			System.out.println("\t-l\tSet the language (supported: en, ko, de, es, fr)" + br + "(defaults to English).");
-			System.out.println("\t-s\tPrints a sample input file.");
-			System.out.println("\t--help\tPrints this help message.");
+			System.out.println(messages.getString("cli.help", EvolutionChamber.VERSION));
 			System.exit(0);
 		}
 
@@ -183,8 +179,6 @@ public class EcCommandLine {
 			in.close();
 			System.exit(0);
 		}
-
-		int index;
 
 		index = findArg(args, "-t");
 		threads = index >= 0 ? Integer.parseInt(args[index + 1]) : Runtime.getRuntime().availableProcessors();
@@ -200,11 +194,6 @@ public class EcCommandLine {
 
 		index = findArg(args, "-y");
 		printYabot = index >= 0;
-
-		index = findArg(args, "-l");
-		if (index >= 0) {
-			EcSwingXMain.messages.changeLocale(new Locale(args[index + 1]));
-		}
 
 		File waypoints = new File(args[args.length - 1]);
 		inputFile = new InputFile(waypoints);
