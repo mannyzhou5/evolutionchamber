@@ -1,0 +1,68 @@
+#sample input file
+
+#the time to send a scouting worker (optional)
+scout-timing 2:00
+
+#define each waypoint
+
+waypoint 3:00
+	zergling 6
+	
+waypoint 6:00
+	roach 7
+
+waypoint 2:00:00
+	mutalisk 6
+	
+
+#complete list of all valid waypoint fields:
+waypoint 2:00:00
+	drone 0
+	baneling 0
+	brood-lord 0
+	corruptor 0
+	hydralisk 0
+	infestor 0
+	mutalisk 0
+	overlord 0
+	overseer 0
+	queen 0
+	roach 0
+	ultralisk 0
+	zergling 0
+
+	baneling-nest 0		
+	evolution-chamber 0
+	extractor 0
+	greater-spire 0
+	hatchery 0
+	hive 0
+	hydralisk-den 0
+	infestation-pit 0
+	lair 0
+	nydus-network 0
+	nydus-worm 0
+	roach-warren 0
+	spawning-pool 0
+	spine-crawler 0
+	spire 0
+	spore-crawler 0
+	ultralisk-cavern 0
+	
+	adrenal-glands
+	burrow
+	carapace 1 #Enter "1" for Carapace Level 1, "2" for Carapace Level 2, etc
+	centrifugal-hooks
+	chitinous-plating
+	flyerArmor 2
+	flyerAttacks 3
+	glial-reconstitution
+	grooved-spines
+	melee 1
+	metabolic-boost
+	missile 2
+	neural-parasite
+	pathogen-glands
+	pneumatized-carapace
+	tunneling-claws
+	ventral-sacs

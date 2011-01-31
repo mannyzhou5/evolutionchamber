@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_run_jar" name="Build JAR">
+<project default="usage" name="Build JAR X">
+	<target name="usage">
+		<echo message="Evolution Chamber build file" />
+	</target>
+	
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
-    <target name="create_run_jar">
+    <target name="create_run_jar_gui">
         <jar destfile="output/evolutionchamber.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
                 <attribute name="Rsrc-Main-Class" value="com.fray.evo.ui.swingx.EcSwingXMain"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ commons-collections-3.2.jar jgap.jar swingx-core-1.6.2.jar looks-2.1.4.jar org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="bin">
+            	<!-- exclude all unit test files from the final JAR -->
+            	<exclude name="**/*Test.class" />
+            	<exclude name="**/test-messages.properties" />
+            </fileset>
+            <zipfileset dir="lib" includes="commons-collections-3.2.jar"/>
+            <zipfileset dir="lib" includes="jgap.jar"/>
+            <zipfileset dir="lib" includes="swingx-core-1.6.2.jar"/>
+            <zipfileset dir="lib" includes="looks-2.1.4.jar"/>
+            <zipfileset dir="${eclipse.home}/plugins" includes="org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+        </jar>
+    </target>
+	
+    <target name="create_run_jar_cli">
+        <jar destfile="output/evolutionchamber-cli.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="com.fray.evo.ui.cli.EcCommandLine"/>
                 <attribute name="Class-Path" value="."/>
                 <attribute name="Rsrc-Class-Path" value="./ commons-collections-3.2.jar jgap.jar swingx-core-1.6.2.jar looks-2.1.4.jar org.hamcrest.core_1.1.0.v20090501071000.jar"/>
             </manifest>
