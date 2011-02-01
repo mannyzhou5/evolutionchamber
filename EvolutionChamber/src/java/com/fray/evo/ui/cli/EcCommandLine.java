@@ -189,7 +189,7 @@ public class EcCommandLine {
 		timeLimit = index >= 0 ? Integer.parseInt(args[index + 1]) : -1;
 
 		index = findArg(args, "-f");
-		onlyOutputFinal = index >= 0 && maxAge >= 0;
+		onlyOutputFinal = index >= 0 && (maxAge >= 0 || timeLimit >= 0);
 
 		index = findArg(args, "-y");
 		printYabot = index >= 0;
