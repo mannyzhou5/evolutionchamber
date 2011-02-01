@@ -54,8 +54,8 @@ waypoint 2:00:00
 	carapace 1 #Enter "1" for Carapace Level 1, "2" for Carapace Level 2, etc
 	centrifugal-hooks
 	chitinous-plating
-	flyerArmor 2
-	flyerAttacks 3
+	flyer-armor 2
+	flyer-attacks 3
 	glial-reconstitution
 	grooved-spines
 	melee 1
