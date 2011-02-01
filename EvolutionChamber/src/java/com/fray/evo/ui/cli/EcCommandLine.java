@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.swing.Timer;
 
@@ -196,7 +195,12 @@ public class EcCommandLine {
 		printYabot = index >= 0;
 
 		File waypoints = new File(args[args.length - 1]);
-		inputFile = new InputFile(waypoints);
+		try{
+			inputFile = new InputFile(waypoints);
+		} catch (UnknownKeywordException e){
+			System.out.println(messages.getString("cli.unknownKeywords", e.getKeywords()));
+			System.exit(1);
+		}
 	}
 
 	/**

@@ -3,6 +3,7 @@ package com.fray.evo.ui.cli;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +11,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import com.fray.evo.EcState;
 import com.fray.evo.util.Buildable;
@@ -20,8 +20,6 @@ import com.fray.evo.util.Upgrade;
 import com.fray.evo.util.ZergLibrary;
 
 public class InputFile {
-	private static final Logger logger = Logger.getLogger(InputFile.class.getName());
-
 	/**
 	 * Maps unit names from the input file to units in EC.
 	 */
@@ -81,12 +79,13 @@ public class InputFile {
 	private int scoutTiming = 0;
 	private List<EcState> waypoints = new ArrayList<EcState>();
 
-	public InputFile(File file) throws Exception {
+	public InputFile(File file) throws IOException, UnknownKeywordException {
 		this(new FileReader(file));
 	}
 
-	public InputFile(Reader reader) throws Exception {
+	public InputFile(Reader reader) throws IOException, UnknownKeywordException {
 		BufferedReader in = null;
+		List<String> unknownKeywords = new ArrayList<String>();
 		try {
 			in = new BufferedReader(reader);
 			String line;
@@ -127,11 +126,14 @@ public class InputFile {
 						curWaypoint.AddUpgrade((Upgrade) buildables.get(word)[num]);
 					}
 				} else {
-					logger.warning("Unknown command \"" + word + "\"");
+					unknownKeywords.add(word);
 				}
 			}
 			if (curWaypoint != null){
 				waypoints.add(curWaypoint);
+			}
+			if (!unknownKeywords.isEmpty()){
+				throw new UnknownKeywordException(unknownKeywords);
 			}
 		} finally {
 			if (in != null) {
@@ -141,10 +143,6 @@ public class InputFile {
 	}
 	
 	public EcState getDestination(){
-		if (waypoints.size() == 0){
-			return null;
-		}
-		
 		//sort by deadline
 		Collections.sort(waypoints, new Comparator<EcState>(){
 			@Override
@@ -153,9 +151,15 @@ public class InputFile {
 			}
 		});
 		
-		EcState destination = waypoints.get(waypoints.size()-1);
+		EcState destination;
+		if (waypoints.size() > 0){
+			destination = waypoints.get(waypoints.size()-1);
+			destination.waypoints = new ArrayList<EcState>(waypoints.subList(0, waypoints.size()-1));
+		} else {
+			destination = EcState.defaultDestination();
+		}
 		destination.scoutDrone = scoutTiming;
-		destination.waypoints = new ArrayList<EcState>(waypoints.subList(0, waypoints.size()-1));
+		
 		return destination;
 	}
 
