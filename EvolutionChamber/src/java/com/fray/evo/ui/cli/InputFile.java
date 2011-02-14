@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fray.evo.EcSettings;
 import com.fray.evo.EcState;
 import com.fray.evo.util.Buildable;
 import com.fray.evo.util.Building;
@@ -19,6 +20,11 @@ import com.fray.evo.util.Unit;
 import com.fray.evo.util.Upgrade;
 import com.fray.evo.util.ZergLibrary;
 
+/**
+ * Reads a waypoints file.
+ * @author mike.angstadt
+ *
+ */
 public class InputFile {
 	/**
 	 * Maps unit names from the input file to units in EC.
@@ -77,6 +83,7 @@ public class InputFile {
 	}
 
 	private int scoutTiming = 0;
+	private EcSettings settings;
 	private List<EcState> waypoints = new ArrayList<EcState>();
 
 	public InputFile(File file) throws IOException, UnknownKeywordException {
@@ -90,6 +97,7 @@ public class InputFile {
 			in = new BufferedReader(reader);
 			String line;
 			EcState curWaypoint = null;
+			boolean inSettingsBlock = false;
 			while ((line = in.readLine()) != null) {
 				//remove comments
 				int hash = line.indexOf('#');
@@ -107,13 +115,27 @@ public class InputFile {
 				String value = split.length > 1 ? split[1] : null;
 				if (word.equals("scout-timing")) {
 					scoutTiming = parseTime(value);
+				} else if (word.equals("settings")) {
+					if (settings == null){
+						settings = new EcSettings();
+						
+						//set boolean values to false because they must be included in the settings block in order for them to be set to true
+						settings.avoidMiningGas = false;
+						settings.pullThreeWorkersOnly = false;
+						settings.pullWorkersFromGas = false;
+						settings.useExtractorTrick = false;
+						settings.overDrone = false;
+						settings.workerParity = false;
+					}
+					inSettingsBlock = true;
 				} else if (word.equals("waypoint")) {
+					inSettingsBlock = false;
 					if (curWaypoint != null) {
 						waypoints.add(curWaypoint);
 					}
 					curWaypoint = EcState.defaultDestination();
 					curWaypoint.targetSeconds = parseTime(value);
-				} else if (buildables.containsKey(word)) {
+				} else if (!inSettingsBlock && buildables.containsKey(word)) {
 					Buildable b = buildables.get(word)[0];
 					if (b instanceof Unit) {
 						int num = value == null ? 1 : Integer.parseInt(value);
@@ -124,6 +146,11 @@ public class InputFile {
 					} else if (b instanceof Upgrade) {
 						int num = value == null ? 0 : Integer.parseInt(value) - 1;
 						curWaypoint.AddUpgrade((Upgrade) buildables.get(word)[num]);
+					}
+				} else if (inSettingsBlock) {
+					boolean validKeyword = processSetting(settings, word, value);
+					if (!validKeyword){
+						unknownKeywords.add(word);
 					}
 				} else {
 					unknownKeywords.add(word);
@@ -140,6 +167,48 @@ public class InputFile {
 				in.close();
 			}
 		}
+	}
+	
+	/**
+	 * Process an item in the "settings" block.
+	 * @param settings
+	 * @param word
+	 * @param value
+	 * @return true if the setting keyword exists, false if not
+	 */
+	private boolean processSetting(EcSettings settings, String word, String value){
+		if ("enforce-worker-parity".equals(word)){
+			if ("until-saturation".equals(value)){
+				settings.workerParity = true;
+				settings.overDrone = false;
+			} else if ("allow-overdroning".equals(value)){
+				settings.workerParity = false;
+				settings.overDrone = true;
+			} else {
+				settings.workerParity = false;
+				settings.overDrone = false;
+			}
+		} else if ("use-extractor-trick".equals(word)){
+			settings.useExtractorTrick = true;
+		} else if ("push-pull-workers-gas".equals(word)){
+			settings.pullWorkersFromGas = true;
+		} else if ("push-pull-in-threes".equals(word)){
+			settings.pullThreeWorkersOnly = true;
+		} else if ("avoid-unnecessary-extractor".equals(word)){
+			settings.avoidMiningGas = true;
+		} else if ("max-extractor-trick-supply".equals(word)){
+			settings.maximumExtractorTrickSupply = Integer.parseInt(value);
+		} else if ("min-pool-supply".equals(word)){
+			settings.minimumPoolSupply = Integer.parseInt(value);
+		} else if ("min-extractor-supply".equals(word)){
+			settings.minimumExtractorSupply = Integer.parseInt(value);
+		} else if ("min-hatchery-supply".equals(word)){
+			settings.minimumHatcherySupply = Integer.parseInt(value);
+		} else {
+			//unknown keyword
+			return false;
+		}
+		return true;
 	}
 	
 	public EcState getDestination(){
@@ -159,6 +228,9 @@ public class InputFile {
 			destination = EcState.defaultDestination();
 		}
 		destination.scoutDrone = scoutTiming;
+		if (settings != null){
+			destination.settings = settings;
+		}
 		
 		return destination;
 	}

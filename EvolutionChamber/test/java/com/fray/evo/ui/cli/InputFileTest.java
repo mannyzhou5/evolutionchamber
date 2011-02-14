@@ -5,6 +5,7 @@ import java.io.StringReader;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.fray.evo.EcSettings;
 import com.fray.evo.EcState;
 import com.fray.evo.util.ZergLibrary;
 
@@ -106,5 +107,106 @@ public class InputFileTest {
 			Assert.assertTrue(e.getKeywords().contains("ignore-me"));
 			Assert.assertTrue(e.getKeywords().contains("and-me-too"));
 		}
+	}
+	
+	/**
+	 * The default settings defined in EcSettings are used if no settings block is defined in the file.
+	 * @throws Exception
+	 */
+	@Test
+	public void testSettingsDefaults() throws Exception {
+		StringReader sr = new StringReader("waypoint 3:00\nzergling\nspine-crawler\nmelee");
+		InputFile file = new InputFile(sr);
+		EcSettings settings = file.getDestination().settings;
+		Assert.assertFalse(settings.overDrone);
+		Assert.assertFalse(settings.workerParity);
+		Assert.assertTrue(settings.useExtractorTrick);
+		Assert.assertTrue(settings.pullWorkersFromGas);
+		Assert.assertFalse(settings.pullThreeWorkersOnly);
+		Assert.assertTrue(settings.avoidMiningGas);
+		Assert.assertEquals(200, settings.maximumExtractorTrickSupply);
+		Assert.assertEquals(2, settings.minimumPoolSupply);
+		Assert.assertEquals(2, settings.minimumExtractorSupply);
+		Assert.assertEquals(2, settings.minimumHatcherySupply);
+	}
+	
+	/**
+	 * Tests what happens when a settings block with no settings is defined.
+	 * @throws Exception
+	 */
+	@Test
+	public void testSettingsNone() throws Exception {
+		StringReader sr = new StringReader("settings\nwaypoint 3:00\nzergling\nspine-crawler\nmelee");
+		InputFile file = new InputFile(sr);
+		EcSettings settings = file.getDestination().settings;
+		Assert.assertFalse(settings.overDrone);
+		Assert.assertFalse(settings.workerParity);
+		Assert.assertFalse(settings.useExtractorTrick);
+		Assert.assertFalse(settings.pullWorkersFromGas);
+		Assert.assertFalse(settings.pullThreeWorkersOnly);
+		Assert.assertFalse(settings.avoidMiningGas);
+		Assert.assertEquals(200, settings.maximumExtractorTrickSupply);
+		Assert.assertEquals(2, settings.minimumPoolSupply);
+		Assert.assertEquals(2, settings.minimumExtractorSupply);
+		Assert.assertEquals(2, settings.minimumHatcherySupply);
+	}
+	
+	/**
+	 * Settings block must only contain settings keywords.
+	 * @throws Exception
+	 */
+	@Test
+	public void testWaypointWordInSettings() throws Exception {
+		//settings is before waypoint
+		StringReader sr = new StringReader("settings\nzergling 5\nwaypoint 3:00\nzergling\nspine-crawler\nmelee");
+		try{
+			new InputFile(sr);
+			Assert.fail();
+		} catch (UnknownKeywordException e){
+			Assert.assertEquals(1, e.getKeywords().size());
+		}
+		
+		//settings is after waypoint
+		sr = new StringReader("waypoint 3:00\nzergling\nspine-crawler\nmelee\nsettings\nzergling 5");
+		try{
+			new InputFile(sr);
+			Assert.fail();
+		} catch (UnknownKeywordException e){
+			Assert.assertEquals(1, e.getKeywords().size());
+		}
+	}
+	
+	/**
+	 * Multiple "settings" blocks are treated as one.
+	 * @throws Exception
+	 */
+	@Test
+	public void testSettingsMultipleBlocks() throws Exception {
+		StringReader sr = new StringReader("settings\nmax-extractor-trick-supply 10\nuse-extractor-trick\nwaypoint 3:00\nzergling\nspine-crawler\nmelee\nsettings\nmax-extractor-trick-supply 20");
+		InputFile file = new InputFile(sr);
+		EcSettings settings = file.getDestination().settings;
+		Assert.assertTrue(settings.useExtractorTrick);
+		Assert.assertEquals(20, settings.maximumExtractorTrickSupply);
+	}
+	
+	/**
+	 * Make sure it parses the settings correctly.
+	 * @throws Exception
+	 */
+	@Test
+	public void testSettings() throws Exception {
+		StringReader sr = new StringReader("settings\nenforce-worker-parity until-saturation\nuse-extractor-trick\npush-pull-workers-gas\npush-pull-in-threes\navoid-unnecessary-extractor\nmax-extractor-trick-supply 10\nmin-pool-supply 11\nmin-extractor-supply 12\nmin-hatchery-supply 13\nwaypoint 3:00\nzergling\nspine-crawler\nmelee");
+		InputFile file = new InputFile(sr);
+		EcSettings settings = file.getDestination().settings;
+		Assert.assertFalse(settings.overDrone);
+		Assert.assertTrue(settings.workerParity);
+		Assert.assertTrue(settings.useExtractorTrick);
+		Assert.assertTrue(settings.pullWorkersFromGas);
+		Assert.assertTrue(settings.pullThreeWorkersOnly);
+		Assert.assertTrue(settings.avoidMiningGas);
+		Assert.assertEquals(10, settings.maximumExtractorTrickSupply);
+		Assert.assertEquals(11, settings.minimumPoolSupply);
+		Assert.assertEquals(12, settings.minimumExtractorSupply);
+		Assert.assertEquals(13, settings.minimumHatcherySupply);
 	}
 }

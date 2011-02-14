@@ -7,6 +7,7 @@ public class UnknownKeywordException extends Exception{
 	private final List<String> keywords;
 	
 	public UnknownKeywordException(List<String> keywords){
+		super("Unknown keywords(s): " + keywords.toString());
 		this.keywords = keywords;
 	}
 	
