@@ -1,77 +1,30 @@
 package com.fray.evo.ui.swingx;
 
-import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
-import static com.fray.evo.ui.swingx.EcSwingXMain.userSettings;
-
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
+import com.fray.evo.*;
+import com.fray.evo.action.EcAction;
 import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXStatusBar;
 import org.jgap.InvalidConfigurationException;
 
-import com.fray.evo.EcBuildOrder;
-import com.fray.evo.EcEvolver;
-import com.fray.evo.EcReportable;
-import com.fray.evo.EcState;
-import com.fray.evo.EvolutionChamber;
-import com.fray.evo.action.EcAction;
-import com.fray.evo.util.ZergBuildingLibrary;
-import com.fray.evo.util.ZergUnitLibrary;
-import com.fray.evo.util.ZergUpgradeLibrary;
+import javax.swing.*;
+import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
+import static com.fray.evo.ui.swingx.EcSwingXMain.userSettings;
 
 //TODO: Refactor this monster. - Lomilar
 public class EcSwingX extends JXPanel implements EcReportable
@@ -89,9 +42,9 @@ public class EcSwingX extends JXPanel implements EcReportable
 	private boolean				isDetailedBuildOrder;
 	private boolean				isYabotBuildOrder;
 	private boolean				isSimpleBuildOrder;
-	private int					gridy			= 0;
+	int							gridy			= 0;
 	private JXStatusBar			statusbar;
-	private List<JComponent>	inputControls	= new ArrayList<JComponent>();
+	List<JComponent>			inputControls	= new ArrayList<JComponent>();
 
 	private final EvolutionChamber ec;
 	List<EcState> destination = new ArrayList<EcState>();
@@ -115,7 +68,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 	private JTabbedPane			tabPane;
 	private Component			lastSelectedTab;
 	private JList				historyList;
-	
+
 	private JFrame				frame;
 
 	/**
@@ -139,103 +92,98 @@ public class EcSwingX extends JXPanel implements EcReportable
 			JPanel leftbottom = new JPanel(new GridBagLayout());
 			JScrollPane stuffPanel = new JScrollPane(leftbottom);
 			{
-				{
-					addControlParts(leftbottom);
-					tabPane = new JTabbedPane(JTabbedPane.LEFT);
-					{
-						//history tab
-						historyPanel = new JPanel(new BorderLayout());
-						addStart(historyPanel);
+                addControlParts(leftbottom);
+                tabPane = new JTabbedPane(JTabbedPane.LEFT);
+                {
+                    //history tab
+                    historyPanel = new JPanel(new BorderLayout());
+                    addStart(historyPanel);
 
-						//waypoint tabs
-						for (int i = 0; i < destination.size()-1; i++)
-						{
-							JPanel lb = new JPanel(new GridBagLayout());
-							waypointPanels.add(lb);
-							addInputContainer(destination.get(i), lb);
-						}
-						
-						//new waypoint tab
-						newWaypointPanel = new JPanel(); //just make it an empty panel
-						tabPane.addChangeListener(new ChangeListener(){
-							@Override
-							public void stateChanged(ChangeEvent event) {
-								if (running && tabPane.getSelectedComponent() == newWaypointPanel){
-									tabPane.setSelectedComponent(lastSelectedTab);
-								} else {
-									lastSelectedTab = tabPane.getSelectedComponent();
-								}
-							}
-						});
-						tabPane.addMouseListener(new MouseListener(){
-							public void mouseClicked(MouseEvent event) {
-								if (!running && tabPane.getSelectedComponent() == newWaypointPanel){
-									//create a new waypoint
-									try{
-										//create waypoint object
-										EcState newWaypoint = (EcState) ec.getInternalDestination().clone();
-										if (destination.size() > 1){
-											//add 3 minutes to the last waypoint's time
-											newWaypoint.targetSeconds = destination.get(destination.size()-2).targetSeconds + (60*3);
-										} else {
-											newWaypoint.targetSeconds = 60*3;
-										}
-										destination.add(destination.size()-1, newWaypoint); //final dest stays on end
-										
-										//create panel
-										JPanel newWaypointPanel = new JPanel(new GridBagLayout());
-										waypointPanels.add(waypointPanels.size()-1, newWaypointPanel); //final dest panel stays on end
-										addInputContainer(newWaypoint, newWaypointPanel);
-										
-										//add the new waypoint to the tabs
-										refreshTabs();
-										
-										//select new waypoint
-										tabPane.setSelectedComponent(newWaypointPanel);
-									} catch (CloneNotSupportedException e){
-									}
-								}
-							}
-							
-							public void mouseEntered(MouseEvent arg0) {
-							}
-							public void mouseExited(MouseEvent arg0) {
-							}
-							public void mousePressed(MouseEvent arg0) {
-							}
-							public void mouseReleased(MouseEvent arg0) {
-							}
-						});
-						
-						//final waypoint tab
-						JPanel finalDestinationPanel = new JPanel(new GridBagLayout());
-						waypointPanels.add(finalDestinationPanel);
-						addInputContainer(destination.get(destination.size()-1), finalDestinationPanel);
+                    //waypoint tabs
+                    for (EcState dest : destination)
+                        addWaypointPanel(dest, false);
 
-						//stats tab
-						statsPanel = new JPanel(new BorderLayout());
-						addStats(statsPanel);
+                    //new waypoint tab
+                    newWaypointPanel = new JPanel(); //just make it an empty panel
+                    tabPane.addChangeListener(new ChangeListener(){
+                        @Override
+                        public void stateChanged(ChangeEvent event) {
+                            if (running && tabPane.getSelectedComponent() == newWaypointPanel){
+                                tabPane.setSelectedComponent(lastSelectedTab);
+                            } else {
+                                lastSelectedTab = tabPane.getSelectedComponent();
+                            }
+                        }
+                    });
+                    tabPane.addMouseListener(new MouseListener(){
+                        public void mouseClicked(MouseEvent event) {
+                            if (running)
+                                return;
+                            if (tabPane.getSelectedComponent() == newWaypointPanel){
+                                //create a new waypoint
+                                try{
+                                    //create waypoint object
+                                    EcState newWaypoint = (EcState) ec.getInternalDestination().clone();
+                                    if (destination.size() > 1){
+                                        //add 3 minutes to the last waypoint's time
+                                        newWaypoint.targetSeconds = destination.get(destination.size()-2).targetSeconds + (60*3);
+                                    } else {
+                                        newWaypoint.targetSeconds = 60*3;
+                                    }
+                                    destination.add(destination.size()-1, newWaypoint); //final dest stays on end
 
-						//settings tab
-						settingsPanel = new JPanel(new GridBagLayout());
-						addSettings(settingsPanel);
-						
-						//add tabs to JTabbedPane
-						refreshTabs();
+                                    //create panel
+                                    PanelWayPoint p = addWaypointPanel(newWaypoint, true);
 
-						//select final waypoint tab
-						tabPane.setSelectedComponent(waypointPanels.get(waypointPanels.size()-1));
-					}
-					GridBagConstraints gridBagConstraints = new GridBagConstraints();
-					gridBagConstraints.anchor = GridBagConstraints.WEST;
-					gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-					gridBagConstraints.weightx = .25;
-					gridBagConstraints.gridy = gridy;
-					gridBagConstraints.gridwidth = 4;
-					gridBagConstraints.insets = new Insets(1, 1, 1, 1);
-					leftbottom.add(tabPane, gridBagConstraints);
-					addStatusBar(leftbottom);
-				}
+                                    //add the new waypoint to the tabs
+                                    refreshTabs();
+
+                                    //select new waypoint
+                                    tabPane.setSelectedComponent(p);
+                                } catch (CloneNotSupportedException e){
+                                }
+                            } else if(event.getButton() == 2) { // wheel click
+                                Component c = tabPane.getSelectedComponent();
+                                if (c instanceof PanelWayPoint) {
+                                    PanelWayPoint wp = (PanelWayPoint)c;
+                                    if (wp.getState() != destination.get(destination.size()-1))
+                                        removeTab(wp);
+                                }
+                            }
+                        }
+
+                        public void mouseEntered(MouseEvent arg0) {
+                        }
+                        public void mouseExited(MouseEvent arg0) {
+                        }
+                        public void mousePressed(MouseEvent arg0) {
+                        }
+                        public void mouseReleased(MouseEvent arg0) {
+                        }
+                    });
+
+                    //stats tab
+                    statsPanel = new JPanel(new BorderLayout());
+                    addStats(statsPanel);
+
+                    //settings tab
+                    settingsPanel = new PanelSettings(this);
+
+                    //add tabs to JTabbedPane
+                    refreshTabs();
+
+                    //select final waypoint tab
+                    tabPane.setSelectedComponent(waypointPanels.get(waypointPanels.size()-1));
+                }
+                GridBagConstraints gridBagConstraints = new GridBagConstraints();
+                gridBagConstraints.anchor = GridBagConstraints.WEST;
+                gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+                gridBagConstraints.weightx = .25;
+                gridBagConstraints.gridy = gridy;
+                gridBagConstraints.gridwidth = 4;
+                gridBagConstraints.insets = new Insets(1, 1, 1, 1);
+                leftbottom.add(tabPane, gridBagConstraints);
+                addStatusBar(leftbottom);
 			}
 			outside.setLeftComponent(stuffPanel);
 		}
@@ -249,14 +197,13 @@ public class EcSwingX extends JXPanel implements EcReportable
 		add(outside);
 		outside.setDividerLocation(490);
 	}
-	
+
 	private void refreshTabs(){
 		tabPane.removeAll();
 		tabPane.addTab(messages.getString("tabs.history"), historyPanel);
 		for (int i = 0; i < waypointPanels.size()-1; i++)
 		{
-			JPanel p = waypointPanels.get(i);
-			tabPane.addTab(messages.getString("tabs.waypoint", i), p);
+			tabPane.addTab(messages.getString("tabs.waypoint", i), waypointPanels.get(i));
 		}
 		tabPane.addTab(messages.getString("tabs.waypoint", "+"), newWaypointPanel);
 		tabPane.addTab(messages.getString("tabs.final"), waypointPanels.get(waypointPanels.size()-1));
@@ -394,174 +341,6 @@ public class EcSwingX extends JXPanel implements EcReportable
 		historyList.setListData(results.toArray());
 	}
 
-	private void addSettings(JPanel settings)
-	{
-		{
-			// somebody enlighten me please how this could be done easier... but
-			// it works :)
-			final String[] radioButtonCaptions = {messages.getString("settings.workerParity.none"), messages.getString("settings.workerParity.untilSaturation"), messages.getString("settings.workerParity.allowOverdroning")};
-			final int defaultSelected;
-			if (destination.get(destination.size()-1).settings.overDrone)
-			{
-				defaultSelected = 1;
-			}
-			else if (destination.get(destination.size()-1).settings.workerParity)
-			{
-				defaultSelected = 2;
-			}
-			else
-			{
-				defaultSelected = 0;
-			}
-			addRadioButtonBox(settings, messages.getString("settings.workerParity"), radioButtonCaptions, defaultSelected,
-					new CustomActionListener()
-					{
-						public void actionPerformed(ActionEvent e)
-						{
-							if (getSelected(e).equals(radioButtonCaptions[1]))
-							{
-								destination.get(destination.size()-1).settings.workerParity = true;
-								destination.get(destination.size()-1).settings.overDrone = false;
-							}
-							else if (getSelected(e).equals(radioButtonCaptions[2]))
-							{
-								destination.get(destination.size()-1).settings.workerParity = false;
-								destination.get(destination.size()-1).settings.overDrone = true;
-							}
-							else
-							{
-								destination.get(destination.size()-1).settings.workerParity = false;
-								destination.get(destination.size()-1).settings.overDrone = false;
-							}
-						}
-
-						@Override
-						void reverse(Object o)
-						{
-							//TODO: Code this up
-						}
-					});
-			gridy++;
-		}
-		addCheck(settings, messages.getString("settings.useExtractorTrick"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				destination.get(destination.size()-1).settings.useExtractorTrick = getTrue(e);
-			}
-
-			@Override
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(destination.get(destination.size()-1).settings.useExtractorTrick);
-			}
-		}).setSelected(destination.get(destination.size()-1).settings.useExtractorTrick);
-		gridy++;
-		addCheck(settings, messages.getString("settings.pullWorkersFromGas"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				destination.get(destination.size()-1).settings.pullWorkersFromGas = getTrue(e);
-			}
-			@Override
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(destination.get(destination.size()-1).settings.pullWorkersFromGas);
-			}
-		}).setSelected(destination.get(destination.size()-1).settings.useExtractorTrick);
-		gridy++;
-		addCheck(settings, messages.getString("settings.pullThreeWorkersTogether"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				destination.get(destination.size()-1).settings.pullThreeWorkersOnly = getTrue(e);
-			}
-			@Override
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(destination.get(destination.size()-1).settings.pullThreeWorkersOnly);
-			}
-		}).setSelected(destination.get(destination.size()-1).settings.pullThreeWorkersOnly);
-		gridy++;
-		addCheck(settings, messages.getString("settings.avoidMiningGas"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				destination.get(destination.size()-1).settings.avoidMiningGas = getTrue(e);
-			}
-			@Override
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(destination.get(destination.size()-1).settings.avoidMiningGas);
-			}
-		}).setSelected(destination.get(destination.size()-1).settings.avoidMiningGas);
-		gridy++;
-		addInput(settings, messages.getString("settings.maxExtractorTrickSupply"), NumberTextField.class, new CustomActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				destination.get(destination.size()-1).settings.maximumExtractorTrickSupply = getDigit(e);
-			}
-			@Override
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(destination.get(destination.size()-1).settings.maximumExtractorTrickSupply));
-			}
-		}).setText("200");
-		gridy++;
-		addInput(settings, messages.getString("settings.minPoolSupply"), NumberTextField.class, new CustomActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				destination.get(destination.size()-1).settings.minimumPoolSupply = getDigit(e);
-			}
-			@Override
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(destination.get(destination.size()-1).settings.minimumPoolSupply));
-			}
-		}).setText("2");
-		gridy++;
-		addInput(settings, messages.getString("settings.minExtractorSupply"), NumberTextField.class, new CustomActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				destination.get(destination.size()-1).settings.minimumExtractorSupply = getDigit(e);
-			}
-			@Override
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(destination.get(destination.size()-1).settings.minimumExtractorSupply));
-			}
-		}).setText("2");
-		gridy++;
-		addInput(settings, messages.getString("settings.minHatcherySupply"), NumberTextField.class, new CustomActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				destination.get(destination.size()-1).settings.minimumHatcherySupply = getDigit(e);
-
-			}
-			@Override
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(destination.get(destination.size()-1).settings.minimumHatcherySupply));
-			}
-		}).setText("2");
-	}
-
 	private void initializeWaypoints()
 	{
 		try
@@ -639,12 +418,12 @@ public class EcSwingX extends JXPanel implements EcReportable
 						StringBuilder stats = new StringBuilder();
 						int threadIndex = 0;
 						stats.append(messages.getString("stats.gamesPlayed", evaluations / 1000));
-						stats.append("\n" + messages.getString("stats.maxBuildOrderLength", ec.getChromosomeLength()));
-						stats.append("\n" + messages.getString("stats.stagnationLimit", ec.getStagnationLimit()));
-						stats.append("\n" + messages.getString("stats.gamesPlayedPerSec", (int) permsPerSecond));
-						stats.append("\n" + messages.getString("stats.mutationRate", ec.getBaseMutationRate() / ec.getChromosomeLength()));
+                        stats.append("\n").append(messages.getString("stats.maxBuildOrderLength", ec.getChromosomeLength()));
+                        stats.append("\n").append(messages.getString("stats.stagnationLimit", ec.getStagnationLimit()));
+                        stats.append("\n").append(messages.getString("stats.gamesPlayedPerSec", (int) permsPerSecond));
+                        stats.append("\n").append(messages.getString("stats.mutationRate", ec.getBaseMutationRate() / ec.getChromosomeLength()));
 						for (Double d : ec.getBestScores())
-							stats.append("\n" + messages.getString("stats.processor", threadIndex, ec.getEvolutionsSinceDiscovery(threadIndex++), d));
+                            stats.append("\n").append(messages.getString("stats.processor", threadIndex, ec.getEvolutionsSinceDiscovery(threadIndex++), d));
 						statsText.setText(stats.toString());
 					}
 				}
@@ -675,862 +454,29 @@ public class EcSwingX extends JXPanel implements EcReportable
 		outputText.setText(welcome);
 	}
 
-	private void addInputContainer(final EcState dest, final JPanel components)
+    void removeTab(PanelWayPoint wayPoint) {
+        inputControls.removeAll(Arrays.asList(wayPoint.getComponents()));
+        int selectedIndex = tabPane.getSelectedIndex();
+        destination.remove(wayPoint.getState());
+        waypointPanels.remove(wayPoint);
+        refreshTabs();
+        if (selectedIndex > 0)
+            tabPane.setSelectedIndex(selectedIndex-1); //if WP3 was removed, select WP2
+    }
+
+    private void readDestinations()
 	{
-		// addInput(component, "", new ActionListener()
-		// {
-		// public void actionPerformed(ActionEvent e)
-		// {
-		// ec.POPULATION_SIZE = getDigit(e);
-		// }
-		// }).setText("30");
-		// addInput(component, "Chromosome Length", new ActionListener()
-		// {
-		// public void actionPerformed(ActionEvent e)
-		// {
-		// ec.CHROMOSOME_LENGTH = getDigit(e);
-		// }
-		// }).setText("120");
-		addInput(components, messages.getString("waypoint.drones"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Drone, getDigit(e));
-			}
-
-			@Override
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getDrones()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.deadline"), TimeTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.targetSeconds = getDigit(e);
-				((JTextField)e.getSource()).setText( formatAsTime(dest.targetSeconds) );
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(formatAsTime(dest.targetSeconds));
-			}
-		}).setText(formatAsTime(dest.targetSeconds));
-		gridy++;
-		addInput(components, messages.getString("waypoint.overlords"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Overlord, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getOverlords()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.overseers"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Overseer, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getOverseers()));
-			}
-		});
-		gridy++;
-		if (dest == destination.get(destination.size()-1)) // only put this option on the Final waypoint.
-		{
-			addInput(components, messages.getString("waypoint.scoutTiming"), TimeTextField.class, new CustomActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					destination.get(destination.size()-1).scoutDrone = getDigit(e);
-					((JTextField)e.getSource()).setText( formatAsTime(dest.scoutDrone) );
-				}
-				void reverse(Object o)
-				{
-					JTextField c = (JTextField) o;
-					c.setText(formatAsTime((destination.get(destination.size()-1).scoutDrone)));
-				}
-			}).setText( formatAsTime(dest.scoutDrone));
-		}
-		addCheck(components, messages.getString("waypoint.burrow"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Burrow);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Burrow);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isBurrow());
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.queens"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Queen, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getQueens()));
-			}
-		});
-		addCheck(components, messages.getString("waypoint.pneumatizedCarapace"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.PneumatizedCarapace);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.PneumatizedCarapace);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isPneumatizedCarapace());
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.zerglings"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Zergling, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getZerglings()));
-			}
-		});
-		addCheck(components, messages.getString("waypoint.ventralSacs"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.VentralSacs);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.VentralSacs);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isVentralSacs());
-			}
-		});
-		gridy++;
-		addCheck(components, messages.getString("waypoint.metabolicBoost"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.MetabolicBoost);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.MetabolicBoost);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isMetabolicBoost());
-			}
-		});
-		addCheck(components, messages.getString("waypoint.adrenalGlands"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.AdrenalGlands);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.AdrenalGlands);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isAdrenalGlands());
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.banelings"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Baneling, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getBanelings()));
-			}
-		});
-		addCheck(components, messages.getString("waypoint.centrifugalHooks"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.CentrifugalHooks);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.CentrifugalHooks);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isCentrifugalHooks());
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.roaches"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Roach, getDigit(e));
-
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getRoaches()));
-			}
-		});
-		gridy++;
-		addCheck(components, messages.getString("waypoint.glialReconstitution"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.GlialReconstitution);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.GlialReconstitution);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isGlialReconstitution());
-			}
-		});
-		addCheck(components, messages.getString("waypoint.tunnelingClaws"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.TunnelingClaws);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.TunnelingClaws);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isTunnelingClaws());
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.hydralisks"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Hydralisk, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getHydralisks()));
-			}
-		});
-		addCheck(components, messages.getString("waypoint.groovedSpines"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.GroovedSpines);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.GroovedSpines);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isGroovedSpines());
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.infestors"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Infestor, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getInfestors()));
-			}
-		});
-		gridy++;
-		addCheck(components, messages.getString("waypoint.neuralParasite"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.NeuralParasite);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.NeuralParasite);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isNeuralParasite());
-			}
-		});
-		addCheck(components, messages.getString("waypoint.pathogenGlands"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.PathogenGlands);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.PathogenGlands);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isPathogenGlands());
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.mutalisks"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Mutalisk, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getMutalisks()));
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.ultralisks"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Ultralisk, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getUltralisks()));
-			}
-		});
-		addCheck(components, messages.getString("waypoint.chitinousPlating"), new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.ChitinousPlating);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.ChitinousPlating);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isChitinousPlating());
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.corruptors"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Corruptor, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getCorruptors()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.broodlords"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetUnits( ZergUnitLibrary.Broodlord, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getBroodlords()));
-			}
-		});
-		gridy++;
-		addCheck(components, messages.getString("waypoint.melee") + " +1", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Melee1);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Melee1);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isMelee1());
-			}
-		});
-		addCheck(components, "+2", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Melee2);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Melee2);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isMelee2());
-			}
-		});
-		addCheck(components, "+3", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Melee3);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Melee3);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isMelee3());
-			}
-		});
-		gridy++;
-		addCheck(components, messages.getString("waypoint.missile") + " +1", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Missile1);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Missile1);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isMissile1());
-			}
-		});
-		addCheck(components, "+2", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Missile2);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Missile2);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isMissile2());
-			}
-		});
-		addCheck(components, "+3", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Missile3);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Missile3);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isMissile3());
-			}
-		});
-		gridy++;
-		addCheck(components, messages.getString("waypoint.carapace") + " +1", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Armor1);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Armor1);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isArmor1());
-			}
-		});
-		addCheck(components, "+2", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Armor2);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Armor2);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isArmor2());
-			}
-		});
-		addCheck(components, "+3", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.Armor3);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.Armor3);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isArmor3());
-			}
-		});
-		gridy++;
-		addCheck(components, messages.getString("waypoint.flyerAttack") + " +1", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isFlyerAttack1());
-			}
-		});
-		addCheck(components, "+2", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks2);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerAttacks2);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isFlyerAttack2());
-			}
-		});
-		addCheck(components, "+3", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks3);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerAttacks3);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isFlyerAttack3());
-			}
-		});
-		gridy++;
-		addCheck(components, messages.getString("waypoint.flyerArmor") + " +1", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerArmor1);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerArmor1);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isFlyerArmor1());
-			}
-		});
-		addCheck(components, "+2", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerArmor2);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerArmor2);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isFlyerArmor2());
-			}
-		});
-		addCheck(components, "+3", new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if(getTrue(e)) dest.AddUpgrade(ZergUpgradeLibrary.FlyerArmor3);
-				else dest.RemoveUpgrade(ZergUpgradeLibrary.FlyerArmor3);
-			}
-			void reverse(Object o)
-			{
-				JCheckBox c = (JCheckBox) o;
-				c.setSelected(dest.isFlyerArmor3());
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.bases"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.requiredBases = getDigit(e);
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.requiredBases));
-			}
-		});
-		addInput(components, messages.getString("waypoint.lairs"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.Lair, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getLairs()));
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.hives"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.Hive, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getHives()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.gasExtractors"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.Extractor, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getGasExtractors()));
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.evolutionChambers"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.EvolutionChamber, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getEvolutionChambers()));
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.spineCrawlers"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.SpineCrawler, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getSpineCrawlers()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.sporeCrawlers"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.SporeCrawler, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getSporeCrawlers()));
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.spawningPools"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.SpawningPool, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getSpawningPools()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.banelingNests"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.BanelingNest, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getBanelingNest()));
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.roachWarrens"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.RoachWarren, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getRoachWarrens()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.hydraliskDens"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.HydraliskDen, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getHydraliskDen()));
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.infestationPits"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.InfestationPit, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getInfestationPit()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.spires"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.Spire, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getSpire()));
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.nydusNetworks"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.NydusNetwork, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getNydusNetwork()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.nydusWorms"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.NydusWorm, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getNydusWorm()));
-			}
-		});
-		gridy++;
-		addInput(components, messages.getString("waypoint.ultraliskCaverns"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.UltraliskCavern, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getUltraliskCavern()));
-			}
-		});
-		addInput(components, messages.getString("waypoint.greaterSpires"), NumberTextField.class, new CustomActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				dest.SetBuilding(ZergBuildingLibrary.GreaterSpire, getDigit(e));
-			}
-			void reverse(Object o)
-			{
-				JTextField c = (JTextField) o;
-				c.setText(Integer.toString(dest.getGreaterSpire()));
-			}
-		});
-		gridy++;
-		
-		int width = 4;
-		if (dest != destination.get(destination.size()-1)){ //add a "remove" button for all waypoints except the final destination
-			inputControls.add(addButton(components, messages.getString("waypoint.remove"), 1, new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					inputControls.removeAll(Arrays.asList(components.getComponents()));
-					int selectedIndex = tabPane.getSelectedIndex();
-					destination.remove(dest);
-					waypointPanels.remove(components);
-					refreshTabs();
-					if (selectedIndex > 0)
-						tabPane.setSelectedIndex(selectedIndex-1); //if WP3 was removed, select WP2
-				}
-			}));
-			width = 3;
-		}
-		
-		inputControls.add(addButton(components, messages.getString("waypoint.reset"), width, new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				for (int i = 0; i < components.getComponentCount(); i++)
-				{
-					Component component = components.getComponent(i);
-					if (component instanceof JTextField)
-					{
-						JTextField textField = (JTextField) component;
-						if (textField.getText().indexOf(":") == -1) // is
-						{
-							// not
-							// a
-							// "Deadline"
-							// field
-							textField.setText("0");
-							textField.getActionListeners()[0].actionPerformed(new ActionEvent(textField, 0, ""));
-						}
-					}
-					else if (component instanceof JCheckBox)
-					{
-						JCheckBox checkBox = (JCheckBox) component;
-						checkBox.setSelected(false);
-						checkBox.getActionListeners()[0].actionPerformed(new ActionEvent(checkBox, 0, ""));
-					}
-				}
-			}
-		}));
-	}
-
-	private void readDestinations()
-	{
-		for (int i = 0; i < inputControls.size(); i++)
-		{
-			JComponent component = inputControls.get(i);
-			if (component instanceof JTextField)
-			{
-				ActionListener actionListener = ((JTextField) component).getActionListeners()[0];
-				if (actionListener instanceof CustomActionListener)
-					((CustomActionListener)actionListener).reverse(component);
-			}
-			else if (component instanceof JCheckBox)
-			{
-				ActionListener actionListener = ((JCheckBox) component).getActionListeners()[0];
-				if (actionListener instanceof CustomActionListener)
-					((CustomActionListener)actionListener).reverse(component);
-			}
-		}
+        for (JComponent component : inputControls) {
+            if (component instanceof JTextField) {
+                ActionListener actionListener = ((JTextField) component).getActionListeners()[0];
+                if (actionListener instanceof CustomActionListener)
+                    ((CustomActionListener) actionListener).reverse(component);
+            } else if (component instanceof JCheckBox) {
+                ActionListener actionListener = ((JCheckBox) component).getActionListeners()[0];
+                if (actionListener instanceof CustomActionListener)
+                    ((CustomActionListener) actionListener).reverse(component);
+            }
+        }
 	}
 	
 	private void addOutputButtons(JPanel component)
@@ -1695,7 +641,6 @@ public class EcSwingX extends JXPanel implements EcReportable
 			}
 		});
 		stopButton.setEnabled(false);
-		final EcReportable ri = this;
 		goButton = addButton(component, messages.getString("start"), new ActionListener()
 		{
 			@Override
@@ -1752,7 +697,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		return label;
 	}
 
-	private JButton addButton(JPanel container, String string, int gridwidth, ActionListener actionListener)
+	JButton addButton(JPanel container, String string, int gridwidth, ActionListener actionListener)
 	{
 		final JButton button = new JButton();
 
@@ -1769,7 +714,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		return button;
 	}
 
-	protected int getDigit(ActionEvent e)
+	static int getDigit(ActionEvent e)
 	{
 		JTextField tf = (JTextField) e.getSource();
 		String text = tf.getText();
@@ -1860,16 +805,10 @@ public class EcSwingX extends JXPanel implements EcReportable
 			waypointPanels.clear();
 			
 			//rebuild panels
-			for (int i = 0; i < destination.size()-1; i++)
-			{
-				JPanel lb = new JPanel(new GridBagLayout());
-				waypointPanels.add(lb);
-				addInputContainer(destination.get(i), lb);
-			}
-			JPanel finalDestinationPanel = new JPanel(new GridBagLayout());
-			waypointPanels.add(finalDestinationPanel); //final waypoint panel goes last
-			addInputContainer(destination.get(destination.size()-1), finalDestinationPanel);
-			
+            for (EcState aDestination : destination) {
+                addWaypointPanel(aDestination, false);
+            }
+
 			//rebuild the tabs
 			refreshTabs();
 		}
@@ -1881,33 +820,14 @@ public class EcSwingX extends JXPanel implements EcReportable
 		}
 	}
 
-	private JPanel addRadioButtonBox(JPanel container, String title, String[] captions, int defaultSelected,
-			final CustomActionListener a)
-	{
-		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridy = gridy;
-		gridBagConstraints.gridwidth = 2;
-		gridBagConstraints.insets = new Insets(1, 1, 1, 1);
-
-		JRadioButton[] buttons = new JRadioButton[captions.length];
-		ButtonGroup group = new ButtonGroup();
-		JPanel radioButtonBox = new JPanel();
-		radioButtonBox.setBorder(BorderFactory.createTitledBorder(title));
-
-		for (int i = 0; i < buttons.length; i++)
-		{
-			buttons[i] = new JRadioButton(captions[i]);
-			buttons[i].addActionListener(a);
-			inputControls.add(buttons[i]);
-			group.add(buttons[i]);
-			if (i == defaultSelected)
-				buttons[i].setSelected(true);
-			radioButtonBox.add(buttons[i]);
-		}
-		container.add(radioButtonBox, gridBagConstraints);
-		return radioButtonBox;
-	}
+    private PanelWayPoint addWaypointPanel(EcState dest, boolean isNew) {
+        PanelWayPoint p = new PanelWayPoint(this, dest);
+        if (isNew)
+            waypointPanels.add(waypointPanels.size()-1,p);
+        else
+            waypointPanels.add(p);
+        return p;
+    }
 
 	protected String getSelected(ActionEvent e)
 	{
@@ -1922,7 +842,7 @@ public class EcSwingX extends JXPanel implements EcReportable
 		return tf.isSelected();
 	}
 	
-	private JTextField addInput(JPanel container, String name, Class<? extends JTextField> clazz, final CustomActionListener a)
+	JTextField addInput(JPanel container, String name, Class<? extends JTextField> clazz, final CustomActionListener a)
 	{
 		try{
 			GridBagConstraints gridBagConstraints;
@@ -1973,36 +893,6 @@ public class EcSwingX extends JXPanel implements EcReportable
 		}
 	}
 
-	private JCheckBox addCheck(JPanel container, String name, final CustomActionListener a)
-	{
-		GridBagConstraints gridBagConstraints;
-
-		final JCheckBox checkBox = new JCheckBox();
-		checkBox.setText(name);
-		gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.anchor = GridBagConstraints.WEST;
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.weightx = .5;
-		if (name.length() == 2)
-			gridBagConstraints.gridwidth = 1;
-		else
-			gridBagConstraints.gridwidth = 2;
-		gridBagConstraints.gridy = gridy;
-		gridBagConstraints.insets = new Insets(1, 1, 1, 1);
-		container.add(checkBox, gridBagConstraints);
-		checkBox.addActionListener(a);
-		checkBox.addChangeListener(new ChangeListener()
-		{
-			@Override
-			public void stateChanged(ChangeEvent arg0)
-			{
-				a.actionPerformed(new ActionEvent(checkBox, 0, "changed"));
-			}
-		});
-		inputControls.add(checkBox);
-		return checkBox;
-	}
-	
 	@Override
 	public void bestScore(final EcState finalState, int intValue, final String detailedText, final String simpleText,
 			final String yabotText)
@@ -2038,15 +928,6 @@ public class EcSwingX extends JXPanel implements EcReportable
 		}
 	}
 
-	private String formatAsTime(int time) {
-		int minutes = time / 60;
-		int seconds = time % 60;
-		
-		return Integer.toString(minutes) + ":"
-			+ (seconds < 10 ? "0" : "")
-			+ Integer.toString(seconds);
-	}
-	
 	@Override
 	public void threadScore(int threadIndex, String output)
 	{

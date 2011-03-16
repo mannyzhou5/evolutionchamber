@@ -1,6 +1,7 @@
 package com.fray.evo;
 
-import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
+import com.fray.evo.util.*;
+import com.fray.evo.util.optimization.ArrayListInt;
 
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -10,17 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Logger;
 
-import com.fray.evo.util.Building;
-import com.fray.evo.util.Library;
-import com.fray.evo.util.Race;
-import com.fray.evo.util.RaceLibraries;
-import com.fray.evo.util.Unit;
-import com.fray.evo.util.Upgrade;
-import com.fray.evo.util.ZergBuildingLibrary;
-import com.fray.evo.util.ZergLibrary;
-import com.fray.evo.util.ZergUnitLibrary;
-import com.fray.evo.util.ZergUpgradeLibrary;
-import com.fray.evo.util.optimization.ArrayListInt;
+import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 
 public class EcState implements Serializable
 {
@@ -43,8 +34,8 @@ public class EcState implements Serializable
 		// }
 		ArrayList<Building> allBuildingsList = RaceLibraries.getBuildingLibrary(settings.race).getList();
 		buildings = new BuildableCollection<Building>(allBuildingsList, settings.race);
-		for (int i = 0; i < allBuildingsList.size(); ++i)
-			buildings.put(allBuildingsList.get(i), 0);
+        for (Building bldg : allBuildingsList)
+            buildings.put(bldg, 0);
 
 		upgrades = new HashSet<Upgrade>();
 
@@ -259,34 +250,26 @@ public class EcState implements Serializable
 	public int getOverDrones(EcState s)
 	{
 		int overDrones = ((s.productionTime() / 17) + s.usedDrones()) * overDroneEfficiency / 100;
-
-		overDrones = Math.min(overDrones, maxOverDrones);
-
-		return overDrones;
+		return Math.min(overDrones, maxOverDrones);
 	}
 
 	public int getParityDrones(EcState s)
 	{
 		int optimalDrones = Math.min((Math.min(s.bases(), 3) * 16) + (s.getGasExtractors() * 3), maxOverDrones);
-		int parityDrones = Math.min(s.getOverDrones(s), optimalDrones);
-
-		return parityDrones;
+        return Math.min(s.getOverDrones(s), optimalDrones);
 	}
 
 	public int getParityDronesClean(EcState s)
 	{
 		int optimalDrones = Math.min((Math.min(s.bases(), 3) * 16) + (s.buildings.get(ZergBuildingLibrary.Extractor) * 3),
 				maxOverDrones);
-		int parityDrones = Math.min(s.getOverDrones(s), optimalDrones);
-
-		return parityDrones;
+        return Math.min(s.getOverDrones(s), optimalDrones);
 	}
 
 	public int bases()
 	{
 		return buildings.get(ZergBuildingLibrary.Hatchery) + buildings.get(ZergBuildingLibrary.Lair) +
                         buildings.get(ZergBuildingLibrary.Hive) ;
-
 	}
 
 	public int productionTime()
@@ -313,12 +296,12 @@ public class EcState implements Serializable
 
 	public int usedDronesClean()
 	{
-                int total =  -1 ;
-                for(Building building: RaceLibraries.getBuildingLibrary(settings.race).getList()){
-                    if(building.getConsumes() == ZergUnitLibrary.Drone){
-                        total += buildings.get(building);
-                    }
-                }
+        int total =  -1 ;
+        for(Building building: RaceLibraries.getBuildingLibrary(settings.race).getList()){
+            if(building.getConsumes() == ZergUnitLibrary.Drone){
+                total += buildings.get(building);
+            }
+        }
 
 		return total;
 	}
@@ -425,9 +408,7 @@ public class EcState implements Serializable
 	{
 		EcState state = defaultDestination();
 		for (EcState s : waypoints)
-		{
 			state.union(s);
-		}
 		state.union(this);
 		return state;
 	}
@@ -440,10 +421,12 @@ public class EcState implements Serializable
 	public String toCompleteString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append(messages.getString("AtTime") + ": " + timestamp());
-		sb.append("\n" + messages.getString("Minerals") + ": " + (int) minerals + "\t" + messages.getString("Gas")
-				+ ":      " + (int) gas + "\t" + messages.getString("Supply") + ":   " + ((int) supplyUsed) + "/"
-				+ supply() + "\t" + messages.getString("Larva") + ": " + getLarva());
+        sb.append(messages.getString("AtTime")).append(": ").append(timestamp());
+        sb.append("\n")
+                .append(messages.getString("Minerals")).append(": ").append((int) minerals).append("\t")
+                .append(messages.getString("Gas")).append(":      ").append((int) gas).append("\t")
+                .append(messages.getString("Supply")).append(":   ").append((int) supplyUsed).append("/").append(supply()).append("\t")
+                .append(messages.getString("Larva")).append(": ").append(getLarva());
 		appendBuildStuff(sb);
 		return sb.toString();
 	}
@@ -543,13 +526,13 @@ public class EcState implements Serializable
 	private void append(StringBuilder sb, String name, boolean doit)
 	{
 		if (doit)
-			sb.append("\n" + messages.getString(name));
+            sb.append("\n").append(messages.getString(name));
 	}
 
 	private void append(StringBuilder sb, String name, int count)
 	{
 		if (count > 0)
-			sb.append("\n" + messages.getString(name) + ": " + count);
+            sb.append("\n").append(messages.getString(name)).append(": ").append(count);
 	}
 
 	public boolean waypointMissed(EcBuildOrder candidate)
@@ -925,7 +908,7 @@ public class EcState implements Serializable
 	}
 
 	/**
-	 * @param larva
+     * @param larva
 	 *            the larva to set
 	 */
 	public void setLarva(int base, int larva)
@@ -935,10 +918,6 @@ public class EcState implements Serializable
 		this.larva.set(base, larva);
 	}
 
-	/**
-	 * @param larva
-	 *            the larva to increment
-	 */
 	public void incrementLarva(int base)
 	{
 		while (this.larva.size() <= base)
@@ -946,10 +925,6 @@ public class EcState implements Serializable
 		this.larva.increment(base);
 	}
 
-	/**
-	 * @param larva
-	 *            the larva to decrement
-	 */
 	public void decrementLarva(int base)
 	{
 		while (this.larva.size() <= base)
