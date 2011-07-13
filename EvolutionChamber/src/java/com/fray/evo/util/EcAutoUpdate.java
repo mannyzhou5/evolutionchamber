@@ -263,6 +263,8 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 				while ((read = in.read(buf)) != -1){
 					md.update(buf, 0, read);
 				}
+				in.close();
+				
 				String fileChecksum = convertToHex(md.digest());
 				
 				//compare checksums

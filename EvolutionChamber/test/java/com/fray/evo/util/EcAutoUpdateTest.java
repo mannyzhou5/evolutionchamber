@@ -20,11 +20,13 @@ import org.junit.Test;
  */
 public class EcAutoUpdateTest {
 	private File file;
-
+	
 	@After
 	public void after() {
 		if (file != null) {
-			file.delete();
+			if(!file.delete()) {
+				System.out.println("Failed to delete the file after a test!");
+			}
 		}
 	}
 
@@ -88,6 +90,8 @@ public class EcAutoUpdateTest {
 		};
 		String latestVersion = auto.getLatestVersion();
 		file = new File("evolutionchamber-version-" + latestVersion + ".jar");
+		
+		Assert.assertFalse(file.exists());
 
 		//"download" the file
 		auto.doInBackground();
