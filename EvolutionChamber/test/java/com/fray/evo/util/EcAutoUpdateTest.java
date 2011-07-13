@@ -104,13 +104,17 @@ public class EcAutoUpdateTest {
 	@Test
 	public void testGetExpectedChecksum() throws Exception {
 		Assert.assertEquals("fc1b7cc2aa749362f217392996fdb23070a3aed6", EcAutoUpdate.getExpectedChecksum("0015").toLowerCase());
-
-		try {
-			EcAutoUpdate.getExpectedChecksum("0011");
-			Assert.fail();
-		} catch (IOException e) {
-			//this exception should be thrown because there is no version 0011
-		}
+	}
+	
+	/**
+	 * Tests if getExpectedChecksum() properly raises an exception
+	 * for a version that does not exist.
+	 * 
+	 * @throws IOException
+	 */
+	@Test(expected=java.io.FileNotFoundException.class)
+	public void testGetExpectedChecksumBadVersion() throws IOException {
+		EcAutoUpdate.getExpectedChecksum("0011");
 	}
 
 	/**
