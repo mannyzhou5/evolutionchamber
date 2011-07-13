@@ -39,7 +39,9 @@ public class UserSettings {
 		this.file = file;
 		if (file.exists()) {
 			try {
-				properties.load(new FileInputStream(file));
+				FileInputStream inStream = new FileInputStream(file);
+				properties.load(inStream);
+				inStream.close();
 			} catch (IOException e) {
 				logger.severe("Cannot read user settings.");
 			}
@@ -167,7 +169,9 @@ public class UserSettings {
 	 */
 	public void save() {
 		try {
-			properties.store(new FileOutputStream(file), "EvolutionChamber user settings file");
+			FileOutputStream outStream = new FileOutputStream(file);
+			properties.store(outStream, "EvolutionChamber user settings file");
+			outStream.close();
 		} catch (IOException e) {
 			logger.severe("Cannot save user settings.");
 		}

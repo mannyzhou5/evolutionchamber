@@ -38,8 +38,8 @@ public class UserSettingsTest {
 	@After
 	public void after() {
 		if (file != null) {
-			if(file.delete()) {
-				System.out.println("Failed to delete properties after a test!");
+			if(!file.delete()) {
+				System.out.println("Failed to delete " + file.getName() + " after a test!");
 			}
 		}
 	}
@@ -62,7 +62,11 @@ public class UserSettingsTest {
 
 		//check the contents of the file
 		Properties properties = new Properties();
-		properties.load(new FileInputStream(file));
+		
+		FileInputStream inStream = new FileInputStream(file);
+		properties.load(inStream);
+		inStream.close();
+		
 		Assert.assertEquals(EvolutionChamber.VERSION, properties.getProperty("version"));
 		Assert.assertNull(properties.getProperty("locale"));
 		Assert.assertNull(properties.getProperty("gui.windowExtendedState"));
@@ -88,7 +92,11 @@ public class UserSettingsTest {
 
 		//check the contents of the file
 		Properties properties = new Properties();
-		properties.load(new FileInputStream(file));
+		
+		FileInputStream inStream = new FileInputStream(file);
+		properties.load(inStream);
+		inStream.close();
+		
 		Assert.assertEquals(EvolutionChamber.VERSION, properties.getProperty("version"));
 		Assert.assertNull(properties.getProperty("locale"));
 		Assert.assertNull(properties.getProperty("gui.windowExtendedState"));
@@ -132,7 +140,10 @@ public class UserSettingsTest {
 		Assert.assertEquals(newLocale, settings.getLocale());
 
 		Properties properties = new Properties();
-		properties.load(new FileInputStream(file));
+		FileInputStream inStream = new FileInputStream(file);
+		properties.load(inStream);
+		inStream.close();
+		
 		Assert.assertEquals("ko_KR", properties.getProperty("locale")); //it should save the file every time a property is changed
 		Assert.assertEquals(EvolutionChamber.VERSION, properties.getProperty("version"));
 
@@ -142,7 +153,10 @@ public class UserSettingsTest {
 		Assert.assertEquals(newLocale, settings.getLocale());
 
 		properties = new Properties();
-		properties.load(new FileInputStream(file));
+		
+		inStream = new FileInputStream(file);
+		properties.load(inStream);
+		inStream.close();
 		Assert.assertEquals("en", properties.getProperty("locale")); //it should save the file every time a property is changed
 	}
 
@@ -163,7 +177,11 @@ public class UserSettingsTest {
 
 		//setting the property should automatically save the file
 		Properties properties = new Properties();
-		properties.load(new FileInputStream(file));
+		
+		FileInputStream inStream = new FileInputStream(file);
+		properties.load(inStream);
+		inStream.close();
+		
 		Assert.assertEquals("100", properties.getProperty("gui.windowHeight"));
 		Assert.assertEquals("500", properties.getProperty("gui.windowWidth"));
 		Assert.assertEquals(EvolutionChamber.VERSION, properties.getProperty("version"));
