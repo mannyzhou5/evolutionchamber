@@ -21,7 +21,6 @@ import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,7 +63,7 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 	 * A regular expression that matches against URLs to the various versions of
 	 * the application.
 	 */
-	private static final Pattern jarUrlRegex = Pattern.compile("http://evolutionchamber\\.googlecode\\.com/files/evolutionchamber-version-(\\d+)\\.jar");
+	private static final Pattern jarUrlRegex = Pattern.compile("evolutionchamber\\.googlecode\\.com/files/evolutionchamber-version-(\\d+)\\.jar");
 	
 	/**
 	 * Whether or not there is a newer version available.

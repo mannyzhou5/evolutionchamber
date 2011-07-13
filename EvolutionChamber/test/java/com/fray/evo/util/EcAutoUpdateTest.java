@@ -124,7 +124,7 @@ public class EcAutoUpdateTest {
 		//get the latest version
 		EcAutoUpdate auto = new EcAutoUpdate("0000", new CallbackImpl());
 		String latestVersion = auto.getLatestVersion();
-
+		Assert.assertNotSame("0000", latestVersion);
 		//try to update from the latest version
 		//there should be no update available
 		auto = new EcAutoUpdate(latestVersion, new CallbackImpl());
