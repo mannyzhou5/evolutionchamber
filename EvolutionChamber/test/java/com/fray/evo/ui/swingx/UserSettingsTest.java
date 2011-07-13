@@ -38,7 +38,9 @@ public class UserSettingsTest {
 	@After
 	public void after() {
 		if (file != null) {
-			file.delete();
+			if(file.delete()) {
+				System.out.println("Failed to delete properties after a test!");
+			}
 		}
 	}
 
@@ -49,7 +51,8 @@ public class UserSettingsTest {
 	 */
 	@Test
 	public void testNonExistantFile() throws Exception {
-		file = new File("test.properties");
+		file = new File("DOES_NOT_EXIST.properties");
+		Assert.assertFalse(file.exists());
 		UserSettings settings = new UserSettings(file);
 		Assert.assertNull(settings.getLocale());
 		Assert.assertNull(settings.getWindowSize());
@@ -74,7 +77,8 @@ public class UserSettingsTest {
 	 */
 	@Test
 	public void testEmptyFile() throws Exception {
-		file = new File("test.properties");
+		file = new File("EMPTY.properties");
+		Assert.assertFalse(file.exists());
 		file.createNewFile();
 		UserSettings settings = new UserSettings(file);
 		Assert.assertNull(settings.getLocale());
