@@ -341,7 +341,7 @@ public final class EvolutionChamber
 			{
 				Collections.shuffle(conf.getGeneticOperators());
 				BASE_MUTATION_RATE += .001;
-				if (BASE_MUTATION_RATE >= CHROMOSOME_LENGTH / 2)
+				if (BASE_MUTATION_RATE >= (double) CHROMOSOME_LENGTH / 2.0 )
 					BASE_MUTATION_RATE = 1;
 				IChromosome fittestChromosome = population.getFittestChromosome();
 				if (killThreads)
