@@ -33,7 +33,7 @@ public final class ActionList {
 		return numLeft > 0;
 	}
 
-	private class TWrapper {
+	private static class TWrapper {
 		public int time;
 		public RunnableAction object;
 		
@@ -43,7 +43,7 @@ public final class ActionList {
 		}
 	}
 
-	public class Comparitor implements Comparator<TWrapper> {
+	public static class Comparitor implements Comparator<TWrapper> {
 		@Override
 		public int compare(TWrapper arg0, TWrapper arg1) {
 			return arg0.time - arg1.time;

@@ -103,7 +103,7 @@ public class EcMessagesTest {
 	 * @author mike.angstadt
 	 * 
 	 */
-	private class JavaAndDirsFilter implements FileFilter {
+	private static class JavaAndDirsFilter implements FileFilter {
 		private List<File> exclusions;
 
 		public JavaAndDirsFilter(List<File> excludeDirs) {

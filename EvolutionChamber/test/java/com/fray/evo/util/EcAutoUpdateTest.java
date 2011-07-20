@@ -145,7 +145,7 @@ public class EcAutoUpdateTest {
 	 * @author mike.angstadt
 	 * 
 	 */
-	private class DisplayDownloadProgress implements PropertyChangeListener {
+	private static class DisplayDownloadProgress implements PropertyChangeListener {
 		private boolean first = true;
 
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -173,7 +173,7 @@ public class EcAutoUpdateTest {
 	 * @author mike.angstadt
 	 * 
 	 */
-	private class CallbackImpl implements EcAutoUpdate.Callback {
+	private static class CallbackImpl implements EcAutoUpdate.Callback {
 		@Override
 		public void checksumFailed() {
 			Assert.fail("File's checksum does not match its expected checksum.");
