@@ -128,10 +128,6 @@ public final class EcStandardFitnessCleanup implements EcFitness {
         return augmentScore(score, candidate ? 1 : 0, destination ? 1 : 0, cost);
     }
 
-    private double augmentScore(double score, boolean a, boolean b, int mula, double mulb, boolean waypoint) {
-        return augmentScore(score, a ? 1 : 0, b ? 1 : 0, mula, mulb, waypoint);
-    }
-
     private double augmentScore(double score, int candidate, int destination, double cost) {
 
         return augmentScore(score, candidate, destination, cost, cost / 100.0, false);
