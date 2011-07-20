@@ -97,10 +97,11 @@ public final class EcCacheMap<E, T> implements Map<E, T>
 		return arg1;
 	}
 
+	@Override
 	public void putAll(Map<? extends E, ? extends T> arg0)
 	{
-		for (E e : arg0.keySet())
-			put(e, arg0.get(e));
+		for (Map.Entry<? extends E, ? extends T> entry : arg0.entrySet())
+			put(entry.getKey(),entry.getValue());
 	}
 
 	public T remove(Object arg0)
