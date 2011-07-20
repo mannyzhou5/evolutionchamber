@@ -191,6 +191,7 @@ public class EcAutoUpdate extends SwingWorker<Void, Void> {
 				while ((read = in.read()) != -1) {
 					out.write(read);
 				}
+				in.close();
 				html = new String(out.toByteArray());
 			}
 
