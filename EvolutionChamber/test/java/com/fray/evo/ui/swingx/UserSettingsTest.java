@@ -118,7 +118,7 @@ public class UserSettingsTest {
 
 		UserSettings settings = new UserSettings(file);
 		Assert.assertEquals(new Locale("en", "US"), settings.getLocale());
-		Assert.assertEquals(new Integer(1), settings.getWindowExtensionState());
+		Assert.assertEquals(Integer.valueOf(1), settings.getWindowExtensionState());
 		Assert.assertEquals(new Dimension(500, 100), settings.getWindowSize());
 		Assert.assertEquals(EvolutionChamber.VERSION, settings.getVersion()); //it should create the "version" property if it doesn't exist
 	}

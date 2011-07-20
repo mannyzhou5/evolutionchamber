@@ -5,9 +5,9 @@ public final class Optimization {
 	
 	public static Integer inte(int i) {
 		if(i < 0 || i > integers.length)
-			return new Integer(i);
+			return Integer.valueOf(i);
 		if(integers[i] == null)
-			integers[i] = new Integer(i);
+			integers[i] = Integer.valueOf(i);
 		return integers[i];
 	}
 }
