@@ -83,11 +83,16 @@ import com.fray.evo.util.GameLog;
 
 public final class EcEvolver extends FitnessFunction
 {
+	/**
+	 * serialVersionUID - Changes to the structure of EcEvolver
+	 *   1 - The log attribute was changed to transient
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(EcEvolver.class.getName());
 	EcState								source;
 	private EcState						destination;
 	private EcState						mergedDestination;
-	private GameLog						log;
+	private transient GameLog			log;
 	private long					evaluations	= 0;
 	private final List<Class<? extends EcAction>> actions;
 	
