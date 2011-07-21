@@ -245,10 +245,8 @@ public final class EcEvolver extends FitnessFunction
 	{
 		StringBuilder sb = new StringBuilder();
 		
-		int i = 0;
 		for (EcAction a : s.getActions())
 		{
-			i++;
 			if (a.isInvalid(s))
 			{
 				continue;
@@ -302,10 +300,8 @@ public final class EcEvolver extends FitnessFunction
 		
 		ArrayList<String> warnings = new ArrayList<String>();
 		
-		int i = 0;
 		for (EcAction a : s.getActions())
 		{
-			i++;
 			if (a.isInvalid(s))
 			{
 				continue;
