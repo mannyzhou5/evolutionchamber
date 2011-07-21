@@ -148,9 +148,9 @@ public class EcState implements Serializable
 	{
 		EcState d = new EcState();
 
-		d.SetUnits(ZergUnitLibrary.Drone, 0);
-		d.SetUnits(ZergUnitLibrary.Overlord, 0);
-		d.SetBuilding(ZergBuildingLibrary.Hatchery, 0);
+		d.setUnits(ZergUnitLibrary.Drone, 0);
+		d.setUnits(ZergUnitLibrary.Overlord, 0);
+		d.setBuilding(ZergBuildingLibrary.Hatchery, 0);
 		d.targetSeconds = 60 * 120;
 
 		return d;
@@ -571,32 +571,32 @@ public class EcState implements Serializable
 		return upgrades;
 	}
 
-	public void AddUpgrade(Upgrade upgrade)
+	public void addUpgrade(Upgrade upgrade)
 	{
 		upgrades.add(upgrade);
 	}
 
-	public void AddUnits(Unit unit, int number)
+	public void addUnits(Unit unit, int number)
 	{
 		units.put(unit, units.get(unit) + number);
 	}
 
-	public void RemoveUnits(Unit unit, int number)
+	public void removeUnits(Unit unit, int number)
 	{
 		units.put(unit, units.get(unit) - number);
 	}
 
-	public void RemoveUpgrade(Upgrade upgrade)
+	public void removeUpgrade(Upgrade upgrade)
 	{
 		upgrades.remove(upgrade);
 	}
 
-	public void SetUnits(Unit unit, int number)
+	public void setUnits(Unit unit, int number)
 	{
 		units.put(unit, number);
 	}
 
-	public void AddBuilding(Building building)
+	public void addBuilding(Building building)
 	{
 		buildings.put(building, buildings.get(building) + 1);
 	}
@@ -642,12 +642,12 @@ public class EcState implements Serializable
 			units.put(unit, 1);
 		}
 	}
-	public void RemoveBuilding(Building building)
+	public void removeBuilding(Building building)
 	{
 		buildings.put(building, buildings.get(building) - 1);
 	}
 
-	public void RequireBuilding(Building building)
+	public void requireBuilding(Building building)
 	{
 		if (building == ZergBuildingLibrary.Spire)
 			return; //Exemption due to greater spire satisfying spire.
@@ -674,7 +674,7 @@ public class EcState implements Serializable
 		return units.toHashMap(allUnits);
 	}
 
-	public void SetBuilding(Building building, int number)
+	public void setBuilding(Building building, int number)
 	{
 		buildings.put(building, number);
 	}

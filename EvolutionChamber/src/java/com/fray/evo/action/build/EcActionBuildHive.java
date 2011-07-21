@@ -24,7 +24,7 @@ public final class EcActionBuildHive extends EcActionBuildBuilding implements Se
 	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
             s.makeBuildingNotBusy(this);
-            s.RemoveBuilding(ZergBuildingLibrary.Lair);
-		s.AddBuilding((Building) buildable);
+            s.removeBuilding(ZergBuildingLibrary.Lair);
+		s.addBuilding((Building) buildable);
 	}
 }

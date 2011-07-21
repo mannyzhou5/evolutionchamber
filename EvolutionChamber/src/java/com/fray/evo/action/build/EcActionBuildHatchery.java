@@ -42,7 +42,7 @@ public final class EcActionBuildHatchery extends EcActionBuildBuilding implement
 	@Override
 	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
-		s.AddBuilding(ZergBuildingLibrary.Hatchery);
+		s.addBuilding(ZergBuildingLibrary.Hatchery);
 		s.hatcheriesBuilding -= 1;
 		s.hatcheryTimes.add(s.seconds);
 		s.larva.add(1);

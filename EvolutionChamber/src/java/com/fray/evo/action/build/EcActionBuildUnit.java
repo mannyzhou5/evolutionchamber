@@ -92,7 +92,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
         if (builtFrom != null) {
             s.makeBuildingNotBusy(this);
         }
-        s.AddUnits((Unit) buildable, 1);
+        s.addUnits((Unit) buildable, 1);
     }
 
     protected void preExecute(EcBuildOrder s) {
@@ -102,7 +102,7 @@ public abstract class EcActionBuildUnit extends EcActionBuild implements Seriali
         }
         Buildable consumes = getConsumes();
         if (consumes != null && getConsumes() != ZergUnitLibrary.Larva) {
-            s.RemoveUnits((Unit) getConsumes(), 1);
+            s.removeUnits((Unit) getConsumes(), 1);
         }
     }
 

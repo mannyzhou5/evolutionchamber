@@ -146,10 +146,10 @@ public final class EcRequirementTree {
             return;
         }
         if (requirement instanceof  Upgrade) {
-            destination.AddUpgrade((Upgrade) requirement);
+            destination.addUpgrade((Upgrade) requirement);
             require(((Upgrade)requirement).getBuiltIn(), destination, actions);
         } else if (requirement instanceof  Building) {
-            destination.RequireBuilding((Building) requirement);
+            destination.requireBuilding((Building) requirement);
         } else if (requirement instanceof  Unit) {
             destination.RequireUnit((Unit) requirement);
         }

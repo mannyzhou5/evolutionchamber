@@ -13,7 +13,7 @@ public final class EcActionExtractorTrick extends EcAction implements Serializab
 	public void execute(final EcBuildOrder s, final GameLog e)
 	{
 		s.minerals -= 25;
-		s.RemoveUnits(ZergUnitLibrary.Drone, 1);
+		s.removeUnits(ZergUnitLibrary.Drone, 1);
 		s.dronesOnMinerals -= 1;
 		s.supplyUsed -= 1;
 		s.extractorsBuilding++;
@@ -26,7 +26,7 @@ public final class EcActionExtractorTrick extends EcAction implements Serializab
 					e.printMessage(s, GameLog.MessageType.Obtained,
 							" " + messages.getString("finished.extractortrick"));
 				s.minerals += 19;
-				s.AddUnits(ZergUnitLibrary.Drone, 1);
+				s.addUnits(ZergUnitLibrary.Drone, 1);
 				s.dronesOnMinerals += 1;
 				s.supplyUsed += 1;
 				s.extractorsBuilding--;

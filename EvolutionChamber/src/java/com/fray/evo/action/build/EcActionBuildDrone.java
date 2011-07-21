@@ -18,7 +18,7 @@ public final class EcActionBuildDrone extends EcActionBuildUnit implements Seria
 	@Override
 	protected void postExecute(final EcBuildOrder s, final GameLog e)
 	{
-		s.AddUnits((Unit) buildable, 1);
+		s.addUnits((Unit) buildable, 1);
 		s.dronesGoingOnMinerals += 1;
 		s.addFutureAction(2, new RunnableAction()
 		{

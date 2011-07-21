@@ -45,7 +45,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetUnits(ZergUnitLibrary.Drone, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Drone, EcSwingX.getDigit(e));
             }
 
             @Override
@@ -73,7 +73,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetUnits( ZergUnitLibrary.Overlord, EcSwingX.getDigit(e));
+                state.setUnits( ZergUnitLibrary.Overlord, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -85,7 +85,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetUnits(ZergUnitLibrary.Overseer, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Overseer, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -114,8 +114,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Burrow);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Burrow);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Burrow);
+                else state.removeUpgrade(ZergUpgradeLibrary.Burrow);
             }
             void reverse(Object o)
             {
@@ -126,7 +126,7 @@ public class PanelWayPoint extends PanelBase
         parent.gridy++;
         parent.addInput(this, messages.getString("waypoint.queens"), NumberTextField.class, new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                state.SetUnits(ZergUnitLibrary.Queen, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Queen, EcSwingX.getDigit(e));
             }
 
             void reverse(Object o) {
@@ -138,8 +138,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.PneumatizedCarapace);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.PneumatizedCarapace);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.PneumatizedCarapace);
+                else state.removeUpgrade(ZergUpgradeLibrary.PneumatizedCarapace);
             }
             void reverse(Object o)
             {
@@ -150,7 +150,7 @@ public class PanelWayPoint extends PanelBase
         parent.gridy++;
         parent.addInput(this, messages.getString("waypoint.zerglings"), NumberTextField.class, new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                state.SetUnits(ZergUnitLibrary.Zergling, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Zergling, EcSwingX.getDigit(e));
             }
 
             void reverse(Object o) {
@@ -162,8 +162,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.VentralSacs);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.VentralSacs);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.VentralSacs);
+                else state.removeUpgrade(ZergUpgradeLibrary.VentralSacs);
             }
             void reverse(Object o)
             {
@@ -176,8 +176,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.MetabolicBoost);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.MetabolicBoost);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.MetabolicBoost);
+                else state.removeUpgrade(ZergUpgradeLibrary.MetabolicBoost);
             }
             void reverse(Object o)
             {
@@ -189,8 +189,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.AdrenalGlands);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.AdrenalGlands);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.AdrenalGlands);
+                else state.removeUpgrade(ZergUpgradeLibrary.AdrenalGlands);
             }
             void reverse(Object o)
             {
@@ -201,7 +201,7 @@ public class PanelWayPoint extends PanelBase
         parent.gridy++;
         parent.addInput(this, messages.getString("waypoint.banelings"), NumberTextField.class, new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                state.SetUnits(ZergUnitLibrary.Baneling, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Baneling, EcSwingX.getDigit(e));
             }
 
             void reverse(Object o) {
@@ -213,8 +213,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.CentrifugalHooks);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.CentrifugalHooks);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.CentrifugalHooks);
+                else state.removeUpgrade(ZergUpgradeLibrary.CentrifugalHooks);
             }
             void reverse(Object o)
             {
@@ -225,7 +225,7 @@ public class PanelWayPoint extends PanelBase
         parent.gridy++;
         parent.addInput(this, messages.getString("waypoint.roaches"), NumberTextField.class, new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                state.SetUnits(ZergUnitLibrary.Roach, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Roach, EcSwingX.getDigit(e));
 
             }
 
@@ -237,8 +237,8 @@ public class PanelWayPoint extends PanelBase
         parent.gridy++;
         addCheck(messages.getString("waypoint.glialReconstitution"), new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.GlialReconstitution);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.GlialReconstitution);
+                if (parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.GlialReconstitution);
+                else state.removeUpgrade(ZergUpgradeLibrary.GlialReconstitution);
             }
 
             void reverse(Object o) {
@@ -250,8 +250,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.TunnelingClaws);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.TunnelingClaws);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.TunnelingClaws);
+                else state.removeUpgrade(ZergUpgradeLibrary.TunnelingClaws);
             }
             void reverse(Object o)
             {
@@ -264,7 +264,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetUnits(ZergUnitLibrary.Hydralisk, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Hydralisk, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -276,8 +276,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.GroovedSpines);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.GroovedSpines);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.GroovedSpines);
+                else state.removeUpgrade(ZergUpgradeLibrary.GroovedSpines);
             }
             void reverse(Object o)
             {
@@ -288,7 +288,7 @@ public class PanelWayPoint extends PanelBase
         parent.gridy++;
         parent.addInput(this, messages.getString("waypoint.infestors"), NumberTextField.class, new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                state.SetUnits(ZergUnitLibrary.Infestor, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Infestor, EcSwingX.getDigit(e));
             }
 
             void reverse(Object o) {
@@ -299,8 +299,8 @@ public class PanelWayPoint extends PanelBase
         parent.gridy++;
         addCheck(messages.getString("waypoint.neuralParasite"), new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.NeuralParasite);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.NeuralParasite);
+                if (parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.NeuralParasite);
+                else state.removeUpgrade(ZergUpgradeLibrary.NeuralParasite);
             }
 
             void reverse(Object o) {
@@ -312,8 +312,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.PathogenGlands);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.PathogenGlands);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.PathogenGlands);
+                else state.removeUpgrade(ZergUpgradeLibrary.PathogenGlands);
             }
             void reverse(Object o)
             {
@@ -326,7 +326,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetUnits(ZergUnitLibrary.Mutalisk, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Mutalisk, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -337,7 +337,7 @@ public class PanelWayPoint extends PanelBase
         parent.gridy++;
         parent.addInput(this, messages.getString("waypoint.ultralisks"), NumberTextField.class, new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                state.SetUnits(ZergUnitLibrary.Ultralisk, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Ultralisk, EcSwingX.getDigit(e));
             }
 
             void reverse(Object o) {
@@ -349,8 +349,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.ChitinousPlating);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.ChitinousPlating);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.ChitinousPlating);
+                else state.removeUpgrade(ZergUpgradeLibrary.ChitinousPlating);
             }
             void reverse(Object o)
             {
@@ -363,7 +363,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetUnits(ZergUnitLibrary.Corruptor, EcSwingX.getDigit(e));
+                state.setUnits(ZergUnitLibrary.Corruptor, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -375,7 +375,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetUnits( ZergUnitLibrary.Broodlord, EcSwingX.getDigit(e));
+                state.setUnits( ZergUnitLibrary.Broodlord, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -388,8 +388,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Melee1);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Melee1);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Melee1);
+                else state.removeUpgrade(ZergUpgradeLibrary.Melee1);
             }
             void reverse(Object o)
             {
@@ -401,8 +401,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Melee2);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Melee2);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Melee2);
+                else state.removeUpgrade(ZergUpgradeLibrary.Melee2);
             }
             void reverse(Object o)
             {
@@ -412,8 +412,8 @@ public class PanelWayPoint extends PanelBase
         });
         addCheck("+3", new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Melee3);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Melee3);
+                if (parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Melee3);
+                else state.removeUpgrade(ZergUpgradeLibrary.Melee3);
             }
 
             void reverse(Object o) {
@@ -426,8 +426,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Missile1);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Missile1);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Missile1);
+                else state.removeUpgrade(ZergUpgradeLibrary.Missile1);
             }
             void reverse(Object o)
             {
@@ -439,8 +439,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Missile2);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Missile2);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Missile2);
+                else state.removeUpgrade(ZergUpgradeLibrary.Missile2);
             }
             void reverse(Object o)
             {
@@ -452,8 +452,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Missile3);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Missile3);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Missile3);
+                else state.removeUpgrade(ZergUpgradeLibrary.Missile3);
             }
             void reverse(Object o)
             {
@@ -466,8 +466,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Armor1);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Armor1);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Armor1);
+                else state.removeUpgrade(ZergUpgradeLibrary.Armor1);
             }
             void reverse(Object o)
             {
@@ -479,8 +479,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Armor2);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Armor2);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Armor2);
+                else state.removeUpgrade(ZergUpgradeLibrary.Armor2);
             }
             void reverse(Object o)
             {
@@ -492,8 +492,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.Armor3);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.Armor3);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.Armor3);
+                else state.removeUpgrade(ZergUpgradeLibrary.Armor3);
             }
             void reverse(Object o)
             {
@@ -506,8 +506,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
+                else state.removeUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
             }
             void reverse(Object o)
             {
@@ -519,8 +519,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks2);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.FlyerAttacks2);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.FlyerAttacks2);
+                else state.removeUpgrade(ZergUpgradeLibrary.FlyerAttacks2);
             }
             void reverse(Object o)
             {
@@ -532,8 +532,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks3);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.FlyerAttacks3);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.FlyerAttacks3);
+                else state.removeUpgrade(ZergUpgradeLibrary.FlyerAttacks3);
             }
             void reverse(Object o)
             {
@@ -546,8 +546,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.FlyerArmor1);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.FlyerArmor1);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.FlyerArmor1);
+                else state.removeUpgrade(ZergUpgradeLibrary.FlyerArmor1);
             }
             void reverse(Object o)
             {
@@ -559,8 +559,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.FlyerArmor2);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.FlyerArmor2);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.FlyerArmor2);
+                else state.removeUpgrade(ZergUpgradeLibrary.FlyerArmor2);
             }
             void reverse(Object o)
             {
@@ -572,8 +572,8 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(parent.getTrue(e)) state.AddUpgrade(ZergUpgradeLibrary.FlyerArmor3);
-                else state.RemoveUpgrade(ZergUpgradeLibrary.FlyerArmor3);
+                if(parent.getTrue(e)) state.addUpgrade(ZergUpgradeLibrary.FlyerArmor3);
+                else state.removeUpgrade(ZergUpgradeLibrary.FlyerArmor3);
             }
             void reverse(Object o)
             {
@@ -596,7 +596,7 @@ public class PanelWayPoint extends PanelBase
         });
         parent.addInput(this, messages.getString("waypoint.lairs"), NumberTextField.class, new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                state.SetBuilding(ZergBuildingLibrary.Lair, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.Lair, EcSwingX.getDigit(e));
             }
 
             void reverse(Object o) {
@@ -607,7 +607,7 @@ public class PanelWayPoint extends PanelBase
         parent.gridy++;
         parent.addInput(this, messages.getString("waypoint.hives"), NumberTextField.class, new CustomActionListener() {
             public void actionPerformed(ActionEvent e) {
-                state.SetBuilding(ZergBuildingLibrary.Hive, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.Hive, EcSwingX.getDigit(e));
             }
 
             void reverse(Object o) {
@@ -619,7 +619,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.Extractor, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.Extractor, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -632,7 +632,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.EvolutionChamber, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.EvolutionChamber, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -645,7 +645,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.SpineCrawler, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.SpineCrawler, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -657,7 +657,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.SporeCrawler, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.SporeCrawler, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -670,7 +670,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.SpawningPool, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.SpawningPool, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -682,7 +682,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.BanelingNest, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.BanelingNest, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -695,7 +695,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.RoachWarren, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.RoachWarren, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -707,7 +707,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.HydraliskDen, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.HydraliskDen, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -720,7 +720,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.InfestationPit, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.InfestationPit, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -732,7 +732,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.Spire, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.Spire, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -745,7 +745,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.NydusNetwork, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.NydusNetwork, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -757,7 +757,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.NydusWorm, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.NydusWorm, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -770,7 +770,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.UltraliskCavern, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.UltraliskCavern, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {
@@ -782,7 +782,7 @@ public class PanelWayPoint extends PanelBase
         {
             public void actionPerformed(ActionEvent e)
             {
-                state.SetBuilding(ZergBuildingLibrary.GreaterSpire, EcSwingX.getDigit(e));
+                state.setBuilding(ZergBuildingLibrary.GreaterSpire, EcSwingX.getDigit(e));
             }
             void reverse(Object o)
             {

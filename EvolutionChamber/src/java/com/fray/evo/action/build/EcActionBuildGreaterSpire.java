@@ -21,6 +21,6 @@ public final class EcActionBuildGreaterSpire extends EcActionBuildBuilding imple
     @Override
     protected void postExecute(EcBuildOrder s, GameLog e) {
         s.makeBuildingNotBusy(this);
-        s.AddBuilding((Building) buildable);
+        s.addBuilding((Building) buildable);
     }
 }

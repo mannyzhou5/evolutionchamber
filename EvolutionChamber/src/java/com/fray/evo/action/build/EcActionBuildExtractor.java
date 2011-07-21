@@ -25,7 +25,7 @@ public final class EcActionBuildExtractor extends EcActionBuildBuilding implemen
 	{
 		if (s.extractorsBuilding == 0)
 			throw new RuntimeException("wtf?");
-		s.AddBuilding((Building) buildable);
+		s.addBuilding((Building) buildable);
 		if (s.settings.pullWorkersFromGas == false)
 		{
 			s.dronesOnMinerals -= 3;

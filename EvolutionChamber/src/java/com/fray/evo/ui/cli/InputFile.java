@@ -139,13 +139,13 @@ public class InputFile {
 					Buildable b = buildables.get(word)[0];
 					if (b instanceof Unit) {
 						int num = value == null ? 1 : Integer.parseInt(value);
-						curWaypoint.SetUnits((Unit) b, num);
+						curWaypoint.setUnits((Unit) b, num);
 					} else if (b instanceof Building) {
 						int num = value == null ? 1 : Integer.parseInt(value);
-						curWaypoint.SetBuilding((Building) b, num);
+						curWaypoint.setBuilding((Building) b, num);
 					} else if (b instanceof Upgrade) {
 						int num = value == null ? 0 : Integer.parseInt(value) - 1;
-						curWaypoint.AddUpgrade((Upgrade) buildables.get(word)[num]);
+						curWaypoint.addUpgrade((Upgrade) buildables.get(word)[num]);
 					}
 				} else if (inSettingsBlock) {
 					boolean validKeyword = processSetting(settings, word, value);

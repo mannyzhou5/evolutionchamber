@@ -23,7 +23,7 @@ public final class EcActionBuildNydusWorm extends EcActionBuildBuilding implemen
 	@Override
 	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
-		s.AddBuilding((Building)buildable);
+		s.addBuilding((Building)buildable);
 		s.nydusNetworkInUse -= 1;
 	}
 }

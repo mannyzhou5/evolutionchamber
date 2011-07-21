@@ -55,7 +55,7 @@ public abstract class EcActionUpgrade extends EcActionMakeBuildable implements S
     }
 
     protected void superAfterTime(EcBuildOrder s, GameLog e) {
-        s.AddUpgrade(upgrade);
+        s.addUpgrade(upgrade);
     }
 
     public int getMinerals() {

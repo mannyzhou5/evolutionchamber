@@ -24,7 +24,7 @@ public final class EcActionBuildLair extends EcActionBuildBuilding implements Se
 	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
             s.makeBuildingNotBusy(this);
-            s.RemoveBuilding(ZergBuildingLibrary.Hatchery);
-		s.AddBuilding((Building) buildable);
+            s.removeBuilding(ZergBuildingLibrary.Hatchery);
+		s.addBuilding((Building) buildable);
 	}
 }

@@ -18,7 +18,7 @@ public final class EcActionBuildZergling extends EcActionBuildUnit implements Se
 	@Override
 	protected void postExecute(EcBuildOrder s, GameLog e)
 	{
-		s.AddUnits((Unit) buildable, 2);
+		s.addUnits((Unit) buildable, 2);
 	}
 
 	@Override

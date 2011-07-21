@@ -87,8 +87,8 @@ public class SpeedTest {
 
 		EcState destination = new EcState();
 		destination.targetSeconds = 120 * 60;
-		destination.SetUnits(ZergUnitLibrary.Mutalisk, 7);
-		destination.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
+		destination.setUnits(ZergUnitLibrary.Mutalisk, 7);
+		destination.addUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
 
 		return runTest(destination, seconds, processors);
 	}
@@ -105,8 +105,8 @@ public class SpeedTest {
 
 		EcState waypoint = new EcState();
 		waypoint.targetSeconds = 120 * 60;
-		waypoint.SetUnits(ZergUnitLibrary.Mutalisk, 7);
-		waypoint.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
+		waypoint.setUnits(ZergUnitLibrary.Mutalisk, 7);
+		waypoint.addUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
 		waypoints.add(waypoint);
 
 		EcState destination = new EcState();
@@ -127,30 +127,30 @@ public class SpeedTest {
 		ArrayList<EcState> waypoints = new ArrayList<EcState>();
 
 		EcState waypoint = new EcState();
-		waypoint.SetUnits(ZergUnitLibrary.Zergling, 6);
+		waypoint.setUnits(ZergUnitLibrary.Zergling, 6);
 		waypoint.targetSeconds = 3 * 60;
 		waypoints.add(waypoint);
 
 		waypoint = new EcState();
-		waypoint.SetUnits(ZergUnitLibrary.Roach, 6);
+		waypoint.setUnits(ZergUnitLibrary.Roach, 6);
 		waypoint.targetSeconds = 6 * 60;
 		waypoints.add(waypoint);
 
 		waypoint = new EcState();
-		waypoint.SetUnits(ZergUnitLibrary.Hydralisk, 2);
+		waypoint.setUnits(ZergUnitLibrary.Hydralisk, 2);
 		waypoint.targetSeconds = 9 * 60;
 		waypoints.add(waypoint);
 
 		waypoint = new EcState();
-		waypoint.SetUnits(ZergUnitLibrary.Overseer, 3);
+		waypoint.setUnits(ZergUnitLibrary.Overseer, 3);
 		waypoint.targetSeconds = 12 * 60;
 		waypoints.add(waypoint);
 
 		EcState destination = new EcState();
 		destination.targetSeconds = 120 * 60;
 		destination.waypoints = waypoints;
-		destination.SetUnits(ZergUnitLibrary.Mutalisk, 7);
-		destination.AddUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
+		destination.setUnits(ZergUnitLibrary.Mutalisk, 7);
+		destination.addUpgrade(ZergUpgradeLibrary.FlyerAttacks1);
 
 		return runTest(destination, seconds, processors);
 	}

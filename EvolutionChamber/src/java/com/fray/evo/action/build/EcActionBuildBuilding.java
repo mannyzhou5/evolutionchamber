@@ -27,7 +27,7 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
 		s.gas -= getGas();
 		if (getConsumes() == ZergUnitLibrary.Drone)
 		{
-			s.RemoveUnits(ZergUnitLibrary.Drone, 1);
+			s.removeUnits(ZergUnitLibrary.Drone, 1);
 			s.dronesOnMinerals -= 1;
 			s.supplyUsed -= 1;
 		}
@@ -64,7 +64,7 @@ public abstract class EcActionBuildBuilding extends EcActionBuild implements Ser
     }
 
 	protected void postExecute(EcBuildOrder s, GameLog e){
-            s.AddBuilding((Building) buildable);
+            s.addBuilding((Building) buildable);
         };
 
     @Override
