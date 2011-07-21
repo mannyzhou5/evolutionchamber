@@ -255,7 +255,7 @@ public final class EvolutionChamber
 	/**
 	 * Resets the object so it can run a new simulation.
 	 */
-	private void reset()
+	private synchronized void reset()
 	{
 		killThreads = false;
 		firstrun = true;
