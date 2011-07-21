@@ -10,6 +10,8 @@ import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildDrone extends EcActionBuildUnit implements Serializable
 {
+	private static final long serialVersionUID = -9015731889232567803L;
+
 	public EcActionBuildDrone()
 	{
 		super(ZergUnitLibrary.Drone);

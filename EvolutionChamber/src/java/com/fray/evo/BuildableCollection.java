@@ -16,7 +16,8 @@ import com.fray.evo.util.Race;
  * @param <T> the Buildable type for this collection. For this class to work, only {@link Buildable#getId()} is required to be set correctly
  */
 public class BuildableCollection<T extends Buildable> implements Serializable {
-    protected final int[] arr;
+	private static final long serialVersionUID = 1L;
+	protected final int[] arr;
     protected final Race race;
 
     public BuildableCollection(Collection<T> buildings, Race race){

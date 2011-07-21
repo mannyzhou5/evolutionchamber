@@ -6,6 +6,8 @@ import com.fray.evo.util.ZergBuildingLibrary;
 
 public final class EcActionBuildBanelingNest extends EcActionBuildBuilding implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	public EcActionBuildBanelingNest()
 	{
 		super(ZergBuildingLibrary.BanelingNest);

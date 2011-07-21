@@ -10,6 +10,8 @@ import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildZergling extends EcActionBuildUnit implements Serializable
 {
+	private static final long serialVersionUID = 1284065587938103817L;
+
 	public EcActionBuildZergling()
 	{
 		super(ZergUnitLibrary.Zergling);

@@ -15,8 +15,10 @@ import java.util.HashMap;
  *
  * @author Cyrik
  */
-public abstract class EcActionMakeBuildable extends EcAction{
-    public void makeBusy(ArrayList<ArrayList<EcAction>> madeBusyBy,HashMap<EcAction,Building> actionBusyIn, Building consumes,BuildableCollection<Building> buildings )
+public abstract class EcActionMakeBuildable extends EcAction
+{
+	private static final long serialVersionUID = -6108769310392430929L;
+	public void makeBusy(ArrayList<ArrayList<EcAction>> madeBusyBy,HashMap<EcAction,Building> actionBusyIn, Building consumes,BuildableCollection<Building> buildings )
             	{
             //ArrayList<EcAction> acc = madeBusyBy.get(consumes);
             if(madeBusyBy.get(consumes.getId()).size() >= buildings.get(consumes)){

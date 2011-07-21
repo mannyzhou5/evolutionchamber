@@ -10,7 +10,8 @@ import com.fray.evo.util.GameLog;
 
 public abstract class EcActionBuild extends EcActionMakeBuildable implements Serializable {
 
-    protected Buildable buildable;
+	private static final long serialVersionUID = 3929615537949650115L;
+	protected Buildable buildable;
 
     public EcActionBuild(Buildable buildable) {
         this.buildable = buildable;

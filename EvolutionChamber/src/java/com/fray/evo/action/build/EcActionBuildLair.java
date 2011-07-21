@@ -9,6 +9,8 @@ import com.fray.evo.util.GameLog;
 
 public final class EcActionBuildLair extends EcActionBuildBuilding implements Serializable
 {
+	private static final long serialVersionUID = 2953922728901731654L;
+
 	public EcActionBuildLair()
 	{
 		super(ZergBuildingLibrary.Lair);

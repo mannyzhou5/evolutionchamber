@@ -9,6 +9,8 @@ import com.fray.evo.util.GameLog;
 
 public final class EcActionBuildNydusWorm extends EcActionBuildBuilding implements Serializable
 {
+	private static final long serialVersionUID = -983279526149686118L;
+
 	public EcActionBuildNydusWorm()
 	{
 		super(ZergBuildingLibrary.NydusWorm);

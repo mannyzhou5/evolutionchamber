@@ -9,6 +9,8 @@ import com.fray.evo.util.GameLog;
 
 public final class EcActionBuildHive extends EcActionBuildBuilding implements Serializable
 {
+	private static final long serialVersionUID = 527262025964328976L;
+
 	public EcActionBuildHive()
 	{
 		super(ZergBuildingLibrary.Hive);

@@ -9,7 +9,9 @@ import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 
 public class PanelSettings extends PanelBase
 {
-    /**
+	private static final long serialVersionUID = 331188014877319644L;
+
+	/**
 	 * Constructor.
 	 * @param parent the window that holds this panel.
 	 */

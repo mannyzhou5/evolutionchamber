@@ -12,7 +12,9 @@ import com.fray.evo.util.RunnableAction;
 
 public abstract class EcAction implements Serializable
 {
-    public static class CanExecuteResult{
+	private static final long serialVersionUID = -2128362561021916042L;
+
+	public static class CanExecuteResult{
         public boolean can;
         public boolean somethingChanged;
         public CanExecuteResult(boolean can, boolean somethingChanged){

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public abstract class EcActionBuildBuilding extends EcActionBuild implements Serializable
 {
+	private static final long serialVersionUID = 6761289110026332078L;
 
 	public EcActionBuildBuilding(Building building)
 	{

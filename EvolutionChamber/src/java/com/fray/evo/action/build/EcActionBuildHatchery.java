@@ -10,6 +10,8 @@ import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildHatchery extends EcActionBuildBuilding implements Serializable
 {
+	private static final long serialVersionUID = 265935963741996160L;
+
 	public EcActionBuildHatchery()
 	{
 		super(ZergBuildingLibrary.Hatchery);

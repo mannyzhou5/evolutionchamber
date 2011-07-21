@@ -7,6 +7,8 @@ import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildBroodLord extends EcActionBuildUnit implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	public EcActionBuildBroodLord()
 	{
 		super(ZergUnitLibrary.Broodlord);

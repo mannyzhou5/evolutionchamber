@@ -8,6 +8,7 @@ import com.fray.evo.util.RunnableAction;
 
 public final class EcActionWait extends EcAction implements Serializable
 {
+	private static final long serialVersionUID = -2361841555630773088L;
 	boolean	go	= false;
 
 	@Override

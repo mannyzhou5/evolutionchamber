@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author Cyrik
  */
 public final class Upgrade extends Buildable {
-    private final Building builtFrom;
+	private static final long serialVersionUID = 1L;
+	private final Building builtFrom;
 
     public Upgrade(int id, String name,int minerals, int gas, double time, Building builtIn, ArrayList<Buildable> requirements){
         super(name,minerals,gas,time,null,requirements, id);

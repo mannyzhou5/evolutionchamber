@@ -15,6 +15,7 @@ import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 
 public class EcState implements Serializable
 {
+	private static final long serialVersionUID = 8913147157413079020L;
 	private static final Logger logger = Logger.getLogger(EcState.class.getName());
 	public EcSettings	settings	= new EcSettings();
 	protected HashSet<Upgrade> upgrades;

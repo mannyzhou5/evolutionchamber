@@ -21,6 +21,8 @@ import com.fray.evo.util.Unit;
 @Deprecated
 public final class UnitCollection extends BuildableCollection<Unit> implements Serializable {
 
+	private static final long serialVersionUID = 4544549226705001596L;
+
 	public UnitCollection(Collection<Unit> units, Race race) {
 		this(units.size(), race);
 	}

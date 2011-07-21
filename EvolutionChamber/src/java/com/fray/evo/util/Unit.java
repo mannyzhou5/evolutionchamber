@@ -12,7 +12,8 @@ import java.util.ArrayList;
  */
 public final class Unit extends Buildable {
 
-    private final double supply;
+	private static final long serialVersionUID = 1L;
+	private final double supply;
     private final Building builtFrom;
     
     public Unit(int id, String name, int minerals, int gas, double supply, double time, Buildable consumes, Building builtFrom, ArrayList<Buildable> requirements) {

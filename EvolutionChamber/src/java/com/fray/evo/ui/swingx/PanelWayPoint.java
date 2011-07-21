@@ -15,7 +15,8 @@ import static com.fray.evo.ui.swingx.EcSwingXMain.messages;
 
 public class PanelWayPoint extends PanelBase
 {
-    private final EcState state;
+	private static final long serialVersionUID = -3838081126063166169L;
+	private final EcState state;
 
     /**
 	 * Constructor.

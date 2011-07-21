@@ -9,7 +9,9 @@ import com.fray.evo.util.GameLog;
 
 public final class EcActionBuildGreaterSpire extends EcActionBuildBuilding implements Serializable
 {
-    public EcActionBuildGreaterSpire() {
+	private static final long serialVersionUID = -3977353805525588023L;
+
+	public EcActionBuildGreaterSpire() {
         super(ZergBuildingLibrary.GreaterSpire);
     }
 

@@ -17,6 +17,8 @@ import javax.swing.ListCellRenderer;
  * 
  */
 public class LocaleComboBox extends JComboBox {
+	private static final long serialVersionUID = 784618264004326168L;
+
 	/**
 	 * Constructor.
 	 * 
@@ -87,6 +89,9 @@ public class LocaleComboBox extends JComboBox {
 	 * 
 	 */
 	private static class ComboBoxRenderer extends JLabel implements ListCellRenderer {
+
+		private static final long serialVersionUID = -2560362531812495409L;
+
 		public ComboBoxRenderer() {
 			setOpaque(true);
 			setVerticalAlignment(CENTER);

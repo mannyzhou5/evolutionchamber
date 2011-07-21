@@ -14,6 +14,7 @@ import com.fray.evo.util.Upgrade;
 
 public abstract class EcActionBuildUnit extends EcActionBuild implements Serializable
 {
+	private static final long serialVersionUID = 6519230186320700621L;
 	public double supply;
 	public boolean consumeLarva;
 	

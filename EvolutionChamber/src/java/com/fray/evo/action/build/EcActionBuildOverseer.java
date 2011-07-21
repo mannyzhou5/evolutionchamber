@@ -7,6 +7,9 @@ import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildOverseer extends EcActionBuildUnit implements Serializable
 {
+	private static final long serialVersionUID = -5927839271180382939L;
+
+
 	public EcActionBuildOverseer()
 	{
 		super(ZergUnitLibrary.Overseer);

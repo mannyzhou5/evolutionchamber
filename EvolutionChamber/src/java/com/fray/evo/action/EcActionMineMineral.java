@@ -10,6 +10,8 @@ import com.fray.evo.util.RunnableAction;
 
 public final class EcActionMineMineral extends EcAction implements Serializable
 {
+	private static final long serialVersionUID = 5849476088588414509L;
+
 	@Override
 	public void execute(final EcBuildOrder s, final GameLog e)
 	{

@@ -7,9 +7,10 @@ import com.fray.evo.action.EcActionMakeBuildable;
 import com.fray.evo.util.*;
 import java.util.ArrayList;
 
-public abstract class EcActionUpgrade extends EcActionMakeBuildable implements Serializable {
-
-    protected  Upgrade upgrade;
+public abstract class EcActionUpgrade extends EcActionMakeBuildable implements Serializable 
+{
+	private static final long serialVersionUID = -7775300504786760312L;
+	protected  Upgrade upgrade;
 
     public EcActionUpgrade() {
         init();

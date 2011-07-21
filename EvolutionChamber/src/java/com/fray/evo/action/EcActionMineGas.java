@@ -10,6 +10,8 @@ import com.fray.evo.util.RunnableAction;
 
 public final class EcActionMineGas extends EcAction implements Serializable
 {
+	private static final long serialVersionUID = 7000036942224791220L;
+
 	@Override
 	public void execute(final EcBuildOrder s, final GameLog e)
 	{

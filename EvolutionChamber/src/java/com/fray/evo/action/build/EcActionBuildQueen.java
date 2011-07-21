@@ -12,6 +12,8 @@ import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildQueen extends EcActionBuildUnit implements Serializable
 {
+	private static final long serialVersionUID = 1780688280823177517L;
+
 	public EcActionBuildQueen()
 	{
 		super(ZergUnitLibrary.Queen);

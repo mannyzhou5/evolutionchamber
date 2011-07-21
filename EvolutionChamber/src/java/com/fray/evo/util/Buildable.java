@@ -16,6 +16,8 @@ import java.util.ArrayList;
  * @author Cyrik, bdurrer
  */
 public abstract class Buildable implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	protected final String name;
 	protected final int minerals;
 	protected final int gas;

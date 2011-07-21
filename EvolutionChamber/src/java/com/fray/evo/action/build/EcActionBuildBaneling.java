@@ -6,7 +6,9 @@ import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionBuildBaneling extends EcActionBuildUnit implements Serializable {
 
-    public EcActionBuildBaneling() {
+	private static final long serialVersionUID = 1L;
+
+	public EcActionBuildBaneling() {
         super(ZergUnitLibrary.Baneling);
     }
 

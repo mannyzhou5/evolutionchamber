@@ -9,6 +9,8 @@ import com.fray.evo.util.ZergUnitLibrary;
 
 public final class EcActionExtractorTrick extends EcAction implements Serializable
 {
+	private static final long serialVersionUID = 8713629742335543863L;
+
 	@Override
 	public void execute(final EcBuildOrder s, final GameLog e)
 	{

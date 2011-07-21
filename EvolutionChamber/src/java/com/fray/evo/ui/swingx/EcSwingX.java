@@ -29,6 +29,7 @@ import static com.fray.evo.ui.swingx.EcSwingXMain.userSettings;
 //TODO: Refactor this monster. - Lomilar
 public class EcSwingX extends JXPanel implements EcReportable
 {
+	private static final long serialVersionUID = 4155107115709884263L;
 	private static final Logger logger = Logger.getLogger(EcSwingX.class.getName());
 	private JTextArea			outputText;
 	private JLabel				status1;

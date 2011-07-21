@@ -9,7 +9,8 @@ import java.awt.event.ActionEvent;
 
 public abstract class PanelBase extends JPanel
 {
-    private final EcSwingX parent;
+	private static final long serialVersionUID = 4799832117789414417L;
+	private final EcSwingX parent;
 
     /**
 	 * Constructor.

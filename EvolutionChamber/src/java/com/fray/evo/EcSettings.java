@@ -10,6 +10,7 @@ import com.fray.evo.util.Race;
 
 public final class EcSettings implements Serializable
 {
+	private static final long serialVersionUID = -5785538042893439693L;
 	public boolean workerParity = false;
 	public boolean overDrone = false;
 	public boolean useExtractorTrick = true;

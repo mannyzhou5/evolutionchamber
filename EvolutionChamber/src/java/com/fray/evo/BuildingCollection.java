@@ -21,6 +21,8 @@ import com.fray.evo.util.RaceLibraries;
 @Deprecated
 public final class BuildingCollection extends BuildableCollection<Building> implements Serializable {
 
+	private static final long serialVersionUID = 7576950287259854976L;
+
 	public BuildingCollection(Collection<Building> buildings, Race race) {
 		this(buildings.size(), race);
 	}
