@@ -28,7 +28,9 @@ import java.util.Arrays;
  */
 public final class ArrayListInt implements Serializable {
 
-    private transient int firstIndex;
+	private static final long serialVersionUID = 4944360631178054777L;
+
+	private transient int firstIndex;
 
     private transient int lastIndex;
 
